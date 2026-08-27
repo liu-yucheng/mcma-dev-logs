@@ -1,0 +1,23 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$y$,
+    ylabel=$z$,
+    title={Trace $x=0$: $y = z^2$},
+    grid=both,
+    axis lines=center,
+    domain=0:9,
+    samples=100,
+    ymin=-3, ymax=3,
+    xmin=0, xmax=9,
+    width=8cm,
+    height=8cm,
+]
+\addplot[red, thick, domain=-3:3] ({x^2}, {x});
+\end{axis}
+\end{tikzpicture}
+\end{document}
