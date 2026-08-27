@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The future plans for the MCMA project: literature review, DeepSeek Harness migration, agent-developed tools, Linux + Docker, Postgres storage, and an MCP server.">
+<title>MCMA &mdash; Future Plans</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>Future Plans</h1>
+    <p class="lede">The experiment is complete. The next step is to move the MCMA system from a research prototype to a dependable service. This page states the plans and the reason for each plan.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="index.html">Overview</a>
+    <a href="agents.html">Agents</a>
+    <a href="experiment.html">Experiment</a>
+    <a href="briefing.html">Results Briefing</a>
+    <a href="explorer.html">Results Explorer</a>
+    <a href="demo-video.html">Demo Video</a>
+    <a href="plans.html" aria-current="page">Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="roadmap">
+  <h2>🗺️ The Roadmap</h2>
+  <p>🎯 The plans follow a firm order. Each plan prepares the next plan.</p>
+  <ol>
+    <li>🧭 Confirm what is new. → <em>Plan 1 (literature).</em></li>
+    <li>🚚 Move the base system to a newer framework. → <em>Plan 2 (DeepSeek Harness).</em></li>
+    <li>🧰 Let the agent extend its own tool set. → <em>Plan 3 (agent-developed tools).</em></li>
+    <li>🐧 Move the runtime to containers. → <em>Plan 4 (Linux + Docker).</em></li>
+    <li>🗄️ Store the data in a database. → <em>Plan 5 (Postgres).</em></li>
+    <li>🔌 Expose the tools by a standard protocol. → <em>Plan 6 (MCP server).</em></li>
+  </ol>
+</section>
+
+<section id="plan-literature">
+  <h2>🧭 Plan 1. Confirm the Innovation Points</h2>
+  <div class="card">
+    <h3>🎯 Goal</h3>
+    <p>Search the existing literature. Analyze the sources. Confirm what is new about math-capable multimodal agents in academia.</p>
+  </div>
+  <div class="card">
+    <h3>🔧 Actions</h3>
+    <p>🛰️ <strong>Search.</strong> Collect the papers on math-capable multimodal agents, agent frameworks, and multimodal math reasoning.</p>
+    <p>📚 <strong>Analyze.</strong> Read each paper. Record its method, its tools, and its results.</p>
+    <p>⚖️ <strong>Compare.</strong> Compare the state of the art with the MCMA design.</p>
+  </div>
+  <div class="card">
+    <h3>✅ Outcome</h3>
+    <p>A firm literature review. It will state the innovation points with evidence. It will show what is new and what is built on prior work.</p>
+  </div>
+</section>
+
+<section id="plan-harness">
+  <h2>🚚 Plan 2. Move to DeepSeek Harness</h2>
+  <div class="card">
+    <h3>🎯 Goal</h3>
+    <p>Move the base functions of the current agent to the DeepSeek Harness framework (<a href="https://github.com/deepseek-ai/deepseek-harness">github.com/deepseek-ai/deepseek-harness</a>).</p>
+  </div>
+  <div class="card">
+    <h3>🔧 Actions</h3>
+    <p>🕮 <strong>Study.</strong> Read the harness APIs and its tool protocol.</p>
+    <p>🔄 <strong>Port the loop.</strong> Move the agent loop to the harness.</p>
+    <p>🧩 <strong>Port the tools.</strong> Move the four base tools to the harness.</p>
+    <p>🧪 <strong>Re-run the suite.</strong> Run the 24-problem suite again. Compare with the recorded results.</p>
+  </div>
+  <div class="card">
+    <h3>✅ Outcome</h3>
+    <p>An agent on a maintained framework. The re-run will confirm that the results do not change.</p>
+  </div>
+</section>
+
+<section id="plan-agent-tools">
+  <h2>🧰 Plan 3. Let the Agent Build Its Own Tools</h2>
+  <div class="card">
+    <h3>🎯 Goal</h3>
+    <p>Use the DeepSeek Harness features. Let the agent develop small tools by itself. These tools will fill the gaps in the base tools.</p>
+  </div>
+  <div class="card">
+    <h3>🔧 Actions</h3>
+    <p>🩺 <strong>Define the need.</strong> The agent finds a task that the base tools cannot do.</p>
+    <p>✍️ <strong>Write the tool.</strong> The agent writes the source code for the tool.</p>
+    <p>🧪 <strong>Test the tool.</strong> The agent runs the tool and checks the output.</p>
+    <p>📦 <strong>Register the tool.</strong> The agent stores the tool for later use.</p>
+  </div>
+  <div class="card">
+    <h3>✅ Outcome</h3>
+    <p>A growing tool set. The agent does not wait for a hand-written tool to arrive.</p>
+  </div>
+</section>
+
+<section id="plan-linux">
+  <h2>🐧 Plan 4. Move to Linux + Docker</h2>
+  <div class="card">
+    <h3>🎯 Goal</h3>
+    <p>🎯 The agent now runs on Windows on a bare metal hardware. The goal is to run the agent on Linux inside Docker containers.</p>
+  </div>
+  <div class="card">
+    <h3>🔧 Actions</h3>
+    <p>🖥️ <strong>Move the runtime.</strong> Install the tool chain on Linux.</p>
+    <p>📦 <strong>Build the image.</strong> Put the agent and its tools into a Docker image.</p>
+    <p>🔁 <strong>Run in a container.</strong> Run the suite in the container. Confirm the results match.</p>
+    <p>📜 <strong>Keep it reproducible.</strong> Record the build files and the version pins.</p>
+  </div>
+  <div class="card">
+    <h3>✅ Outcome</h3>
+    <p>A reproducible runtime. It is ready for service-based deployment.</p>
+  </div>
+</section>
+
+<section id="plan-postgres">
+  <h2>🗄️ Plan 5. Store Data in Postgres</h2>
+  <div class="card">
+    <h3>🎯 Goal</h3>
+    <p>The agent now stores data directly in the PC filesystem. The goal is to store the data in a Postgres database with a standard management method.</p>
+  </div>
+  <div class="card">
+    <h3>🔧 Actions</h3>
+    <p>📐 <strong>Design the schema.</strong> Define the records for the run sessions and the results.</p>
+    <p>🔌 <strong>Connect the server.</strong> The agent server writes to Postgres instead of files.</p>
+    <p>🗂️ <strong>Add migrations.</strong> Manage the schema changes in version control.</p>
+    <p>💾 <strong>Add backups.</strong> Store the data copies on schedule.</p>
+  </div>
+  <div class="card">
+    <h3>✅ Outcome</h3>
+    <p>A typed, searchable, dependable data store. It replaces the flat files.</p>
+  </div>
+</section>
+
+<section id="plan-mcp">
+  <h2>🔌 Plan 6. Expose the Tools as an MCP Server</h2>
+  <div class="card">
+    <h3>🎯 Goal</h3>
+    <p>The base tools are now the Extensions of the DeepAgents built-in tools. The goal is to rebuild all base tools as one Model Context Protocol (MCP) server. The MCP protocol is a standard interface for tool calls.</p>
+  </div>
+  <div class="card">
+    <h3>🔧 Actions</h3>
+    <p>🧩 <strong>Refactor.</strong> Move each base tool into a service method.</p>
+    <p>🧭 <strong>Expose the protocol.</strong> Publish the tool list and the call interface through MCP.</p>
+    <p>🔗 <strong>Connect the client.</strong> The agent calls the server through the MCP client.</p>
+    <p>🧪 <strong>Re-run the suite.</strong> Confirm the tools behave the same as before.</p>
+  </div>
+  <div class="card">
+    <h3>✅ Outcome</h3>
+    <p>Any MCP-capable agent can reuse the tools. The tool interface is no longer tied to DeepAgents.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Experiment log <code>dev-logs-20260824</code>, Aug 21&ndash;27, 2026. Done by LIU Yucheng. Supervised by Prof. HU Jishan. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+</body>
+</html>

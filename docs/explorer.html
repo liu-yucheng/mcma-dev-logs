@@ -25,6 +25,7 @@
     <a href="briefing.html">Results Briefing</a>
     <a href="explorer.html" aria-current="page">Results Explorer</a>
     <a href="demo-video.html">Demo Video</a>
+    <a href="plans.html">Future Plans</a>
   </div>
 </nav>
 
@@ -67,6 +68,7 @@
         <iframe title="Left panel viewer"></iframe>
       </div>
       <div class="status">&mdash;</div>
+      <div class="panel-resizer" role="separator" aria-orientation="horizontal" title="Drag to resize the left pane height; double-click to reset" tabindex="0"></div>
     </div>
 
     <div class="splitter" role="separator" aria-orientation="vertical" title="Drag to resize; double-click to reset" tabindex="0"></div>
@@ -89,9 +91,9 @@
         <iframe title="Right panel viewer"></iframe>
       </div>
       <div class="status">&mdash;</div>
+      <div class="panel-resizer" role="separator" aria-orientation="horizontal" title="Drag to resize the right pane height; double-click to reset" tabindex="0"></div>
     </div>
     </div>
-    <div class="explorer-resizer" role="separator" aria-orientation="horizontal" title="Drag to resize the explorer height; double-click to reset" tabindex="0"></div>
   </div>
 </section>
 
@@ -113,12 +115,11 @@
 .explorer {
   display: flex;
   flex-direction: column;
-  height: var(--exh, 1080px);
   font-weight: 300;
 }
 .explorer-row {
   display: flex;
-  align-items: stretch;
+  align-items: flex-start;
   flex: 1 1 0%;
   min-height: 0;
 }
@@ -127,6 +128,7 @@
   flex-direction: column;
   min-width: 0;
   flex: 0 0 var(--left-w, 50%);
+  height: var(--panel-h, 540px);
   border: 1px solid #cfd5dd;
   border-radius: 8px;
   overflow: hidden;
@@ -136,11 +138,13 @@
 .panel[data-panel="right"] { flex: 1 1 0%; }
 .splitter {
   flex: 0 0 7px;
+  align-self: stretch;
   border-left: 1px solid #d0d5dd;
   border-right: 1px solid #d0d5dd;
   background: #e2e6ec;
   cursor: col-resize;
   touch-action: none;
+  user-select: none;
 }
 .splitter:hover { background: #c8d0da; }
 .h-splitter {
@@ -152,7 +156,7 @@
   touch-action: none;
 }
 .h-splitter:hover { background: #c8d0da; }
-.explorer-resizer {
+.panel-resizer {
   flex: 0 0 10px;
   border-top: 1px solid #d0d5dd;
   background: #e6eaef;
@@ -160,15 +164,22 @@
   touch-action: none;
   user-select: none;
 }
-.explorer-resizer:hover { background: #ccd4de; }
+.panel-resizer:hover { background: #ccd4de; }
 body.resizing { cursor: col-resize; user-select: none; }
 body.resizing-v { cursor: row-resize; user-select: none; }
 @media (max-width: 1120px) {
   .explorer { display: block; height: auto; }
   .explorer-row { display: block; }
-  .explorer-resizer { display: none; }
-  .panel { height: 520px; }
-  .splitter { display: none; }
+  .splitter {
+    display: block;
+    width: auto;
+    height: 7px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #d0d5dd;
+    border-bottom: 1px solid #d0d5dd;
+    cursor: row-resize;
+  }
 }
 .panel-head {
   display: flex;
@@ -228,7 +239,7 @@ body.resizing-v { cursor: row-resize; user-select: none; }
 .btn:disabled { opacity: .45; cursor: default; background: transparent; border-color: transparent; }
 .btn.icon { font-size: .95rem; padding: 5px 8px; min-width: 30px; text-align: center; }
 
-.panel-body { flex: 0 0 var(--body-h, 52%); min-height: 120px; display: flex; }
+.panel-body { flex: 0 0 var(--body-h, calc(100% - 240px)); min-height: 120px; display: flex; }
 .files-col { flex: 1 1 auto; min-width: 0; overflow: auto; padding: 6px 4px; background: #fff; }
 
 .preview {
@@ -556,17 +567,51 @@ body.resizing-v { cursor: row-resize; user-select: none; }
   function initSplit() {
     var exp = document.getElementById("explorer");
     var split = exp.querySelector(".splitter");
-
-    var saved = null;
-    try { saved = parseFloat(localStorage.getItem("mcma-explorer-split")); } catch (e) {}
-    if (saved > 10 && saved < 90) exp.style.setProperty("--left-w", saved + "%");
     if (!split) return;
+
+    var savedW = null;
+    try { savedW = parseFloat(localStorage.getItem("mcma-explorer-split")); } catch (e) {}
+    if (savedW > 10 && savedW < 90) exp.style.setProperty("--left-w", savedW + "%");
+
+    function isStacked() {
+      try { return window.matchMedia("(max-width: 1120px)").matches; } catch (e) { return false; }
+    }
+    function leftPan() { return exp.querySelector('.panel[data-panel="left"]'); }
+    function rightPan() { return exp.querySelector('.panel[data-panel="right"]'); }
+    function stackedSize() {
+      return leftPan().offsetHeight + split.offsetHeight + rightPan().offsetHeight;
+    }
+    function setStacked(lh, rh) {
+      leftPan().style.setProperty("--panel-h", lh + "px");
+      rightPan().style.setProperty("--panel-h", rh + "px");
+      try {
+        localStorage.setItem("mcma-explorer-panel-h-left", String(lh));
+        localStorage.setItem("mcma-explorer-panel-h-right", String(rh));
+      } catch (e) {}
+    }
+    function nudgeStacked(delta) {
+      var l = leftPan();
+      var total = stackedSize();
+      var cur = parseFloat(l.style.getPropertyValue("--panel-h"));
+      if (!(cur > 0)) cur = l.getBoundingClientRect().height;
+      var max = total - split.offsetHeight - PANEL_H_MIN;
+      var lh = Math.max(PANEL_H_MIN, Math.min(max, cur + delta));
+      setStacked(lh, total - split.offsetHeight - lh);
+    }
+    function resetStacked() {
+      leftPan().style.removeProperty("--panel-h");
+      rightPan().style.removeProperty("--panel-h");
+      try {
+        localStorage.removeItem("mcma-explorer-panel-h-left");
+        localStorage.removeItem("mcma-explorer-panel-h-right");
+      } catch (e) {}
+    }
 
     var dragging = false;
     function startDragging(ev) {
       ev.preventDefault();
       dragging = true;
-      document.body.classList.add("resizing");
+      document.body.classList.add(isStacked() ? "resizing-v" : "resizing");
       try { split.setPointerCapture(ev.pointerId); } catch (e) {}
       document.addEventListener("pointermove", onMove);
       document.addEventListener("pointerup", onUp);
@@ -574,91 +619,122 @@ body.resizing-v { cursor: row-resize; user-select: none; }
     function stopDragging() {
       if (!dragging) return;
       dragging = false;
-      document.body.classList.remove("resizing");
+      document.body.classList.remove("resizing", "resizing-v");
       document.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerup", onUp);
-      try { localStorage.setItem("mcma-explorer-split", exp.style.getPropertyValue("--left-w")); } catch (e) {}
+      if (!isStacked()) {
+        try { localStorage.setItem("mcma-explorer-split", exp.style.getPropertyValue("--left-w")); } catch (e) {}
+      }
     }
     split.addEventListener("pointerdown", startDragging);
     split.addEventListener("pointercancel", stopDragging);
     split.addEventListener("dblclick", function () {
-      exp.style.setProperty("--left-w", "50%");
-      try { localStorage.setItem("mcma-explorer-split", "50"); } catch (e) {}
+      if (isStacked()) {
+        resetStacked();
+      } else {
+        exp.style.setProperty("--left-w", "50%");
+        try { localStorage.setItem("mcma-explorer-split", "50"); } catch (e) {}
+      }
     });
     split.addEventListener("keydown", function (ev) {
-      var delta = ev.key === "ArrowLeft" ? -5 : ev.key === "ArrowRight" ? 5 : 0;
-      if (!delta) return;
-      ev.preventDefault();
-      var cur = parseFloat(exp.style.getPropertyValue("--left-w")) || 50;
-      var pct = Math.max(15, Math.min(85, cur + delta));
-      exp.style.setProperty("--left-w", pct + "%");
-      try { localStorage.setItem("mcma-explorer-split", String(pct)); } catch (e) {}
+      var k = ev.key;
+      if (isStacked()) {
+        var delta = k === "ArrowUp" ? -40 : k === "ArrowDown" ? 40 : 0;
+        if (!delta) return;
+        ev.preventDefault();
+        nudgeStacked(delta);
+      } else {
+        var deltaW = k === "ArrowLeft" ? -5 : k === "ArrowRight" ? 5 : 0;
+        if (!deltaW) return;
+        ev.preventDefault();
+        var cur = parseFloat(exp.style.getPropertyValue("--left-w")) || 50;
+        var pct = Math.max(15, Math.min(85, cur + deltaW));
+        exp.style.setProperty("--left-w", pct + "%");
+        try { localStorage.setItem("mcma-explorer-split", String(pct)); } catch (e) {}
+      }
     });
 
     function onMove(ev) {
       if (!dragging) return;
-      var rect = exp.getBoundingClientRect();
-      var pct = ((ev.clientX - rect.left) / rect.width) * 100;
-      pct = Math.max(15, Math.min(85, pct));
-      exp.style.setProperty("--left-w", pct + "%");
+      if (isStacked()) {
+        var l = leftPan();
+        var total = stackedSize();
+        var max = total - split.offsetHeight - PANEL_H_MIN;
+        var lh = Math.max(PANEL_H_MIN, Math.min(max, ev.clientY - l.getBoundingClientRect().top));
+        setStacked(lh, total - split.offsetHeight - lh);
+      } else {
+        var rect = exp.getBoundingClientRect();
+        var pct = ((ev.clientX - rect.left) / rect.width) * 100;
+        pct = Math.max(15, Math.min(85, pct));
+        exp.style.setProperty("--left-w", pct + "%");
+      }
     }
     function onUp() { stopDragging(); }
   }
 
-  var EXPLORER_H_DEFAULT = 1080; /* 1.5x the original ~720px height */
+  var PANEL_H_MIN = 380, PANEL_H_MAX = 1800;
 
-  function initHeightResizer() {
-    var exp = document.getElementById("explorer");
-    var handle = exp.querySelector(".explorer-resizer");
-    if (!handle) return;
-    var saved = null;
-    try { saved = parseFloat(localStorage.getItem("mcma-explorer-height")); } catch (e) {}
-    if (saved >= 480) exp.style.setProperty("--exh", saved + "px");
+  function initPanelHeightResizers() {
+    [].forEach.call(document.querySelectorAll(".panel"), function (pl) {
+      var handle = pl.querySelector(".panel-resizer");
+      if (!handle) return;
+      var pname = pl.getAttribute("data-panel");
 
-    var dragging = false;
-    var onMove, onUp;
-    handle.addEventListener("pointerdown", function (ev) {
-      ev.preventDefault();
-      dragging = true;
-      document.body.classList.add("resizing-v");
-      try { handle.setPointerCapture(ev.pointerId); } catch (e) {}
-      document.addEventListener("pointermove", onMove);
-      document.addEventListener("pointerup", onUp);
+      var saved = null;
+      try { saved = parseFloat(localStorage.getItem("mcma-explorer-panel-h-" + pname)); } catch (e) {}
+      if (saved >= PANEL_H_MIN) pl.style.setProperty("--panel-h", saved + "px");
+
+      var dragging = false;
+      var onMove, onUp;
+
+      function setH(px) {
+        px = Math.max(PANEL_H_MIN, Math.min(PANEL_H_MAX, px));
+        pl.style.setProperty("--panel-h", px + "px");
+      }
+
+      handle.addEventListener("pointerdown", function (ev) {
+        ev.preventDefault();
+        dragging = true;
+        document.body.classList.add("resizing-v");
+        try { handle.setPointerCapture(ev.pointerId); } catch (e) {}
+        document.addEventListener("pointermove", onMove);
+        document.addEventListener("pointerup", onUp);
+      });
+      handle.addEventListener("pointercancel", function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+      });
+      handle.addEventListener("dblclick", function () {
+        pl.style.removeProperty("--panel-h");
+        try { localStorage.removeItem("mcma-explorer-panel-h-" + pname); } catch (e) {}
+      });
+      handle.addEventListener("keydown", function (ev) {
+        var delta = ev.key === "ArrowUp" ? -40 : ev.key === "ArrowDown" ? 40 : 0;
+        if (!delta) return;
+        ev.preventDefault();
+        var cur = parseFloat(pl.style.getPropertyValue("--panel-h"));
+        if (!(cur > 0)) cur = pl.getBoundingClientRect().height;
+        setH(cur + delta);
+      });
+      onMove = function (ev) {
+        if (!dragging) return;
+        setH(ev.clientY - pl.getBoundingClientRect().top);
+      };
+      onUp = function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+        try {
+          var h = pl.style.getPropertyValue("--panel-h").replace("px", "");
+          if (h) localStorage.setItem("mcma-explorer-panel-h-" + pname, h);
+        } catch (e) {}
+      };
     });
-    handle.addEventListener("pointercancel", function () {
-      if (!dragging) return;
-      dragging = false;
-      document.body.classList.remove("resizing-v");
-      document.removeEventListener("pointermove", onMove);
-      document.removeEventListener("pointerup", onUp);
-    });
-    handle.addEventListener("dblclick", function () {
-      exp.style.setProperty("--exh", EXPLORER_H_DEFAULT + "px");
-      try { localStorage.setItem("mcma-explorer-height", String(EXPLORER_H_DEFAULT)); } catch (e) {}
-    });
-    handle.addEventListener("keydown", function (ev) {
-      var delta = ev.key === "ArrowUp" ? -40 : ev.key === "ArrowDown" ? 40 : 0;
-      if (!delta) return;
-      ev.preventDefault();
-      var cur = parseFloat(exp.style.getPropertyValue("--exh")) || EXPLORER_H_DEFAULT;
-      var h = Math.max(480, Math.min(2400, cur + delta));
-      exp.style.setProperty("--exh", h + "px");
-      try { localStorage.setItem("mcma-explorer-height", String(h)); } catch (e) {}
-    });
-    onMove = function (ev) {
-      if (!dragging) return;
-      var top = exp.getBoundingClientRect().top;
-      var h = Math.max(480, Math.min(2400, ev.clientY - top));
-      exp.style.setProperty("--exh", h + "px");
-    };
-    onUp = function () {
-      if (!dragging) return;
-      dragging = false;
-      document.body.classList.remove("resizing-v");
-      document.removeEventListener("pointermove", onMove);
-      document.removeEventListener("pointerup", onUp);
-      try { localStorage.setItem("mcma-explorer-height", exp.style.getPropertyValue("--exh")); } catch (e) {}
-    };
   }
 
   function initPanelResizers() {
@@ -669,6 +745,8 @@ body.resizing-v { cursor: row-resize; user-select: none; }
       var body = pl.querySelector(".panel-body");
       var head = pl.querySelector(".panel-head");
       var status = pl.querySelector(".status");
+      var preview = pl.querySelector(".preview");
+      var resizer = pl.querySelector(".panel-resizer");
       var pname = pl.getAttribute("data-panel");
 
       try {
@@ -680,7 +758,11 @@ body.resizing-v { cursor: row-resize; user-select: none; }
       var onMove, onUp;
 
       function applyPx(px) {
-        px = Math.max(120, Math.min(pl.clientHeight - 140, px));
+        var previewMin = parseFloat(window.getComputedStyle(preview).minHeight) || 120;
+        var reserved = head.getBoundingClientRect().height + split.offsetHeight +
+                       previewMin + status.getBoundingClientRect().height +
+                       (resizer ? resizer.offsetHeight : 0);
+        px = Math.max(120, Math.min(pl.clientHeight - reserved, px));
         pl.style.setProperty("--body-h", px + "px");
       }
 
@@ -729,7 +811,7 @@ body.resizing-v { cursor: row-resize; user-select: none; }
 
   function init() {
     initSplit();
-    initHeightResizer();
+    initPanelHeightResizers();
     initPanelResizers();
 
     [].forEach.call(document.querySelectorAll(".panel"), function (pl) {
