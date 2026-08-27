@@ -1,0 +1,20 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    title={Surface $z=\sin y$},
+    view={60}{30},
+    xmin=-2, xmax=2,
+    ymin=-6.5, ymax=6.5,
+    zmin=-1.2, zmax=1.2
+]
+\foreach \y in {-6.2832,-5.4978,-4.7124,-3.927,-3.1416,-2.3562,-1.5708,-0.7854,0,0.7854,1.5708,2.3562,3.1416,3.927,4.7124,5.4978,6.2832}{
+    \addplot3[blue, thick, domain=-2:2] (x,\y,{sin(deg(\y))});
+}
+\addplot3[red, very thick, domain=-6.5:6.5, samples=100] (0,x,{sin(deg(x))});
+\end{axis}
+\end{tikzpicture}
+\end{document}

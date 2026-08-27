@@ -1,0 +1,25 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={-55}{22},
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    xmin=-2.4, xmax=2.4,
+    ymin=-2.4, ymax=2.4,
+    zmin=-3, zmax=3,
+    width=9cm, height=8cm,
+    grid=major
+]
+\addplot3[
+    surf, shader=flat, opacity=0.45,
+    domain=0:360, y domain=-3:3,
+    samples=60, samples y=12,
+    blue
+] ({cos(x)}, {2*sin(x)}, {y});
+\addplot3+[domain=0:360, samples=120, thick, blue] ({cos(x)}, {2*sin(x)}, {-3});
+\addplot3+[domain=0:360, samples=120, thick, blue] ({cos(x)}, {2*sin(x)}, {3});
+\end{axis}
+\end{tikzpicture}
+\end{document}
