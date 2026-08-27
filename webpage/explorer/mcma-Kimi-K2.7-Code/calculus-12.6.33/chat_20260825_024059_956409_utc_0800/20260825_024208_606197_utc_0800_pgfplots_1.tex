@@ -1,0 +1,24 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$y$, ylabel=$z$,
+    xmin=-1, xmax=5,
+    ymin=1, ymax=5,
+    axis equal,
+    width=8cm, height=8cm,
+    title={Cross-sections of the ellipsoid},
+    legend pos=outer north east
+]
+\addplot[blue, thick, domain=0:360, samples=200, variable=\t]
+({2*sin(\t)+2}, {cos(\t)+3});
+\addlegendentry{Cross section $x=0$ (ellipse)}
+\addplot[red, thick, domain=0:360, samples=200, variable=\t]
+({2*sin(\t)+2}, {cos(\t)+3});
+\addlegendentry{Cross section $y=2$ (circle)}
+\addplot[only marks, mark=*, black] coordinates {(2,3)};
+\end{axis}
+\end{tikzpicture}
+\end{document}

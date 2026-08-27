@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260825_021441_816679_utc_0800 — Q&amp;A · mcma-Nex-N2-Pro &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../../preview.css">
+<link rel="stylesheet" href="../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260825_021441_816679_utc_0800</h1>
+    <p class="lede">The <code>_qna.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>mcma-Nex-N2-Pro/calculus-12.6.34/chat_20260825_021441_816679_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+Please solve the math problem in the image.
+
+
+
+
+
+
+
+<figure class="refimg"><img class="zimg" src="./20260825_021441_816679_utc_0800_qna/20260825_021441_816679_utc_0800_0.png" alt="Image: 20260825_021441_816679_utc_0800_qna"><figcaption>20260825_021441_816679_utc_0800_0.png</figcaption></figure>
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+Complete the squares in the variables that appear quadratically:
+
+$$
+4y^2-16y=4\bigl((y-2)^2-4\bigr)=4(y-2)^2-16,
+$$
+
+and
+
+$$
+z^2-4z=(z-2)^2-4.
+$$
+
+Substituting into
+
+$$
+4y^2+z^2-x-16y-4z+20=0
+$$
+
+gives
+
+$$
+4(y-2)^2-16+(z-2)^2-4-x+20=0,
+$$
+
+so
+
+$$
+4(y-2)^2+(z-2)^2-x=0.
+$$
+
+Thus the reduced standard form is
+
+$$
+x=4(y-2)^2+(z-2)^2.
+$$
+
+This is an **elliptic paraboloid**. It opens in the positive $x$-direction because $x$ is the sum of two nonnegative squared terms. Its vertex occurs when both squared terms are zero:
+
+$$
+(y,z)=(2,2),\qquad x=0,
+$$
+
+so the vertex is $(0,2,2)$. The axis is the line $y=2,\ z=2$.
+
+For $x=k>0$, the cross-section is the ellipse
+
+$$
+4(y-2)^2+(z-2)^2=k,
+$$
+
+or
+
+$$
+\frac{(y-2)^2}{k/4}+\frac{(z-2)^2}{k}=1.
+$$
+
+The traces in the planes $z=2$ and $y=2$ are parabolas:
+
+$$
+x=4(y-2)^2,\qquad x=(z-2)^2.
+$$
+
+There are no real points with $x<0$.
+
+$$
+\boxed{x=4(y-2)^2+(z-2)^2,\ \text{an elliptic paraboloid with vertex }(0,2,2)\text{ opening in the }+x\text{ direction}}
+$$
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="20260825_021731_632122_utc_0800_pyplot_0.png" alt="pyplot-generated plot."><figcaption>20260825_021731_632122_utc_0800_pyplot_0.png</figcaption></figure>
+
+<figure class="refimg"><img class="zimg" src="./20260825_021441_816679_utc_0800_qna/20260825_021441_816679_utc_0800_1.png" alt="Image: 20260825_021441_816679_utc_0800_qna"><figcaption>20260825_021441_816679_utc_0800_1.png</figcaption></figure>
+
+<figure class="refimg"><img class="zimg" src="20260825_021731_632122_utc_0800_pyplot_1.png" alt="pyplot-generated plot."><figcaption>20260825_021731_632122_utc_0800_pyplot_1.png</figcaption></figure>
+
+<figure class="refimg"><img class="zimg" src="./20260825_021441_816679_utc_0800_qna/20260825_021441_816679_utc_0800_2.png" alt="Image: 20260825_021441_816679_utc_0800_qna"><figcaption>20260825_021441_816679_utc_0800_2.png</figcaption></figure>
+
+
+
+---
+
+[PGFplots / tikz plot.](./20260825_021731_632122_utc_0800_pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm,
+    height=9cm,
+    view={-55}{22},
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    title={$x=4(y-2)^2+(z-2)^2$: elliptic paraboloid},
+    domain=0:4,
+    y domain=0:4,
+    samples=35,
+    samples y=35,
+    colormap/viridis,
+    grid=major,
+    zmin=0, zmax=4,
+    xmin=0, xmax=10,
+    ymin=0, ymax=4,
+]
+\addplot3[surf,shader=interp,opacity=0.85]
+({4*(y-2)^2+(x-2)^2}, y, x);
+\addplot3[only marks, mark=*, mark size=2.2pt, red]
+coordinates {(0,2,2)};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="20260825_021731_632122_utc_0800_pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG"><figcaption>20260825_021731_632122_utc_0800_pgfplots_0.png</figcaption></figure>.)
+
+<figure class="refimg"><img class="zimg" src="./20260825_021441_816679_utc_0800_qna/20260825_021441_816679_utc_0800_3.png" alt="Image: 20260825_021441_816679_utc_0800_qna"><figcaption>20260825_021441_816679_utc_0800_3.png</figcaption></figure>
+
+
+
+[PGFplots / tikz plot.](./20260825_021731_632122_utc_0800_pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm,
+    height=7cm,
+    xlabel=$x$,
+    ylabel=$y$,
+    title={Trace in $z=2$: $x=4(y-2)^2$},
+    domain=0:4,
+    samples=200,
+    grid=major,
+    xmin=0, xmax=16,
+    ymin=0, ymax=4,
+]
+\addplot[blue, very thick] ({4*(x-2)^2}, x);
+\addplot[red, only marks, mark=*, mark size=2.5pt] coordinates {(0,2)};
+\draw[gray, dashed] (axis cs:0,2) -- (axis cs:16,2);
+\node[above right, gray] at (axis cs:0.3,2.05) {$y=2,\ z=2$};
+\node[red, above right] at (axis cs:0.2,2.05) {vertex};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="20260825_021731_632122_utc_0800_pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG"><figcaption>20260825_021731_632122_utc_0800_pgfplots_1.png</figcaption></figure>.)
+
+<figure class="refimg"><img class="zimg" src="./20260825_021441_816679_utc_0800_qna/20260825_021441_816679_utc_0800_4.png" alt="Image: 20260825_021441_816679_utc_0800_qna"><figcaption>20260825_021441_816679_utc_0800_4.png</figcaption></figure>
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>mcma-Nex-N2-Pro/calculus-12.6.34/chat_20260825_021441_816679_utc_0800</code>, experiment log <code>dev-logs-20260824</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>
