@@ -48,8 +48,8 @@
 
 <section id="design">
   <h2>🧪 Design</h2>
-  <p>🗓️ LIU Yucheng ran the experiment from Aug&nbsp;21 to Aug&nbsp;27, 2026, under the supervision of Prof.&nbsp;HU Jishan. 📚 The problems come from Stewart&rsquo;s <em>Calculus</em>, Section&nbsp;12.6, &quot;Cylinders and Quadric Surfaces&quot; &mdash; a topic the supervisor teaches routinely. 📐 Each problem gives one equation in $x$, $y$, and $z$, and asks the solver to identify the surface and to draw it. Since the mathematics is standard textbook material, this page does not repeat it in detail; the technical machinery behind the agent is the part that needs explanation.</p>
-  <p>🎯 The tested subject is the development of VLM-powered Math-Capable Multimodal Agents (MCMA), a project the student worked on from Jul&nbsp;25 to Aug&nbsp;20, before the experiment run. The experiment run of Aug&nbsp;21 to Aug&nbsp;27 evaluates that project.</p>
+  <p>🗓️ LIU Yucheng ran the experiment from Aug&nbsp;21 to Aug&nbsp;27, 2026. 📚 The problems come from <em>Calculus, Early Transcendentals</em>, Section&nbsp;12.6, &quot;Cylinders and Quadric Surfaces.&quot; 📐 Each problem gives one equation in $x$, $y$, and $z$, and asks the solver to identify the surface and to draw it. Since the mathematics is standard textbook material, this page does not repeat it in detail; the technical machinery behind the agent is the part that needs explanation.</p>
+  <p>🎯 The tested subject is the development of VLM-powered Math-Capable Multimodal Agents (MCMA). More specifically, the subject is the MCMA software updates LIU Yucheng worked on from Jul&nbsp;25 to Aug&nbsp;20, before the experiment run. The experiment run of Aug&nbsp;21 to Aug&nbsp;27 evaluates the project.</p>
   <p>🗂️ Three problem groups cover 24 exercises.</p>
   <ul>
     <li>12.6.3 &ndash; 12.6.8 (6 problems)</li>
@@ -68,7 +68,7 @@
   <h2>🧭 Conditions</h2>
   <p>🔄 Two conditions ran side by side.</p>
   <p>🤖 An AI model can be used by MCMA only if it is a vision-language model (VLM) and supports tool-calling.</p>
-  <p>🌐 In this experiment, we selected a set of the latest open-source VLMs that support tool-calling. They come from SiliconFlow, a service in China.</p>
+  <p>🌐 In this experiment, we selected a set of the latest open-source VLMs that support tool-calling. AI service provider SiliconFlow (China) hosts these models.</p>
   <ul>
     <li>🤖 <strong>Bare model:</strong> the language model alone. It reads the problem image and replies with text. It has no tools, so it can reason but cannot compute, plot, or write files.</li>
     <li>🛠️ <strong>MCMA agent:</strong> a multimodal model plus DeepAgents plus four custom tools. It can run Python, draw plots in two formats, and write a final answer file.</li>
