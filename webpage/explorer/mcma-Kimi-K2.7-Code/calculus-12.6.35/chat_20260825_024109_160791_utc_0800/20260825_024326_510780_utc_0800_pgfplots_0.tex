@@ -1,0 +1,25 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={60}{30},
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    xmin=0, xmax=4,
+    ymin=-3, ymax=1,
+    zmin=-1, zmax=3,
+    width=10cm, height=10cm,
+    axis equal,
+    title={Circular cone: $(x-2)^2+(z-1)^2=(y+1)^2$},
+    colormap/viridis,
+]
+\addplot3[surf, shader=interp, domain=0:2, y domain=0:360, samples=40, samples y=60, z buffer=sort]
+    ({2+x*cos(y)}, {-1+x}, {1+x*sin(y)});
+\addplot3[surf, shader=interp, domain=0:2, y domain=0:360, samples=40, samples y=60, z buffer=sort, colormap/plasma]
+    ({2+x*cos(y)}, {-1-x}, {1+x*sin(y)});
+\addplot3[only marks, mark=*, red] coordinates {(2,-1,1)};
+\addplot3[red, dashed, thick, domain=-3:1, samples=2] ({2},{x},{1});
+\end{axis}
+\end{tikzpicture}
+\end{document}

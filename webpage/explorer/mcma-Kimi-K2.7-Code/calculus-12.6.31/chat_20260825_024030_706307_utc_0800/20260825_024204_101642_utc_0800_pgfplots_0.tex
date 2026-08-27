@@ -1,0 +1,26 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    title={$x^2+2y-2z^2=0$ (hyperbolic paraboloid)},
+    view={-60}{20},
+    colormap/viridis,
+    samples=40,
+    domain=-2:2,
+    y domain=-2:2,
+    zmin=-2.5, zmax=2.5,
+    ymin=-2.5, ymax=4.5,
+    grid=major,
+    width=10cm,
+    height=8cm
+]
+\addplot3[surf, shader=interp, opacity=0.8] {sqrt((x^2+2*y)/2)};
+\addplot3[surf, shader=interp, opacity=0.8] {-sqrt((x^2+2*y)/2)};
+\addplot3[red, thick, samples=100, variable=\t, domain=-2:2] (0, \t^2, \t);
+\addplot3[blue, thick, samples=100, variable=\t, domain=-2:2] (\t, -\t^2/2, 0);
+\end{axis}
+\end{tikzpicture}
+\end{document}

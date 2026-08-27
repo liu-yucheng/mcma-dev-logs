@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260825_013836_715000_utc_0800 — Q&amp;A · mcma-Nex-N2-Pro &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../styles.css">
+<link rel="stylesheet" href="../../../../preview.css">
+<link rel="stylesheet" href="../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260825_013836_715000_utc_0800</h1>
+    <p class="lede">The <code>_qna.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>mcma-Nex-N2-Pro/calculus-12.6.30/chat_20260825_013836_715000_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+Please solve the math problem in the image.
+
+
+
+
+
+
+
+<figure class="refimg"><img class="zimg" src="./20260825_013836_715000_utc_0800_qna/20260825_013836_715000_utc_0800_0.png" alt="Image: 20260825_013836_715000_utc_0800_qna"><figcaption>20260825_013836_715000_utc_0800_0.png</figcaption></figure>
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+Given
+$$
+4x^2-y+2z^2=0.
+$$
+
+Move the linear term to the other side:
+
+$$
+y=4x^2+2z^2.
+$$
+
+This is already in standard form for an elliptic paraboloid. The standard form is
+
+$$
+y=ax^2+bz^2,\qquad a>0,\ b>0.
+$$
+
+So the surface is an **elliptic paraboloid opening in the positive $y$-direction**, with vertex at the origin.
+
+Useful traces:
+
+- In the plane $y=0$: $4x^2+2z^2=0$, so only the point $(0,0,0)$.
+- In the plane $y=c>0$:
+  $$
+  4x^2+2z^2=c,
+  $$
+  an ellipse.
+- In the plane $z=0$:
+  $$
+  y=4x^2,
+  $$
+  a parabola opening in the positive $y$-direction.
+- In the plane $x=0$:
+  $$
+  y=2z^2,
+  $$
+  also a parabola opening in the positive $y$-direction.
+
+Therefore, the surface is an elliptic paraboloid opening upward along the $y$-axis.
+
+\[
+\boxed{\text{Elliptic paraboloid, } y=4x^2+2z^2}
+\]
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="20260825_013921_712719_utc_0800_pyplot_0.png" alt="pyplot-generated plot."><figcaption>20260825_013921_712719_utc_0800_pyplot_0.png</figcaption></figure>
+
+<figure class="refimg"><img class="zimg" src="./20260825_013836_715000_utc_0800_qna/20260825_013836_715000_utc_0800_1.png" alt="Image: 20260825_013836_715000_utc_0800_qna"><figcaption>20260825_013836_715000_utc_0800_1.png</figcaption></figure>
+
+
+
+---
+
+[PGFplots / tikz plot.](./20260825_013921_712719_utc_0800_pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[tikz,border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$x$}, ylabel={$z$}, zlabel={$y$},
+    view={45}{25},
+    domain=-1:1, y domain=-1:1,
+    samples=35, samples y=35,
+    xmin=-1, xmax=1, ymin=-1, ymax=1, zmin=0, zmax=6,
+    colormap/viridis,
+    colorbar,
+    grid=major
+]
+\addplot3[surf, shader=interp, opacity=0.85] {4*x^2 + 2*y^2};
+\addplot3[red, very thick, domain=0:360, samples=120]
+    ({sqrt(1/4)*cos(x)}, {sqrt(1/2)*sin(x)}, {1});
+\addplot3[black, very thick, domain=0:360, samples=120]
+    ({sqrt(2/4)*cos(x)}, {sqrt(2/2)*sin(x)}, {2});
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="20260825_013921_712719_utc_0800_pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG"><figcaption>20260825_013921_712719_utc_0800_pgfplots_0.png</figcaption></figure>.)
+
+<figure class="refimg"><img class="zimg" src="./20260825_013836_715000_utc_0800_qna/20260825_013836_715000_utc_0800_2.png" alt="Image: 20260825_013836_715000_utc_0800_qna"><figcaption>20260825_013836_715000_utc_0800_2.png</figcaption></figure>
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>mcma-Nex-N2-Pro/calculus-12.6.30/chat_20260825_013836_715000_utc_0800</code>, experiment log <code>dev-logs-20260824</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

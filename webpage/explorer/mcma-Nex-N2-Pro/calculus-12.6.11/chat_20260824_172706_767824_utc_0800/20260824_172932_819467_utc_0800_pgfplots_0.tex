@@ -1,0 +1,36 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  width=11cm, height=9cm,
+  xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+  view={-55}{20},
+  xmin=0, xmax=6, ymin=-2.3, ymax=2.3, zmin=-1.3, zmax=1.3,
+  grid=major,
+  colormap/viridis,
+  legend style={at={(0.02,0.98)}, anchor=north west, font=\scriptsize},
+  title={Traces of $x=y^2+4z^2$},
+]
+\addplot3[
+  surf,
+  shader=interp,
+  domain=0:5,
+  y domain=0:360,
+  samples=35,
+  samples y=45,
+  opacity=0.82,
+] ({x},{sqrt(x)*cos(y)},{0.5*sqrt(x)*sin(y)});
+\addlegendentry{surface}
+\addplot3[red, thick, domain=-2.2:2.2, samples=120] ({x^2},{x},{0});
+\addlegendentry{$z=0:\ x=y^2$}
+\addplot3[blue, thick, domain=-1.5:1.5, samples=120] ({4*x^2},{0},{x});
+\addlegendentry{$y=0:\ x=4z^2$}
+\addplot3[orange, thick, dashed, domain=0:360, samples=150] ({1},{sqrt(1)*cos(x)},{0.5*sqrt(1)*sin(x)});
+\addlegendentry{$x=1$ ellipse}
+\addplot3[purple, thick, dashed, domain=0:360, samples=150] ({2},{sqrt(2)*cos(x)},{0.5*sqrt(2)*sin(x)});
+\addlegendentry{$x=2$ ellipse}
+\end{axis}
+\end{tikzpicture}
+\end{document}
