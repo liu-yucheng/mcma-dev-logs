@@ -1,0 +1,41 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=9cm,
+    view={-55}{25},
+    xlabel={$x$},
+    ylabel={$y$},
+    zlabel={$z$},
+    title={$36x^2+y^2+36z^2=36$ with traces},
+    xmin=-1.2, xmax=1.2,
+    ymin=-6.2, ymax=6.2,
+    zmin=-1.2, zmax=1.2,
+    grid=major,
+    legend style={at={(0.03,0.97)}, anchor=north west}
+]
+\addplot3[
+    surf,
+    shader=interp,
+    opacity=0.55,
+    colormap/viridis,
+    domain=0:360,
+    y domain=0:180,
+    samples=35,
+    samples y=20
+]
+({cos(x)*sin(y)}, {6*sin(x)*sin(y)}, {cos(y)});
+\addplot3[domain=0:360, samples=120, red, ultra thick]
+({cos(x)}, {6*sin(x)}, {0});
+\addlegendentry{$z=0$}
+\addplot3[domain=0:360, samples=120, green!70!black, ultra thick]
+({0}, {6*sin(x)}, {cos(x)});
+\addlegendentry{$x=0$}
+\addplot3[domain=0:360, samples=120, blue, ultra thick]
+({cos(x)}, {0}, {sin(x)});
+\addlegendentry{$y=0$}
+\end{axis}
+\end{tikzpicture}
+\end{document}

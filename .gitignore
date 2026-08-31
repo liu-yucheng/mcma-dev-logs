@@ -2,6 +2,7 @@
 **/.*
 !**/.git*
 !.env.example
+!.raw_data
 
 # Project specific ignored files
 **/.vscode/

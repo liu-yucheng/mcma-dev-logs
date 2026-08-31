@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Why the MCMA experiment was run and how the agents solved 24 surface-sketching problems. The Agents chapter explains the agent and its tools for a non-technical reader.">
+<title>MCMA &mdash; Experiment</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../lightbox.css">
+<style>
+.stat.contrast-red { background: #fdf1ee; border-color: #ecb7a6; }
+.stat.contrast-red .num { color: #b23a1c; }
+.stat.contrast-red .lbl { color: #8a4a38; }
+.stat.contrast-green { background: #eef8f1; border-color: #aed8bd; }
+.stat.contrast-green .num, .stat.contrast-green .lbl { color: #2f6f4f; }
+.timeline { margin: 18px 0; }
+.tl-item { display: flex; gap: 14px; align-items: flex-start; padding: 10px 0; border-left: 3px solid var(--accent); margin-left: 6px; padding-left: 16px; }
+.tl-item strong { display: block; }
+.tl-sub { margin: 2px 0 0; font-size: .9rem; color: var(--muted); }
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../lightbox.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>Experiment</h1>
+    <p class="lede">Two conditions drew the same 24 surfaces. The bare model drew none. The MCMA agents drew all of them. The <a href="agents.html">Agents</a> chapter explains what an agent is and why the tools matter.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="agents.html">Agents</a>
+    <a href="experiment.html" aria-current="page">Experiment</a>
+    <a href="briefing.html">Results Briefing</a>
+    <a href="explorer.html">Results Explorer</a>
+    <a href="demo-video.html">Demo Video</a>
+    <a href="plans.html">Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="design">
+  <h2>🧪 Design</h2>
+  <p>🗓️ LIU Yucheng ran the experiment from Aug&nbsp;21 to Aug&nbsp;27, 2026. 📚 The problems come from <em>Calculus, Early Transcendentals</em>, Section&nbsp;12.6, &quot;Cylinders and Quadric Surfaces.&quot; 📐 Each problem gives one equation in $x$, $y$, and $z$, and asks the solver to identify the surface and to draw it. Since the mathematics is standard textbook material, this page does not repeat it in detail; the technical machinery behind the agent is the part that needs explanation.</p>
+  <p>🎯 The tested subject is the development of VLM-powered Math-Capable Multimodal Agents (MCMA). More specifically, the subject is the MCMA software updates LIU Yucheng worked on from Jul&nbsp;25 to Aug&nbsp;20, before the experiment run. The experiment run of Aug&nbsp;21 to Aug&nbsp;27 evaluates the project.</p>
+  <p>🗂️ Three problem groups cover 24 exercises.</p>
+  <ul>
+    <li>12.6.3 &ndash; 12.6.8 (6 problems)</li>
+    <li>12.6.11 &ndash; 12.6.20 (10 problems)</li>
+    <li>12.6.29 &ndash; 12.6.36 (8 problems)</li>
+  </ul>
+  <h3>🗓️ The experiment timeline</h3>
+  <div class="timeline">
+    <div class="tl-item"><div><strong>Jul&nbsp;25 &ndash; Aug&nbsp;20</strong><div class="tl-sub">📝 Project development. The MCMA agent and its four tools were built.</div></div></div>
+    <div class="tl-item"><div><strong>Aug&nbsp;21 &ndash; Aug&nbsp;27</strong><div class="tl-sub">🧪 The experiment run. Two conditions drew the same 24 surfaces.</div></div></div>
+  </div>
+  <p>📸 A typical example is 12.6.3, with the equation $x^2 + z^2 = 1$: a circular cylinder about the $y$-axis. The printed question arrives as an image, not as text. ✏️ The answer must include a drawing, not only a sentence. This one requirement &mdash; <em>produce a picture</em> &mdash; is the whole point of the experiment.</p>
+</section>
+
+<section id="conditions">
+  <h2>🧭 Conditions</h2>
+  <p>🔄 Two conditions ran side by side.</p>
+  <p>🤖 An AI model can be used by MCMA only if it is a vision-language model (VLM) and supports tool-calling.</p>
+  <p>🌐 In this experiment, we selected a set of the latest open-source VLMs that support tool-calling. AI service provider SiliconFlow (China) hosts these models.</p>
+  <ul>
+    <li>🤖 <strong>Bare model:</strong> the language model alone. It reads the problem image and replies with text. It has no tools, so it can reason but cannot compute, plot, or write files.</li>
+    <li>🛠️ <strong>MCMA agent:</strong> a multimodal model plus DeepAgents plus four custom tools. It can run Python, draw plots in two formats, and write a final answer file.</li>
+  </ul>
+  <table>
+    <thead>
+      <tr><th>Setup</th><th>Model</th><th>Tools</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Bare model</td><td>Qwen3.5-397B-A17B</td><td>None</td></tr>
+      <tr><td>MCMA</td><td>Qwen3.5-397B-A17B</td><td>DeepAgents + 4 custom tools</td></tr>
+      <tr><td>MCMA</td><td>Kimi-K2.7-Code</td><td>DeepAgents + 4 custom tools</td></tr>
+      <tr><td>MCMA</td><td>Nex-N2-Pro</td><td>DeepAgents + 4 custom tools</td></tr>
+      <tr><td>MCMA</td><td>Qwen3.6-27B</td><td>DeepAgents + 4 custom tools</td></tr>
+    </tbody>
+  </table>
+  <p>The bare model and the first MCMA row share the same model, Qwen3.5-397B-A17B. Only the tool layer differs. This pair is the controlled comparison: one model, with and without tools. The other rows show the same agent layer on four models of different sizes and makers, all of them open-sourced.</p>
+
+  <h3>💪 What each condition can do</h3>
+  <table>
+    <thead><tr><th>Capability</th><th>Bare model</th><th>MCMA agent</th></tr></thead>
+    <tbody>
+      <tr><td>👁️ Read the problem image</td><td><span class="badge good">✅ Yes</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>🧠 Reason about the equation</td><td><span class="badge good">✅ Yes</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>🧮 Run calculations (numpy &amp; sympy)</td><td><span class="badge bad">❌ No</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>📈 Draw plots (pyplot, PGFplots)</td><td><span class="badge bad">❌ No</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>📄 Write the final result file</td><td><span class="badge bad">❌ No</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>🖼️ Sketch a surface picture</td><td><span class="badge bad">❌ No</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="baseline">
+  <h2>❌ Baseline&rsquo;s Failure</h2>
+  <p>📉 The bare model failed every problem. Its final output for 12.6.3 was:</p>
+  <div class="boxed-note">$\boxed{\text{No mathematical results.}}$</div>
+  <p>The failure was 🧩 structural, not intellectual. The model reasoned about the surface correctly in many runs, but it had no way to emit a picture. A "sketch the surface" task requires a plot, and a plot requires a plotting tool. 🔇 Words alone cannot satisfy the exercise. This contrast is the crux of the experiment: capability came from the tools, not from extra math knowledge.</p>
+  <p>Bare success: <strong>0 of 24 problems (0%)</strong>. <span class="badge bad">❌ Failed 24 / 24</span></p>
+  <div class="stat-grid">
+    <div class="stat contrast-red"><div class="num">0 / 24</div><div class="lbl">❌ Problems solved (0%)</div></div>
+    <div class="stat contrast-red"><div class="num">24 / 24</div><div class="lbl">❌ Problems failed</div></div>
+    <div class="stat contrast-red"><div class="num">0 / 24</div><div class="lbl">❌ Problems solved on the first attempt</div></div>
+  </div>
+</section>
+
+<section id="success">
+  <h2>✅ Agents' Success</h2>
+  <p>🏆 Every MCMA agent solved every problem. Each agent identified the surface, drew a 3D plot in both formats, drew a 2D cross-section in both formats, and wrote a valid boxed answer. The tools carried out every calculation and every drawing; the model made every decision.</p>
+  <div class="stat-grid">
+    <div class="stat contrast-green"><div class="num">4 / 4</div><div class="lbl">✅ MCMA agents solved 24 of 24 problems (100%)</div></div>
+    <div class="stat contrast-green"><div class="num">96 / 96</div><div class="lbl">✅ Problems solved across all MCMA agents</div></div>
+    <div class="stat contrast-green"><div class="num">82 / 96</div><div class="lbl">✅ Problems solved on the first attempt (85%)</div></div>
+    <div class="stat contrast-green"><div class="num">1.21</div><div class="lbl">🔁 Average attempts per MCMA problem</div></div>
+  </div>
+  <p>The success was structural, just as the failure was. The agents had tools and they used them. 🧮 numpy and sympy verified every calculation; 🖼️ pyplot and PGFplots drew every plot; 📄 the results tool wrote every answer. The same model that failed without tools succeeded with tools. This is the mirror image of the baseline result.</p>
+  <p>🔁 All 20 retries came from infrastructure, not from mathematics. ⏳ 15 retries came from API rate limits; 📦 5 retries came from an output block that did not parse. ✅ None came from a wrong mathematical result.</p>
+</section>
+
+
+
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+});
+</script>
+
+</body>
+</html>

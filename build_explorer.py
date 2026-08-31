@@ -13,6 +13,7 @@ webpage/explorer/ preserving the folder tree structure, and finally
 injects the resulting tree into webpage/explorer.html so the explorer
 can render it without any runtime directory listing.
 """
+import hashlib
 import json
 import os
 import re
@@ -250,6 +251,51 @@ def copy_file(src: Path, rel: str) -> None:
     shutil.copy2(src, dst)
 
 
+def dedupe_qna_images(chat_dst: Path) -> None:
+    """Remove every non-`*_qna/` image from a generated chat dir.
+
+    Each chat record keeps its transcript images only inside the
+    `*_qna/` subfolder.  The rendered plot copies (`*_pyplot_*.png`,
+    `*_pgfplots_*.png`) and any other image files at the chat root are
+    duplicates of those transcript images and get deleted.  Their
+    `<figure>` blocks in qna.html are dropped too, since the surviving
+    `*_qna/` figure already shows the same content.
+    """
+    qna_dirs = [p for p in chat_dst.iterdir() if p.is_dir() and p.name.endswith("_qna")]
+    root_pngs = sorted(chat_dst.glob("*.png"))
+    if not root_pngs:
+        return
+
+    html = chat_dst / "qna.html"
+    if html.is_file():
+        txt = html.read_text(encoding="utf-8")
+        fig_re = re.compile(r'<figure class="refimg">.*?</figure>', re.S)
+        fig_blocks = list(fig_re.finditer(txt))
+
+        edits = []
+        for m in fig_blocks:
+            img = re.search(r'<img[^>]*\bsrc="([^"]+)"', m.group(0))
+            if not img:
+                continue
+            src = img.group(1).strip().replace("\\", "/").lstrip("./")
+            heads = src.split("/", 1)
+            in_qna = "/" in src and any(hs == qd.name for hs in [heads[0]] for qd in qna_dirs)
+            if in_qna:
+                continue
+            s, e = m.span()
+            if txt[e:e + 3] == ". )" or txt[e:e + 2] == ".)":
+                trailing = 2 if txt[e:e + 2] == ".)" else 3
+            else:
+                trailing = 0
+            edits.append((s, e + trailing, ""))
+        for s, e, repl in sorted(edits, reverse=True):
+            txt = txt[:s] + repl + txt[e:]
+        html.write_text(txt, encoding="utf-8")
+
+    for f in root_pngs:
+        f.unlink()
+
+
 # --------------------------------------------------------------------------
 # leaf page generators
 # --------------------------------------------------------------------------
@@ -386,6 +432,9 @@ def gen_qna(model: str, problem: str, chat_dir: Path) -> None:
 """
     (DST / rel).parent.mkdir(parents=True, exist_ok=True)
     (DST / rel).write_text(page_skeleton(ts + " — Q&amp;A · " + model, base, body), encoding="utf-8")
+
+    # drop duplicate / non-`*_qna/` images copied into the chat dir
+    dedupe_qna_images(DST / model / problem / chat_dir.name)
 
     # shortcut leaf at <model>/<problem>/qna_<timestamp>.html so the transcript
     # is reachable by the shorter path instead of <chat>/qna.html
