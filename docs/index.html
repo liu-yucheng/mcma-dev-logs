@@ -3,232 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Browse each dev log by date in a single-pane Windows 11 style explorer. Shortcuts named dev-logs-&lt;date&gt;-index.html jump to the index of each dev log.">
+<meta name="description" content="Browse each dev log by date in a 1-pane style explorer. Shortcuts named dev-logs-&lt;date&gt;-index.html jump to the index of each dev log.">
 <title>dev-logs &mdash; Explorer</title>
-<style>
-:root {
-  --ink: #1c2128;
-  --muted: #59626f;
-  --accent: #0f52b0;
-  --accent-2: #2f446f;
-  --line: #e2e6ec;
-  --bg: #ffffff;
-  --bg-soft: #f6f8fa;
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  color: var(--ink);
-  background: var(--bg);
-  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.6;
-  font-size: 17px;
-}
-.container { width: 95%; max-width: none; margin: 0 auto; padding: 0 20px; }
-header.site {
-  background: linear-gradient(135deg, #0b2954 0%, #123d7a 60%, #0f3263 100%);
-  color: #fff;
-  padding: 40px 0 34px;
-}
-header.site .kicker {
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  font-size: .8rem;
-  color: #9ec0f0;
-}
-header.site h1 { font-size: 2rem; line-height: 1.15; margin: 10px 0 14px; }
-header.site p.lede {
-  font-size: 1.06rem;
-  max-width: 760px;
-  color: #d4e3f7;
-  margin: 0;
-}
-main { padding: 28px 0; }
-footer.site {
-  background: #0a1834;
-  color: #a9b9da;
-  margin-top: 60px;
-  padding: 30px 0;
-  font-size: .9rem;
-}
-footer.site a { color: #d5e0f7; }
-
-.explorer {
-  display: flex;
-  flex-direction: column;
-  font-weight: 300;
-}
-.panel {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  height: var(--panel-h, 1000px);
-  border: 1px solid #cfd5dd;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(24, 32, 42, 0.08);
-}
-.panel-head {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 8px;
-  border-bottom: 1px solid #dfe4ea;
-  background: #f5f6f8;
-  flex: 0 0 auto;
-  flex-wrap: wrap;
-}
-.navbtns {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  padding-right: 8px;
-  border-right: 1px solid #dfe4ea;
-}
-.addrbar {
-  flex: 1 1 220px;
-  min-width: 120px;
-  display: flex;
-  align-items: center;
-  margin-left: 4px;
-}
-.addrbar .path {
-  flex: 1;
-  min-width: 0;
-  font-family: Consolas, "Courier New", monospace;
-  font-size: .8rem;
-  color: var(--ink);
-  background: #fff;
-  border: 1px solid #d4d9e0;
-  border-radius: 6px;
-  padding: 4px 10px;
-  box-shadow: inset 0 1px 2px rgba(24, 32, 42, 0.05);
-}
-.addrbar .path:focus {
-  border-color: var(--accent);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(15, 98, 176, 0.18);
-}
-.btn {
-  font-size: .78rem;
-  padding: 5px 9px;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  background: transparent;
-  color: var(--ink);
-  cursor: pointer;
-  line-height: 1;
-  white-space: nowrap;
-}
-.btn:hover { background: #e9edf2; border-color: #d5dbe3; }
-.btn:active { background: #dfe4eb; border-color: #c6cdd6; }
-.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.btn:disabled { opacity: .45; cursor: default; background: transparent; border-color: transparent; }
-.btn.icon { font-size: .95rem; padding: 5px 8px; min-width: 30px; text-align: center; }
-
-.panel-body { flex: 0 0 var(--body-h, calc(100% - 600px)); min-height: 120px; display: flex; }
-.files-col { flex: 1 1 auto; min-width: 0; overflow: auto; padding: 6px 4px; background: #fff; }
-
-.h-splitter {
-  flex: 0 0 7px;
-  border-top: 1px solid #d0d5dd;
-  border-bottom: 1px solid #d0d5dd;
-  background: #e2e6ec;
-  cursor: row-resize;
-  touch-action: none;
-}
-.h-splitter:hover { background: #c8d0da; }
-.preview {
-  border-top: 1px solid #dfe4ea;
-  flex: 1 1 0%;
-  min-height: 120px;
-  background: #fff;
-}
-.preview iframe { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
-.status {
-  border-top: 1px solid #dfe4ea;
-  padding: 4px 10px;
-  font-size: .78rem;
-  color: var(--muted);
-  font-family: Consolas, "Courier New", monospace;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background: #f5f6f8;
-  flex: 0 0 auto;
-}
-.panel-resizer {
-  flex: 0 0 10px;
-  border-top: 1px solid #d0d5dd;
-  background: #e6eaef;
-  cursor: row-resize;
-  touch-action: none;
-  user-select: none;
-}
-.panel-resizer:hover { background: #ccd4de; }
-body.resizing-v { cursor: row-resize; user-select: none; }
-
-.files-title {
-  font-size: .74rem;
-  font-weight: 500;
-  color: var(--muted);
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  padding: 3px 4px;
-  border-bottom: 1px solid #e6eaef;
-  margin-bottom: 6px;
-}
-.f-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 6px;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.f-row:hover { background: #f0f3f7; }
-.f-row.selected { background: #e3f0fc; border-color: #b9d8f1; }
-.f-row.dir { font-weight: 500; }
-.f-row.virtual .f-name { color: var(--muted); }
-.f-name { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-.chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 5px;
-  font-size: .66rem;
-  font-weight: 600;
-  color: #fff;
-  flex: 0 0 auto;
-}
-.chip-d { background: #5b6b7e; }
-.chip-index { background: #0f52b0; }
-.chip-file { background: #0f766e; }
-.chip-log { background: #8e44ad; }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: .95rem;
-  margin: 18px 0;
-}
-th, td { border-bottom: 1px solid var(--line); padding: 10px 10px; text-align: left; }
-th { background: var(--bg-soft); }
-.empty-hint { color: var(--muted); font-size: .84rem; padding: 10px 6px; }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-explorer">
 
 <header class="site">
   <div class="container">
     <div class="kicker">dev-logs index</div>
     <h1>Dev Log Explorer</h1>
-    <p class="lede">Browse each dev log by date in a single-pane Windows 11 style explorer. Shortcuts named <code>dev-logs-&lt;date&gt;-index.html</code> open the index of each log; a single click opens a folder or a file.</p>
+    <p class="lede">Browse each dev log by date in a 1-pane file explorer. Shortcuts named <code>dev-logs-&lt;date&gt;-index.html</code> open the index of each log; a single click opens a folder or a file.</p>
   </div>
 </header>
 
@@ -249,7 +34,7 @@ th { background: var(--bg-soft); }
 </section>
 
 <section id="explorer">
-  <h2>Single-pane explorer</h2>
+  <h2>1-pane explorer</h2>
   <div class="explorer" id="explorer">
     <div class="panel">
       <div class="panel-head">
@@ -276,7 +61,7 @@ th { background: var(--bg-soft); }
 
 <section id="use">
   <h2>How to use the explorer</h2>
-  <p>The pane is styled like a Windows&nbsp;11 File Explorer window. The toolbar on top offers navigation buttons (back, forward, up, home); the address bar shows the current location with <code>/</code> as the separator and is editable &mdash; type a path such as <code>dev-logs-20260824</code> and press <code>Enter</code> to jump straight to it. The main view lists the subdirectories and files of the current folder, with <code>.</code> (current folder) and <code>..</code> (parent folder) at the top. Single-click a directory to open it; single-click a shortcut named <code>dev-logs-&lt;date&gt;-index.html</code> (or another file) to view it in the lower half; double-click it to open the file in a new browser window.</p>
+  <p>The pane is styled like a file explorer window. The toolbar on top offers navigation buttons (back, forward, up, home); the address bar shows the current location with <code>/</code> as the separator and is editable &mdash; type a path such as <code>dev-logs-20260824</code> and press <code>Enter</code> to jump straight to it. The main view lists the subdirectories and files of the current folder, with <code>.</code> (current folder) and <code>..</code> (parent folder) at the top. Single-click a directory to open it; single-click a shortcut named <code>dev-logs-&lt;date&gt;-index.html</code> (or another file) to view it in the lower half; double-click it to open the file in a new browser window.</p>
   <p class="small">Each shortcut mirrors <code>docs/dev-logs-&lt;date&gt;/index.html</code>. Add a new dev log by extending <code>RESULTS_TREE</code> below with a <code>dev-logs-&lt;date&gt;</code> folder and its <code>dev-logs-&lt;date&gt;-index.html</code> shortcut.</p>
 </section>
 </main>
