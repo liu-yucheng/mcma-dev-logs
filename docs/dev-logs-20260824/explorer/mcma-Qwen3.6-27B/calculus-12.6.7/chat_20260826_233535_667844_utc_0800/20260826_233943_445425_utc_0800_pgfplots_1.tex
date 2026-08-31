@@ -1,0 +1,20 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$x$},
+    ylabel={$y$},
+    title={$xy = 1$},
+    axis lines=center,
+    domain=0.2:4,
+    samples=50,
+    width=8cm,
+    height=8cm
+]
+\addplot[blue, thick] {1/x};
+\addplot[red, thick, domain=-4:-0.2] {1/x};
+\end{axis}
+\end{tikzpicture}
+\end{document}

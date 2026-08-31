@@ -1,0 +1,11 @@
+{
+    "attempt_count": 2,
+    "reattempt_reasons": [
+        "Model produced invalid output.",
+        null
+    ],
+    "attempt_worked_as_expected": [
+        false,
+        true
+    ]
+}

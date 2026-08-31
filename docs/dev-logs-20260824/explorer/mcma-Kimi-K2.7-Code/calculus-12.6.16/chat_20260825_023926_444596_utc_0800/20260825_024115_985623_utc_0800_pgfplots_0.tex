@@ -1,0 +1,26 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=10cm,
+    view={-60}{25},
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    zmin=-40, zmax=5,
+    colormap/viridis,
+    title={$4x^2+9y^2+z=0$},
+    samples=40,
+    domain=-2:2,
+    y domain=-2:2,
+]
+\addplot3[surf, opacity=0.85, shader=interp] {-4*x^2-9*y^2};
+\addplot3[red, thick, domain=0:360, samples=100, variable=\t]
+    ({sqrt(5)/2*cos(\t)}, {sqrt(5)/3*sin(\t)}, -5);
+\addplot3[orange, thick, domain=-2:2, samples=100]
+    (0, x, -9*x^2);
+\addplot3[magenta, thick, domain=-2:2, samples=100]
+    (x, 0, -4*x^2);
+\end{axis}
+\end{tikzpicture}
+\end{document}
