@@ -1,0 +1,11 @@
+{
+    "attempt_count": 2,
+    "reattempt_reasons": [
+        "AI service provider \"tokens per minute\" rate limit reached.",
+        null
+    ],
+    "attempt_worked_as_expected": [
+        false,
+        true
+    ]
+}

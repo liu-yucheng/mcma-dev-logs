@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Results of the MCMA calculus benchmark: per-model success rates, attempt counts, and retry causes, presented as charts and tables.">
+<title>MCMA &mdash; Results Briefing</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+td.num.good-num { color: #2f6f4f; font-weight: 600; }
+td.num.fail-num { color: #b23a1c; font-weight: 600; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>Results Briefing</h1>
+    <p class="lede">Every MCMA configuration solved all 24 problems. The bare model solved none. The charts below show where the difference came from.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="agents.html">Agents</a>
+    <a href="experiment.html">Experiment</a>
+    <a href="briefing.html" aria-current="page">Results Briefing</a>
+    <a href="explorer.html">Results Explorer</a>
+    <a href="demo-video.html">Demo Video</a>
+    <a href="plans.html">Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="table">
+  <h2>Per-model results</h2>
+  <p>The data below comes from the remarks records in <code>agent-attempts</code>. Each record stores attempt count, success flags, and retry reasons for one problem and one model.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Configuration</th>
+        <th class="num">Problems</th>
+        <th class="num">Solved</th>
+        <th class="num">First-attempt</th>
+        <th class="num">Total attempts</th>
+        <th class="num">Avg attempts / problem</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>(Bare-Model+)Qwen3.5-397B-A17B</td><td class="num">24</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num">24</td><td class="num">1.00</td></tr>
+      <tr class="ok"><td>(MCMA+)Kimi-K2.7-Code</td><td class="num">24</td><td class="num good-num">24</td><td class="num good-num">24</td><td class="num">24</td><td class="num">1.00</td></tr>
+      <tr class="ok"><td>(MCMA+)Qwen3.5-397B-A17B</td><td class="num">24</td><td class="num good-num">24</td><td class="num good-num">20</td><td class="num">28</td><td class="num">1.17</td></tr>
+      <tr class="ok"><td>(MCMA+)Qwen3.6-27B</td><td class="num">24</td><td class="num good-num">24</td><td class="num good-num">23</td><td class="num">25</td><td class="num">1.04</td></tr>
+      <tr class="ok"><td>(MCMA+)Nex-N2-Pro</td><td class="num">24</td><td class="num good-num">24</td><td class="num good-num">15</td><td class="num">39</td><td class="num">1.62</td></tr>
+    </tbody>
+  </table>
+  <p class="small">First-attempt means the agent solved the problem with one attempt. Total attempts counts every attempt, including retries.</p>
+</section>
+
+<section id="charts">
+  <h2>Charts</h2>
+
+  <div class="chart-grid">
+    <div class="chart-box"><canvas id="chartSuccess" height="220"></canvas></div>
+    <div class="chart-box"><canvas id="chartFirstTry" height="220"></canvas></div>
+    <div class="chart-box"><canvas id="chartAttempts" height="230"></canvas></div>
+    <div class="chart-box"><canvas id="chartRetries" height="230"></canvas></div>
+  </div>
+
+  <h3>The numbers behind the charts</h3>
+  <table>
+    <thead><tr><th>Configuration</th><th class="num">1 attempt</th><th class="num">2 attempts</th><th class="num">3 attempts</th><th class="num">Solved</th></tr></thead>
+    <tbody>
+      <tr><td>(Bare-Model+)Qwen3.5-397B-A17B</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num fail-num">0 / 24</td></tr>
+      <tr class="ok"><td>(MCMA+)Kimi-K2.7-Code</td><td class="num good-num">24</td><td class="num">0</td><td class="num">0</td><td class="num good-num">24 / 24</td></tr>
+      <tr class="ok"><td>(MCMA+)Qwen3.5-397B-A17B</td><td class="num good-num">20</td><td class="num">4</td><td class="num">0</td><td class="num good-num">24 / 24</td></tr>
+      <tr class="ok"><td>(MCMA+)Qwen3.6-27B</td><td class="num good-num">23</td><td class="num">1</td><td class="num">0</td><td class="num good-num">24 / 24</td></tr>
+      <tr class="ok"><td>(MCMA+)Nex-N2-Pro</td><td class="num good-num">15</td><td class="num">3</td><td class="num">6</td><td class="num good-num">24 / 24</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="causes">
+  <h2>Retry causes</h2>
+  <p>MCMA agents retried 20 of 116 attempts. No retry came from a wrong mathematical result. The retry causes are:</p>
+  <ol>
+    <li><strong>Rate limit.</strong> The API service reached the &ldquo;tokens per minute&rdquo; cap. The agent waited, and then it retried. The later attempt succeeded.</li>
+    <li><strong>Invalid output format.</strong> The model produced a LaTeX or result block that did not parse. The agent rewrote the block. The later attempt succeeded.</li>
+  </ol>
+  <p>We call an attempt &ldquo;Agents worked as expected&rdquo; when the model produces multimodal contents, that is text and image, as the final solution of a problem. We use this term regardless of the mathematical correctness of the output. We need to manually compare model output against canonical solutions to check mathematical correctness.</p>
+
+  <h3>Parameter size does not affect tool-calling capability</h3>
+  <p>The parameter size of a model appears to have no correlation with its ability to produce multimodal output with the agent tools. This holds regardless of the mathematical correctness of the output.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<script>
+const SUCCESS = {
+  labels: ["(Bare-Model+)\nQwen3.5-397B-A17B", "(MCMA+)\nKimi-K2.7-Code", "(MCMA+)\nQwen3.5-397B-A17B", "(MCMA+)\nQwen3.6-27B", "(MCMA+)\nNex-N2-Pro"],
+  data: [0, 100, 100, 100, 100]
+};
+
+new Chart(document.getElementById("chartSuccess"), {
+  type: "bar",
+  data: {
+    labels: SUCCESS.labels,
+    datasets: [{ label: "Problems solved (%)", data: SUCCESS.data, backgroundColor: ["#b23a1c", "#2f446f", "#2f446f", "#2f446f", "#2f446f"], borderRadius: 6 }]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Success rate by configuration" }, legend: { display: false } },
+    scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: "Percent of problems solved" } } }
+  }
+});
+
+const ATTEMPTS = {
+  labels: ["(Bare-Model+)\nQwen3.5-397B-A17B", "(MCMA+)\nKimi-K2.7-Code", "(MCMA+)\nQwen3.5-397B-A17B", "(MCMA+)\nQwen3.6-27B", "(MCMA+)\nNex-N2-Pro"],
+  data: {
+    "1 attempt": [0, 24, 20, 23, 15],
+    "2 attempts": [0, 0, 4, 1, 3],
+    "3 attempts": [0, 0, 0, 0, 6]
+  }
+};
+
+new Chart(document.getElementById("chartAttempts"), {
+  type: "bar",
+  data: {
+    labels: ATTEMPTS.labels,
+    datasets: [
+      { label: "Solved in 1 attempt", data: ATTEMPTS.data["1 attempt"], backgroundColor: "#2f446f", borderRadius: 4 },
+      { label: "Solved in 2 attempts", data: ATTEMPTS.data["2 attempts"], backgroundColor: "#e8a33d", borderRadius: 4 },
+      { label: "Solved in 3 attempts", data: ATTEMPTS.data["3 attempts"], backgroundColor: "#b23a1c", borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Attempts per model (24 problems each)" } },
+    scales: { x: { stacked: true, title: { display: true, text: "Configuration" } }, y: { stacked: true, beginAtZero: true, title: { display: true, text: "Number of problems" } } }
+  }
+});
+
+new Chart(document.getElementById("chartRetries"), {
+  type: "doughnut",
+  data: {
+    labels: ["API rate limit", "Invalid output format"],
+    datasets: [{ data: [15, 5], backgroundColor: ["#e8a33d", "#b23a1c"], borderWidth: 0 }]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Causes of the 20 failed MCMA attempts" }, legend: { position: "bottom" } }
+  }
+});
+
+new Chart(document.getElementById("chartFirstTry"), {
+  type: "bar",
+  data: {
+    labels: ["(MCMA+)\nKimi-K2.7-Code", "(MCMA+)\nQwen3.6-27B", "(MCMA+)\nQwen3.5-397B-A17B", "(MCMA+)\nNex-N2-Pro"],
+    datasets: [{ label: "Solved on first attempt (of 24)", data: [24, 23, 20, 15], backgroundColor: "#0f52b0", borderRadius: 6 }]
+  },
+  options: {
+    responsive: true,
+    indexAxis: "y",
+    plugins: { title: { display: true, text: "First-attempt solves by model" }, legend: { display: false } },
+    scales: { x: { beginAtZero: true, max: 24 } }
+  }
+});
+</script>
+
+</body>
+</html>

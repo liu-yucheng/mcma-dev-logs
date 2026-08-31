@@ -3,126 +3,680 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Can current open-source vision-language models support multimodal advanced math tutoring? MCMA agents solved 96 of 96 calculus problems. The bare model solved 0 of 24.">
-<title>MCMA &mdash; Overview</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<meta name="description" content="Browse each dev log by date in a single-pane Windows 11 style explorer. Shortcuts named dev-logs-&lt;date&gt;-index.html jump to the index of each dev log.">
+<title>dev-logs &mdash; Explorer</title>
 <style>
-.stat-fail { background: #fdf1ee; border-color: #ecb7a6; }
-.stat-fail .num { color: #b23a1c; }
-.stat-ok { background: #eef8f1; border-color: #aed8bd; }
-.stat-ok .num { color: #2f6f4f; }
-.bars { margin: 18px 0; }
-.bar-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
-.bar-label { width: 140px; font-weight: 600; flex: 0 0 140px; }
-.bar-track { flex: 1; background: #e8edf2; border-radius: 999px; height: 22px; overflow: hidden; }
-.bar-fill { display: block; height: 100%; border-radius: 999px; }
-.bar-fill.fail { background: #b23a1c; }
-.bar-fill.ok { background: #2f6f4f; }
-.bar-num { width: 120px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
-.qa-grid { display: grid; gap: 12px; margin: 18px 0; }
-.qa-card { display: flex; align-items: flex-start; gap: 14px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
-.qa-ico { font-size: 1.6rem; line-height: 1; }
-.qa-main { font-weight: 600; }
-.qa-sub { margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
-.key-term { margin: 12px 0; }
-.key-term .term { font-weight: 700; }
+:root {
+  --ink: #1c2128;
+  --muted: #59626f;
+  --accent: #0f52b0;
+  --accent-2: #2f446f;
+  --line: #e2e6ec;
+  --bg: #ffffff;
+  --bg-soft: #f6f8fa;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  font-size: 17px;
+}
+.container { width: 95%; max-width: none; margin: 0 auto; padding: 0 20px; }
+header.site {
+  background: linear-gradient(135deg, #0b2954 0%, #123d7a 60%, #0f3263 100%);
+  color: #fff;
+  padding: 40px 0 34px;
+}
+header.site .kicker {
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-size: .8rem;
+  color: #9ec0f0;
+}
+header.site h1 { font-size: 2rem; line-height: 1.15; margin: 10px 0 14px; }
+header.site p.lede {
+  font-size: 1.06rem;
+  max-width: 760px;
+  color: #d4e3f7;
+  margin: 0;
+}
+main { padding: 28px 0; }
+footer.site {
+  background: #0a1834;
+  color: #a9b9da;
+  margin-top: 60px;
+  padding: 30px 0;
+  font-size: .9rem;
+}
+footer.site a { color: #d5e0f7; }
+
+.explorer {
+  display: flex;
+  flex-direction: column;
+  font-weight: 300;
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: var(--panel-h, 1000px);
+  border: 1px solid #cfd5dd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(24, 32, 42, 0.08);
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #dfe4ea;
+  background: #f5f6f8;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+}
+.navbtns {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-right: 8px;
+  border-right: 1px solid #dfe4ea;
+}
+.addrbar {
+  flex: 1 1 220px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+.addrbar .path {
+  flex: 1;
+  min-width: 0;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: .8rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #d4d9e0;
+  border-radius: 6px;
+  padding: 4px 10px;
+  box-shadow: inset 0 1px 2px rgba(24, 32, 42, 0.05);
+}
+.addrbar .path:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(15, 98, 176, 0.18);
+}
+.btn {
+  font-size: .78rem;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+}
+.btn:hover { background: #e9edf2; border-color: #d5dbe3; }
+.btn:active { background: #dfe4eb; border-color: #c6cdd6; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.btn:disabled { opacity: .45; cursor: default; background: transparent; border-color: transparent; }
+.btn.icon { font-size: .95rem; padding: 5px 8px; min-width: 30px; text-align: center; }
+
+.panel-body { flex: 0 0 var(--body-h, calc(100% - 600px)); min-height: 120px; display: flex; }
+.files-col { flex: 1 1 auto; min-width: 0; overflow: auto; padding: 6px 4px; background: #fff; }
+
+.h-splitter {
+  flex: 0 0 7px;
+  border-top: 1px solid #d0d5dd;
+  border-bottom: 1px solid #d0d5dd;
+  background: #e2e6ec;
+  cursor: row-resize;
+  touch-action: none;
+}
+.h-splitter:hover { background: #c8d0da; }
+.preview {
+  border-top: 1px solid #dfe4ea;
+  flex: 1 1 0%;
+  min-height: 120px;
+  background: #fff;
+}
+.preview iframe { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
+.status {
+  border-top: 1px solid #dfe4ea;
+  padding: 4px 10px;
+  font-size: .78rem;
+  color: var(--muted);
+  font-family: Consolas, "Courier New", monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: #f5f6f8;
+  flex: 0 0 auto;
+}
+.panel-resizer {
+  flex: 0 0 10px;
+  border-top: 1px solid #d0d5dd;
+  background: #e6eaef;
+  cursor: row-resize;
+  touch-action: none;
+  user-select: none;
+}
+.panel-resizer:hover { background: #ccd4de; }
+body.resizing-v { cursor: row-resize; user-select: none; }
+
+.files-title {
+  font-size: .74rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 3px 4px;
+  border-bottom: 1px solid #e6eaef;
+  margin-bottom: 6px;
+}
+.f-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 6px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.f-row:hover { background: #f0f3f7; }
+.f-row.selected { background: #e3f0fc; border-color: #b9d8f1; }
+.f-row.dir { font-weight: 500; }
+.f-row.virtual .f-name { color: var(--muted); }
+.f-name { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  font-size: .66rem;
+  font-weight: 600;
+  color: #fff;
+  flex: 0 0 auto;
+}
+.chip-d { background: #5b6b7e; }
+.chip-index { background: #0f52b0; }
+.chip-file { background: #0f766e; }
+.chip-log { background: #8e44ad; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .95rem;
+  margin: 18px 0;
+}
+th, td { border-bottom: 1px solid var(--line); padding: 10px 10px; text-align: left; }
+th { background: var(--bg-soft); }
+.empty-hint { color: var(--muted); font-size: .84rem; padding: 10px 6px; }
 </style>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
 <body>
 
 <header class="site">
   <div class="container">
-    <div class="kicker">Experiment Report</div>
-    <h1>Can Open-Source VLMs Teach Advanced Math?</h1>
-    <p class="lede">Can current open-source vision-language models support multimodal tutoring of advanced mathematics? The experiment answers this question with data.</p>
+    <div class="kicker">dev-logs index</div>
+    <h1>Dev Log Explorer</h1>
+    <p class="lede">Browse each dev log by date in a single-pane Windows 11 style explorer. Shortcuts named <code>dev-logs-&lt;date&gt;-index.html</code> open the index of each log; a single click opens a folder or a file.</p>
   </div>
 </header>
 
-<nav>
-  <div class="container">
-    <a href="index.html" aria-current="page">Overview</a>
-    <a href="agents.html">Agents</a>
-    <a href="experiment.html">Experiment</a>
-    <a href="briefing.html">Results Briefing</a>
-    <a href="explorer.html">Results Explorer</a>
-    <a href="demo-video.html">Demo Video</a>
-    <a href="plans.html">Future Plans</a>
-  </div>
-</nav>
-
 <main class="container">
 
-<section id="summary">
-  <h2>📋 Summary</h2>
-  <p>🎯 <strong>The question under test.</strong> Can current open-source vision-language models (VLMs) support multimodal tutoring of advanced mathematics? This page presents the results of the experiment in <code>dev-logs-20260824</code>.</p>
-  <p>🧭 <strong>The purpose follows from a principle.</strong> An AI teaching assistant for advanced math must first understand how to solve advanced math problems. A model that cannot solve a problem cannot tutor it.</p>
-  <div class="stat-grid">
-    <div class="stat"><div class="num">24</div><div class="lbl">📚 Problems from Stewart Calculus, Section 12.6</div></div>
-    <div class="stat"><div class="num">3</div><div class="lbl">🗂️ Problem groups: 12.6.3&ndash;8, 12.6.11&ndash;20, 12.6.29&ndash;36 (6 + 10 + 8 exercises)</div></div>
-    <div class="stat"><div class="num">5</div><div class="lbl">⚙️ Configurations tested: 1 bare model + 4 MCMA agents</div></div>
-  </div>
-
-  <p>🔄 Two conditions ran side by side.</p>
-  <div class="qa-grid">
-    <div class="qa-card"><span class="qa-ico">🤖</span><div><div class="qa-main">Bare model</div><div class="qa-sub">💬 The language model alone. It reads the problem image and replies with text. It has no tools, so it cannot compute, plot, or write files.</div></div></div>
-    <div class="qa-card"><span class="qa-ico">🛠️</span><div><div class="qa-main">MCMA agent</div><div class="qa-sub">🔧 The same tools wrapped around a model. The agent can run Python, draw plots, and write final results.</div></div></div>
-  </div>
-
-  <div class="stat-grid">
-    <div class="stat stat-fail"><div class="num">0 / 24</div><div class="lbl">❌ Solved by the bare model (0%)</div></div>
-    <div class="stat stat-ok"><div class="num">96 / 96</div><div class="lbl">✅ Solved by MCMA agents (100%)</div></div>
-    <div class="stat"><div class="num">85%</div><div class="lbl">🎯 MCMA problems solved on the first attempt (82 of 96)</div></div>
-    <div class="stat"><div class="num">1.21</div><div class="lbl">🔁 Average attempts per MCMA problem (116 attempts over 96 problems)</div></div>
-  </div>
-  <div class="bars">
-    <div class="bar-row"><span class="bar-label">🤖 Bare model</span><span class="bar-track"><span class="bar-fill fail" style="width:0%"></span></span><span class="bar-num">0 / 24</span></div>
-    <div class="bar-row"><span class="bar-label">🛠️ MCMA agents</span><span class="bar-track"><span class="bar-fill ok" style="width:100%"></span></span><span class="bar-num">96 / 96</span></div>
-  </div>
-  <p class="small">The bare model produced text like <span class="boxed-note">$\boxed{\text{No mathematical results.}}$</span> for every problem. It could not sketch a surface because it had no tool to draw one.</p>
-
-  <h3>📈 The main finding</h3>
-  <p>📝 Various contemporary open-source VLMs perform multimodal undergraduate-level advanced math tutoring tasks well. The models empowered the agents to solve the 3D plotting calculus problems automatically. In this experiment, ❌ <strong>every agent without a tool failed</strong>, and ✅ <strong>every agent with the tool layer solved all 24 problems</strong>.</p>
-
-  <h3>🧩 Why the results are not specially-tuned cases.</h3>
-  <p>🔬 The agents were not specially tuned to solve these problems. The system prompt does not teach the agent any particular type of multimodal math problem. It defines only a general work flow: 👁️ read the problem image, 🧠 analyze step by step, 🧮 verify every calculation with Python, 🖼️ draw the plots, and 📄 write the boxed answer. The same process can serve a different problem type.</p>
-  <p>🚀 This property gives the agent its potential. With the same design, the agent can act as a general-purpose undergraduate-level advanced math AI teaching assistant. It reads, reasons, verifies, and plots, without special tuning per problem family.</p>
+<section id="legend">
+  <h2>Legends</h2>
+  <table>
+    <thead><tr><th>Leaf</th><th>Location</th><th>Contents</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip chip-index">I</span> <code>index.html</code></td><td><code>dev-logs-&lt;date&gt;/</code></td><td>The dev log index page for that date; a single click opens it in the viewer.</td></tr>
+      <tr><td><span class="chip chip-log">L</span> <code>dev-logs-&lt;date&gt;-index.html</code></td><td>root</td><td>A shortcut (redirect) that opens the same <code>index.html</code>, so each log is reachable at the short root path without drilling into the folder.</td></tr>
+      <tr><td><span class="chip chip-file">F</span> &lt;any other file&gt;</td><td>any folder</td><td>A generic leaf; a single click opens it in the viewer.</td></tr>
+      <tr><td><span class="chip chip-d">D</span> <code>dev-logs-&lt;date&gt;</code> folder</td><td>root</td><td>A dated dev-log directory node; a single click opens it.</td></tr>
+      <tr><td><span class="chip chip-d">D</span> <code>.</code> &amp; <code>..</code></td><td>any folder</td><td>Virtual entries at the top of the list: <code>.</code> stays in (refreshes) the current folder, <code>..</code> moves up to the parent folder.</td></tr>
+    </tbody>
+  </table>
 </section>
 
-<section id="glossary">
-  <h2>📖 Key Terms</h2>
-  <p>The terms below appear once in full, then by short name.</p>
-  <div class="card">
-    <p class="key-term"><span class="term">👁️ Vision-language model (VLM).</span> A model that reads both text and images, such as the open-source models in this experiment.</p>
-    <p class="key-term"><span class="term">💬 Language model (LLM).</span> A neural network trained on text. It reads text and writes text. It reasons about symbols and equations but cannot touch a file or draw an image by itself.</p>
-    <p class="key-term"><span class="term">🖼️ Multimodal tutoring.</span> Tutoring in which the problem arrives as an image, such as a picture of a printed question, and the answer includes plots.</p>
-    <p class="key-term"><span class="term">🤖 Agent.</span> A program that loops. It asks the model for a step, runs tools the model requests, and gives the tool output back to the model. The loop ends when the model stops calling tools.</p>
-    <p class="key-term"><span class="term">⚙️ DeepAgents.</span> A framework for building such agents. It provides the loop and the built-in tools such as plan tracking and file access. MCMA uses DeepAgents as the outer layer.</p>
-    <p class="key-term"><span class="term">🧰 Tool.</span> A function the model can call. MCMA adds four custom tools: <code>run_python</code>, <code>plot_pyplot</code>, <code>plot_pgfplots</code>, and <code>write_results</code>.</p>
-    <p class="key-term"><span class="term">🏆 MCMA.</span> Math-Capable Multimodal Agent. It is the agent system tested here: a multimodal model plus DeepAgents plus the four custom tools.</p>
+<section id="explorer">
+  <h2>Single-pane explorer</h2>
+  <div class="explorer" id="explorer">
+    <div class="panel">
+      <div class="panel-head">
+        <div class="navbtns" role="group" aria-label="Navigation">
+          <button type="button" class="btn icon" data-act="back" title="Back" aria-label="Back" disabled>&#8249;</button>
+          <button type="button" class="btn icon" data-act="forward" title="Forward" aria-label="Forward" disabled>&#8250;</button>
+          <button type="button" class="btn icon" data-act="up" title="Up one level" aria-label="Up one level">&#8593;</button>
+          <button type="button" class="btn icon" data-act="home" title="Go to home" aria-label="Go to home">&#8962;</button>
+        </div>
+        <div class="addrbar"><input class="path" type="text" spellcheck="false" autocomplete="off" aria-label="Current path" value="/" title="Type a path and press Enter to jump"></div>
+      </div>
+      <div class="panel-body">
+        <div class="files-col" role="listbox" aria-label="Files"></div>
+      </div>
+      <div class="h-splitter" role="separator" aria-orientation="horizontal" title="Drag to resize the file list / viewer; double-click to reset" tabindex="0"></div>
+      <div class="preview">
+        <iframe title="Viewer"></iframe>
+      </div>
+      <div class="status">&mdash;</div>
+      <div class="panel-resizer" role="separator" aria-orientation="horizontal" title="Drag to resize the pane height; double-click to reset" tabindex="0"></div>
+    </div>
   </div>
 </section>
 
+<section id="use">
+  <h2>How to use the explorer</h2>
+  <p>The pane is styled like a Windows&nbsp;11 File Explorer window. The toolbar on top offers navigation buttons (back, forward, up, home); the address bar shows the current location with <code>/</code> as the separator and is editable &mdash; type a path such as <code>dev-logs-20260824</code> and press <code>Enter</code> to jump straight to it. The main view lists the subdirectories and files of the current folder, with <code>.</code> (current folder) and <code>..</code> (parent folder) at the top. Single-click a directory to open it; single-click a shortcut named <code>dev-logs-&lt;date&gt;-index.html</code> (or another file) to view it in the lower half; double-click it to open the file in a new browser window.</p>
+  <p class="small">Each shortcut mirrors <code>docs/dev-logs-&lt;date&gt;/index.html</code>. Add a new dev log by extending <code>RESULTS_TREE</code> below with a <code>dev-logs-&lt;date&gt;</code> folder and its <code>dev-logs-&lt;date&gt;-index.html</code> shortcut.</p>
+</section>
 </main>
 
 <footer class="site">
   <div class="container">
-    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Experiment log <code>dev-logs-20260824</code>, Aug 21&ndash;27, 2026. Done by LIU Yucheng. Supervised by Prof. HU Jishan. Licensed under the GNU AGPL 3.0.</p>
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
   </div>
 </footer>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  renderMathInElement(document.body, {
-    delimiters: [
-      { left: "$$", right: "$$", display: true },
-      { left: "$", right: "$", display: false }
-    ],
-    throwOnError: false
-  });
-});
+(function () {
+  "use strict";
+
+  //RESULTS_TREE:BEGIN
+  var DEVLOG_TREE = [
+    { "n": "dev-logs-20260824", "c": [
+      { "n": "index.html", "p": "dev-logs-20260824/index.html", "t": "html" }
+    ]},
+    { "n": "dev-logs-20260824-index.html", "p": "dev-logs-20260824/index.html", "t": "html", "s": true }
+  ];
+  //RESULTS_TREE:END
+
+  var ROOT = DEVLOG_TREE || [];
+
+  function findDir(dir) {
+    for (var i = 0; i < ROOT.length; i++) {
+      var n = ROOT[i];
+      if (n.c && n.n === dir) return n;
+    }
+    return null;
+  }
+
+  function getDirNode(path) {
+    if (!path.length) return { n: "", c: ROOT };
+    var node = findDir(path[0]);
+    if (!node) return null;
+    for (var i = 1; i < path.length; i++) {
+      var child = null;
+      (node.c || []).forEach(function (ch) {
+        if (ch.c && ch.n === path[i]) child = ch;
+      });
+      if (!child) return null;
+      node = child;
+    }
+    return node;
+  }
+
+  function dirsOf(node) {
+    return (node.c || []).filter(function (ch) { return !!ch.c; });
+  }
+  function filesOf(node) {
+    return (node.c || []).filter(function (ch) { return !ch.c; });
+  }
+
+  function _numRun(s, pos) {
+    var value = 0, len = 0, k = pos;
+    while (k < s.length && s.charAt(k) >= "0" && s.charAt(k) <= "9") {
+      value = value * 10 + (s.charCodeAt(k) - 48);
+      len++; k++;
+    }
+    return { value: value, len: len, end: k };
+  }
+  function natCompare(a, b) {
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+    var i = 0, j = 0;
+    while (i < a.length && j < b.length) {
+      var ca = a.charAt(i), cb = b.charAt(j);
+      var ad = ca >= "0" && ca <= "9", bd = cb >= "0" && cb <= "9";
+      if (ad && bd) {
+        var ra = _numRun(a, i), rb = _numRun(b, j);
+        if (ra.value !== rb.value) return ra.value - rb.value;
+        if (ra.len !== rb.len) return ra.len - rb.len;
+        i = ra.end; j = rb.end;
+      } else {
+        if (ca !== cb) return ca < cb ? -1 : 1;
+        i++; j++;
+      }
+    }
+    if (i < a.length) return 1;
+    if (j < b.length) return -1;
+    return 0;
+  }
+
+  var state = { path: [], sel: null, back: [], fwd: [] };
+
+  function filesEl() { return document.querySelector(".files-col"); }
+  function pathEl() { return document.querySelector(".path"); }
+  function statusEl() { return document.querySelector(".status"); }
+  function iframeEl() { return document.querySelector(".preview iframe"); }
+
+  function relOf(node) {
+    return node.p;
+  }
+
+  function view(node) {
+    if (!node || node.c) return;
+    state.sel = node;
+    iframeEl().src = relOf(node);
+    statusEl().textContent = node.p;
+    highlightSel();
+  }
+
+  function setPath(path) {
+    state.path = path.slice();
+    renderFiles();
+    pathEl().value = path.join("/") || "/";
+  }
+
+  function updateNav() {
+    document.querySelector('[data-act="back"]').disabled = !state.back.length;
+    document.querySelector('[data-act="forward"]').disabled = !state.fwd.length;
+  }
+
+  function navigate(path) {
+    var same = state.path.join("/") === path.slice().join("/");
+    state.fwd = [];
+    if (!same) state.back.push(state.path.slice());
+    setPath(path);
+    updateNav();
+  }
+
+  function goBack() {
+    if (!state.back.length) return;
+    state.fwd.push(state.path.slice());
+    setPath(state.back.pop());
+    updateNav();
+  }
+
+  function goForward() {
+    if (!state.fwd.length) return;
+    state.back.push(state.path.slice());
+    setPath(state.fwd.pop());
+    updateNav();
+  }
+
+  function renderFiles() {
+    var node = getDirNode(state.path);
+    var host = filesEl();
+    host.textContent = "";
+    if (!node) {
+      var h = document.createElement("div");
+      h.className = "empty-hint";
+      h.textContent = "(empty)";
+      host.appendChild(h);
+      return;
+    }
+    var title = document.createElement("div");
+    title.className = "files-title";
+    title.textContent = "Files — " + (state.path.join("/") || "roots");
+    host.appendChild(title);
+
+    function virtualRow(label, isDot) {
+      var r = document.createElement("div");
+      r.className = "f-row dir virtual";
+      var chip = document.createElement("span");
+      chip.className = "chip chip-d";
+      chip.textContent = "D";
+      var name = document.createElement("span");
+      name.className = "f-name";
+      name.innerHTML = "<strong>" + label + "</strong>";
+      r.appendChild(chip);
+      r.appendChild(name);
+      r.title = isDot ? "Current folder — click to refresh" : "Parent folder — click to go up";
+      r.addEventListener("click", function () {
+        state.sel = null;
+        highlightSel();
+        if (isDot) {
+          setPath(state.path);
+        } else if (state.path.length) {
+          navigate(state.path.slice(0, -1));
+        }
+      });
+      return r;
+    }
+
+    function row(item, isDir) {
+      var r = document.createElement("div");
+      r.className = "f-row" + (isDir ? " dir" : "");
+      var chip = document.createElement("span");
+      var name = document.createElement("span");
+      name.className = "f-name";
+      if (isDir) {
+        chip.className = "chip chip-d";
+        chip.textContent = "D";
+        name.innerHTML = "<strong>" + item.n + "</strong>";
+      } else {
+        var leaf = item.s ? "L" : (item.n === "index.html" ? "I" : "F");
+        chip.className = "chip " + (item.s ? "chip-log" : leaf === "I" ? "chip-index" : "chip-file");
+        chip.textContent = leaf;
+        name.textContent = item.n;
+      }
+      r.appendChild(chip);
+      r.appendChild(name);
+      r.title = isDir ? state.path.concat([item.n]).join("/") : item.p;
+      r.addEventListener("click", function () {
+        if (isDir) {
+          state.sel = null;
+          highlightSel();
+          navigate(state.path.concat([item.n]));
+        } else {
+          view(item);
+        }
+      });
+      if (!isDir) {
+        r.addEventListener("keydown", function (ev) {
+          if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); view(item); }
+        });
+        r.addEventListener("dblclick", function (ev) {
+          ev.preventDefault();
+          window.open(relOf(item), "_blank");
+        });
+      }
+      return r;
+    }
+
+    if (state.path.length) host.appendChild(virtualRow(".. | parent directory", false));
+    host.appendChild(virtualRow(". | current directory", true));
+
+    var dirs = dirsOf(node).slice().sort(function (a, b) { return natCompare(a.n, b.n); });
+    var files = filesOf(node).slice().sort(function (a, b) { return natCompare(a.n, b.n); });
+    dirs.forEach(function (d) { host.appendChild(row(d, true)); });
+    files.forEach(function (f) { host.appendChild(row(f, false)); });
+  }
+
+  function highlightSel() {
+    var sel = state.sel;
+    [].forEach.call(filesEl().querySelectorAll(".f-row"), function (r) {
+      var focused = sel && r.querySelector(".f-name").textContent === sel.n;
+      r.classList.toggle("selected", focused);
+    });
+  }
+
+  function doAct(act) {
+    if (act === "back") {
+      goBack();
+    } else if (act === "forward") {
+      goForward();
+    } else if (act === "up") {
+      if (state.path.length) navigate(state.path.slice(0, -1));
+    } else if (act === "home") {
+      navigate([]);
+    } else if (act === "newtab") {
+      if (state.sel) window.open(relOf(state.sel), "_blank");
+    }
+  }
+
+  var PANEL_H_MIN = 380, PANEL_H_MAX = 1800;
+
+  function initHeightResizers() {
+    var pl = document.querySelector(".panel");
+    var handle = pl.querySelector(".panel-resizer");
+    var saved = null;
+    try { saved = parseFloat(localStorage.getItem("devlogs-explorer-panel-h")); } catch (e) {}
+    if (saved >= PANEL_H_MIN) pl.style.setProperty("--panel-h", saved + "px");
+
+    var dragging = false;
+    var onMove, onUp;
+    function setH(px) {
+      px = Math.max(PANEL_H_MIN, Math.min(PANEL_H_MAX, px));
+      pl.style.setProperty("--panel-h", px + "px");
+    }
+    handle.addEventListener("pointerdown", function (ev) {
+      ev.preventDefault();
+      dragging = true;
+      document.body.classList.add("resizing-v");
+      try { handle.setPointerCapture(ev.pointerId); } catch (e) {}
+      document.addEventListener("pointermove", onMove);
+      document.addEventListener("pointerup", onUp);
+    });
+    handle.addEventListener("pointercancel", function () {
+      if (!dragging) return;
+      dragging = false;
+      document.body.classList.remove("resizing-v");
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+    });
+    handle.addEventListener("dblclick", function () {
+      pl.style.removeProperty("--panel-h");
+      try { localStorage.removeItem("devlogs-explorer-panel-h"); } catch (e) {}
+    });
+    handle.addEventListener("keydown", function (ev) {
+      var delta = ev.key === "ArrowUp" ? -40 : ev.key === "ArrowDown" ? 40 : 0;
+      if (!delta) return;
+      ev.preventDefault();
+      var cur = parseFloat(pl.style.getPropertyValue("--panel-h"));
+      if (!(cur > 0)) cur = pl.getBoundingClientRect().height;
+      setH(cur + delta);
+    });
+    onMove = function (ev) {
+      if (!dragging) return;
+      setH(ev.clientY - pl.getBoundingClientRect().top);
+    };
+    onUp = function () {
+      if (!dragging) return;
+      dragging = false;
+      document.body.classList.remove("resizing-v");
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+      try {
+        var h = pl.style.getPropertyValue("--panel-h").replace("px", "");
+        if (h) localStorage.setItem("devlogs-explorer-panel-h", h);
+      } catch (e) {}
+    };
+  }
+
+  function initBodyResizers() {
+    var pl = document.querySelector(".panel");
+    var split = pl.querySelector(".h-splitter");
+    var body = pl.querySelector(".panel-body");
+    var head = pl.querySelector(".panel-head");
+    var status = pl.querySelector(".status");
+    var preview = pl.querySelector(".preview");
+    var resizer = pl.querySelector(".panel-resizer");
+
+    try {
+      var saved = localStorage.getItem("devlogs-explorer-body");
+      if (saved) pl.style.setProperty("--body-h", saved);
+    } catch (e) {}
+
+    var dragging = false;
+    var onMove, onUp;
+    function applyPx(px) {
+      var previewMin = parseFloat(window.getComputedStyle(preview).minHeight) || 120;
+      var reserved = head.getBoundingClientRect().height + split.offsetHeight +
+                     previewMin + status.getBoundingClientRect().height +
+                     (resizer ? resizer.offsetHeight : 0);
+      px = Math.max(120, Math.min(pl.clientHeight - reserved, px));
+      pl.style.setProperty("--body-h", px + "px");
+    }
+    split.addEventListener("pointerdown", function (ev) {
+      ev.preventDefault();
+      dragging = true;
+      document.body.classList.add("resizing-v");
+      try { split.setPointerCapture(ev.pointerId); } catch (e) {}
+      document.addEventListener("pointermove", onMove);
+      document.addEventListener("pointerup", onUp);
+    });
+    split.addEventListener("pointercancel", function () {
+      if (!dragging) return;
+      dragging = false;
+      document.body.classList.remove("resizing-v");
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+    });
+    split.addEventListener("dblclick", function () {
+      pl.style.removeProperty("--body-h");
+      try { localStorage.removeItem("devlogs-explorer-body"); } catch (e) {}
+    });
+    split.addEventListener("keydown", function (ev) {
+      var delta = ev.key === "ArrowUp" ? -40 : ev.key === "ArrowDown" ? 40 : 0;
+      if (!delta) return;
+      ev.preventDefault();
+      var cur = parseInt(pl.style.getPropertyValue("--body-h"), 10);
+      if (!(cur > 0)) cur = Math.round(body.getBoundingClientRect().height);
+      applyPx(cur + delta);
+    });
+    onMove = function (ev) {
+      if (!dragging) return;
+      var top = head.getBoundingClientRect().bottom;
+      applyPx(ev.clientY - top);
+    };
+    onUp = function () {
+      if (!dragging) return;
+      dragging = false;
+      document.body.classList.remove("resizing-v");
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+      try { localStorage.setItem("devlogs-explorer-body", pl.style.getPropertyValue("--body-h")); } catch (e) {}
+    };
+  }
+
+  function init() {
+    initHeightResizers();
+    initBodyResizers();
+
+    [].forEach.call(document.querySelectorAll(".btn"), function (b) {
+      b.addEventListener("click", function () { doAct(b.getAttribute("data-act")); });
+    });
+    var input = document.querySelector(".path");
+    input.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        var parts = input.value.split("/").filter(function (s) { return !!s.trim(); });
+        if (getDirNode(parts)) navigate(parts);
+        else input.value = state.path.join("/") || "/";
+      }
+    });
+    input.addEventListener("focus", function () { input.select(); });
+    input.addEventListener("blur", function () {
+      input.value = state.path.join("/") || "/";
+    });
+
+    setPath([]);
+    updateNav();
+  }
+
+  init();
+})();
 </script>
 
 </body>

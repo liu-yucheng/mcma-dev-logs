@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Can current open-source vision-language models support multimodal advanced math tutoring? MCMA agents solved 96 of 96 calculus problems. The bare model solved 0 of 24.">
+<title>MCMA &mdash; Overview</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>
+.stat-fail { background: #fdf1ee; border-color: #ecb7a6; }
+.stat-fail .num { color: #b23a1c; }
+.stat-ok { background: #eef8f1; border-color: #aed8bd; }
+.stat-ok .num { color: #2f6f4f; }
+.bars { margin: 18px 0; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+.bar-label { width: 140px; font-weight: 600; flex: 0 0 140px; }
+.bar-track { flex: 1; background: #e8edf2; border-radius: 999px; height: 22px; overflow: hidden; }
+.bar-fill { display: block; height: 100%; border-radius: 999px; }
+.bar-fill.fail { background: #b23a1c; }
+.bar-fill.ok { background: #2f6f4f; }
+.bar-num { width: 120px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+.qa-grid { display: grid; gap: 12px; margin: 18px 0; }
+.qa-card { display: flex; align-items: flex-start; gap: 14px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.qa-ico { font-size: 1.6rem; line-height: 1; }
+.qa-main { font-weight: 600; }
+.qa-sub { margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
+.key-term { margin: 12px 0; }
+.key-term .term { font-weight: 700; }
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>Can Open-Source VLMs Teach Advanced Math?</h1>
+    <p class="lede">Can current open-source vision-language models support multimodal tutoring of advanced mathematics? The experiment answers this question with data.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html" aria-current="page">Overview</a>
+    <a href="agents.html">Agents</a>
+    <a href="experiment.html">Experiment</a>
+    <a href="briefing.html">Results Briefing</a>
+    <a href="explorer.html">Results Explorer</a>
+    <a href="demo-video.html">Demo Video</a>
+    <a href="plans.html">Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="summary">
+  <h2>📋 Summary</h2>
+  <p>🎯 <strong>The question under test.</strong> Can current open-source vision-language models (VLMs) support multimodal tutoring of advanced mathematics? This page presents the results of the experiment in <code>dev-logs-20260824</code>.</p>
+  <p>🧭 <strong>The purpose follows from a principle.</strong> An AI teaching assistant for advanced math must first understand how to solve advanced math problems. A model that cannot solve a problem cannot tutor it.</p>
+  <div class="stat-grid">
+    <div class="stat"><div class="num">24</div><div class="lbl">📚 Problems from Stewart Calculus, Section 12.6</div></div>
+    <div class="stat"><div class="num">3</div><div class="lbl">🗂️ Problem groups: 12.6.3&ndash;8, 12.6.11&ndash;20, 12.6.29&ndash;36 (6 + 10 + 8 exercises)</div></div>
+    <div class="stat"><div class="num">5</div><div class="lbl">⚙️ Configurations tested: 1 bare model + 4 MCMA agents</div></div>
+  </div>
+
+  <p>🔄 Two conditions ran side by side.</p>
+  <div class="qa-grid">
+    <div class="qa-card"><span class="qa-ico">🤖</span><div><div class="qa-main">Bare model</div><div class="qa-sub">💬 The language model alone. It reads the problem image and replies with text. It has no tools, so it cannot compute, plot, or write files.</div></div></div>
+    <div class="qa-card"><span class="qa-ico">🛠️</span><div><div class="qa-main">MCMA agent</div><div class="qa-sub">🔧 The same tools wrapped around a model. The agent can run Python, draw plots, and write final results.</div></div></div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat stat-fail"><div class="num">0 / 24</div><div class="lbl">❌ Solved by the bare model (0%)</div></div>
+    <div class="stat stat-ok"><div class="num">96 / 96</div><div class="lbl">✅ Solved by MCMA agents (100%)</div></div>
+    <div class="stat"><div class="num">85%</div><div class="lbl">🎯 MCMA problems solved on the first attempt (82 of 96)</div></div>
+    <div class="stat"><div class="num">1.21</div><div class="lbl">🔁 Average attempts per MCMA problem (116 attempts over 96 problems)</div></div>
+  </div>
+  <div class="bars">
+    <div class="bar-row"><span class="bar-label">🤖 Bare model</span><span class="bar-track"><span class="bar-fill fail" style="width:0%"></span></span><span class="bar-num">0 / 24</span></div>
+    <div class="bar-row"><span class="bar-label">🛠️ MCMA agents</span><span class="bar-track"><span class="bar-fill ok" style="width:100%"></span></span><span class="bar-num">96 / 96</span></div>
+  </div>
+  <p class="small">The bare model produced text like <span class="boxed-note">$\boxed{\text{No mathematical results.}}$</span> for every problem. It could not sketch a surface because it had no tool to draw one.</p>
+
+  <h3>📈 The main finding</h3>
+  <p>📝 Various contemporary open-source VLMs perform multimodal undergraduate-level advanced math tutoring tasks well. The models empowered the agents to solve the 3D plotting calculus problems automatically. In this experiment, ❌ <strong>every agent without a tool failed</strong>, and ✅ <strong>every agent with the tool layer solved all 24 problems</strong>.</p>
+
+  <h3>🧩 Why the results are not specially-tuned cases.</h3>
+  <p>🔬 The agents were not specially tuned to solve these problems. The system prompt does not teach the agent any particular type of multimodal math problem. It defines only a general work flow: 👁️ read the problem image, 🧠 analyze step by step, 🧮 verify every calculation with Python, 🖼️ draw the plots, and 📄 write the boxed answer. The same process can serve a different problem type.</p>
+  <p>🚀 This property gives the agent its potential. With the same design, the agent can act as a general-purpose undergraduate-level advanced math AI teaching assistant. It reads, reasons, verifies, and plots, without special tuning per problem family.</p>
+</section>
+
+<section id="glossary">
+  <h2>📖 Key Terms</h2>
+  <p>The terms below appear once in full, then by short name.</p>
+  <div class="card">
+    <p class="key-term"><span class="term">👁️ Vision-language model (VLM).</span> A model that reads both text and images, such as the open-source models in this experiment.</p>
+    <p class="key-term"><span class="term">💬 Language model (LLM).</span> A neural network trained on text. It reads text and writes text. It reasons about symbols and equations but cannot touch a file or draw an image by itself.</p>
+    <p class="key-term"><span class="term">🖼️ Multimodal tutoring.</span> Tutoring in which the problem arrives as an image, such as a picture of a printed question, and the answer includes plots.</p>
+    <p class="key-term"><span class="term">🤖 Agent.</span> A program that loops. It asks the model for a step, runs tools the model requests, and gives the tool output back to the model. The loop ends when the model stops calling tools.</p>
+    <p class="key-term"><span class="term">⚙️ DeepAgents.</span> A framework for building such agents. It provides the loop and the built-in tools such as plan tracking and file access. MCMA uses DeepAgents as the outer layer.</p>
+    <p class="key-term"><span class="term">🧰 Tool.</span> A function the model can call. MCMA adds four custom tools: <code>run_python</code>, <code>plot_pyplot</code>, <code>plot_pgfplots</code>, and <code>write_results</code>.</p>
+    <p class="key-term"><span class="term">🏆 MCMA.</span> Math-Capable Multimodal Agent. It is the agent system tested here: a multimodal model plus DeepAgents plus the four custom tools.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+});
+</script>
+
+</body>
+</html>
