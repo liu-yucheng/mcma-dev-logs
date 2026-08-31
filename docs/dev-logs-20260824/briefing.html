@@ -18,7 +18,7 @@ td.num.fail-num { color: #b23a1c; font-weight: 600; }
   <div class="container">
     <div class="kicker">Experiment Report</div>
     <h1>Results Briefing</h1>
-    <p class="lede">Every MCMA configuration solved all 24 problems. The bare model solved none. The charts below show where the difference came from.</p>
+    <p class="lede">Every MCMA configuration solved all 24 problems. The tools-disabled model solved none. The charts below show where the difference came from.</p>
   </div>
 </header>
 
@@ -53,7 +53,7 @@ td.num.fail-num { color: #b23a1c; font-weight: 600; }
       </tr>
     </thead>
     <tbody>
-      <tr><td>(Bare-Model+)Qwen3.5-397B-A17B</td><td class="num">24</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num">24</td><td class="num">1.00</td></tr>
+      <tr><td>(Tools-Disabled+)Qwen3.5-397B-A17B</td><td class="num">24</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num">24</td><td class="num">1.00</td></tr>
       <tr class="ok"><td>(MCMA+)Kimi-K2.7-Code</td><td class="num">24</td><td class="num good-num">24</td><td class="num good-num">24</td><td class="num">24</td><td class="num">1.00</td></tr>
       <tr class="ok"><td>(MCMA+)Qwen3.5-397B-A17B</td><td class="num">24</td><td class="num good-num">24</td><td class="num good-num">20</td><td class="num">28</td><td class="num">1.17</td></tr>
       <tr class="ok"><td>(MCMA+)Qwen3.6-27B</td><td class="num">24</td><td class="num good-num">24</td><td class="num good-num">23</td><td class="num">25</td><td class="num">1.04</td></tr>
@@ -77,7 +77,7 @@ td.num.fail-num { color: #b23a1c; font-weight: 600; }
   <table>
     <thead><tr><th>Configuration</th><th class="num">1 attempt</th><th class="num">2 attempts</th><th class="num">3 attempts</th><th class="num">Solved</th></tr></thead>
     <tbody>
-      <tr><td>(Bare-Model+)Qwen3.5-397B-A17B</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num fail-num">0 / 24</td></tr>
+      <tr><td>(Tools-Disabled+)Qwen3.5-397B-A17B</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num fail-num">0 / 24</td></tr>
       <tr class="ok"><td>(MCMA+)Kimi-K2.7-Code</td><td class="num good-num">24</td><td class="num">0</td><td class="num">0</td><td class="num good-num">24 / 24</td></tr>
       <tr class="ok"><td>(MCMA+)Qwen3.5-397B-A17B</td><td class="num good-num">20</td><td class="num">4</td><td class="num">0</td><td class="num good-num">24 / 24</td></tr>
       <tr class="ok"><td>(MCMA+)Qwen3.6-27B</td><td class="num good-num">23</td><td class="num">1</td><td class="num">0</td><td class="num good-num">24 / 24</td></tr>
@@ -109,7 +109,7 @@ td.num.fail-num { color: #b23a1c; font-weight: 600; }
 
 <script>
 const SUCCESS = {
-  labels: ["(Bare-Model+)\nQwen3.5-397B-A17B", "(MCMA+)\nKimi-K2.7-Code", "(MCMA+)\nQwen3.5-397B-A17B", "(MCMA+)\nQwen3.6-27B", "(MCMA+)\nNex-N2-Pro"],
+  labels: ["(Tools-Disabled+)\nQwen3.5-397B-A17B", "(MCMA+)\nKimi-K2.7-Code", "(MCMA+)\nQwen3.5-397B-A17B", "(MCMA+)\nQwen3.6-27B", "(MCMA+)\nNex-N2-Pro"],
   data: [0, 100, 100, 100, 100]
 };
 
@@ -127,7 +127,7 @@ new Chart(document.getElementById("chartSuccess"), {
 });
 
 const ATTEMPTS = {
-  labels: ["(Bare-Model+)\nQwen3.5-397B-A17B", "(MCMA+)\nKimi-K2.7-Code", "(MCMA+)\nQwen3.5-397B-A17B", "(MCMA+)\nQwen3.6-27B", "(MCMA+)\nNex-N2-Pro"],
+  labels: ["(Tools-Disabled+)\nQwen3.5-397B-A17B", "(MCMA+)\nKimi-K2.7-Code", "(MCMA+)\nQwen3.5-397B-A17B", "(MCMA+)\nQwen3.6-27B", "(MCMA+)\nNex-N2-Pro"],
   data: {
     "1 attempt": [0, 24, 20, 23, 15],
     "2 attempts": [0, 0, 4, 1, 3],
