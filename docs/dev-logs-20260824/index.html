@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Can current open-source vision-language models support multimodal advanced math tutoring? MCMA agents solved 96 of 96 calculus problems. The bare model solved 0 of 24.">
+<meta name="description" content="Can current open-source vision-language models support multimodal advanced math tutoring? MCMA agents solved 96 of 96 calculus problems. The tools-disabled model solved 0 of 24.">
 <title>MCMA &mdash; Overview</title>
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -64,26 +64,26 @@
   <div class="stat-grid">
     <div class="stat"><div class="num">24</div><div class="lbl">📚 Problems from Stewart Calculus, Section 12.6</div></div>
     <div class="stat"><div class="num">3</div><div class="lbl">🗂️ Problem groups: 12.6.3&ndash;8, 12.6.11&ndash;20, 12.6.29&ndash;36 (6 + 10 + 8 exercises)</div></div>
-    <div class="stat"><div class="num">5</div><div class="lbl">⚙️ Configurations tested: 1 bare model + 4 MCMA agents</div></div>
+    <div class="stat"><div class="num">5</div><div class="lbl">⚙️ Configurations tested: 1 tools-disabled model + 4 MCMA agents</div></div>
   </div>
 
   <p>🔄 Two conditions ran side by side.</p>
   <div class="qa-grid">
-    <div class="qa-card"><span class="qa-ico">🤖</span><div><div class="qa-main">Bare model</div><div class="qa-sub">💬 The language model alone. It reads the problem image and replies with text. It has no tools, so it cannot compute, plot, or write files.</div></div></div>
+    <div class="qa-card"><span class="qa-ico">🤖</span><div><div class="qa-main">Tools disabled</div><div class="qa-sub">💬 The language model alone. It reads the problem image and replies with text. It has no tools, so it cannot compute, plot, or write files.</div></div></div>
     <div class="qa-card"><span class="qa-ico">🛠️</span><div><div class="qa-main">MCMA agent</div><div class="qa-sub">🔧 The same tools wrapped around a model. The agent can run Python, draw plots, and write final results.</div></div></div>
   </div>
 
   <div class="stat-grid">
-    <div class="stat stat-fail"><div class="num">0 / 24</div><div class="lbl">❌ Solved by the bare model (0%)</div></div>
+    <div class="stat stat-fail"><div class="num">0 / 24</div><div class="lbl">❌ Solved by the tools-disabled model (0%)</div></div>
     <div class="stat stat-ok"><div class="num">96 / 96</div><div class="lbl">✅ Solved by MCMA agents (100%)</div></div>
     <div class="stat"><div class="num">85%</div><div class="lbl">🎯 MCMA problems solved on the first attempt (82 of 96)</div></div>
     <div class="stat"><div class="num">1.21</div><div class="lbl">🔁 Average attempts per MCMA problem (116 attempts over 96 problems)</div></div>
   </div>
   <div class="bars">
-    <div class="bar-row"><span class="bar-label">🤖 Bare model</span><span class="bar-track"><span class="bar-fill fail" style="width:0%"></span></span><span class="bar-num">0 / 24</span></div>
+    <div class="bar-row"><span class="bar-label">🤖 Tools disabled</span><span class="bar-track"><span class="bar-fill fail" style="width:0%"></span></span><span class="bar-num">0 / 24</span></div>
     <div class="bar-row"><span class="bar-label">🛠️ MCMA agents</span><span class="bar-track"><span class="bar-fill ok" style="width:100%"></span></span><span class="bar-num">96 / 96</span></div>
   </div>
-  <p class="small">The bare model produced text like <span class="boxed-note">$\boxed{\text{No mathematical results.}}$</span> for every problem. It could not sketch a surface because it had no tool to draw one.</p>
+  <p class="small">The tools-disabled model produced text like <span class="boxed-note">$\boxed{\text{No mathematical results.}}$</span> for every problem. It could not sketch a surface because it had no tool to draw one.</p>
 
   <h3>📈 The main finding</h3>
   <p>📝 Various contemporary open-source VLMs perform multimodal undergraduate-level advanced math tutoring tasks well. The models empowered the agents to solve the 3D plotting calculus problems automatically. In this experiment, ❌ <strong>every agent without a tool failed</strong>, and ✅ <strong>every agent with the tool layer solved all 24 problems</strong>.</p>
