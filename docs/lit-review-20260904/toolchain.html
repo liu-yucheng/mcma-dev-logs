@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Visualization toolchains in multimodal agents: the ubiquity of matplotlib.pyplot in agentic workflows versus the research void in autonomous agentic control of PGFplots.">
+<title>MCMA &mdash; Literature Review &middot; Visualization Tools</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.cite { color: var(--accent); text-decoration: none; font-size: .82em; }
+.cite:hover { text-decoration: underline; }
+.qa-grid { display: grid; gap: 12px; margin: 18px 0; }
+.qa-card { display: flex; align-items: flex-start; gap: 14px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.qa-ico { font-size: 1.6rem; line-height: 1; }
+.qa-main { font-weight: 600; }
+.qa-sub { margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
+.card h3 { margin-top: 0; }
+ol.steps { margin: 12px 0 12px 22px; }
+ol.steps li { margin: 6px 0; }
+.vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+@media (max-width: 760px) { .vs-grid { grid-template-columns: 1fr; } }
+.vs-col { border-radius: 10px; padding: 16px 18px; }
+.vs-col.mat { background: #eef6f0; border: 1px solid #b7d9c0; }
+.vs-col.pgf { background: #fdf1ee; border: 1px solid #ecb7a6; }
+.vs-col h3 { margin: 0 0 8px; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; }
+.badge.good { background: #e1f2e6; color: var(--accent-2); }
+.badge.bad { background: #fbe4de; color: var(--warn); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Literature Review &mdash; Chapter 3</div>
+    <h1>The Visualization Toolchain: A Tale of Two Tools (<code>pyplot</code> vs. <code>PGFplots</code>)</h1>
+    <p class="lede">🐍 The ability to use both <code>matplotlib.pyplot</code> and <code>PGFplots</code> is one of the most distinctive features of the agent under review. The literature shows a sharp difference in how these tools are adopted within agentic systems. With this difference comes a large, untapped research area.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Literature review home" aria-label="Literature review home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="benchmarks.html">Benchmarks</a>
+    <a href="agents.html">Agent Architectures</a>
+    <a href="toolchain.html" aria-current="page">Visualization Tools</a>
+    <a href="sketching.html">3D Sketching</a>
+    <a href="pedagogy.html">Pedagogy</a>
+    <a href="recommendations.html">Recommendations</a>
+    <a href="references.html">References</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="matplotlib">
+  <h2>🐍 3.1 The dominance of matplotlib in agentic workflows</h2>
+  <p>The search results consistently show that when autonomous agents need to generate plots, they almost always turn to Python's <code>matplotlib</code> library.</p>
+
+  <div class="card">
+    <h3>Direct code generation</h3>
+    <p>Systems such as <strong>MAGMA-Edu</strong> <a class="cite" href="references.html#ref-1">[42]</a>, <strong>AXPO</strong> <a class="cite" href="references.html#ref-2">[43]</a>, and <strong>MultiVis-Agent</strong> <a class="cite" href="references.html#ref-3">[44]</a> all show agents that write and run Python code directly with <code>matplotlib.pyplot</code>. The generated code is explicit and imperative. It uses commands such as <code>plt.plot()</code>, <code>plt.text()</code>, and <code>plt.savefig()</code> <a class="cite" href="references.html#ref-156">[45]</a>.</p>
+  </div>
+
+  <div class="card">
+    <h3>Iterative refinement</h3>
+    <p>The revision process for <code>matplotlib</code> plots is also well documented. <strong>MultiVis-Agent</strong> includes specific agent actions for <code>generate_visualization_code</code> and <code>modify_visualization_code</code>. It has an evaluation loop. This loop runs the <code>matplotlib</code> code (<code>execute_matplotlib_code</code>) and gives feedback for refinement <a class="cite" href="references.html#ref-158">[46]</a>. Similarly, the <strong>chart-plot</strong> agentic system uses <code>matplotlib</code> code generation inside a render loop. It uses this to reach publication-quality charts through iterative editing <a class="cite" href="references.html#ref-159">[47]</a><a class="cite" href="references.html#ref-73">[48]</a>. <strong>PlotGen</strong> <a class="cite" href="references.html#ref-56">[49]</a> and <strong>MatPlotAgent</strong> <a class="cite" href="references.html#ref-57">[50]</a> describe multi-agent architectures. In these, feedback (numeric or visual) triggers revisions in the <code>matplotlib</code> code.</p>
+  </div>
+
+  <h3>Why matplotlib dominates</h3>
+  <div class="card">
+    <p>The reason for <code>matplotlib</code>'s dominance is clear. It fits neatly into the code-as-policy paradigm that LLMs prefer. The feedback loop is simple:</p>
+    <ol class="steps">
+      <li>🔎 The LLM generates Python code.</li>
+      <li>⚙️ A code interpreter runs it.</li>
+      <li>📤 The output (an image file or an error message) returns to the agent.</li>
+      <li>🔄 The agent revises the code based on the feedback.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="pgfplots">
+  <h2>📄 3.2 The research void: agentic control of PGFplots</h2>
+  <p>In sharp contrast to <code>matplotlib</code>, the provided literature contains no example of an autonomous agent using <code>PGFplots</code> for generative and revision tasks in education. Repeated and targeted queries on this topic found no such system.</p>
+
+  <h3>What the literature shows</h3>
+  <p>The search results reference <code>PGFplots</code> only in general terms. They call it a capable LaTeX package for creating high-quality scientific plots <a class="cite" href="references.html#ref-4">[51]</a><a class="cite" href="references.html#ref-164">[52]</a><a class="cite" href="references.html#ref-98">[53]</a>. One older paper from 2007 describes a web service for automating <code>PGFplots</code> generation via JSON-RPC. This is not an autonomous LLM-based agent. It has no revision or tutoring capability <a class="cite" href="references.html#ref-99">[54]</a>.</p>
+
+  <h3>What the literature is missing</h3>
+  <div class="card">
+    <p>No paper describes an agent that:</p>
+    <ol class="steps">
+      <li>✍️ Writes LaTeX code that uses the <code>pgfplots</code> package to define a mathematical plot.</li>
+      <li>🛠️ Compiles the LaTeX document to generate a PDF or image.</li>
+      <li>👀 Reads the visual output or the compilation logs to judge the result.</li>
+      <li>🔄 Revises the <code>PGFplots</code> LaTeX code on its own to fix errors or make improvements.</li>
+    </ol>
+    <p>This is a clear research gap. <code>PGFplots</code> offers better typographic consistency and quality for publication-ready figures inside scientific documents. This makes it a desirable tool. However, its declarative, compilation-based nature is a harder challenge for agentic control.</p>
+  </div>
+</section>
+
+<section id="gap-pgfplots">
+  <h2>🕳️ 3.3 Open problems from the PGFplots gap</h2>
+  <p>The ability to use <code>PGFplots</code> opens a rich line of research questions that the community has not yet addressed:</p>
+
+  <div class="qa-grid">
+    <div class="qa-card">
+      <span class="qa-ico">⚙️</span>
+      <div>
+        <div class="qa-main">Building robust agentic workflows for declarative languages</div>
+        <p class="qa-sub">The core challenge is to create a reliable reasoning and action loop for a compiled language such as LaTeX. An open problem is: <strong>What is the best agentic architecture for controlling PGFplots?</strong> Does it need a complex chain of parsing compiler errors? Does it need a vision agent to &ldquo;look&rdquo; at the output PDF and give feedback? The chart-plot system uses LaTeX for layout but <code>matplotlib</code> for the actual plot <a class="cite" href="references.html#ref-21">[55]</a><a class="cite" href="references.html#ref-167">[56]</a>. This suggests that researchers have so far avoided the complexity of controlling the LaTeX graphics layer itself.</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <span class="qa-ico">⚖️</span>
+      <div>
+        <div class="qa-main">Comparing toolchains</div>
+        <p class="qa-sub">An agent with both tools is well placed to answer: <strong>What are the trade-offs between an imperative library (matplotlib) and a declarative package (PGFplots) for autonomous mathematical visualization?</strong> This research could explore reliability, output quality, ease of revision, computational overhead, and the types of errors the agent makes with each tool.</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <span class="qa-ico">🧠</span>
+      <div>
+        <div class="qa-main">Hybrid tool use</div>
+        <p class="qa-sub">A more advanced question is: <strong>How can an agent learn to choose the best tool for the job?</strong> Perhaps <code>matplotlib</code> is better for quick, exploratory sketching. <code>PGFplots</code> might be reserved for the final, high-fidelity figure in a report. This needs a higher level of metacognition and planning.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="vs-grid">
+    <div class="vs-col mat">
+      <h3><span class="badge good">well covered</span> 🐍 matplotlib</h3>
+      <p>Direct code generation, render loops, numeric and visual feedback, multi-agent revision. This is the dominant paradigm in agentic plotting.</p>
+    </div>
+    <div class="vs-col pgf">
+      <h3><span class="badge bad">research void</span> 📄 PGFplots</h3>
+      <p>Only general references and a 2007 web service. No autonomous compilation, log parsing, or revision loop exists in the literature.</p>
+    </div>
+  </div>
+
+  <p class="small">📄 Continue to <a href="sketching.html">Chapter 4 &mdash; The Frontier of 3D Surface Sketching</a>: fundamental challenges in spatial reasoning.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

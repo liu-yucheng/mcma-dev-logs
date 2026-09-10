@@ -1,0 +1,44 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{colormaps}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={45}{25},
+    xlabel={$x$},
+    ylabel={$y$},
+    zlabel={$z$},
+    title={Ellipsoid: $36x^2 + y^2 + 36z^2 = 36$},
+    domain=0:2*pi,
+    y domain=0:pi,
+    samples=30,
+    samples y=20,
+    z buffer=sort,
+    colormap/viridis,
+    width=12cm,
+    height=10cm,
+    xmin=-1.5, xmax=1.5,
+    ymin=-7, ymax=7,
+    zmin=-1.5, zmax=1.5,
+]
+% Ellipsoid surface
+\addplot3[surf, opacity=0.6, shader=interp] 
+    ({sin(y)*cos(x)}, {6*sin(y)*sin(x)}, {cos(y)});
+
+% xy-trace (z=0)
+\addplot3[red, thick, domain=0:2*pi, samples=50] 
+    ({cos(x)}, {6*sin(x)}, 0);
+
+% xz-trace (y=0)
+\addplot3[green!70!black, thick, domain=0:2*pi, samples=50] 
+    ({cos(x)}, 0, {sin(x)});
+
+% yz-trace (x=0)
+\addplot3[blue, thick, domain=0:2*pi, samples=50] 
+    (0, {6*cos(x)}, {sin(x)});
+
+\end{axis}
+\end{tikzpicture}
+\end{document}

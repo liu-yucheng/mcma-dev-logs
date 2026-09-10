@@ -1,0 +1,21 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=8cm,
+    height=8cm,
+    xlabel=$z$,
+    ylabel=$y$,
+    title={Trace in $yz$-plane ($x=0$): $y = z^2$},
+    grid=both,
+    axis equal image,
+    domain=-2:2,
+    samples=100,
+]
+\addplot[blue, thick] {x^2};
+\end{axis}
+\end{tikzpicture}
+\end{document}

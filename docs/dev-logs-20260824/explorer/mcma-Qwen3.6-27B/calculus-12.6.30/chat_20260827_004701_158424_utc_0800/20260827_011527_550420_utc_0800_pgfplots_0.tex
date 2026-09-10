@@ -1,0 +1,20 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={60}{30},
+    domain=-1:1,
+    y domain=-1:1,
+    samples=20,
+    xlabel={$x$},
+    ylabel={$z$},
+    zlabel={$y$},
+    title={Elliptic Paraboloid},
+    colormap/viridis
+]
+\addplot3[surf] {4*x^2 + 2*y^2};
+\end{axis}
+\end{tikzpicture}
+\end{document}

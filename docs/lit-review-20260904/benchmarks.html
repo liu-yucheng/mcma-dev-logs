@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The evolving landscape of multimodal mathematical reasoning evaluation: MathVista, MMMU, MathVerse, MATH-Vision and the research gap of missing generative and agentic benchmarking.">
+<title>MCMA &mdash; Literature Review &middot; Benchmarks</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.cite { color: var(--accent); text-decoration: none; font-size: .82em; }
+.cite:hover { text-decoration: underline; }
+.badge-row { margin: 14px 0; }
+.qa-grid { display: grid; gap: 12px; margin: 18px 0; }
+.qa-card { display: flex; align-items: flex-start; gap: 14px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.qa-ico { font-size: 1.6rem; line-height: 1; }
+.qa-main { font-weight: 600; }
+.qa-sub { margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
+.card h3 { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Literature Review &mdash; Chapter 1</div>
+    <h1>The Evolving Landscape of Multimodal Mathematical Reasoning Evaluation</h1>
+    <p class="lede">📊 To understand the research gaps that relate to a math-tutoring agent, the review first sets the baseline for evaluating multimodal mathematical reasoning. The community has moved past text-only benchmarks such as <code>MATH</code>. It now uses more complex, visually grounded assessments. These benchmarks define the state of the field. Their limits reveal the first set of research gaps.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Literature review home" aria-label="Literature review home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="benchmarks.html" aria-current="page">Benchmarks</a>
+    <a href="agents.html">Agent Architectures</a>
+    <a href="toolchain.html">Visualization Tools</a>
+    <a href="sketching.html">3D Sketching</a>
+    <a href="pedagogy.html">Pedagogy</a>
+    <a href="recommendations.html">Recommendations</a>
+    <a href="references.html">References</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="foundations">
+  <h2>🧱 1.1 Foundational and holistic benchmarks</h2>
+  <p>The first wave of multimodal math benchmarks aimed to create broad testbeds for the general mathematical reasoning of VLMs and MLLMs.</p>
+
+  <div class="card">
+    <h3>MathVista</h3>
+    <p>Introduced in 2023, MathVista (Lu et al., 2023; <code>arXiv:2310.02255</code>) <a class="cite" href="references.html#ref-54">[1]</a> is a landmark effort to build a holistic benchmark for multimodal mathematical reasoning. It contains <strong>6,141 examples from 31 distinct datasets</strong>. It is one of the first large-scale datasets for this purpose <a class="cite" href="references.html#ref-61">[2]</a><a class="cite" href="references.html#ref-62">[3]</a>. Its official project page is <a href="https://mathvista.github.io/">https://mathvista.github.io/</a> <a class="cite" href="references.html#ref-115">[4]</a><a class="cite" href="references.html#ref-116">[5]</a>. However, studies that use MathVista show that even top models struggle with its problems. This is especially true for problems with &ldquo;complex figures&rdquo; and problems that need &ldquo;rigorous reasoning&rdquo; <a class="cite" href="references.html#ref-117">[6]</a>. This shows a foundational gap: we can test for this reasoning, but current models lack the skill.</p>
+  </div>
+
+  <div class="card">
+    <h3>MMMU &mdash; Massive Multi-discipline Multimodal Understanding</h3>
+    <p>This benchmark expands evaluation to college level across <strong>30 subjects</strong>, including Science and Engineering. It requires expert-level knowledge <a class="cite" href="references.html#ref-110">[7]</a>. It tests for &ldquo;advanced perception and reasoning&rdquo; <a class="cite" href="references.html#ref-118">[8]</a>. It may contain calculus problems. But its broad scope means it is not built to test the fine-grained skills needed for generative tasks such as surface sketching. Its existence shows the community's ambition to handle undergraduate and expert-level material. That matches the target domain of a calculus-tutoring agent.</p>
+  </div>
+</section>
+
+<section id="second-generation">
+  <h2>🔬 1.2 Second-generation benchmarks targeting deeper understanding</h2>
+  <p>More recent benchmarks address specific weaknesses in earlier evaluations. They focus on whether models truly understand the visual parts of a problem. They also test whether models rely on spurious correlations instead.</p>
+
+  <div class="card">
+    <h3>MathVerse</h3>
+    <p>Published in 2024 (Zhang et al.; <code>arXiv:2403.14624</code>), MathVerse is built to test &ldquo;whether Multi-modal LLMs (MLLMs) truly understand diagrams in visual math problems&rdquo; <a class="cite" href="references.html#ref-111">[9]</a><a class="cite" href="references.html#ref-113">[10]</a>. Its official project page is <a href="https://mathverse-cuhk.github.io">https://mathverse-cuhk.github.io</a> <a class="cite" href="references.html#ref-114">[11]</a><a class="cite" href="references.html#ref-121">[12]</a>. This benchmark contains <strong>2,612 problems</strong>. Crucially, it introduces multiple variants for each problem. This supports step-wise Chain-of-Thought (CoT) evaluation <a class="cite" href="references.html#ref-125">[13]</a>. The focus on &ldquo;truly seeing&rdquo; the diagrams answers the finding that many MLLMs fail on earlier benchmarks due to shallow visual processing <a class="cite" href="references.html#ref-126">[14]</a>.</p>
+  </div>
+
+  <div class="card">
+    <h3>MATH-Vision</h3>
+    <p>Also from 2024 (Wang et al.; <code>arXiv:2402.14804</code>), this benchmark focuses on high-quality problems from real math competitions <a class="cite" href="references.html#ref-33">[15]</a><a class="cite" href="references.html#ref-63">[16]</a><a class="cite" href="references.html#ref-130">[17]</a>. Its paper is titled &ldquo;Measuring Multimodal Mathematical Reasoning with the MATH-Vision Dataset.&rdquo; Its project page is <a href="https://mathvision-cuhk.github.io">https://mathvision-cuhk.github.io</a> <a class="cite" href="references.html#ref-33">[18]</a>. Like MathVerse, it pushes for higher-standard visual and logical integration.</p>
+  </div>
+
+  <h3>Specialized niche benchmarks</h3>
+  <p>Other recent benchmarks target even more specific reasoning facets. They include:</p>
+  <ul>
+    <li><strong>MV-MATH</strong> (Wang et al., 2025; <code>arXiv:2502.20808</code>). It focuses on problems that need reasoning across multiple images or visual contexts. This skill is not well covered by single-image benchmarks <a class="cite" href="references.html#ref-17">[19]</a><a class="cite" href="references.html#ref-94">[20]</a><a class="cite" href="references.html#ref-95">[21]</a>.</li>
+    <li><strong>WE-MATH</strong> (Qiao et al., 2024; <a href="https://arxiv.org/abs/2407.01284"><code>arXiv:2407.01284</code></a>). It is built for &ldquo;fine-grained mathematical-knowledge evaluation.&rdquo; It aims to test whether a model has human-like mathematical reasoning skills [22][23].</li>
+    <li><strong>VisioMath</strong> and <strong>GeoQA</strong>. They target figure-based mathematical reasoning and geometric question-answering. They represent earlier but important steps in this domain <a class="cite" href="references.html#ref-24">[24]</a>.</li>
+  </ul>
+</section>
+
+<section id="gap-benchmarking">
+  <h2>🕳️ 1.3 Research gap: the absence of generative and agentic benchmarking</h2>
+  <p>A critical look at these benchmarks reveals a large research gap directly relevant to a math-tutoring agent. Current benchmarks are mostly <strong>discriminative or single-turn generative</strong>. They present a static problem (text + image). They then grade the final answer or the textual reasoning path (CoT).</p>
+
+  <h3>What they fail to evaluate</h3>
+  <div class="qa-grid">
+    <div class="qa-card"><span class="qa-ico">🧰</span><div><div class="qa-main">Tool use and manipulation</div><p class="qa-sub">No existing math benchmark tests an agent's ability to select, set up, and run external tools such as <code>pyplot</code> or <code>PGFplots</code>. The evaluation stops at the model's textual or multiple-choice output.</p></div></div>
+    <div class="qa-card"><span class="qa-ico">🔁</span><div><div class="qa-main">Iterative revision and self-correction</div><p class="qa-sub">Generating a plot, checking it, and revising it is a complex, multi-step agentic process. Benchmarks such as MathVerse test step-wise reasoning. They do not test step-wise action and correction in a generative task.</p></div></div>
+    <div class="qa-card"><span class="qa-ico">🎨</span><div><div class="qa-main">Generative fidelity and correctness</div><p class="qa-sub">There is no framework for judging the quality and correctness of a generated mathematical visualization, such as a calculus surface sketch. Is the surface topologically correct? Are the axes labelled well? Does it show the given function exactly? These are detailed evaluation criteria. They go far beyond &ldquo;is the final answer correct?&rdquo;</p></div></div>
+    <div class="qa-card"><span class="qa-ico">🎓</span><div><div class="qa-main">Pedagogical utility</div><p class="qa-sub">In a tutoring context, a &ldquo;correct&rdquo; plot may not be a &ldquo;good&rdquo; plot. A good plot might highlight specific features (for example, critical points, inflection points) to help student understanding. No benchmark tests the pedagogical value of a generated artifact.</p></div></div>
+  </div>
+
+  <h3>The first open problem</h3>
+  <div class="card">
+    <p><strong>❓ How do we design a benchmark to evaluate the full lifecycle of an autonomous, multimodal math tutoring agent</strong>&mdash;from problem understanding, to tool-based generative action, to iterative revision, to pedagogical effectiveness?</p>
+    <p>The capabilities of such an agent require a new benchmark. Current standards cannot measure its core skills. General agent benchmarks such as <strong>AgentVista</strong> <a class="cite" href="references.html#ref-81">[25]</a> and <strong>OSWorld</strong> <a class="cite" href="references.html#ref-25">[26]</a> are emerging for GUI and web tasks. But a specialized counterpart for scientific and educational generative tasks is missing.</p>
+  </div>
+
+  <p class="small">📄 Continue to <a href="agents.html">Chapter 2 &mdash; Agent Architectures</a>. It reviews agentic frameworks and their limits for complex mathematical tasks.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

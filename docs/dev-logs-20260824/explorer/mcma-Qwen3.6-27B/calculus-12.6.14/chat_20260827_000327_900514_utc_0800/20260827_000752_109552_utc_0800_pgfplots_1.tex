@@ -1,0 +1,18 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+xlabel={$y$},
+ylabel={$z$},
+xmin=-6, xmax=6,
+ymin=-12, ymax=12,
+axis equal image,
+grid=major,
+title={Trace in $yz$-plane ($x=0$)}
+]
+\addplot[green!60!black, thick, samples=60] ({5*cos(deg(x))}, {10*sin(deg(x))});
+\end{axis}
+\end{tikzpicture}
+\end{document}

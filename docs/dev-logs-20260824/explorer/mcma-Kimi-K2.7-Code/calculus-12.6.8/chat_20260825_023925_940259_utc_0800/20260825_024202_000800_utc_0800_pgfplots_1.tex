@@ -1,0 +1,18 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$y$}, ylabel={$z$},
+    title={Trace of $z=\sin y$ in the $yz$-plane},
+    xmin=-6.5, xmax=6.5,
+    ymin=-1.2, ymax=1.2,
+    samples=200,
+    grid=major,
+    axis lines=middle
+]
+\addplot[blue, thick, domain=-6.5:6.5] {sin(deg(x))};
+\end{axis}
+\end{tikzpicture}
+\end{document}

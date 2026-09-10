@@ -1,0 +1,23 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={-60}{20},
+    xlabel=$x$,
+    ylabel=$y$,
+    zlabel=$z$,
+    title={$y=z^2-x^2$ (hyperbolic paraboloid)},
+    colormap/viridis,
+    samples=50,
+    domain=-3:3,
+    y domain=-3:3,
+    axis equal image,
+]
+\addplot3[surf, opacity=0.8, shader=interp] {y^2-x^2};
+\addplot3[red, thick, samples=100, domain=-3:3] (0,{x^2},x);
+\addplot3[blue, thick, samples=100, domain=-3:3] (x,{-x^2},0);
+\end{axis}
+\end{tikzpicture}
+\end{document}
