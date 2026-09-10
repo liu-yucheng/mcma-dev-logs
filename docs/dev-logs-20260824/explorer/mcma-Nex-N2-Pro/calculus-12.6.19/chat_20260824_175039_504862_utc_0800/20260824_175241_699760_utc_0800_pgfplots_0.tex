@@ -1,0 +1,41 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm, height=9cm,
+    view={-58}{24},
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    title={$y=z^2-x^2$: hyperbolic paraboloid},
+    grid=major,
+    xmin=-3, xmax=3,
+    ymin=-9, ymax=9,
+    zmin=-3, zmax=3,
+    colormap/viridis,
+]
+\addplot3[
+    surf,
+    domain=-3:3,
+    y domain=-3:3,
+    samples=35,
+    shader=interp,
+    opacity=0.72
+] ({x},{y^2-x^2},{y});
+
+% x=0 trace: y=z^2
+\addplot3[domain=-3:3, samples=100, thick, red] ({0},{x^2},{x});
+% z=0 trace: y=-x^2
+\addplot3[domain=-3:3, samples=100, thick, blue] ({x},{-x^2},{0});
+% y=0 traces: z=\pm x
+\addplot3[domain=-3:3, samples=100, thick, black, dashed] ({x},{0},{x});
+\addplot3[domain=-3:3, samples=100, thick, black, dashed] ({x},{0},{-x});
+% y=1 hyperbola: z^2-x^2=1
+\addplot3[domain=-3:3, samples=100, thick, purple] ({x},{1},{sqrt(x^2+1)});
+\addplot3[domain=-3:3, samples=100, thick, purple] ({x},{1},{-sqrt(x^2+1)});
+% y=-1 hyperbola: z^2-x^2=-1
+\addplot3[domain=-3:3, samples=100, thick, orange] ({sqrt(x^2+1)},{-1},{x});
+\addplot3[domain=-3:3, samples=100, thick, orange] ({-sqrt(x^2+1)},{-1},{x});
+\end{axis}
+\end{tikzpicture}
+\end{document}

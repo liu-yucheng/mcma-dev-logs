@@ -1,0 +1,18 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$z$}, ylabel={$x$},
+    xmin=-1.2, xmax=1.2,
+    ymin=-0.2, ymax=4.5,
+    axis lines=middle,
+    width=12cm,
+    height=8cm,
+    title={Trace $y=0$: $x=4z^2$}
+]
+\addplot[blue, thick, domain=-1:1, samples=100] {4*x*x};
+\end{axis}
+\end{tikzpicture}
+\end{document}

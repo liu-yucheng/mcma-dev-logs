@@ -1,0 +1,19 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$z$},
+    ylabel={$y$},
+    title={Trace in $y$-$z$ plane ($x=0$): $y = z^2$},
+    domain=-3:3,
+    samples=50,
+    axis lines=middle,
+    width=10cm,
+    height=8cm
+]
+\addplot[red, thick] {x^2};
+\end{axis}
+\end{tikzpicture}
+\end{document}

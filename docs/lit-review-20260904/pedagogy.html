@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The unaddressed challenge of pedagogical effectiveness: diagram-problem misalignment, lack of pedagogical scaffolding, and open problems in autonomous pedagogy.">
+<title>MCMA &mdash; Literature Review &middot; Pedagogy</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.cite { color: var(--accent); text-decoration: none; font-size: .82em; }
+.cite:hover { text-decoration: underline; }
+.key-term { margin: 12px 0; }
+.key-term .term { font-weight: 700; }
+.qa-grid { display: grid; gap: 12px; margin: 18px 0; }
+.qa-card { display: flex; align-items: flex-start; gap: 14px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.qa-ico { font-size: 1.6rem; line-height: 1; }
+.qa-main { font-weight: 600; }
+.qa-sub { margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
+.card h3 { margin-top: 0; }
+ol.steps { margin: 12px 0 12px 22px; }
+ol.steps li { margin: 6px 0; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Literature Review &mdash; Chapter 5</div>
+    <h1>The Unaddressed Challenge: Pedagogical Effectiveness</h1>
+    <p class="lede">🎓 The largest research gap for any system that aims to be an &ldquo;autonomous tutor&rdquo; is the step from solving a problem to teaching a student how to solve it. The literature shows that current models are deeply weak in this area.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Literature review home" aria-label="Literature review home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="benchmarks.html">Benchmarks</a>
+    <a href="agents.html">Agent Architectures</a>
+    <a href="toolchain.html">Visualization Tools</a>
+    <a href="sketching.html">3D Sketching</a>
+    <a href="pedagogy.html" aria-current="page">Pedagogy</a>
+    <a href="recommendations.html">Recommendations</a>
+    <a href="references.html">References</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="alignment">
+  <h2>🎓 5.1 The failure of pedagogical alignment</h2>
+  <p>A recent study that evaluates MLLMs on generating educational materials found systemic failures in pedagogical effectiveness <a class="cite" href="references.html#ref-44">[67]</a><a class="cite" href="references.html#ref-180">[68]</a>. The key weaknesses are:</p>
+
+  <div class="qa-grid">
+    <div class="qa-card">
+      <span class="qa-ico">📐</span>
+      <div>
+        <div class="qa-main">Diagram-problem misalignment</div>
+        <p class="qa-sub">Generated diagrams often fail to represent the meaning of the problem correctly and clearly <a class="cite" href="references.html#ref-183">[69]</a>. For a calculus tutor, this could mean plotting the wrong function or plotting over the wrong domain.</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <span class="qa-ico">🧭</span>
+      <div>
+        <div class="qa-main">Lack of pedagogical scaffolding</div>
+        <p class="qa-sub">Models are universally weak at using effective teaching strategies <a class="cite" href="references.html#ref-44">[70]</a><a class="cite" href="references.html#ref-180">[71]</a>. They fail to use grade-appropriate language. They fail to break complex ideas into simpler steps. They fail to guide the student's learning process. An agent might produce a perfect, complex 3D surface. It could still fail to tell the student what to learn from it.</p>
+      </div>
+    </div>
+  </div>
+
+  <p>The technical ability to generate a plot is only the first step. It is often the easiest step too. The real challenge, and a large research gap, is to give the agent pedagogical intelligence.</p>
+</section>
+
+<section id="gap-pedagogy">
+  <h2>🕳️ 5.2 Open problems in autonomous pedagogy</h2>
+  <p>This gap gives rise to several critical research questions. A math-capable multimodal tutoring agent is well suited to explore them:</p>
+
+  <div class="qa-grid">
+    <div class="qa-card">
+      <span class="qa-ico">🎨</span>
+      <div>
+        <div class="qa-main">Pedagogically-driven visualization</div>
+        <p class="qa-sub">How can an agent learn what to plot and how to style it to maximize student understanding? This goes beyond simply plotting <code>z = f(x, y)</code>. The agent might decide to plot the gradient field, overlay level curves, or animate the change in a tangent plane. This is an open problem of pedagogical content selection.</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <span class="qa-ico">💬</span>
+      <div>
+        <div class="qa-main">Integrating tutoring strategies with agentic actions</div>
+        <p class="qa-sub">How can established pedagogical frameworks (for example, Socratic questioning, scaffolding, worked examples) be integrated into the agent's action loop? Instead of just generating a plot, the agent might first ask the student, &ldquo;What do you think the surface will look like near the origin?&rdquo; It could then generate the plot to confirm or correct their intuition.</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <span class="qa-ico">📊</span>
+      <div>
+        <div class="qa-main">Evaluating tutoring efficacy</div>
+        <p class="qa-sub">Current benchmarks measure correctness, not learning gain. A key open problem is the development of evaluation methods and metrics to assess the pedagogical effectiveness of an autonomous tutoring agent. This would likely involve user studies with real students. The studies would measure conceptual understanding before and after interacting with the agent.</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="small">📄 Continue to <a href="recommendations.html">Chapter 6 &mdash; Conclusion and Strategic Recommendations for Future Research</a>.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

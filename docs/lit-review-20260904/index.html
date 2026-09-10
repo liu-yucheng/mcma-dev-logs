@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A literature review of research gaps and open problems in math-capable multimodal AI agents for autonomous tutoring: benchmarking, PGFplots integration, 3D sketching, and pedagogical effectiveness.">
+<title>MCMA &mdash; Literature Review Overview</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.cite { color: var(--accent); text-decoration: none; font-size: .85em; }
+.cite:hover { text-decoration: underline; }
+.key-term { margin: 12px 0; }
+.key-term .term { font-weight: 700; }
+.qa-grid { display: grid; gap: 12px; margin: 18px 0; }
+.qa-card { display: flex; align-items: flex-start; gap: 14px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.qa-card a { text-decoration: none; }
+.qa-ico { font-size: 1.6rem; line-height: 1; }
+.qa-main a { font-weight: 600; color: var(--ink); }
+.qa-main a:hover { color: var(--accent); }
+.qa-sub { margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
+.tag { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; background: #e1f0f6; color: var(--accent); }
+.list { margin: 12px 0 12px 22px; }
+.list li { margin: 8px 0; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Literature Review &mdash; Sep. 04, 2026</div>
+    <h1>Research Gaps and Open Problems in Math-Capable Multimodal AI Agents for Autonomous Tutoring</h1>
+    <p class="lede">📚 This review maps the current research. It covers multimodal mathematical reasoning, agentic architectures, generative visualization, and intelligent tutoring. It identifies four research gaps. A math-capable multimodal agent with <code>matplotlib.pyplot</code> and <code>PGFplots</code> integration is well placed to address these gaps.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Literature review home" aria-label="Literature review home">&#8962;</a>
+    <a href="index.html" aria-current="page">Overview</a>
+    <a href="benchmarks.html">Benchmarks</a>
+    <a href="agents.html">Agent Architectures</a>
+    <a href="toolchain.html">Visualization Tools</a>
+    <a href="sketching.html">3D Sketching</a>
+    <a href="pedagogy.html">Pedagogy</a>
+    <a href="recommendations.html">Recommendations</a>
+    <a href="references.html">References</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="profile">
+  <h2>📑 Report profile</h2>
+  <p>📊 <strong>Title.</strong> Analysis of research gaps and open problems in math-capable multimodal AI agents for autonomous tutoring.</p>
+  <div class="stat-grid">
+    <div class="stat"><div class="num">2026-09-04</div><div class="lbl">🗓️ Date of the review</div></div>
+    <div class="stat"><div class="num">Researchers</div><div class="lbl">🧭 Presented to</div></div>
+    <div class="stat"><div class="num">Yucheng LIU</div><div class="lbl">✍️ Written by</div></div>
+    <div class="stat"><div class="num">4</div><div class="lbl">🔍 Research gaps identified</div></div>
+  </div>
+  <p class="small">🧠 Assistance from <span class="tag">DeepSeek V4 Flash Research Agents</span>. The raw report lives in <code>.raw_data/lit-review-20260904/mcma-ai-assisted-review.md</code>. It goes with the experiment site <code>dev-logs-20260824</code>. The agent under discussion uses both <code>matplotlib.pyplot</code> and <code>PGFplots</code> for tasks such as calculus surface sketching.</p>
+</section>
+
+<section id="summary">
+  <h2>🎯 Executive summary</h2>
+  <p>This report reviews current research on math-capable multimodal AI agents. It focuses on research gaps and open problems that relate to a new agent with these capabilities:</p>
+  <div class="card">
+    <ul class="list">
+      <li>🎓 It teaches advanced mathematics on its own.</li>
+      <li>👁️ It integrates vision-language models (VLMs).</li>
+      <li>🛠️ It has a toolset for generating and revising plots.</li>
+      <li>📈 It uses both <code>matplotlib.pyplot</code> and <code>PGFplots</code> for tasks such as calculus surface sketching.</li>
+    </ul>
+  </div>
+  <p>These capabilities put the agent in several new research areas. The field moves fast. Important research gaps remain. The review found four gaps:</p>
+
+  <div class="qa-grid">
+    <div class="qa-card">
+      <span class="qa-ico">📊</span>
+      <div>
+        <div class="qa-main"><a href="benchmarks.html#gap-benchmarking">1. A benchmarking void</a></div>
+        <p class="qa-sub">No existing benchmark tests an agent's ability to do generative, iterative tasks such as undergraduate-level calculus surface sketching. Current benchmarks focus on discriminative or single-turn generative tasks. They do not test tool use, iterative revision, or pedagogical scaffolding.</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <span class="qa-ico">📄</span>
+      <div>
+        <div class="qa-main"><a href="toolchain.html#gap-pgfplots">2. The PGFplots integration frontier</a></div>
+        <p class="qa-sub">The literature shows a clear gap in agentic systems that can generate and revise plots with the LaTeX-native <code>PGFplots</code> package. Most systems use Python-based libraries such as <code>matplotlib</code>. These libraries have a simpler code-execution-feedback loop. The ability to control <code>PGFplots</code> is a useful edge. It also opens a mostly unexplored research area.</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <span class="qa-ico">🧊</span>
+      <div>
+        <div class="qa-main"><a href="sketching.html#gap-3d">3. Nascent capabilities in visual reasoning and sketching</a></div>
+        <p class="qa-sub">Sketching as a "chain of thought" for reasoning is an emerging idea. Current models, however, have severe limits in 3D spatial understanding. They show poor global structural reasoning. They fail to keep topological validity. They cannot read 3D space from 2D projections correctly. These limits are large hurdles for surface sketching in calculus.</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <span class="qa-ico">🎓</span>
+      <div>
+        <div class="qa-main"><a href="pedagogy.html#gap-pedagogy">4. The chasm of pedagogical ineffectiveness</a></div>
+        <p class="qa-sub">A repeated theme in recent literature is that even capable models fail as teaching tools. Agents often cannot make grade-appropriate explanations. They cannot match diagrams to problem meaning. They cannot use effective scaffolding. The move from "problem solver" to "autonomous tutor" is a large, under-researched challenge.</p>
+      </div>
+    </div>
+  </div>
+
+  <p>The report examines these findings in order. It maps the current field. It also gives a structured guide to the open research questions the agent can answer. With these capabilities, the work can help solve these challenges in AI for education and scientific discovery.</p>
+</section>
+
+<section id="guide">
+  <h2>🧭 How to read this review</h2>
+  <p>The review follows the structure of the source report. Each page covers one chapter:</p>
+  <table>
+    <thead>
+      <tr><th>Page</th><th>Covers</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><a href="benchmarks.html">Benchmarks</a></td><td>📊 Chapter 1 &mdash; The evolving landscape of multimodal mathematical reasoning evaluation, from <code>MathVista</code> to second-generation benchmarks, and the missing generative, agentic benchmarking.</td></tr>
+      <tr><td><a href="agents.html">Agent Architectures</a></td><td>🧩 Chapter 2 &mdash; Code-as-policy and multi-agent frameworks, sketching as a reasoning tool, and the need for adaptive, dynamic agent architectures.</td></tr>
+      <tr><td><a href="toolchain.html">Visualization Tools</a></td><td>🐍 Chapter 3 &mdash; A tale of two tools: the ubiquity of <code>matplotlib</code> in agentic workflows versus the research void in agentic control of <code>PGFplots</code>.</td></tr>
+      <tr><td><a href="sketching.html">3D Sketching</a></td><td>🧊 Chapter 4 &mdash; The frontier of 3D surface sketching: local versus global perception, 2D projection versus 3D reality, and iterative refinement loops.</td></tr>
+      <tr><td><a href="pedagogy.html">Pedagogy</a></td><td>🎓 Chapter 5 &mdash; The unaddressed challenge of pedagogical effectiveness and autonomous tutoring strategies.</td></tr>
+      <tr><td><a href="recommendations.html">Recommendations</a></td><td>📋 Chapter 6 &mdash; Conclusions and strategic recommendations for future research on each of the four gaps.</td></tr>
+      <tr><td><a href="references.html">References</a></td><td>📚 The full citation data behind the review, including sources not directly cited.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">Inline citations such as <a class="cite" href="references.html#ref-1">[1]</a> link to the numbered entries on the <a href="references.html">References</a> page. Every citation number matches the source report.</p>
+</section>
+
+<section id="terms">
+  <h2>📖 Key terms</h2>
+  <p>The terms below appear once in full, then by short name.</p>
+  <div class="card">
+    <p class="key-term"><span class="term">👁️ Vision-language model (VLM).</span> A model that reads both text and images, such as the open-source models discussed in this review. Also called a multimodal large language model (MLLM).</p>
+    <p class="key-term"><span class="term">🤖 Agent.</span> A program that loops: it asks the model for a step, runs the tools the model requests, and gives the tool output back to the model. The loop ends when the model stops calling tools.</p>
+    <p class="key-term"><span class="term">🧮 Code-as-policy.</span> A paradigm in which the model generates an explicit program (for example Python) that calls APIs or specialist modules to solve a visual task, instead of outputting the answer directly.</p>
+    <p class="key-term"><span class="term">📈 matplotlib / pyplot.</span> An imperative Python plotting library. Agents write code like <code>plt.plot()</code> and <code>plt.savefig()</code>; a code interpreter runs it and returns an image or an error message.</p>
+    <p class="key-term"><span class="term">📄 PGFplots.</span> A declarative LaTeX package for high-quality scientific plots, compiled into a PDF. Superior typographic consistency, but a harder challenge for agentic control.</p>
+    <p class="key-term"><span class="term">🧊 Chain of thought (CoT).</span> A prompting technique that elicits step-by-step reasoning. "Visual chain of thought" extends the idea to drawing diagrams as part of the reasoning process.</p>
+    <p class="key-term"><span class="term">🧭 Scaffolding.</span> A teaching strategy that breaks complex ideas into simpler steps and guides the student's learning process. The review finds current models universally weak at it.</p>
+    <p class="key-term"><span class="term">🧪 Benchmark.</span> A fixed set of problems used to measure a model or agent's capability. The review shows that current math benchmarks do not measure generative agentic tutoring tasks.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

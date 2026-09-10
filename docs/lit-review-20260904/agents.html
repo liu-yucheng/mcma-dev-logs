@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Agentic architectures for math-capable multimodal agents: code-as-policy, multi-agent systems, sketching as a reasoning tool, and the SkillGraph research gap of adaptive agent topologies.">
+<title>MCMA &mdash; Literature Review &middot; Agent Architectures</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.cite { color: var(--accent); text-decoration: none; font-size: .85em; }
+.cite:hover { text-decoration: underline; }
+.key-term { margin: 12px 0; }
+.key-term .term { font-weight: 700; }
+.qa-grid { display: grid; gap: 12px; margin: 18px 0; }
+.qa-card { display: flex; align-items: flex-start; gap: 14px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.qa-ico { font-size: 1.6rem; line-height: 1; }
+.qa-main { font-weight: 600; }
+.qa-sub { margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
+.card h3 { margin-top: 0; }
+ol.steps { margin: 12px 0 12px 22px; }
+ol.steps li { margin: 6px 0; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Literature Review &mdash; Chapter 2</div>
+    <h1>The Architecture of Autonomy: Agentic Frameworks and Their Limitations</h1>
+    <p class="lede">🤖 A math-capable multimodal system is not just a model. It is an agent. An agent perceives, reasons, and acts. The current literature on agentic architectures sets the context for autonomous capability. It also shows gaps in how these architectures are applied to complex mathematical tasks.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Literature review home" aria-label="Literature review home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="benchmarks.html">Benchmarks</a>
+    <a href="agents.html" aria-current="page">Agent Architectures</a>
+    <a href="toolchain.html">Visualization Tools</a>
+    <a href="sketching.html">3D Sketching</a>
+    <a href="pedagogy.html">Pedagogy</a>
+    <a href="recommendations.html">Recommendations</a>
+    <a href="references.html">References</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="code-as-policy">
+  <h2>🧩 2.1 Decomposing problems into executable steps</h2>
+  <p>A dominant paradigm in agentic reasoning is to break a complex problem into a sequence of simpler, often executable, steps. This neuro-symbolic approach improves interpretability and reliability.</p>
+
+  <div class="card">
+    <h3>Code-as-policy</h3>
+    <p>Systems such as <strong>ViperGPT</strong> <a class="cite" href="references.html#ref-9">[27]</a> and <strong>VisProg</strong> <a class="cite" href="references.html#ref-10">[28]</a> pioneered the idea of having an LLM generate code (for example, Python) that calls APIs or specialist models to solve a visual task. This approach answers a key weakness of end-to-end models: the entanglement of visual processing and logical reasoning <a class="cite" href="references.html#ref-139">[29]</a>. By generating an explicit program, the agent's reasoning becomes transparent and debuggable. The use of <code>pyplot</code> and <code>PGFplots</code> code generation fits this paradigm well.</p>
+  </div>
+
+  <div class="card">
+    <h3>Multi-agent systems</h3>
+    <p>More complex tasks often benefit from a society of collaborating agents. Frameworks such as <strong>MAGMA-Edu</strong> <a class="cite" href="references.html#ref-1">[30]</a> and <strong>MatPlotAgent</strong> <a class="cite" href="references.html#ref-57">[31]</a> use multiple specialized agents. For example, MAGMA-Edu uses a &ldquo;Code Generator Agent&rdquo; to create visualizations with <code>matplotlib.pyplot</code> <a class="cite" href="references.html#ref-43">[32]</a>. MatPlotAgent uses a &ldquo;visual agent&rdquo; to analyze plots and a &ldquo;code agent&rdquo; to write and debug the plotting code <a class="cite" href="references.html#ref-143">[33]</a>. This modularity allows more specialization and more robustness.</p>
+  </div>
+</section>
+
+<section id="sketching">
+  <h2>✏️ 2.2 The emerging paradigm of sketching as a reasoning tool</h2>
+  <p>A particularly relevant line of research for surface-sketching is the use of a &ldquo;sketchpad&rdquo;. It is not just an output canvas. It is an external cognitive tool that aids reasoning. This mimics how humans draw diagrams to think.</p>
+
+  <div class="card">
+    <h3>Visual sketchpads</h3>
+    <p><strong>Visual Sketchpad</strong> <a class="cite" href="references.html#ref-6">[34]</a> and <strong>Sketchpad</strong> <a class="cite" href="references.html#ref-146">[35]</a> address a major gap in MLLMs: the lack of an external working memory to offload visual-spatial information. These frameworks let an agent &ldquo;draw&rdquo; auxiliary elements such as lines, boxes, or marks onto a canvas <a class="cite" href="references.html#ref-86">[36]</a><a class="cite" href="references.html#ref-90">[37]</a>. The key insight is that the act of sketching is part of the reasoning process itself &mdash; a &ldquo;visual chain of thought&rdquo; <a class="cite" href="references.html#ref-138">[38]</a>. This approach has shown real performance gains on math problems that involve geometry and graphs <a class="cite" href="references.html#ref-147">[39]</a>.</p>
+    <p class="small">Related systems in the same line of work: SketchAgent (<a href="https://arxiv.org/abs/2411.17673">arXiv:2411.17673</a>) <a class="cite" href="references.html#ref-7">[40]</a>, TalkSketch <a class="cite" href="references.html#ref-26">[26]</a>, and reflection-in-action ideation frameworks <a class="cite" href="references.html#ref-27">[27]</a>.</p>
+  </div>
+
+  <h3>Research gap: from 2D auxiliary marks to 3D generative sketching</h3>
+  <div class="card">
+    <p>The current state of agentic sketching focuses on <strong>adding 2D auxiliary marks to existing images</strong> to solve a problem. This is fundamentally different from a tutoring agent's task: <strong>generating a complex 3D surface sketch from scratch</strong> based on a mathematical description (for example, an equation <code>z = f(x, y)</code>).</p>
+    <p class="key-term"><span class="term">❓ Open problem: How can agentic architectures be extended to support generative 3D sketching as a reasoning process?</span> This would involve more than plotting the final surface. The agent might sketch contour lines, gradient vectors, or cross-sections as intermediate reasoning steps. All of these would be orchestrated by the agent.</p>
+  </div>
+</section>
+
+<section id="gap-adaptive">
+  <h2>🕳️ 2.3 Research gap: adaptive and dynamic agent architectures</h2>
+  <p>Current multi-agent systems often rely on predefined workflows and fixed agent roles. This rigidity is a major limit when facing the open-ended nature of advanced mathematics.</p>
+
+  <div class="card">
+    <h3>The SkillGraph findings</h3>
+    <p>The <strong>SkillGraph</strong> paper <a class="cite" href="references.html#ref-8">[41]</a> identifies two critical gaps in multi-agent systems:</p>
+    <ul>
+      <li><strong>Fixed topologies.</strong> Agent graphs cannot adapt to the specific demands of a new task.</li>
+      <li><strong>Skill stagnation.</strong> Agents cannot refine their skills or heuristics on their own when they meet novel problems or &ldquo;blind spots.&rdquo;</li>
+    </ul>
+  </div>
+
+  <p>This applies directly to a tutoring agent. An advanced calculus problem may need a sequence of actions that a fixed architecture cannot foresee. The agent may first manipulate symbols (with a CAS tool). It may then draw a 3D plot (<code>PGFplots</code>). It may then analyze the plot to find a feature. Finally, it may draw a 2D contour plot (<code>pyplot</code>) to explain that feature to the student.</p>
+
+  <div class="card">
+    <p class="key-term"><span class="term">❓ Major research question: How can we develop dynamically reconfigurable multi-agent architectures for mathematical tutoring</span> &mdash; where the agent team and their collaboration workflow adapt in real time to the complexity of the problem and the pedagogical needs of the student?</p>
+    <p>An agent with a diverse toolset &mdash; symbolic, 3D generation, contour mapping &mdash; provides an ideal platform to explore solutions to this &ldquo;skill stagnation&rdquo; problem.</p>
+  </div>
+
+  <p class="small">📄 Continue to <a href="toolchain.html">Chapter 3 &mdash; Visualization Tools</a>: a tale of two tools (<code>pyplot</code> vs. <code>PGFplots</code>).</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>
