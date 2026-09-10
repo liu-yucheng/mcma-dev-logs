@@ -1,0 +1,29 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$x$},
+    ylabel={$y$},
+    title={Cross-section at $z=1$: Lines},
+    grid=major,
+    width=8cm,
+    height=6cm,
+    axis lines=middle,
+    xmin=-3, xmax=7,
+    ymin=-5, ymax=3,
+    xlabel style={at={(current axis.right of origin)}, anchor=west},
+    ylabel style={at={(current axis.above origin)}, anchor=south},
+]
+% Plot the lines x-2 = y+1 and x-2 = -(y+1)
+\addplot[blue, thick, domain=-5:3] ({y+3}, {y});
+\addplot[red, thick, domain=-5:3] ({1-y}, {y});
+% Plot the vertex
+\addplot[black, mark=*, only marks] coordinates {(2, -1)};
+% Add legend
+\legend{$x-2 = y+1$, $x-2 = -(y+1)$, Vertex (2,-1,1)}
+\end{axis}
+\end{tikzpicture}
+\end{document}

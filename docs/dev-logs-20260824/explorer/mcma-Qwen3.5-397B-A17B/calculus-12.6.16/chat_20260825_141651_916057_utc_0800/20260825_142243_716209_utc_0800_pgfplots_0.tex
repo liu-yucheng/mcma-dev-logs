@@ -1,0 +1,24 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$x$,
+    ylabel=$y$,
+    zlabel=$z$,
+    title={Elliptic Paraboloid: $z = -4x^2 - 9y^2$},
+    view={45}{30},
+    colormap/viridis,
+    grid=major,
+    ]
+    \addplot3[
+        surf,
+        domain=-2:2,
+        y domain=-2:2,
+        samples=30,
+        opacity=0.8
+    ] {-4*x^2 - 9*y^2};
+\end{axis}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,18 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=8cm,
+    xlabel={$x$}, ylabel={$z$},
+    xmin=-4, xmax=4,
+    ymin=-2, ymax=2,
+    axis equal,
+    title={$xz$-trace ($y=0$): $x^2=4z^2$}
+]
+\addplot[domain=-2:2, samples=100, purple, thick] {0.5*x};
+\addplot[domain=-2:2, samples=100, purple, thick] {-0.5*x};
+\end{axis}
+\end{tikzpicture}
+\end{document}

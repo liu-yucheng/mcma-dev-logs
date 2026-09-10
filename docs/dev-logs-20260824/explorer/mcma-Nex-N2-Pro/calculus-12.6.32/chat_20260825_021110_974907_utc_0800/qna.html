@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260825_021110_974907_utc_0800 — Q&amp;A · mcma-Nex-N2-Pro &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260825_021110_974907_utc_0800</h1>
+    <p class="lede">The <code>_qna.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>mcma-Nex-N2-Pro/calculus-12.6.32/chat_20260825_021110_974907_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+Please solve the math problem in the image.
+
+
+
+
+
+
+
+<figure class="refimg"><img class="zimg" src="./20260825_021110_974907_utc_0800_qna/20260825_021110_974907_utc_0800_0.png" alt="Image: 20260825_021110_974907_utc_0800_qna"><figcaption>20260825_021110_974907_utc_0800_0.png</figcaption></figure>
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+Given
+$$
+y^2=x^2+4z^2+4,
+$$
+move the $x^2$ and $z^2$ terms to the left:
+$$
+y^2-x^2-4z^2=4.
+$$
+Divide by $4$:
+$$
+\frac{y^2}{4}-\frac{x^2}{4}-z^2=1.
+$$
+Equivalently,
+$$
+\frac{y^2}{2^2}-\frac{x^2}{2^2}-\frac{z^2}{1^2}=1.
+$$
+
+This is the standard form of a **two-sheeted hyperboloid** whose axis is the $y$-axis. The positive squared term is the $y$-term, so the two sheets open in the positive and negative $y$ directions. The vertices are at
+$$
+(0,2,0)\quad\text{and}\quad(0,-2,0).
+$$
+
+A useful way to sketch it is to look at traces:
+
+- In the plane $x=0$:
+  $$
+  \frac{y^2}{4}-z^2=1,
+  $$
+  a hyperbola opening upward and downward.
+- In the plane $z=0$:
+  $$
+  \frac{y^2}{4}-\frac{x^2}{4}=1,
+  $$
+  also a hyperbola opening upward and downward.
+- For $|y|>2$, horizontal traces $y=k$ are ellipses:
+  $$
+  \frac{x^2}{4}+z^2=\frac{k^2-4}{4}.
+  $$
+- For $|y|<2$, there are no real points.
+
+Therefore the surface consists of two separate bowl-like sheets, one above $y=2$ and one below $y=-2$.
+
+$$
+\boxed{\frac{y^2}{4}-\frac{x^2}{4}-z^2=1,\ \text{two-sheeted hyperboloid with axis along the }y\text{-axis}.}
+$$
+
+---
+
+
+
+
+
+<figure class="refimg"><img class="zimg" src="./20260825_021110_974907_utc_0800_qna/20260825_021110_974907_utc_0800_1.png" alt="Image: 20260825_021110_974907_utc_0800_qna"><figcaption>20260825_021110_974907_utc_0800_1.png</figcaption></figure>
+
+
+
+<figure class="refimg"><img class="zimg" src="./20260825_021110_974907_utc_0800_qna/20260825_021110_974907_utc_0800_2.png" alt="Image: 20260825_021110_974907_utc_0800_qna"><figcaption>20260825_021110_974907_utc_0800_2.png</figcaption></figure>
+
+
+
+---
+
+[PGFplots / tikz plot.](./20260825_021210_697061_utc_0800_pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\pgfplotsset{trig format plots=rad}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm,
+    height=8cm,
+    xlabel=$x$,
+    ylabel=$y$,
+    zlabel=$z$,
+    title={Two-sheeted hyperboloid: $y^2/4-x^2/4-z^2=1$},
+    view={-55}{22},
+    xmin=-4, xmax=4,
+    ymin=-5, ymax=5,
+    zmin=-3, zmax=3,
+    grid=major,
+    colormap={twosheet}{color=(orange) color=(blue)}
+]
+\addplot3[
+    surf,
+    domain=0:1.55,
+    y domain=0:2*pi,
+    samples=35,
+    samples y=50,
+    shader=flat,
+    opacity=0.75,
+    color=blue
+]
+({2*sinh(x)*cos(y)}, {2*cosh(x)}, {sin(y)});
+
+\addplot3[
+    surf,
+    domain=0:1.55,
+    y domain=0:2*pi,
+    samples=35,
+    samples y=50,
+    shader=flat,
+    opacity=0.75,
+    color=orange
+]
+({2*sinh(x)*cos(y)}, {-2*cosh(x)}, {sin(y)});
+
+\addplot3[only marks, mark=*, mark size=1.5pt, black] coordinates {(0,2,0) (0,-2,0)};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+
+
+<figure class="refimg"><img class="zimg" src="./20260825_021110_974907_utc_0800_qna/20260825_021110_974907_utc_0800_3.png" alt="Image: 20260825_021110_974907_utc_0800_qna"><figcaption>20260825_021110_974907_utc_0800_3.png</figcaption></figure>
+
+
+
+[PGFplots / tikz plot.](./20260825_021210_697061_utc_0800_pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=9cm,
+    height=8cm,
+    xlabel=$z$,
+    ylabel=$y$,
+    title={Trace in the plane $x=0$: $y^2/4-z^2=1$},
+    xmin=-5, xmax=5,
+    ymin=-5, ymax=5,
+    axis lines=center,
+    grid=major,
+    axis equal image,
+    domain=2:5,
+    samples=200
+]
+\addplot[blue, thick] ({x}, {2*sqrt(1+x^2/4)});
+\addplot[blue, thick] ({-x}, {2*sqrt(1+x^2/4)});
+\addplot[orange, thick] ({x}, {-2*sqrt(1+x^2/4)});
+\addplot[orange, thick] ({-x}, {-2*sqrt(1+x^2/4)});
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+
+
+<figure class="refimg"><img class="zimg" src="./20260825_021110_974907_utc_0800_qna/20260825_021110_974907_utc_0800_4.png" alt="Image: 20260825_021110_974907_utc_0800_qna"><figcaption>20260825_021110_974907_utc_0800_4.png</figcaption></figure>
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>mcma-Nex-N2-Pro/calculus-12.6.32/chat_20260825_021110_974907_utc_0800</code>, experiment log <code>dev-logs-20260824</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$x$},
+    ylabel={$y$},
+    title={Trace in $x$-$y$ plane ($z=0$): $y = -x^2/2$},
+    domain=-3:3,
+    samples=50,
+    axis lines=middle,
+    width=10cm,
+    height=8cm
+]
+\addplot[blue, thick] {-x^2/2};
+\end{axis}
+\end{tikzpicture}
+\end{document}

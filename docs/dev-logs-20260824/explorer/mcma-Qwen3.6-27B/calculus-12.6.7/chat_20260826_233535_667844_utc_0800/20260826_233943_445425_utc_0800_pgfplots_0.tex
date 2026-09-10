@@ -1,0 +1,19 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={60}{30},
+    xlabel={$x$},
+    ylabel={$y$},
+    zlabel={$z$},
+    title={$xy = 1$},
+    width=10cm,
+    height=8cm
+]
+\addplot3[domain=0.3:2, y domain=-1.5:1.5, surf, samples=6, samples y=4, blue!30] ({x}, {1/x}, {y});
+\addplot3[domain=-2:-0.3, y domain=-1.5:1.5, surf, samples=6, samples y=4, red!30] ({x}, {1/x}, {y});
+\end{axis}
+\end{tikzpicture}
+\end{document}
