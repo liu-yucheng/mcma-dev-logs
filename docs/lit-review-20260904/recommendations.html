@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Conclusion and strategic recommendations for future research: the benchmarking gap, the PGFplots integration gap, the 3D spatial reasoning gap, and the pedagogical effectiveness gap.">
+<title>MCMA &mdash; Literature Review &middot; Recommendations</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.cite { color: var(--accent); text-decoration: none; font-size: .82em; }
+.cite:hover { text-decoration: underline; }
+.key-term { margin: 12px 0; }
+.key-term .term { font-weight: 700; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .78rem; font-weight: 600; margin-right: 6px; }
+.badge.gap { background: #fbe4de; color: var(--warn); }
+.badge.rec { background: #e1f2e6; color: var(--accent-2); }
+.stat-warn { background: #fdf1ee; border-color: #ecb7a6; }
+.stat-warn .num { color: #b23a1c; }
+.stat-ok { background: #eef8f1; border-color: #aed8bd; }
+.stat-ok .num { color: #2f6f4f; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Literature Review &mdash; Chapter 6</div>
+    <h1>Conclusion and Strategic Recommendations for Future Research</h1>
+    <p class="lede">🎯 A math-capable multimodal AI agent with <code>pyplot</code> and <code>PGFplots</code> integration for autonomous tutoring sits at the meeting point of several major research frontiers. The review identifies four significant, actionable research gaps. Such an agent is uniquely placed to fill them.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Literature review home" aria-label="Literature review home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="benchmarks.html">Benchmarks</a>
+    <a href="agents.html">Agent Architectures</a>
+    <a href="toolchain.html">Visualization Tools</a>
+    <a href="sketching.html">3D Sketching</a>
+    <a href="pedagogy.html">Pedagogy</a>
+    <a href="recommendations.html" aria-current="page">Recommendations</a>
+    <a href="references.html">References</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="summary-gaps">
+  <h2>📋 The four research gaps at a glance</h2>
+  <div class="stat-grid">
+    <div class="stat stat-warn"><div class="num">1</div><div class="lbl">📊 The benchmarking gap &mdash; no benchmark for generative, iterative, pedagogically-oriented agentic tasks such as calculus surface sketching</div></div>
+    <div class="stat stat-warn"><div class="num">2</div><div class="lbl">📄 The PGFplots integration gap &mdash; no research on autonomous agents that generate and revise plots with the declarative PGFplots/LaTeX toolchain</div></div>
+    <div class="stat stat-warn"><div class="num">3</div><div class="lbl">🧊 The 3D spatial reasoning gap &mdash; models cannot reason robustly about 3D geometry; topology errors and 2D/3D confusion</div></div>
+    <div class="stat stat-warn"><div class="num">4</div><div class="lbl">🎓 The pedagogical effectiveness gap &mdash; the chasm between technical problem-solving and effective teaching</div></div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Gap</th><th>What is missing</th><th>Recommendation</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge gap">Gap 1</span>The benchmarking gap</td>
+        <td>Benchmarks for evaluating generative, iterative, and pedagogically-oriented agentic tasks such as calculus surface sketching.</td>
+        <td><span class="badge rec">Act</span>Propose and create a new benchmark, &ldquo;Calculus Sketch.&rdquo; It would evaluate agents on generating, revising, and pedagogically annotating 3D surfaces and related plots.</td>
+      </tr>
+      <tr>
+        <td><span class="badge gap">Gap 2</span>The PGFplots integration gap</td>
+        <td>Research on autonomous agents that generate and revise plots with the declarative, high-fidelity PGFplots/LaTeX toolchain.</td>
+        <td><span class="badge rec">Act</span>Publish a foundational paper that details the PGFplots workflow of a math-capable multimodal agent. Conduct a comparative study of the <code>matplotlib</code> vs. <code>PGFplots</code> toolchains for agentic control. Compare strengths, weaknesses, and error modes. This is a wide-open area for high-impact research.</td>
+      </tr>
+      <tr>
+        <td><span class="badge gap">Gap 3</span>The 3D spatial reasoning gap</td>
+        <td>Robust reasoning about 3D geometry: errors in topology, confusion of 2D projections with 3D reality.</td>
+        <td><span class="badge rec">Act</span>Investigate and design novel self-correction mechanisms that enforce topological validity in generated surfaces. Explore hybrid architectures. Combine the VLM's language capability with a formal geometry engine to improve spatial reasoning.</td>
+      </tr>
+      <tr>
+        <td><span class="badge gap">Gap 4</span>The pedagogical effectiveness gap</td>
+        <td>The leap from problem-solving to teaching: current models fail to produce pedagogically sound or helpful educational content.</td>
+        <td><span class="badge rec">Act</span>Develop a &ldquo;pedagogical planner&rdquo; module. It decides what to visualize and how to explain it, based on the calculus concept and a model of the student's understanding. Conduct user studies that compare educational impact against static diagrams or less capable systems.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="position">
+  <h2>🧭 Why this is a research platform, not an incremental improvement</h2>
+  <div class="card">
+    <p>By addressing these gaps in order, this line of work can make real contributions to artificial intelligence, human-computer interaction, and computational education. The agent in this review is more than an incremental improvement. It is a new research platform. With these capabilities, the work can help solve these open problems in AI for education and scientific discovery. It can pave the way for a new generation of capable, effective autonomous tutors.</p>
+  </div>
+</section>
+
+<section id="reading-path">
+  <h2>📖 The gaps, mapped to this site</h2>
+  <table>
+    <thead><tr><th>Open chapter</th><th>Chapter page</th></tr></thead>
+    <tbody>
+      <tr><td>The benchmarking void and its open problem</td><td><a href="benchmarks.html#gap-benchmarking">Chapter 1 &mdash; Benchmarks</a></td></tr>
+      <tr><td>Sketching as reasoning &amp; adaptive agent architectures</td><td><a href="agents.html#gap-adaptive">Chapter 2 &mdash; Agent Architectures</a></td></tr>
+      <tr><td>Agentic control of PGFplots and open problems</td><td><a href="toolchain.html#gap-pgfplots">Chapter 3 &mdash; Visualization Tools</a></td></tr>
+      <tr><td>Topological validity and 3D geometric intuition</td><td><a href="sketching.html#gap-3d">Chapter 4 &mdash; 3D Sketching</a></td></tr>
+      <tr><td>Autonomous pedagogy open problems</td><td><a href="pedagogy.html#gap-pedagogy">Chapter 5 &mdash; Pedagogy</a></td></tr>
+    </tbody>
+  </table>
+  <p class="small">All citation data is on the <a href="references.html">References</a> page.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

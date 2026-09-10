@@ -1,0 +1,56 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={-55}{22},
+    width=11cm,
+    height=9cm,
+    xlabel={$x$},
+    ylabel={$y$},
+    zlabel={$z$},
+    title={Hyperboloid of two sheets: $-x^2+4y^2-z^2=4$},
+    xmin=-5, xmax=5,
+    ymin=-4, ymax=4,
+    zmin=-5, zmax=5,
+    grid=major,
+]
+\addplot3[
+    surf,
+    shader=interp,
+    opacity=0.72,
+    domain=1:4,
+    y domain=0:360,
+    samples=25,
+    samples y=45,
+    colormap={upper}{rgb255=(180,220,255); rgb255=(40,110,210)},
+]
+({2*sqrt(x^2-1)*cos(deg(y))}, {x}, {2*sqrt(x^2-1)*sin(deg(y))});
+\addplot3[
+    surf,
+    shader=interp,
+    opacity=0.72,
+    domain=-4:-1,
+    y domain=0:360,
+    samples=25,
+    samples y=45,
+    colormap={lower}{rgb255=(255,190,190); rgb255=(210,50,50)},
+]
+({2*sqrt(x^2-1)*cos(deg(y))}, {x}, {2*sqrt(x^2-1)*sin(deg(y))});
+\addplot3+[domain=0:360, samples=90, thick, blue, no markers]
+({2*sqrt(1.2^2-1)*cos(deg(x))}, {1.2}, {2*sqrt(1.2^2-1)*sin(deg(x))});
+\addplot3+[domain=0:360, samples=90, thick, blue, dashed, no markers]
+({2*sqrt(2^2-1)*cos(deg(x))}, {2}, {2*sqrt(2^2-1)*sin(deg(x))});
+\addplot3+[domain=0:360, samples=90, thick, orange, dashed, no markers]
+({2*sqrt(3^2-1)*cos(deg(x))}, {3}, {2*sqrt(3^2-1)*sin(deg(x))});
+\addplot3+[domain=0:360, samples=90, thick, blue, dashed, no markers]
+({2*sqrt(2^2-1)*cos(deg(x))}, {-2}, {2*sqrt(2^2-1)*sin(deg(x))});
+\addplot3+[domain=0:360, samples=90, thick, orange, dashed, no markers]
+({2*sqrt(3^2-1)*cos(deg(x))}, {-3}, {2*sqrt(3^2-1)*sin(deg(x))});
+\addplot3[only marks, mark=*, mark size=1.3pt, black] coordinates {(0,1,0) (0,-1,0)};
+\node at (axis cs:0.25,1.25,0) {$(0,1,0)$};
+\node at (axis cs:0.25,-1.25,0) {$(0,-1,0)$};
+\end{axis}
+\end{tikzpicture}
+\end{document}

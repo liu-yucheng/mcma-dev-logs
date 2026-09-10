@@ -1,0 +1,68 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{colormaps}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={60}{30},
+    xlabel={$X$},
+    ylabel={$Y$},
+    zlabel={$Z$},
+    title={Ellipsoid: $25x^2 + 4y^2 + z^2 = 100$},
+    axis equal,
+    width=12cm,
+    height=10cm,
+    grid=major,
+    colormap/viridis,
+    ]
+    % Parametric plot of the ellipsoid
+    % x = 2 cos(u) sin(v)
+    % y = 5 sin(u) sin(v)
+    % z = 10 cos(v)
+    \addplot3[
+        surf,
+        shader=interp,
+        opacity=0.6,
+        domain=0:360,
+        y domain=0:180,
+        samples=30,
+        samples y=15,
+        colormap/viridis
+    ] 
+    ({2*cos(x)*sin(y)}, {5*sin(x)*sin(y)}, {10*cos(y)});
+
+    % xy-trace (z=0): x^2/4 + y^2/25 = 1
+    % x = 2 cos(t), y = 5 sin(t), z = 0
+    \addplot3[
+        domain=0:360,
+        samples=100,
+        thick,
+        color=red
+    ]
+    ({2*cos(x)}, {5*sin(x)}, 0);
+
+    % xz-trace (y=0): x^2/4 + z^2/100 = 1
+    % x = 2 cos(t), y = 0, z = 10 sin(t)
+    \addplot3[
+        domain=0:360,
+        samples=100,
+        thick,
+        color=green!70!black
+    ]
+    ({2*cos(x)}, 0, {10*sin(x)});
+
+    % yz-trace (x=0): y^2/25 + z^2/100 = 1
+    % x = 0, y = 5 cos(t), z = 10 sin(t)
+    \addplot3[
+        domain=0:360,
+        samples=100,
+        thick,
+        color=magenta
+    ]
+    (0, {5*cos(x)}, {10*sin(x)});
+
+\end{axis}
+\end{tikzpicture}
+\end{document}

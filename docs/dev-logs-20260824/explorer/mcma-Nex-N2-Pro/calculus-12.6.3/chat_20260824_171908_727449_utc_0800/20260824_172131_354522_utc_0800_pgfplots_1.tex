@@ -1,0 +1,38 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={-60}{20},
+    xlabel={$x$},
+    ylabel={$y$},
+    zlabel={$z$},
+    xmin=-2.3, xmax=2.3,
+    ymin=-2.3, ymax=2.3,
+    zmin=-2.3, zmax=2.3,
+    width=9cm,
+    height=7cm,
+    grid=major,
+    title={Circular cylinder $x^2+z^2=1$ along the $y$-axis}
+]
+\addplot3[
+    surf,
+    shader=interp,
+    opacity=0.45,
+    faceted color=white,
+    colormap={bluegray}{rgb255=(219,235,252) rgb255=(69,117,180)},
+    domain=0:360,
+    y domain=-2.2:2.2,
+    samples=50,
+    samples y=20
+]
+({cos(deg(x))}, {y}, {sin(deg(x))});
+
+\addplot3+[domain=0:360, samples=80, smooth, blue, thick, mark=none]
+    ({cos(deg(x))}, {-2.2}, {sin(deg(x))});
+\addplot3+[domain=0:360, samples=80, smooth, blue, thick, mark=none]
+    ({cos(deg(x))}, {2.2}, {sin(deg(x))});
+\end{axis}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The frontier of 3D surface sketching for calculus tutoring: local versus global perception, 2D projection versus 3D reality, and the iterative refinement feedback loop.">
+<title>MCMA &mdash; Literature Review &middot; 3D Sketching</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.cite { color: var(--accent); text-decoration: none; font-size: .82em; }
+.cite:hover { text-decoration: underline; }
+.key-term { margin: 12px 0; }
+.key-term .term { font-weight: 700; }
+.qa-grid { display: grid; gap: 12px; margin: 18px 0; }
+.qa-card { display: flex; align-items: flex-start; gap: 14px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.qa-ico { font-size: 1.6rem; line-height: 1; }
+.qa-main { font-weight: 600; }
+.qa-sub { margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
+.card h3 { margin-top: 0; }
+.boxed-note { background: #fff8e6; border: 1px solid #eddcae; border-radius: 8px; padding: 12px 16px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Literature Review &mdash; Chapter 4</div>
+    <h1>The Frontier of 3D Surface Sketching: Fundamental Challenges in Spatial Reasoning</h1>
+    <p class="lede">🧊 The target application is sketching surfaces in undergraduate calculus. This puts an agent in one of the hardest areas for current MLLMs: 3D spatial reasoning and generation. The literature identifies several fundamental limits. These limits are major research hurdles.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Literature review home" aria-label="Literature review home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="benchmarks.html">Benchmarks</a>
+    <a href="agents.html">Agent Architectures</a>
+    <a href="toolchain.html">Visualization Tools</a>
+    <a href="sketching.html" aria-current="page">3D Sketching</a>
+    <a href="pedagogy.html">Pedagogy</a>
+    <a href="recommendations.html">Recommendations</a>
+    <a href="references.html">References</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="global-structure">
+  <h2>🧊 4.1 The gap between local perception and global structure</h2>
+  <p>A key finding is that MLLMs often excel at local visual feature recognition. But they fail to assemble these features into a coherent global structure. One study noted that models show &ldquo;strong local visual parsing but weak global structural reasoning&rdquo; <a class="cite" href="references.html#ref-127">[57]</a>. They can identify points, lines, and labels. They cannot comprehend the overall topological network of a complex diagram <a class="cite" href="references.html#ref-131">[58]</a>.</p>
+
+  <h3>Application to surface sketching</h3>
+  <div class="card">
+    <p>When sketching a surface such as <code>z = sin(x) &middot; cos(y)</code>, an agent must keep global consistency. The peaks and troughs must align correctly. The periodicity must hold across the whole domain. The surface must stay continuous where the function is continuous. An agent with weak global reasoning might produce a plot with locally correct-looking waves. The waves would be globally misaligned or disconnected.</p>
+  </div>
+
+  <h3 id="gap-3d">The topological validity challenge</h3>
+  <div class="card">
+    <p>This issue is also noted in 3D generation. One paper highlights that general-purpose VLMs often fail to produce topologically valid outputs in zero-shot settings when they generate 3D surfaces from sketches <a class="cite" href="references.html#ref-41">[59]</a>. Achieving validity needs specialized, structured approaches <a class="cite" href="references.html#ref-171">[60]</a>. This is a direct and difficult challenge.</p>
+    <p class="key-term"><span class="term">❓ Open problem:</span> <strong>What mechanisms or self-correction routines can an agent use to ensure the topological validity of the calculus surfaces it generates?</strong></p>
+  </div>
+</section>
+
+<section id="projection">
+  <h2>📐 4.2 Confusion between 2D projection and 3D reality</h2>
+  <p>Another documented failure mode is the inability to infer true 3D geometry from 2D representations.</p>
+
+  <h3>Euclidean vs. projected space</h3>
+  <div class="card">
+    <p>A study on 3D spatial reasoning found that models often make critical errors. For example, they measure distances along the 2D projected surface of an image rather than calculating the true 3D Euclidean distance <a class="cite" href="references.html#ref-42">[61]</a>. They also struggle with geometric concepts such as foreshortening and occlusion <a class="cite" href="references.html#ref-173">[62]</a>.</p>
+  </div>
+
+  <h3>Implications for tutoring</h3>
+  <div class="card">
+    <p>This is a huge problem for a tutoring agent. A calculus student learning about surface integrals or gradients on a 3D surface needs to understand the true 3D geometry. If the tutoring agent itself is &ldquo;thinking&rdquo; in 2D projected space, it cannot give correct geometric intuitions. For example, it might fail to see a gradient as perpendicular to a level curve on the surface.</p>
+  </div>
+
+  <h3>Open research question</h3>
+  <div class="boxed-note">
+    <p><strong>❓ How can we give multimodal agents a genuine 3D &ldquo;geometric intuition&rdquo;?</strong> This lets them reason about and render surfaces while accounting for perspective, occlusion, and Euclidean geometry. It may require moving beyond standard VLM architectures. It may require explicit 3D geometry engines or neuro-symbolic geometric reasoners.</p>
+  </div>
+</section>
+
+<section id="feedback-loop">
+  <h2>🔁 4.3 The iterative refinement and feedback loop</h2>
+  <p>Generating and revising a plot is not only technical. It is also cognitive. State-of-the-art agents use a feedback loop. This is a nascent but fast-moving area of research.</p>
+
+  <h3>Multi-agent validation</h3>
+  <div class="card">
+    <p>The most common pattern is a multi-agent system. One agent generates a plot, and another validates it. <strong>MatPlotAgent</strong> uses a &ldquo;visual agent&rdquo; to analyze the rendered plot and give feedback to a &ldquo;code agent&rdquo; for revision <a class="cite" href="references.html#ref-162">[63]</a>. <strong>PlotGen</strong> uses a &ldquo;numeric feedback agent&rdquo; to validate data trends against user expectations <a class="cite" href="references.html#ref-161">[64]</a>.</p>
+  </div>
+
+  <h3>The &ldquo;user-in-the-loop&rdquo; model</h3>
+  <div class="card">
+    <p>In a tutoring context, the student is the ultimate user. Research into tutoring systems highlights the value of dynamic plotting as a form of feedback to respond to student mistakes <a class="cite" href="references.html#ref-39">[65]</a>. General Socratic tutoring frameworks such as <strong>AutoTutor-LLM</strong> focus on tracking student misconceptions to calibrate feedback <a class="cite" href="references.html#ref-178">[66]</a>. But using plot revision as a feedback modality is under-explored.</p>
+  </div>
+
+  <h3>Research gap in pedagogical revision</h3>
+  <div class="card">
+    <p>The current revision models (PlotGen, MatPlotAgent) focus on technical correctness: &ldquo;Does the plot match the data or query?&rdquo; An educational context adds a new layer of complexity. The feedback loop must be driven by pedagogical goals.</p>
+    <p class="key-term"><span class="term">❓ Open question: How can an autonomous tutoring agent use student feedback (for example, &ldquo;I don't understand why the surface is curved there&rdquo;) to revise a generated plot for teaching?</span> This is not about fixing a bug in the code. It is about re-generating the visualization to show a concept more clearly. The agent may add annotations, change the viewing angle, or overlay a tangent plane.</p>
+  </div>
+
+  <p class="small">📄 Continue to <a href="pedagogy.html">Chapter 5 &mdash; The Unaddressed Challenge: Pedagogical Effectiveness</a>.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

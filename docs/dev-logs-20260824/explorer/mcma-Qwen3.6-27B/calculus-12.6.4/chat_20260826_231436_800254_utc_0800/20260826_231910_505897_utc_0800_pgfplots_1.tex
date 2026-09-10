@@ -1,0 +1,20 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={$x$},
+    ylabel={$y$},
+    width=10cm,
+    height=8cm,
+    xmin=-1.5, xmax=1.5,
+    ymin=-2.5, ymax=2.5,
+    grid=major
+]
+\addplot[domain=0:6.28, samples=100, blue, thick] ({cos(x)}, {2*sin(x)});
+\addplot[only marks, mark=*, red] coordinates {(1,0) (-1,0) (0,2) (0,-2)};
+\end{axis}
+\end{tikzpicture}
+\end{document}
