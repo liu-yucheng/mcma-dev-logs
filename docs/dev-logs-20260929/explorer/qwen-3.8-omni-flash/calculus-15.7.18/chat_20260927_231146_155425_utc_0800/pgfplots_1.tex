@@ -1,0 +1,57 @@
+\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows.meta}
+\pgfplotsset{compat=1.18, trig format plots=deg}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=8.2cm, height=8.2cm, axis equal,
+    xlabel={$y$}, ylabel={$z$},
+    xmin=-0.5,xmax=3.6, ymin=-0.6,ymax=3.4,
+    xtick={0,1,2,3}, ytick={0,1,2,3},
+    grid=major, grid style={gray!35},
+]
+% ---- quarter disk D (filled, dense polygon) ----
+\addplot[fill=green, opacity=0.22, draw=none] coordinates {
+  (0,0) (3.0000,0.0000) (2.9990,0.0785) (2.9959,0.1570) (2.9908,0.2354)
+  (2.9836,0.3136) (2.9743,0.3916) (2.9631,0.4693) (2.9498,0.5467)
+  (2.9344,0.6237) (2.9171,0.7003) (2.8978,0.7765) (2.8765,0.8520)
+  (2.8532,0.9271) (2.8279,1.0014) (2.8007,1.0751) (2.7716,1.1481)
+  (2.7406,1.2202) (2.7078,1.2915) (2.6730,1.3620) (2.6365,1.4315)
+  (2.5981,1.5000) (2.5579,1.5675) (2.5160,1.6339) (2.4724,1.6992)
+  (2.4271,1.7634) (2.3801,1.8263) (2.3314,1.8880) (2.2812,1.9483)
+  (2.2294,2.0074) (2.1761,2.0651) (2.1213,2.1213) (2.0651,2.1761)
+  (2.0074,2.2294) (1.9483,2.2812) (1.8880,2.3314) (1.8263,2.3801)
+  (1.7634,2.4271) (1.6992,2.4724) (1.6339,2.5160) (1.5675,2.5579)
+  (1.5000,2.5981) (1.4315,2.6365) (1.3620,2.6730) (1.2915,2.7078)
+  (1.2202,2.7406) (1.1481,2.7716) (1.0751,2.8007) (1.0014,2.8279)
+  (0.9271,2.8532) (0.8520,2.8765) (0.7765,2.8978) (0.7003,2.9171)
+  (0.6237,2.9344) (0.5467,2.9498) (0.4693,2.9631) (0.3916,2.9743)
+  (0.3136,2.9836) (0.2354,2.9908) (0.1570,2.9959) (0.0785,2.9990)
+  (0.0000,3.0000) (0,0)};
+% ---- boundary of D ----
+\addplot[black, line width=1.3pt, domain=0:90, samples=80] ({3*cos(x)}, {3*sin(x)});
+\addplot[black, line width=1.3pt] coordinates {(0,0) (3,0)};
+\addplot[black, line width=1.3pt] coordinates {(0,0) (0,3)};
+
+% ---- sample polar ray to the point (y,z) ----
+\addplot[-{Stealth[length=2mm]}, red!65!black, line width=1.2pt]
+  coordinates {(0,0) (1.8137,1.4153)};
+\addplot[blue!60!black, line width=1.1pt, domain=0:38, samples=40]
+  ({0.85*cos(x)}, {0.85*sin(x)});
+\node[blue!60!black, font=\bfseries] at (axis cs:1.05,0.48) {$\theta$};
+\node[red!65!black, font=\bfseries] at (axis cs:0.70,0.88) {$r$};
+\addplot[only marks, mark=*, mark size=2pt, black] coordinates {(1.8137,1.4153)};
+\node[black, anchor=west] at (axis cs:1.87,1.45) {$(y,z)$};
+
+% ---- annotations ----
+\node[green!30!black, font=\bfseries] at (axis cs:1.55,-0.42)
+     {$D:\;y^2+z^2\le 9,\;y\ge 0,\;z\ge 0$};
+\node[black] at (axis cs:2.48,2.48) {$r=3$};
+\node[blue!60!black] at (axis cs:0.48,3.16) {$\theta=\pi/2$};
+\node[blue!60!black] at (axis cs:2.60,0.17) {$\theta=0$};
+\node[red!60!black, align=center, font=\small] at (axis cs:3.02,1.02)
+     {$0\le x\le y/3$};
+\end{axis}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,42 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm, height=11cm,
+    view={50}{22},
+    axis lines=center,
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=-2, xmax=2, ymin=-2, ymax=2, zmin=0, zmax=5.4,
+    domain=0:360, y domain=0:1.5811,
+    samples=48, samples y=22,
+    z buffer=sort,
+    colormap/viridis,
+    hide axis=false,
+]
+% upper paraboloid  z = 5 - x^2 - y^2  (parametric in polar coords)
+\addplot3[
+    surf, shader=interp, opacity=0.55, colormap/winter,
+    domain=0:360, y domain=0:1.5811, samples=48, samples y=22
+]
+  ({y*cos(x)}, {y*sin(x)}, {5 - y^2});
+
+% lower paraboloid  z = x^2 + y^2
+\addplot3[
+    surf, shader=interp, opacity=0.55, colormap/autumn,
+    domain=0:360, y domain=0:1.5811, samples=48, samples y=22
+]
+  ({y*cos(x)}, {y*sin(x)}, {y^2});
+
+% intersection circle  r = sqrt(5/2), z = 5/2
+\addplot3[
+    no markers, thick, black,
+    domain=0:360, samples=120, samples y=1
+]
+  ({1.5811*cos(x)}, {1.5811*sin(x)}, {2.5});
+\end{axis}
+\end{tikzpicture}
+\end{document}

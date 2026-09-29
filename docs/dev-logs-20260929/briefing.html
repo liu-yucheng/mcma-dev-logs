@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Results briefing for the MCMA calculus benchmark: per-model success rates, time usage, estimated costs, and token usage, presented as charts and tables.">
+<meta name="keywords" content="MCMA, results briefing, success rate, time usage audit, cost, token usage audit, statistics, charts">
+<title>MCMA &mdash; Results Briefing</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.num.good-num { color: #2f6f4f; font-weight: 600; }
+td.num.fail-num { color: #b23a1c; font-weight: 600; }
+td.num.gray-num { color: #5b6b7e; font-weight: 600; }
+.stat-note { font-size: .82rem; color: var(--muted); }
+.badge.audit { background: #e8e2f6; border-color: #c9bce6; color: #4c3a7a; }
+.chart-note { font-size: .86rem; color: var(--muted); margin-top: 6px; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>Results Briefing</h1>
+    <p class="lede">✅ Four MCMA agents solved every problem. ➖ One solved 22 of its 24. ❌ The tools-disabled model solved none. This chapter reports the results in four parts: <strong>🎯 Success Rates</strong>, <strong>⏱️ Time Usage</strong>, <strong>💰 Cost-effectiveness</strong>, and <strong>🔢 Token Usage</strong>.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="agents.html">Agents</a>
+    <a href="experiment.html">Experiment</a>
+    <a href="briefing.html" aria-current="page">Results Briefing</a>
+    <a href="explorer.html">Results Explorer</a>
+    <a href="demo-video.html">Demo Video</a>
+    <a href="plans.html">Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="success-rates">
+  <h2>🎯 Success Rates</h2>
+  <p>The data below comes from the attempt records in each <code>&lt;model&gt;/&lt;problem&gt;</code> folder. One retry is one extra <code>chat_&lt;timestamp&gt;/</code> record for that problem. A case is scored &ldquo;solved&rdquo; when the agent produced a plot within 5 attempts. In a solved session, the last <code>chat_&lt;timestamp&gt;/</code> record (in natural order) is the successful attempt. Its final solution carries the graphical plots. Every earlier attempt failed. The explorer&rsquo;s <code>remarks.html</code> records each attempt with that convention.</p>
+  <div class="chart-grid">
+    <div class="chart-box"><canvas id="chartSuccess" height="220"></canvas></div>
+    <div class="chart-box"><canvas id="chartFirstTry" height="220"></canvas></div>
+    <div class="chart-box"><canvas id="chartAttempts" height="230"></canvas></div>
+    <div class="chart-box"><canvas id="chartRetries" height="230"></canvas></div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Configuration</th>
+        <th class="num">Problems</th>
+        <th class="num">Solved</th>
+        <th class="num">First-attempt</th>
+        <th class="num">Total attempts</th>
+        <th class="num">Avg attempts / problem</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>(Tools-Disabled+)deepseek-flash</td><td class="num fail-num">24</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num fail-num">24</td><td class="num fail-num">1.00</td></tr>
+      <tr class="ok"><td>(MCMA+)deepseek-flash</td><td class="num good-num">24</td><td class="num good-num">24</td><td class="num good-num">24</td><td class="num good-num">24</td><td class="num good-num">1.00</td></tr>
+      <tr><td>(MCMA+)gemma-4-26b-a4b-it</td><td class="num">24</td><td class="num">22</td><td class="num">15</td><td class="num">42</td><td class="num">1.75</td></tr>
+      <tr><td>(MCMA+)glm-5.3-flash</td><td class="num">24</td><td class="num">24</td><td class="num">22</td><td class="num">26</td><td class="num">1.08</td></tr>
+      <tr><td>(MCMA+)MiniMax-M3</td><td class="num">24</td><td class="num">24</td><td class="num">23</td><td class="num">25</td><td class="num">1.04</td></tr>
+      <tr class="ok"><td>(MCMA+)qwen-3.8-omni-flash</td><td class="num good-num">24</td><td class="num good-num">24</td><td class="num good-num">24</td><td class="num good-num">24</td><td class="num good-num">1.00</td></tr>
+    </tbody>
+  </table>
+  <h3>📊 The numbers behind the charts</h3>
+  <table>
+    <thead><tr><th>Configuration</th><th class="num">1 attempt</th><th class="num">2 attempts</th><th class="num">3+ attempts</th><th class="num">Solved</th></tr></thead>
+    <tbody>
+      <tr><td>(Tools-Disabled+)deepseek-flash</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num fail-num">0</td><td class="num fail-num">0 / 24</td></tr>
+      <tr class="ok"><td>(MCMA+)deepseek-flash</td><td class="num good-num">24</td><td class="num good-num">0</td><td class="num good-num">0</td><td class="num good-num">24 / 24</td></tr>
+      <tr><td>(MCMA+)gemma-4-26b-a4b-it</td><td class="num">15</td><td class="num">5</td><td class="num">4</td><td class="num">22 / 24</td></tr>
+      <tr><td>(MCMA+)glm-5.3-flash</td><td class="num">22</td><td class="num">2</td><td class="num">0</td><td class="num">24 / 24</td></tr>
+      <tr><td>(MCMA+)MiniMax-M3</td><td class="num">23</td><td class="num">1</td><td class="num">0</td><td class="num">24 / 24</td></tr>
+      <tr class="ok"><td>(MCMA+)qwen-3.8-omni-flash</td><td class="num good-num">24</td><td class="num good-num">0</td><td class="num good-num">0</td><td class="num good-num">24 / 24</td></tr>
+    </tbody>
+  </table>
+  <p class="small">First-attempt means the agent solved the problem with one attempt. Total attempts counts every attempt, including retries. Across the 5 MCMA configurations, the runs totaled 141 attempts over 120 cases. 118 cases produced a plot within 5 attempts (98%). 108 were solved on the first attempt (90%).</p>
+
+  <h3>🔁 Re-attempts</h3>
+  <p>MCMA agents re-attempted 21 times over the 120 cases. The re-attempts are spread unevenly. <strong>18 of the 21 come from <code>gemma-4-26b-a4b-it</code></strong>. Two of that model&rsquo;s problems (15.7.23 and 15.7.50) never produced a plot in any of their five attempts. These two problems are the whole cause of the 2 unsolved cases.</p>
+  <ol>
+    <li><strong>No plot in the solution.</strong> The workflow requires the final answer to include plots. On 15.7.23 and 15.7.50, <code>gemma-4-26b-a4b-it</code> chose not to include any image in any of its 5 attempts. The agent kept retrying and still submitted a text-only answer.</li>
+    <li><strong>First-attempt gap.</strong> The remaining re-attempts were few. glm needed a second pass on 2 problems. MiniMax needed a second pass on 1 problem. On the next attempt, they produced the required plot.</li>
+  </ol>
+  <p class="small">The <code>remarks.html</code> page of each solved session marks every attempt before the last one as <span class="badge bad">failed</span> and the last one as <span class="badge good">worked</span>. In the two gemma manual cases, all five attempts are marked <span class="badge bad">failed</span>.</p>
+  <p>We call an attempt &ldquo;Agents worked as expected&rdquo; when the model produces multimodal contents, that is text and image, as the final solution of a problem. We use this term regardless of the mathematical correctness of the output. We need to manually compare model output against canonical solutions to check mathematical correctness.</p>
+</section>
+
+<section id="time-usage">
+  <h2>⏱️ Time Usage</h2>
+  <p>Chat duration includes reading, reasoning, running tools, and writing the final answer across every retry. The slowest median problem-level time belongs to qwen-3.8-omni-flash. The tools-disabled model is the fastest. It never waits on plotting tools.</p>
+
+  <div class="chart-grid">
+    <div class="chart-box"><canvas id="chartTimeTotal" height="230"></canvas><p class="chart-note">⏱️ Chart 5 &mdash; Total chat time per run, in minutes.</p></div>
+    <div class="chart-box"><canvas id="chartTimeAvg" height="230"></canvas><p class="chart-note">⏱️ Chart 6 &mdash; Average chat time per recorded attempt, in seconds.</p></div>
+  </div>
+
+  <h3>⏱️ Time table</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Configuration</th>
+        <th class="num">Attempts</th>
+        <th class="num">Avg / attempt (s)</th>
+        <th class="num">Total time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>(Tools-Disabled+)deepseek-flash</td><td class="num gray-num">24</td><td class="num gray-num">152.2</td><td class="num gray-num">01:00:53</td></tr>
+      <tr><td>(MCMA+)deepseek-flash</td><td class="num good-num">24</td><td class="num good-num">203.7</td><td class="num good-num">01:21:29</td></tr>
+      <tr><td>(MCMA+)gemma-4-26b-a4b-it</td><td class="num">42</td><td class="num">387.2</td><td class="num">04:31:02</td></tr>
+      <tr><td>(MCMA+)glm-5.3-flash</td><td class="num">26</td><td class="num">382.0</td><td class="num">02:45:33</td></tr>
+      <tr><td>(MCMA+)MiniMax-M3</td><td class="num">25</td><td class="num">332.2</td><td class="num">02:18:23</td></tr>
+      <tr><td>(MCMA+)qwen-3.8-omni-flash</td><td class="num fail-num">24</td><td class="num fail-num">1027.5</td><td class="num fail-num">06:50:58</td></tr>
+    </tbody>
+  </table>
+  <div class="stat-grid">
+    <div class="stat"><div class="num" style="color:#2f6f4f;font-weight:700">203.7s</div><div class="lbl">⏱️ Avg chat time per recorded attempt, (MCMA+)deepseek-flash</div></div>
+    <div class="stat"><div class="num" style="color:#2f6f4f;font-weight:700">01:21:29</div><div class="lbl">⏱️ Total chat time, (MCMA+)deepseek-flash</div></div>
+    <div class="stat"><div class="num" style="color:#b23a1c;font-weight:700">1027.5s</div><div class="lbl">⏱️ Avg chat time per recorded attempt, (MCMA+)qwen-3.8-omni-flash</div></div>
+    <div class="stat"><div class="num" style="color:#b23a1c;font-weight:700">06:50:58</div><div class="lbl">⏱️ Total chat time, (MCMA+)qwen-3.8-omni-flash</div></div>
+  </div>
+</section>
+
+<section id="cost-effectiveness">
+  <h2>💰 Cost-effectiveness</h2>
+  <p>Cost is the estimated spend to reach each configuration&rsquo;s success rate. Costs read from each <code>costs.json</code>. Peak-hour vs off-peak pricing matters only for the two deepseek-flash configurations. The other models quote a flat rate. Exchange rate used: 1 CNY = 0.15 USD (1 USD = 6.71 CNY), dated <code>20260928_utc_0800</code>. The trade is plain. The run that produced cheap plots read the least context. The cheapest run, <code>gemma-4-26b-a4b-it</code> at 0.50 USD, still solved 22 of its 24 problems at a 91.7% success rate.</p>
+
+  <div class="chart-grid">
+    <div class="chart-box"><canvas id="chartCostCny" height="230"></canvas><p class="chart-note">💰 Chart 7 &mdash; Estimated cost in CNY, peak- vs off-peak hours.</p></div>
+    <div class="chart-box"><canvas id="chartCostUsd" height="230"></canvas><p class="chart-note">💰 Chart 8 &mdash; Estimated cost in USD, peak- vs off-peak hours.</p></div>
+  </div>
+
+  <h3>💰 Cost table</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Configuration</th>
+        <th class="num">Peak CNY</th>
+        <th class="num">Off-peak CNY</th>
+        <th class="num">Peak USD</th>
+        <th class="num">Off-peak USD</th>
+        <th class="num">Solved</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>(Tools-Disabled+)deepseek-flash</td><td class="num gray-num">7.00</td><td class="num gray-num">3.50</td><td class="num gray-num">1.05</td><td class="num gray-num">0.525</td><td class="num gray-num">0 / 24</td></tr>
+      <tr><td>(MCMA+)deepseek-flash</td><td class="num good-num">8.00</td><td class="num good-num">4.00</td><td class="num good-num">1.20</td><td class="num good-num">0.60</td><td class="num good-num">24 / 24</td></tr>
+      <tr><td>(MCMA+)gemma-4-26b-a4b-it</td><td class="num">3.36</td><td class="num">3.36</td><td class="num">0.50</td><td class="num">0.50</td><td class="num">22 / 24</td></tr>
+      <tr><td>(MCMA+)glm-5.3-flash</td><td class="num">8.20</td><td class="num">8.20</td><td class="num">1.37</td><td class="num">1.37</td><td class="num">24 / 24</td></tr>
+      <tr><td>(MCMA+)MiniMax-M3</td><td class="num">11.88</td><td class="num">11.88</td><td class="num">1.77</td><td class="num">1.77</td><td class="num">24 / 24</td></tr>
+      <tr><td>(MCMA+)qwen-3.8-omni-flash</td><td class="num fail-num">16.00</td><td class="num fail-num">16.00</td><td class="num fail-num">2.40</td><td class="num fail-num">2.40</td><td class="num fail-num">24 / 24</td></tr>
+    </tbody>
+  </table>
+  <div class="chart-grid">
+    <div class="chart-box"><canvas id="chartCostVsTime" height="240"></canvas><p class="chart-note">💰⏱️ Chart 9 &mdash; Grouped bars: cost vs time, side by side per run (cost in CNY 10&ndash;scale, time in minutes).</p></div>
+  </div>
+  <p>Read the cost next to the success rate. The cheapest configuration was also among the most capable. <code>gemma-4-26b-a4b-it</code> spent 0.50 USD and solved 22 of 24 problems. The most expensive, <code>qwen-3.8-omni-flash</code> at 2.40 USD, solved all 24. Cost-effectiveness here is the ratio of solved problems to money spent. The deepseek-flash pair shows the return of the tool layer. Tools took the same model from 0 to 24 solves for less than a dollar extra.</p>
+</section>
+
+<section id="token-usage">
+  <h2>🔢 Token Usage</h2>
+  <p>Token counts are round-trip totals across <em>recorded chat attempts</em> (one per retry, matching the attempt data in the Success Rates section). The input token totals include the cached-context reads that the API reports. The output token totals break out reasoning tokens where a model reports them. The MCMA agents read far more context than they write because each message re-sends the ongoing plan, the tool transcripts, and the prompt. Input dominates every run.</p>
+
+  <div class="chart-grid">
+    <div class="chart-box"><canvas id="chartTokenTotal" height="230"></canvas><p class="chart-note">🔢 Chart 10 &mdash; Total tokens consumed by each run, split into input (read) and output (written).</p></div>
+    <div class="chart-box"><canvas id="chartTokenAvg" height="230"></canvas><p class="chart-note">🔢 Chart 11 &mdash; Average tokens per recorded chat attempt. This normalizes for retries (gemma-4-26b-a4b-it has 42 attempts).</p></div>
+    <div class="chart-box"><canvas id="chartInputComposition" height="230"></canvas><p class="chart-note">🔢 Chart 12 &mdash; Average input tokens per attempt, split into cached-context reads vs new input.</p></div>
+    <div class="chart-box"><canvas id="chartOutputComposition" height="230"></canvas><p class="chart-note">🔢 Chart 13 &mdash; Average output tokens per attempt, split into reasoning vs visible output (models that do not report reasoning show zero).</p></div>
+  </div>
+
+  <h3>🔢 Token table</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Configuration</th>
+        <th class="num">Attempts</th>
+        <th class="num">Input total</th>
+        <th class="num">Output total</th>
+        <th class="num">Total tokens</th>
+        <th class="num">Avg / attempt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>(Tools-Disabled+)deepseek-flash</td><td class="num gray-num">24</td><td class="num gray-num">2,838,549</td><td class="num gray-num">324,961</td><td class="num gray-num">3,163,510</td><td class="num gray-num">131,813</td></tr>
+      <tr><td>(MCMA+)deepseek-flash</td><td class="num">24</td><td class="num">21,647,673</td><td class="num">693,983</td><td class="num">22,341,656</td><td class="num">930,902</td></tr>
+      <tr><td>(MCMA+)gemma-4-26b-a4b-it</td><td class="num good-num">42</td><td class="num good-num">4,814,327</td><td class="num good-num">346,284</td><td class="num good-num">5,160,611</td><td class="num good-num">122,872</td></tr>
+      <tr><td>(MCMA+)glm-5.3-flash</td><td class="num">26</td><td class="num">8,359,475</td><td class="num">335,269</td><td class="num">8,694,744</td><td class="num">334,413</td></tr>
+      <tr><td>(MCMA+)MiniMax-M3</td><td class="num good-num">25</td><td class="num good-num">10,829,437</td><td class="num good-num">350,749</td><td class="num good-num">11,180,186</td><td class="num good-num">447,207</td></tr>
+      <tr><td>(MCMA+)qwen-3.8-omni-flash</td><td class="num fail-num">24</td><td class="num fail-num">44,501,850</td><td class="num fail-num">1,107,745</td><td class="num fail-num">45,609,595</td><td class="num fail-num">1,900,400</td></tr>
+    </tbody>
+  </table>
+  <div class="stat-grid">
+    <div class="stat"><div class="num" style="color:#2f6f4f;font-weight:700">4.8M</div><div class="lbl">🔢 Input tokens, largest run (MCMA+)gemma-4-26b-a4b-it</div></div>
+    <div class="stat"><div class="num" style="color:#2f6f4f;font-weight:700">114.6K</div><div class="lbl">🔢 Avg input tokens per attempt, (MCMA+)gemma-4-26b-a4b-it</div></div>
+    <div class="stat"><div class="num" style="color:#b23a1c;font-weight:700">45.6M</div><div class="lbl">🔢 Input tokens, largest run (MCMA+)qwen-3.8-omni-flash</div></div>
+    <div class="stat"><div class="num" style="color:#b23a1c;font-weight:700">1.9M</div><div class="lbl">🔢 Avg input tokens per attempt, (MCMA+)qwen-3.8-omni-flash</div></div>
+  </div>
+  <div class="chart-grid">
+    <div class="chart-box"><canvas id="chartTokensVsTime" height="240"></canvas><p class="chart-note">🔢 Chart 14 &mdash; Scatter: average tokens per attempt vs average seconds per attempt. Bubble size = estimated off-peak CNY cost.</p></div>
+  </div>
+  <p>Across the six configurations there is a clear trade. The runs that produce plots cheaply are the ones that read the least context. qwen-3.8-omni-flash spent the most tokens and the most time. gemma-4-26b-a4b-it kept both low. It still solved 22 of its 24 problems at the lowest cost.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<script>
+const LABELS = [
+  ["(Tools-Disabled+)\ndeepseek-flash", "(MCMA+)\ndeepseek-flash", "(MCMA+)\ngemma-4-26b-a4b-it", "(MCMA+)\nglm-5.3-flash", "(MCMA+)\nMiniMax-M3", "(MCMA+)\nqwen-3.8-omni-flash"]
+];
+
+const ORDER = LABELS[0];
+
+const SUCCESS = {
+  labels: ORDER,
+  data: [0, 100, 91.7, 100, 100, 100]
+};
+
+new Chart(document.getElementById("chartSuccess"), {
+  type: "bar",
+  data: {
+    labels: SUCCESS.labels,
+    datasets: [{ label: "Problems solved (%)", data: SUCCESS.data, backgroundColor: ["#b23a1c", "#2f446f", "#2f446f", "#2f446f", "#2f446f", "#2f446f"], borderRadius: 6 }]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Success rate by configuration" }, legend: { display: false } },
+    scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: "Percent of problems solved" } } }
+  }
+});
+
+const ATTEMPTS = {
+  labels: ORDER,
+  data: {
+    "1 attempt": [0, 24, 15, 22, 23, 24],
+    "2 attempts": [0, 0, 5, 2, 1, 0],
+    "3+ attempts": [0, 0, 4, 0, 0, 0]
+  }
+};
+
+new Chart(document.getElementById("chartAttempts"), {
+  type: "bar",
+  data: {
+    labels: ATTEMPTS.labels,
+    datasets: [
+      { label: "Attempts: 1", data: ATTEMPTS.data["1 attempt"], backgroundColor: "#2f446f", borderRadius: 4 },
+      { label: "Attempts: 2", data: ATTEMPTS.data["2 attempts"], backgroundColor: "#e8a33d", borderRadius: 4 },
+      { label: "Attempts: 3+", data: ATTEMPTS.data["3+ attempts"], backgroundColor: "#b23a1c", borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Attempts per model (24 problems each)" } },
+    scales: { x: { stacked: true, title: { display: true, text: "Configuration" } }, y: { stacked: true, beginAtZero: true, title: { display: true, text: "Number of problems" } } }
+  }
+});
+
+new Chart(document.getElementById("chartRetries"), {
+  type: "bar",
+  data: {
+    labels: ORDER,
+    datasets: [{ label: "Re-attempts", data: [0, 0, 18, 2, 1, 0], backgroundColor: ["#5b6b7e", "#5b6b7e", "#b23a1c", "#e8a33d", "#e8a33d", "#5b6b7e"], borderRadius: 6 }]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Re-attempts by model (extra attempts beyond the first)" }, legend: { display: false } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "Number of re-attempts" } } }
+  }
+});
+
+new Chart(document.getElementById("chartFirstTry"), {
+  type: "bar",
+  data: {
+    labels: ["(MCMA+)\nqwen-3.8-omni-flash", "(MCMA+)\ndeepseek-flash", "(MCMA+)\nMiniMax-M3", "(MCMA+)\nglm-5.3-flash", "(MCMA+)\ngemma-4-26b-a4b-it"],
+    datasets: [{ label: "Solved on first attempt (of 24)", data: [24, 24, 23, 22, 15], backgroundColor: "#0f52b0", borderRadius: 6 }]
+  },
+  options: {
+    responsive: true,
+    indexAxis: "y",
+    plugins: { title: { display: true, text: "First-attempt solves by model" }, legend: { display: false } },
+    scales: { x: { beginAtZero: true, max: 24 } }
+  }
+});
+
+const ATTEMPT = [24, 24, 42, 26, 25, 24];
+
+const INPUT_AVG = [118272.875, 901986.375, 114626.833, 321518.269, 433177.48, 1854243.75];
+const OUTPUT_AVG = [13540.042, 28915.958, 8244.857, 12894.962, 14029.96, 46156.042];
+const TOTAL_AVG = [131812.917, 930902.333, 122871.690, 334413.231, 447207.44, 1900399.792];
+
+const INPUT_SUM = [2838549, 21647673, 4814327, 8359475, 10829437, 44501850];
+const OUTPUT_SUM = [324961, 693983, 346284, 335269, 350749, 1107745];
+
+const CACHE_AVG = [113839.792, 883946.5, 69410.286, 253600, 397167.32, 1365802.667];
+const REASONING_AVG = [10440.708, 18056.125, 0, 4475.346, 2313.6, 15831.5];
+
+const TIME_TOTAL_MIN = [60.9, 81.5, 271.0, 165.6, 138.4, 411.0];
+const TIME_AVG_SEC = [152.242, 203.725, 387.204, 382.048, 332.154, 1027.455];
+
+const COST_CNY_PEAK = [7.0, 8.0, 3.36, 8.2, 11.88, 16.0];
+const COST_CNY_OFF = [3.5, 4.0, 3.36, 8.2, 11.88, 16.0];
+const COST_USD_PEAK = [1.05, 1.2, 0.5, 1.37, 1.77, 2.4];
+const COST_USD_OFF = [0.525, 0.6, 0.5, 1.37, 1.77, 2.4];
+
+const BLUE = "#2f446f", AMBER = "#e8a33d", RED = "#b23a1c", GREEN = "#2f6f4f", GREY = "#5b6b7e";
+
+const stackInputOutput = function (id, labels, inData, outData, title, xTitle) {
+  new Chart(document.getElementById(id), {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        { label: "Input tokens", data: inData, backgroundColor: BLUE, borderRadius: 4 },
+        { label: "Output tokens", data: outData, backgroundColor: AMBER, borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { title: { display: true, text: title }, legend: { display: true } },
+      scales: {
+        x: { stacked: true, title: { display: !!xTitle, text: xTitle || "" } },
+        y: { stacked: true, beginAtZero: true, title: { display: true, text: "Tokens" } }
+      }
+    }
+  });
+};
+
+stackInputOutput("chartTokenTotal", ORDER, INPUT_SUM, OUTPUT_SUM, "Total tokens per run", "Configuration");
+stackInputOutput("chartTokenAvg", ORDER, INPUT_AVG, OUTPUT_AVG, "Average tokens per attempt", "Configuration");
+
+new Chart(document.getElementById("chartInputComposition"), {
+  type: "bar",
+  data: {
+    labels: ORDER,
+    datasets: [
+      { label: "Cache-read input", data: CACHE_AVG, backgroundColor: BLUE, borderRadius: 4 },
+      { label: "Other input", data: INPUT_AVG.map(function (v, i) { return v - CACHE_AVG[i]; }), backgroundColor: GREY, borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Input tokens: cache-read vs new" } },
+    scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true, title: { display: true, text: "Avg input tokens / attempt" } } }
+  }
+});
+
+new Chart(document.getElementById("chartOutputComposition"), {
+  type: "bar",
+  data: {
+    labels: ORDER,
+    datasets: [
+      { label: "Reasoning output", data: REASONING_AVG, backgroundColor: AMBER, borderRadius: 4 },
+      { label: "Visible output", data: OUTPUT_AVG.map(function (v, i) { return v - REASONING_AVG[i]; }), backgroundColor: GREEN, borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Output tokens: reasoning vs visible" } },
+    scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true, title: { display: true, text: "Avg output tokens / attempt" } } }
+  }
+});
+
+new Chart(document.getElementById("chartTimeTotal"), {
+  type: "bar",
+  data: {
+    labels: ORDER,
+    datasets: [{ label: "Total chat time (min)", data: TIME_TOTAL_MIN, backgroundColor: [RED, GREEN, GREEN, GREEN, GREEN, GREEN], borderRadius: 6 }]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Total chat time per run" }, legend: { display: false } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "Minutes" } } }
+  }
+});
+
+new Chart(document.getElementById("chartTimeAvg"), {
+  type: "bar",
+  data: {
+    labels: ORDER,
+    datasets: [{ label: "Avg chat time / attempt (s)", data: TIME_AVG_SEC, backgroundColor: [RED, GREEN, GREEN, GREEN, GREEN, GREEN], borderRadius: 6 }]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Average chat time per attempt" }, legend: { display: false } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "Seconds" } } }
+  }
+});
+
+new Chart(document.getElementById("chartCostCny"), {
+  type: "bar",
+  data: {
+    labels: ORDER,
+    datasets: [
+      { label: "Peak CNY", data: COST_CNY_PEAK, backgroundColor: BLUE, borderRadius: 4 },
+      { label: "Off-peak CNY", data: COST_CNY_OFF, backgroundColor: AMBER, borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Estimated cost (CNY)" } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "CNY" } } }
+  }
+});
+
+new Chart(document.getElementById("chartCostUsd"), {
+  type: "bar",
+  data: {
+    labels: ORDER,
+    datasets: [
+      { label: "Peak USD", data: COST_USD_PEAK, backgroundColor: BLUE, borderRadius: 4 },
+      { label: "Off-peak USD", data: COST_USD_OFF, backgroundColor: AMBER, borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Estimated cost (USD)" } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "USD" } } }
+  }
+});
+
+new Chart(document.getElementById("chartTokensVsTime"), {
+  type: "bubble",
+  data: {
+    labels: ORDER,
+    datasets: [{
+      label: "Runs",
+      data: ORDER.map(function (l, i) {
+        return {
+          x: TOTAL_AVG[i],
+          y: TIME_AVG_SEC[i],
+          r: Math.max(5, COST_CNY_OFF[i] * 2),
+          label: l.replace("\n", " ")
+        };
+      }),
+      backgroundColor: [RED, GREEN, GREEN, GREEN, GREEN, GREEN].map(function (c) { return c + "cc"; }),
+      borderColor: "#ffffff", borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: { display: true, text: "Tokens per attempt vs time per attempt" },
+      tooltip: { callbacks: { label: function (c) { return c.raw.label + " — " + Math.round(c.raw.x).toLocaleString() + " tok, " + c.raw.y.toFixed(0) + " s"; } } }
+    },
+    scales: {
+      x: { title: { display: true, text: "Avg tokens / attempt" }, ticks: { callback: function (v) { return (v / 1000000).toFixed(1) + "M"; } } },
+      y: { title: { display: true, text: "Avg seconds / attempt" } }
+    }
+  }
+});
+
+new Chart(document.getElementById("chartCostVsTime"), {
+  type: "bar",
+  data: {
+    labels: ORDER,
+    datasets: [
+      { label: "Cost (CNY)", data: COST_CNY_OFF, backgroundColor: RED, borderRadius: 4 },
+      { label: "Time (min)", data: TIME_TOTAL_MIN.map(function (v) { return Math.min(v, 40); }), backgroundColor: BLUE, borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { title: { display: true, text: "Cost vs time (cost in CNY; time 0&ndash;40 min scale)" } },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "CNY or minutes (capped)" } } }
+  }
+});
+</script>
+
+</body>
+</html>

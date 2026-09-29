@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_141519_544188_utc_0800 — Q&amp;A · tools-disabled-deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_141519_544188_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>tools-disabled-deepseek-flash/calculus-15.7.21/chat_20260928_141519_544188_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_141519_544188_utc_0800_0.png`. Alt text: Image: human_20260928_141519_544188_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_141519_544188_utc_0800_0.png" alt="Image: qna_20260928_141519_544188_utc_0800"><figcaption>20260928_141519_544188_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Volume by a triple integral
+
+The solid is bounded by the parabolic cylinder $y=x^2$, the plane $z=0$ (bottom), and the plane $y+z=1$, i.e. $z=1-y$ (top).
+
+In the $xy$-plane, the relevant region is where the top surface is above the bottom surface:
+
+$$
+0 \le z \le 1-y,\qquad x^2 \le y \le 1.
+$$
+
+The condition $x^2\le y\le 1$ forces $x^2\le 1$, so $-1\le x\le 1$.
+
+Thus the volume is
+
+$$
+V=\int_{-1}^{1}\int_{x^2}^{1}\int_{0}^{1-y}1\,dz\,dy\,dx
+  =\int_{-1}^{1}\int_{x^2}^{1}(1-y)\,dy\,dx.
+$$
+
+Evaluate the inner integral:
+
+$$
+\int_{x^2}^{1}(1-y)\,dy
+= \left[y-\frac{y^2}{2}\right]_{x^2}^{1}
+= \frac12-x^2+\frac{x^4}{2}.
+$$
+
+Therefore
+
+$$
+V=\int_{-1}^{1}\left(\frac12-x^2+\frac{x^4}{2}\right)dx.
+$$
+
+The integrand is even, so
+
+$$
+V=2\int_0^1\left(\frac12-x^2+\frac{x^4}{2}\right)dx
+=2\left[\frac{x}{2}-\frac{x^3}{3}+\frac{x^5}{10}\right]_0^1.
+$$
+
+Hence
+
+$$
+V=2\left(\frac12-\frac13+\frac1{10}\right)
+=2\left(\frac{15-10+3}{30}\right)
+=2\cdot\frac{8}{30}
+=\frac{8}{15}.
+$$
+
+Equivalently, integrating in the order $dz\,dx\,dy$ gives
+
+$$
+V=\int_0^1\int_{-\sqrt y}^{\sqrt y}(1-y)\,dx\,dy
+=\int_0^12\sqrt y(1-y)\,dy
+=2\left(\frac23-\frac25\right)
+=\frac{8}{15}.
+$$
+
+$$
+\boxed{\dfrac{8}{15}}
+$$
+
+---
+
+No graphical results.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>tools-disabled-deepseek-flash/calculus-15.7.21/chat_20260928_141519_544188_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

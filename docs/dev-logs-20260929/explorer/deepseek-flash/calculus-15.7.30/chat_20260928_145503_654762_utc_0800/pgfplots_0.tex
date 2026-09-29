@@ -1,0 +1,41 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={30}{20},
+    axis equal,
+    xmin=-2.6, xmax=2.6,
+    ymin=-3.6, ymax=3.6,
+    zmin=-3.6, zmax=3.6,
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    grid=major,
+    colormap={cyl}{color=(cyan!40) color=(blue!80)},
+    title={$E:\ y^2+z^2\leq 9,\ -2\leq x\leq 2$},
+]
+% lateral surface, split into upper and lower halves
+\addplot3[surf, domain=-2:2, y domain=-3:3, samples=11, samples y=41,
+    opacity=0.78, shader=interp] {sqrt(9-y^2)};
+\addplot3[surf, domain=-2:2, y domain=-3:3, samples=11, samples y=41,
+    opacity=0.78, shader=interp] {-sqrt(9-y^2)};
+% filled end disks at x = -2 and x = 2
+\addplot3[surf, domain=0:360, y domain=0:3, samples=41, samples y=11,
+    trig format plots=deg, opacity=0.78, shader=interp]
+({-2}, {y*cos(x)}, {y*sin(x)});
+\addplot3[surf, domain=0:360, y domain=0:3, samples=41, samples y=11,
+    trig format plots=deg, opacity=0.78, shader=interp]
+({2}, {y*cos(x)}, {y*sin(x)});
+% generators parallel to the x-axis
+\pgfplotsforeachungrouped \a in {0,45,...,315}{
+    \addplot3[domain=-2:2, samples=2, black!55, thick]
+    ({x}, {3*cos(\a)}, {3*sin(\a)});
+}
+% boundary circles
+\addplot3[domain=0:360, samples=120, trig format plots=deg, thick, black]
+({-2}, {3*cos(x)}, {3*sin(x)});
+\addplot3[domain=0:360, samples=120, trig format plots=deg, thick, black]
+({2}, {3*cos(x)}, {3*sin(x)});
+\end{axis}
+\end{tikzpicture}
+\end{document}

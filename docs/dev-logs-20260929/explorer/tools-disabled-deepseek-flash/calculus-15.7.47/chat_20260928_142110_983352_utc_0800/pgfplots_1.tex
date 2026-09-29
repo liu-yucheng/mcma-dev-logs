@@ -1,0 +1,27 @@
+\documentclass[tikz,border=4pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  view={60}{28},
+  xlabel=$x$, ylabel=$y$, zlabel=$z$,
+  xmin=-1, xmax=1, ymin=0, ymax=1, zmin=0, zmax=1.05,
+  samples=25, samples y=25,
+  zbuffer=sort
+]
+% Parabolic-cylinder wall  y = x^2,  0 <= z <= 1 - x^2
+\addplot3[surf, opacity=0.55, fill=orange, faceted color=orange!50,
+  domain=-1:1, y domain=0:1]
+  (x, x^2, y*(1-x^2));
+% Floor  z = 0  over  x^2 <= y <= 1
+\addplot3[surf, opacity=0.30, fill=green!70, faceted color=green!50,
+  domain=-1:1, y domain=0:1]
+  (x, x^2 + y*(1-x^2), 0);
+% Roof   z = 1 - y  over  x^2 <= y <= 1
+\addplot3[surf, opacity=0.30, fill=cyan, faceted color=cyan!50,
+  domain=-1:1, y domain=0:1]
+  (x, x^2 + y*(1-x^2), 1-(x^2 + y*(1-x^2)));
+\end{axis}
+\end{tikzpicture}
+\end{document}

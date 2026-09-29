@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_145438_614408_utc_0800 — Q&amp;A · deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_145438_614408_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>deepseek-flash/calculus-15.7.29/chat_20260928_145438_614408_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_145438_614408_utc_0800_0.png`. Alt text: Image: human_20260928_145438_614408_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_145438_614408_utc_0800_0.png" alt="Image: qna_20260928_145438_614408_utc_0800"><figcaption>20260928_145438_614408_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Geometric set-up
+
+The surface $y=4-x^{2}-4z^{2}$ is an elliptic paraboloid opening in the negative $y$-direction. It meets the plane $y=0$ in the ellipse
+
+$$
+x^{2}+4z^{2}=4 \quad\Longleftrightarrow\quad \frac{x^{2}}{4}+z^{2}=1 .
+$$
+
+Therefore the solid is
+
+$$
+E=\{(x,y,z): x^{2}+4z^{2}\le 4,\quad 0\le y\le 4-x^{2}-4z^{2}\}.
+$$
+
+The six iterated integrals come from choosing the order of integration and then projecting $E$ onto the coordinate plane of the two outer variables.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, trig format plots=rad}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={-60}{25},
+    axis lines=center,
+    xlabel=$x$, ylabel=$z$, zlabel=$y$,
+    domain=0:1, y domain=0:2*pi,
+    samples=32, samples y=64,
+    xmin=-2.3, xmax=2.3, ymin=-1.3, ymax=1.3, zmin=0, zmax=4.4,
+    colormap/viridis,
+    width=10cm, height=8cm,
+]
+\addplot3[surf, opacity=0.75, shader=interp] ({2*x*cos(y)}, {x*sin(y)}, {4*(1-x^2)});
+\addplot3[surf, opacity=0.25, fill=gray] ({2*x*cos(y)}, {x*sin(y)}, {0});
+\addplot3[red, thick, samples=80, domain=0:2*pi] ({2*cos(x)}, {sin(x)}, {0});
+\addplot3[red, thick] coordinates {(0.8,0.4,0) (0.8,0.4,2.72)};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+## Projections and inner limits
+
+For an order such as $dz\,dy\,dx$, the outer two variables are $x$ and $y$, so we use the shadow on the $xy$-plane. Solving $y=4-x^{2}-4z^{2}$ for $z$ gives the inner limits
+
+$$
+z=-\frac{1}{2}\sqrt{4-x^{2}-y},\qquad z=+\frac{1}{2}\sqrt{4-x^{2}-y}.
+$$
+
+Similarly:
+
+| order | projection (shadow) | inner limits |
+|---|---|---|
+| $dz\,dy\,dx$ | $0\le y\le 4-x^{2},\ -2\le x\le 2$ | $-\frac12\sqrt{4-x^{2}-y}\le z\le \frac12\sqrt{4-x^{2}-y}$ |
+| $dz\,dx\,dy$ | $0\le y\le 4,\ -\sqrt{4-y}\le x\le \sqrt{4-y}$ | same |
+| $dy\,dz\,dx$ | $-2\le x\le 2,\ -\sqrt{1-x^{2}/4}\le z\le \sqrt{1-x^{2}/4}$ | $0\le y\le 4-x^{2}-4z^{2}$ |
+| $dy\,dx\,dz$ | $-1\le z\le 1,\ -2\sqrt{1-z^{2}}\le x\le 2\sqrt{1-z^{2}}$ | same |
+| $dx\,dy\,dz$ | $-1\le z\le 1,\ 0\le y\le 4-4z^{2}$ | $-\sqrt{4-4z^{2}-y}\le x\le \sqrt{4-4z^{2}-y}$ |
+| $dx\,dz\,dy$ | $0\le y\le 4,\ -\sqrt{1-y/4}\le z\le \sqrt{1-y/4}$ | same |
+
+The three shadows are shown below.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, trig format plots=rad}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    axis equal image,
+    xmin=-2.4, xmax=2.4, ymin=-1.4, ymax=1.4,
+    xlabel=$x$, ylabel=$z$,
+    width=11cm, height=6.5cm,
+    grid=both,
+    tick align=outside,
+    clip=false,
+    legend style={at={(0.98,0.02)}, anchor=south east, font=\small, fill=white, fill opacity=0.85},
+]
+% filled projection D
+\addplot[fill=blue!15, draw=none, domain=0:2*pi, samples=160, forget plot]
+    ({2*cos(x)},{sin(x)}) \closedcycle;
+% outer boundary y=0
+\addplot[blue, very thick, domain=0:2*pi, samples=160] ({2*cos(x)},{sin(x)});
+\addlegendentry{$y=0$}
+% inner level curves
+\addplot[orange, thick, domain=0:2*pi, samples=160] ({sqrt(3)*cos(x)},{sqrt(3)/2*sin(x)});
+\addlegendentry{$y=1$}
+\addplot[green!60!black, thick, domain=0:2*pi, samples=160] ({sqrt(2)*cos(x)},{sqrt(2)/2*sin(x)});
+\addlegendentry{$y=2$}
+\addplot[red, thick, domain=0:2*pi, samples=160] ({cos(x)},{0.5*sin(x)});
+\addlegendentry{$y=3$}
+\addplot[purple, thick, domain=0:2*pi, samples=160] ({sqrt(0.5)*cos(x)},{sqrt(0.5)/2*sin(x)});
+\addlegendentry{$y=3.5$}
+% sample point
+\addplot[only marks, mark=*, red, mark size=2.2pt, forget plot] coordinates {(0.8,0.4)};
+\node[red, anchor=west, font=\small] at (axis cs:1.1,0.95) {sample $(x,z)$};
+\node[red, anchor=west, font=\small] at (axis cs:1.1,0.78) {$y:0\to 4-x^2-4z^2$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_2.png" alt="pyplot-generated plot"><figcaption>pyplot_2.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_2.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xmin=-2.3, xmax=2.3, ymin=-0.3, ymax=4.4,
+    xlabel=$x$, ylabel=$y$,
+    width=10cm, height=7cm,
+    grid=both,
+    clip=false,
+    legend style={at={(0.98,0.98)}, anchor=north east, font=\small, fill=white, fill opacity=0.85},
+]
+\addplot[fill=green!20, draw=none, domain=-2:2, samples=120] {4-x^2} \closedcycle;
+\addplot[green!60!black, very thick, domain=-2:2, samples=120] {4-x^2};
+\addlegendentry{$y=4-x^2$}
+\addplot[only marks, mark=*, red, mark size=2.2pt, forget plot] coordinates {(0.8,3.36)};
+\draw[red, -&gt;, thick] (axis cs:-0.9,2.75) -- (axis cs:0.8,3.36);
+\node[red, anchor=west, font=\scriptsize, align=left] at (axis cs:-2.15,2.3)
+    {for fixed $(x,y)$,\\ $z:-\frac{1}{2}\sqrt{4-x^2-y}$\\ $\to+\frac{1}{2}\sqrt{4-x^2-y}$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_2.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_2.png</figcaption></figure>
+
+
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_3.png" alt="pyplot-generated plot"><figcaption>pyplot_3.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_3.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xmin=-1.15, xmax=1.15, ymin=-0.3, ymax=4.4,
+    xlabel=$z$, ylabel=$y$,
+    width=10cm, height=7cm,
+    grid=both,
+    clip=false,
+    legend style={at={(0.98,0.98)}, anchor=north east, font=\small, fill=white, fill opacity=0.85},
+]
+\addplot[fill=orange!25, draw=none, domain=-1:1, samples=120] {4-4*x^2} \closedcycle;
+\addplot[orange, very thick, domain=-1:1, samples=120] {4-4*x^2};
+\addlegendentry{$y=4-4z^2$}
+\addplot[only marks, mark=*, red, mark size=2.2pt, forget plot] coordinates {(0.4,3.36)};
+\draw[red, -&gt;, thick] (axis cs:-0.55,2.65) -- (axis cs:0.4,3.36);
+\node[red, anchor=west, font=\scriptsize, align=left] at (axis cs:-1.08,2.3)
+    {for fixed $(y,z)$,\\ $x:-\sqrt{4-4z^2-y}$\\ $\to+\sqrt{4-4z^2-y}$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_3.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_3.png</figcaption></figure>
+
+
+
+
+---
+
+## The six iterated integrals
+
+All of the following are equal to $\displaystyle \iiint_{E} f(x,y,z)\,dV$.
+
+$$
+\boxed{
+\begin{aligned}
+&\int_{-2}^{2}\int_{0}^{\,4-x^{2}}\int_{-\frac{1}{2}\sqrt{4-x^{2}-y}}^{\frac{1}{2}\sqrt{4-x^{2}-y}} f(x,y,z)\,dz\,dy\,dx\\[2mm]
+&\int_{0}^{4}\int_{-\sqrt{4-y}}^{\sqrt{4-y}}\int_{-\frac{1}{2}\sqrt{4-x^{2}-y}}^{\frac{1}{2}\sqrt{4-x^{2}-y}} f(x,y,z)\,dz\,dx\,dy\\[2mm]
+&\int_{-2}^{2}\int_{-\sqrt{1-x^{2}/4}}^{\sqrt{1-x^{2}/4}}\int_{0}^{\,4-x^{2}-4z^{2}} f(x,y,z)\,dy\,dz\,dx\\[2mm]
+&\int_{-1}^{1}\int_{-2\sqrt{1-z^{2}}}^{2\sqrt{1-z^{2}}}\int_{0}^{\,4-x^{2}-4z^{2}} f(x,y,z)\,dy\,dx\,dz\\[2mm]
+&\int_{-1}^{1}\int_{0}^{\,4-4z^{2}}\int_{-\sqrt{4-4z^{2}-y}}^{\sqrt{4-4z^{2}-y}} f(x,y,z)\,dx\,dy\,dz\\[2mm]
+&\int_{0}^{4}\int_{-\sqrt{1-y/4}}^{\sqrt{1-y/4}}\int_{-\sqrt{4-4z^{2}-y}}^{\sqrt{4-4z^{2}-y}} f(x,y,z)\,dx\,dz\,dy
+\end{aligned}}
+$$
+
+**Check.** Taking $f=1$ in any of the six integrals gives the volume
+
+$$
+\iiint_{E} dV = \int_{0}^{4} \frac{\pi}{2}(4-y)\,dy = 4\pi,
+$$
+
+which agrees with the cross-sectional-area computation.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>deepseek-flash/calculus-15.7.29/chat_20260928_145438_614408_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

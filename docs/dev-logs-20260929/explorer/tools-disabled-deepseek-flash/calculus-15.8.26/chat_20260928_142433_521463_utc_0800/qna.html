@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_142433_521463_utc_0800 — Q&amp;A · tools-disabled-deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_142433_521463_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>tools-disabled-deepseek-flash/calculus-15.8.26/chat_20260928_142433_521463_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_142433_521463_utc_0800_0.png`. Alt text: Image: human_20260928_142433_521463_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_142433_521463_utc_0800_0.png" alt="Image: qna_20260928_142433_521463_utc_0800"><figcaption>20260928_142433_521463_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Problem
+
+Use **cylindrical coordinates**.
+
+(a) Find the volume of the solid that the cylinder $r=a\cos\theta$ cuts out of the sphere of radius $a$ centered at the origin.
+
+(b) Illustrate the solid by graphing the sphere and the cylinder on the same screen.
+
+---
+
+## Part (a): Volume
+
+### 1. Describe the two surfaces in cylindrical coordinates
+
+In cylindrical coordinates $(r,\theta,z)$ with $x=r\cos\theta,\;y=r\sin\theta,\;z=z$, the volume element is
+
+$$
+dV=r\,dz\,dr\,d\theta .
+$$
+
+- **Sphere** of radius $a$ centered at the origin: $x^2+y^2+z^2=a^2$, i.e.
+
+$$
+r^2+z^2=a^2\quad\Longrightarrow\quad z=\pm\sqrt{a^2-r^2} .
+$$
+
+- **Cylinder** $r=a\cos\theta$: multiplying by $r$ gives $r^2=ar\cos\theta$, i.e. $x^2+y^2=ax$, or
+
+$$
+\left(x-\tfrac{a}{2}\right)^2+y^2=\left(\tfrac{a}{2}\right)^2 .
+$$
+
+So the "cylinder" is a circular cylinder of **radius $\tfrac{a}{2}$** whose axis is the vertical line $x=\tfrac{a}{2},\,y=0$ (it passes through the origin and is tangent to the sphere's equator at $(a,0)$).
+
+### 2. Set up the region
+
+The solid cut out is the set of points lying **inside both** surfaces. From the cylinder, since $r\ge 0$ we need $\cos\theta\ge 0$, i.e.
+
+$$
+-\tfrac{\pi}{2}\le\theta\le\tfrac{\pi}{2},\qquad 0\le r\le a\cos\theta .
+$$
+
+(Note $a\cos\theta\le a$, so the cylinder stays within the sphere's equatorial radius $r=a$ automatically.) For fixed $(r,\theta)$, the sphere caps the solid at $z=\pm\sqrt{a^2-r^2}$. Hence
+
+$$
+R:\quad -\tfrac{\pi}{2}\le\theta\le\tfrac{\pi}{2},\qquad 0\le r\le a\cos\theta,\qquad -\sqrt{a^2-r^2}\le z\le \sqrt{a^2-r^2} .
+$$
+
+### 3. Evaluate the triple integral
+
+$$
+V=\int_{-\pi/2}^{\pi/2}\!\!\int_{0}^{a\cos\theta}\!\!\int_{-\sqrt{a^2-r^2}}^{\sqrt{a^2-r^2}} r\,dz\,dr\,d\theta
+=\int_{-\pi/2}^{\pi/2}\!\!\int_{0}^{a\cos\theta} 2r\sqrt{a^2-r^2}\,dr\,d\theta .
+$$
+
+**The $r$-integral.** Substitute $u=a^2-r^2$, so $du=-2r\,dr$; when $r=0$, $u=a^2$, and when $r=a\cos\theta$, $u=a^2-a^2\cos^2\theta=a^2\sin^2\theta$:
+
+$$
+\int_{0}^{a\cos\theta} 2r\sqrt{a^2-r^2}\,dr
+=\int_{a^2\sin^2\theta}^{a^2}\sqrt{u}\,du
+=\frac{2}{3}\Big[a^{3}-\big(a^2\sin^2\theta\big)^{3/2}\Big]
+=\frac{2a^{3}}{3}\Big(1-|\sin\theta|^{3}\Big).
+$$
+
+> **Key point (a common error).** Because $\sqrt{\sin^2\theta}=|\sin\theta|$, we get $\big(a^2\sin^2\theta\big)^{3/2}=a^3|\sin\theta|^{3}$, **not** $a^3\sin^3\theta$. Keeping the absolute value is essential.
+
+**The $\theta$-integral.** Now
+
+$$
+V=\frac{2a^{3}}{3}\int_{-\pi/2}^{\pi/2}\Big(1-|\sin\theta|^{3}\Big)\,d\theta
+=\frac{2a^{3}}{3}\left[\pi-\int_{-\pi/2}^{\pi/2}|\sin\theta|^{3}\,d\theta\right].
+$$
+
+Using the evenness of $|\sin\theta|^3$ and $\displaystyle\int_0^{\pi/2}\sin^3\theta\,d\theta=\frac{2}{3}$:
+
+$$
+\int_{-\pi/2}^{\pi/2}|\sin\theta|^{3}\,d\theta=2\int_0^{\pi/2}\sin^3\theta\,d\theta=2\cdot\frac{2}{3}=\frac{4}{3}.
+$$
+
+Therefore
+
+$$
+V=\frac{2a^{3}}{3}\left(\pi-\frac{4}{3}\right)=\boxed{\;\dfrac{2a^{3}}{9}\,(3\pi-4)\;}.
+$$
+
+Numerically $V\approx 1.2055\,a^{3}$.
+
+> If one *forgets* the absolute value and integrates the odd function $\sin^3\theta$ over the symmetric interval (getting $0$), the incorrect answer $V=\frac{2\pi a^3}{3}\approx 2.094\,a^3$ results. The $|\sin\theta|^3$ correction reduces the volume, which is consistent with the cross-sectional disk having radius only $a/2$. As a bound check, the enclosing cylinder column of radius $a/2$ has cross-sectional area $\pi a^2/4$, and $V=(2/9)(3\pi-4)a^3<\frac{\pi a^2}{4}\cdot(2a)=\frac{\pi a^3}{2}$. ✔
+
+### 4. Indifferent check in Cartesian coordinates
+
+Equivalently $V=\iint_{D} 2\sqrt{a^2-x^2-y^2}\,dA$ where $D$ is the disk $(x-\tfrac{a}{2})^2+y^2\le (\tfrac{a}{2})^2$. Evaluating this disk integral reproduces $\frac{2a^3}{9}(3\pi-4)$.
+
+---
+
+
+
+Image `pyplot_0.png` not found.
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">% Solid cut out of the sphere x^2+y^2+z^2=a^2 by the cylinder r = a*cos(theta),
+% i.e. (x-a/2)^2 + y^2 = (a/2)^2.  Drawn for a = 1.
+% Standalone &amp; compilable with pdflatex (requires the pgfplots package).
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+
+\begin{document}
+\begin{tikzpicture}
+  \begin{axis}[
+      view={35}{22},
+      xlabel=$x$, ylabel=$y$, zlabel=$z$,
+      width=12cm, height=12cm,
+      axis lines=box, clip=false,
+      title={sphere $x^{2}+y^{2}+z^{2}=1$ and cylinder $(x-\tfrac12)^{2}+y^{2}=\tfrac14$},
+    ]
+
+    % ---- sphere, radius a = 1 ------------------------------------------
+    % (theta in [0,360], phi in [0,180])
+    \addplot3[
+        surf, shader=faceted, opacity=0.18, faceted color=gray!60,
+        samples=41, samples y=21,
+        domain=0:360, y domain=0:180,
+      ]
+      ({sin(y)*cos(x)}, {sin(y)*sin(x)}, {cos(y)});
+
+    % ---- cylinder (x-1/2)^2 + y^2 = 1/4 , -1 &lt;= z &lt;= 1 -----------------
+    \addplot3[
+        surf, shader=faceted, opacity=0.45, color=red!70,
+        samples=51, samples y=2,
+        domain=0:360, y domain=-1:1,
+      ]
+      ({0.5+0.5*cos(x)}, {0.5*sin(x)}, {y});
+
+  \end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+Image `pgfplots_0.png` not found.
+
+
+
+---
+
+## Part (b): Graphing the sphere and the cylinder
+
+Plot both surfaces on the same 3‑D axes (drawn here for $a=1$):
+
+- **Sphere** $x^2+y^2+z^2=a^2$: the round grey translucent surface (plot both hemispheres, or use the parametrization $\theta\in[0,2\pi],\ \phi\in[0,\pi]$).
+- **Cylinder** $(x-\tfrac{a}{2})^2+y^2=(\tfrac{a}{2})^2$: the red surface, with parametrization
+
+$$
+\big(x,y,z\big)=\Big(\tfrac{a}{2}+\tfrac{a}{2}\cos t,\;\tfrac{a}{2}\sin t,\;z\Big),\qquad t\in[0,2\pi],\ z\in[-a,a].
+$$
+
+Notice how the cylinder passes through the origin and is tangent to the sphere's equator at $(a,0)$; the material it removes from the sphere is the lens‑shaped solid of part (a).
+
+**Matplotlib (pyplot) code** used to make the figure:
+
+
+<pre><code class="language-python">import numpy as np, matplotlib
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+a = 1.0
+fig = plt.figure(figsize=(9,9)); ax = fig.add_subplot(111, projection=&quot;3d&quot;)
+
+# sphere (both hemispheres, grey wireframe)
+u = np.linspace(0, 2*np.pi, 49); v = np.linspace(0, np.pi/2, 25)
+U, V = np.meshgrid(u, v, indexing=&quot;ij&quot;)
+X, Y, Z = a*np.cos(V)*np.cos(U), a*np.cos(V)*np.sin(U), a*np.sin(V)
+for s in (1, -1):
+    ax.plot_wireframe(X, Y, s*Z, rstride=2, cstride=2, color=&quot;grey&quot;, alpha=0.45)
+
+# cylinder (x-a/2)^2+y^2=(a/2)^2
+t = np.linspace(0, 2*np.pi, 121); zc = np.linspace(-a, a, 41)
+T, Zc = np.meshgrid(t, zc, indexing=&quot;ij&quot;)
+ax.plot_surface(a/2 + a/2*np.cos(T), a/2*np.sin(T), Zc,
+                color=&quot;tab:red&quot;, alpha=0.45)
+
+L = 1.35*a
+ax.plot([-L,L],[0,0],[0,0],&quot;k&quot;); ax.plot([0,0],[-L,L],[0,0],&quot;k&quot;); ax.plot([0,0],[0,0],[-L,L],&quot;k&quot;)
+ax.set_xlabel(&quot;x&quot;); ax.set_ylabel(&quot;y&quot;); ax.set_zlabel(&quot;z&quot;)
+ax.set_box_aspect((1,1,1)); ax.view_init(elev=22, azim=32)
+plt.savefig(&quot;plot_pyplot.png&quot;, dpi=150)
+</code></pre>
+
+
+**PGFplots / TikZ code** (also shown above in the LaTeX block) produces the same picture:
+
+
+<pre><code class="language-latex">\begin{axis}[view={35}{22}, xlabel=$x$, ylabel=$y$, zlabel=$z$, axis lines=box]
+  \addplot3[surf, opacity=0.18, faceted color=gray!60, samples=41, samples y=21,
+            domain=0:360, y domain=0:180]
+    ({sin(y)*cos(x)}, {sin(y)*sin(x)}, {cos(y)});            % sphere
+  \addplot3[surf, opacity=0.45, color=red!70, samples=51, samples y=2,
+            domain=0:360, y domain=-1:1]
+    ({0.5+0.5*cos(x)}, {0.5*sin(x)}, {y});                   % cylinder
+\end{axis}
+</code></pre>
+
+
+---
+
+## Final answer
+
+$$
+\boxed{\;V=\dfrac{2a^{3}}{9}\,(3\pi-4)\;}
+$$
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>tools-disabled-deepseek-flash/calculus-15.8.26/chat_20260928_142433_521463_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

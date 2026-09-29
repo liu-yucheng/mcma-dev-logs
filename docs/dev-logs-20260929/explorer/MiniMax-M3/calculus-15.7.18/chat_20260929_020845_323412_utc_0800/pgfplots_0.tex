@@ -1,0 +1,63 @@
+\documentclass[border=5pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{amsmath}
+\begin{document}
+\begin{tikzpicture}
+% Left plot: yz-projection
+\begin{axis}[
+    at={(0,0)},
+    anchor=south west,
+    xlabel={$y$}, ylabel={$z$},
+    xmin=-0.2, xmax=3.5,
+    ymin=-0.2, ymax=3.5,
+    width=7cm, height=7cm,
+    title={Projection onto $yz$-plane},
+    axis lines=box,
+    xtick={0,1,2,3},
+    ytick={0,1,2,3},
+    legend style={font=\footnotesize, draw=black},
+    legend pos=north west,
+    grid=major,
+    grid style={gray!30}
+]
+% Filled quarter disk
+\addplot[cyan!40, domain=0:1.5708, samples=50] ({3*cos(deg(x))}, {3*sin(deg(x))}) \closedcycle;
+% Boundary
+\addplot[blue, thick, samples=100, domain=0:1.5708, variable=t] ({3*cos(deg(t))}, {3*sin(deg(t))});
+\addplot[red, thick] coordinates {(0,0) (3,0)};
+\addplot[green!60!black, thick] coordinates {(0,0) (0,3)};
+\node at (axis cs:1.5,1.5) {$\begin{array}{c} 0 \leq z \leq \sqrt{9-y^2} \\ 0 \leq y \leq 3 \end{array}$};
+\addlegendentry{$y^2+z^2=9$}
+\end{axis}
+
+% Right plot: xy-projection
+\begin{axis}[
+    at={(7.5cm,0)},
+    anchor=south west,
+    xlabel={$x$}, ylabel={$y$},
+    xmin=-0.1, xmax=1.4,
+    ymin=-0.2, ymax=3.5,
+    width=7cm, height=7cm,
+    title={Projection onto $xy$-plane},
+    axis lines=box,
+    xtick={0,0.5,1.0},
+    ytick={0,1,2,3},
+    legend style={font=\footnotesize, draw=black},
+    legend pos=north west,
+    grid=major,
+    grid style={gray!30}
+]
+% Filled triangle below y=3x
+\addplot[green!30, domain=0:3, samples=50] ({x/3}, {x}) \closedcycle;
+% Boundary
+\addplot[blue, thick, samples=50, domain=0:3, variable=y] ({y/3}, {y});
+\addplot[red, thick] coordinates {(0,0) (0,3)};
+\addplot[green!60!black, thick] coordinates {(0,0) (3,0)};
+\addplot[only marks, mark=*, mark size=2pt] coordinates {(1,3)};
+\node at (axis cs:0.9,3) {$(1,3)$};
+\node[draw, fill=yellow!20, font=\footnotesize] at (axis cs:0.7,1.5) {$\begin{array}{c}\text{For each }y:\\ 0 \leq x \leq y/3\end{array}$};
+\addlegendentry{$y=3x$}
+\end{axis}
+\end{tikzpicture}
+\end{document}

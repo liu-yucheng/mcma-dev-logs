@@ -1,0 +1,48 @@
+\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, trig format plots=deg}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width  = 12.2cm, height = 9.4cm,
+    view={24}{-58},
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=-1.15, xmax=1.15, ymin=-0.9, ymax=0.9, zmin=-0.78, zmax=0.78,
+    ztick={-0.6,-0.3,...,0.6},
+    title={Part (a): maximizing region
+           $E=\{(x,y,z)\mid x^2+2y^2+3z^2\le 1\}$},
+    every title/.append style={font=\small},
+    axis background/.style={fill=black!3},
+]
+% ---- the ellipsoid surface ----------------------------------------------
+\addplot3[surf, shader=flat, opacity=0.38,
+          domain=0:360, samples=37, y domain=0:180, samples y=19,
+          color=orange!70!red]
+    ({cos(x)*sin(y)}, {sin(x)*sin(y)/sqrt(2)}, {cos(y)/sqrt(3)});
+
+% ---- principal traces of the boundary -----------------------------------
+\addplot3[very thick, black, domain=0:360, samples=121, smooth]
+    ({cos(x)}, {sin(x)/sqrt(2)}, 0);
+\node[font=\scriptsize, black, anchor=north east] at (axis cs:-0.30,-0.62,0)
+     {$z{=}0:\ x^2{+}2y^2{=}1$};
+\addplot3[thick, black, domain=0:360, samples=121, smooth]
+    ({cos(x)}, 0, {sin(x)/sqrt(3)});
+\node[font=\scriptsize, black, anchor=north west] at (axis cs:0.75,0.0,-0.60)
+     {$y{=}0:\ x^2{+}3z^2{=}1$};
+\addplot3[thick, black, domain=0:360, samples=121, smooth]
+    (0, {cos(x)/sqrt(2)}, {sin(x)/sqrt(3)});
+
+% ---- semi-axes ------------------------------------------------------------
+\addplot3[red,   ultra thick] coordinates {(0,0,0) (1,0,0)}
+    node[midway, below, font=\footnotesize, red]{$a{=}1$};
+\addplot3[blue,  ultra thick] coordinates {(0,0,0) (0,0.7071,0)}
+    node[midway, right, font=\footnotesize, blue]{$b{=}1/\sqrt{2}$};
+\addplot3[green!55!black, ultra thick] coordinates {(0,0,0) (0,0,0.5774)}
+    node[midway, right, font=\footnotesize, green!55!black]{$c{=}1/\sqrt{3}$};
+
+% ---- vertices -------------------------------------------------------------
+\addplot3[only marks, mark=*, mark size=1.6pt, black]
+    coordinates {(1,0,0) (-1,0,0) (0,0.7071,0) (0,-0.7071,0) (0,0,0.5774) (0,0,-0.5774)};
+\end{axis}
+\end{tikzpicture}
+\end{document}

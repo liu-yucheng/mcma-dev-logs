@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_020715_309615_utc_0800 — Q&amp;A · qwen-3.8-omni-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_020715_309615_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>qwen-3.8-omni-flash/calculus-15.8.26/chat_20260928_020715_309615_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_020715_309615_utc_0800_0.png`. Alt text: Image: human_20260928_020715_309615_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_020715_309615_utc_0800_0.png" alt="Image: qna_20260928_020715_309615_utc_0800"><figcaption>20260928_020715_309615_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Problem
+
+Use cylindrical coordinates.
+**(a)** Find the volume of the solid that the cylinder $r=a\cos\theta$ cuts out of the sphere of radius $a$ centered at the origin.
+**(b)** Illustrate the solid by graphing the sphere and the cylinder on the same screen.
+
+---
+
+## Step 1 — Translate the two surfaces
+
+| surface | equation | role |
+|---|---|---|
+| sphere, radius $a$ centred at $O$ | $x^2+y^2+z^2=a^2\iff \rho^2=r^2+z^2=a^2$ | top/bottom: $z=\pm\sqrt{a^2-r^2}$ |
+| circular cylinder | $r=a\cos\theta\iff x^2+y^2=ax\iff \left(x-\tfrac a2\right)^2+y^2=\left(\tfrac a2\right)^2$ | lateral wall (radius $a/2$, axis through $(a/2,0)$) |
+
+Because $r=a\cos\theta$ is traced exactly once for $-\tfrac\pi2\le\theta\le\tfrac\pi2$ (and $r\ge0$ requires $\cos\theta\ge0$), the solid is
+
+$$
+W=\left\{(r,\theta,z):\ -\tfrac{\pi}{2}\le\theta\le\tfrac{\pi}{2},\quad 0\le r\le a\cos\theta,\quad -\sqrt{a^2-r^2}\le z\le \sqrt{a^2-r^2}\right\}
+$$
+
+**Key check:** the cylinder lies *entirely inside* the disk $r\le a$, since $a\cos\theta\le a$. So the radial upper limit $a\cos\theta$ never overshoots the sphere's equator (equality only at $\theta=0$) — no extra case splitting is needed. This is *Viviani's solid*.
+
+---
+
+## Step 2 — The base region $D$ (2-D picture)
+
+Projecting $W$ onto the $xy$-plane gives $D=\{\,0\le r\le a\cos\theta,\ -\tfrac\pi2\le\theta\le\tfrac\pi2\,\}$: the orange disk of radius $a/2$ centred at $(a/2,0)$, internally tangent to the circle $r=a$ (the sphere's shadow) at $(a,0)$.
+
+The red rays show the order of integration: for each fixed $\theta$, $r$ runs from the origin out to the cylinder wall $r=a\cos\theta$; then $\theta$ sweeps $-\tfrac\pi2\to\tfrac\pi2$.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18,trig format plots=rad}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  width=8.4cm,height=8.4cm,
+  xmin=-1.40,xmax=1.55,ymin=-1.42,ymax=1.32,
+  axis equal image,
+  xlabel={$x$},ylabel={$y$},
+  grid=major,grid style={gray!25},
+  samples=240,
+  legend style={draw=none,font=\scriptsize,at={(0.02,0.99)},anchor=north west,fill=white,fill opacity=.7},
+  title={\footnotesize Base region $D$: $-\pi/2\le\theta\le\pi/2$, $0\le r\le a\cos\theta$ ($a=1$)}]
+
+  \addplot+[fill=blue!45!gray,fill opacity=.12,draw=blue!45!gray,line width=0.9pt,
+            domain=0:2*pi,mark=none] ({cos(x)},{sin(x)}) -- cycle;
+  \addplot+[fill=orange,fill opacity=.45,draw=orange!75!black,line width=1.2pt,
+            domain=-pi/2:pi/2,mark=none] ({cos(x)^2},{cos(x)*sin(x)}) -- cycle;
+
+  \draw[red!75!black,line width=0.5pt] (axis cs:0,0) -- (axis cs:0.25,-0.433);
+  \draw[red!75!black,line width=0.5pt] (axis cs:0,0) -- (axis cs:0.75,-0.433);
+  \draw[red!75!black,line width=0.5pt] (axis cs:0,0) -- (axis cs:1,0);
+  \draw[red!75!black,line width=0.5pt] (axis cs:0,0) -- (axis cs:0.75,0.433);
+  \draw[red!75!black,line width=0.5pt] (axis cs:0,0) -- (axis cs:0.25,0.433);
+  \draw[-&gt;,red!80!black,line width=1pt] (axis cs:0,0) -- (axis cs:0.75,0.433);
+  \node[red!80!black,font=\scriptsize,rotate=30] at (axis cs:0.28,0.33) {$r:0 \to a\cos\theta$};
+
+  \draw[gray,densely dotted,line width=0.4pt] (axis cs:-1,0) -- (axis cs:1,0);
+  \draw[gray,densely dotted,line width=0.4pt] (axis cs:0,-1) -- (axis cs:0,1);
+
+  \filldraw[orange!75!black] (axis cs:0.5,0) circle (1.7pt);
+  \node[orange!75!black,font=\tiny,anchor=south] at (axis cs:0.5,0.06) {center $(a/2,0)$};
+  \filldraw[blue!45!gray] (axis cs:1,0) circle (1.7pt);
+  \node[blue!45!gray,font=\tiny,anchor=north east] at (axis cs:1.02,-0.30) {tangency $(a,0)$};
+  \filldraw[black] (axis cs:0,0) circle (1.4pt);
+  \node[font=\scriptsize,anchor=east] at (axis cs:-0.05,-0.06) {O};
+
+  \node[font=\tiny,anchor=north west,text width=2.2cm,align=left] at (axis cs:-1.34,-1.10)
+     {shaded region $=$ base $D$ of the solid};
+
+  \addlegendentry{sphere trace $r=a$}
+  \addlegendentry{cylinder $r=a\cos\theta$}
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+## Step 3 — Set up the triple integral
+
+With $dV=r\,dz\,dr\,d\theta$ and the symmetry $z\mapsto -z$:
+
+$$
+V=\iiint_W dV=\int_{-\pi/2}^{\pi/2}\!\int_{0}^{a\cos\theta}\!\int_{-\sqrt{a^2-r^2}}^{\sqrt{a^2-r^2}} r\,dz\,dr\,d\theta
+=\int_{-\pi/2}^{\pi/2}\!\int_{0}^{a\cos\theta} 2r\sqrt{a^2-r^2}\;dr\,d\theta
+$$
+
+### Inner integral ($z$)
+$$\int_{-\sqrt{a^2-r^2}}^{\sqrt{a^2-r^2}}dz=2\sqrt{a^2-r^2}$$
+
+### Middle integral ($r$) — substitute $u=a^2-r^2$, $du=-2r\,dr$
+$$
+\int_{0}^{a\cos\theta}2r\sqrt{a^2-r^2}\,dr
+=\Big[-\tfrac{2}{3}\big(a^2-r^2\big)^{3/2}\Big]_{0}^{a\cos\theta}
+=\tfrac{2}{3}a^3-\tfrac{2}{3}\big(a^2-a^2\cos^2\theta\big)^{3/2}
+$$
+
+**Careful with the $3/2$ power:** $\big(a^2\sin^2\theta\big)^{3/2}=a^3|\sin\theta|^3$, *not* $a^3\sin^3\theta$. This absolute value is the one trap in the problem. Hence
+$$
+\int_{0}^{a\cos\theta}2r\sqrt{a^2-r^2}\,dr=\frac{2a^{3}}{3}\Big(1-|\sin\theta|^{3}\Big)
+$$
+
+### Outer integral ($\theta$) — the integrand is even
+$$
+V=\frac{2a^{3}}{3}\int_{-\pi/2}^{\pi/2}\bigl(1-|\sin\theta|^{3}\bigr)d\theta
+=\frac{2a^{3}}{3}\left[\pi-2\int_{0}^{\pi/2}\sin^{3}\theta\,d\theta\right]
+$$
+using $\displaystyle\int_0^{\pi/2}\sin^3\theta\,d\theta=\Big[-\cos\theta+\tfrac{\cos^3\theta}{3}\Big]_0^{\pi/2}=\frac{2}{3}$
+(from $\sin^3\theta=\sin\theta(1-\cos^2\theta)$, then $u=\cos\theta$).
+
+$$
+V=\frac{2a^{3}}{3}\left(\pi-\frac{4}{3}\right)=\frac{2a^{3}}{9}\,(3\pi-4)
+$$
+
+---
+
+## Step 4 — Verification
+
+* Symbolic (SymPy): $\ \int_{-\pi/2}^{\pi/2}\frac{2a^3}{3}\bigl(1-|\sin\theta|^3\bigr)d\theta=\frac{2a^3(3\pi-4)}{9}$ ✔ (pieces: $\int_{-\pi/2}^{\pi/2}d\theta=\pi$, $\int_{-\pi/2}^{\pi/2}|\sin\theta|^3d\theta=\frac43$)
+* Independent nested quadrature at $a=1$: $V=1.2055036$ versus formula $\frac{2}{9}(3\pi-4)=1.2055062$ ✔
+* Monte-Carlo on the raw solid $\{x^2+y^2+z^2\le a^2\}\cap\{x^2+y^2\le ax\}$, $3\times10^6$ points: $V=1.2062\pm0.0023$ ✔
+* Sanity: $V\big/\bigl(\tfrac43\pi a^3\bigr)\approx0.288$, i.e. the cylinder removes just under $29\%$ of the ball — plausible for a cylinder of half the radius pushed against the boundary.
+* Trap check: dropping the absolute value would give $\frac{2\pi a^3}{3}\approx2.094\,a^3$, which is *exactly half* the ball's volume $\frac43\pi a^3$ — $73\%$ too large, and a red flag that the odd function $\sin^3\theta$ was integrated symmetrically to $0$ by accident.
+
+---
+
+## Step 5 — Part (b): the solid on screen
+
+The 3-D picture puts both surfaces in one frame: the transparent blue sphere $\rho=a$, the translucent orange cylinder $r=a\cos\theta$ (its vertical generators and its equatorial cross-section drawn darker), and — in green — the actual solid, bounded laterally by the cylinder wall and above/below by the spherical caps $z=\pm\sqrt{a^2-r^2}$.
+
+The two red curves are the **Viviani windows**: substitute $r=a\cos\theta$ into $z^2=a^2-r^2$ to get
+
+$$
+x=a\cos^2\theta,\qquad y=a\sin\theta\cos\theta,\qquad z=\pm\,a|\sin\theta|,\qquad -\tfrac\pi2\le\theta\le\tfrac\pi2
+$$
+
+Landmarks (verified numerically, $a=1$):
+
+* $\theta=0$: $(a,0,0)$ — the point where the cylinder is tangent to the sphere's equator, and the windows dip to $z=0$ there.
+* $\theta=\pm\tfrac\pi2$: $(0,0,\pm a)$ — both branches of a window meet on the $z$-axis at the top/bottom of the sphere; this is the **double (self-intersection) point** of each figure-eight curve.
+* $\theta=\pm\tfrac\pi3$: $\bigl(\tfrac a4,\pm\tfrac{\sqrt3 a}{4},\pm\tfrac{\sqrt3 a}{2}\bigr)$, and every point satisfies $r^2+z^2=a^2$ exactly, confirming the curve lies on both surfaces.
+
+Each window is a figure eight on the cylinder, and the two windows (upper and lower) pinched at $(0,0,\pm a)$ are exactly the boundary of the green solid.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  width=10.5cm,height=9cm,
+  view={-58}{20},
+  xlabel={$x$},ylabel={$y$},zlabel={$z$},
+  xmin=-1,xmax=1,ymin=-1,ymax=1,zmin=-1,zmax=1,
+  xtick={-1,0,1},ytick={-1,0,1},ztick={-1,0,1},
+  tick label style={font=\tiny},
+  grid=major,grid style={gray!20},
+  title={\footnotesize (b) Sphere $\rho=a$ and cylinder $r=a\cos\theta$ on the same screen ($a=1$)}]
+
+  % ---------------- sphere  rho = a ----------------
+  \addplot3[surf, blue!45!gray, opacity=0.10,
+             domain=0:360, y domain=0:180, samples=20, samples y=12]
+    ({sin(y)*cos(x)},{sin(y)*sin(x)},{cos(y)});
+  \addplot3[blue!55!black, thin, opacity=0.8, domain=0:180, samples=40]
+    ({sin(x)},{0},{cos(x)});
+  \addplot3[blue!55!black, thin, opacity=0.8, domain=0:180, samples=40]
+    ({0},{sin(x)},{cos(x)});
+  \addplot3[blue!55!black, thin, opacity=0.8, domain=0:360, samples=60]
+    ({0.866*cos(x)},{0.866*sin(x)},{0.5});
+  \addplot3[blue!55!black, thin, opacity=0.8, domain=0:360, samples=60]
+    ({0.866*cos(x)},{0.866*sin(x)},{-0.5});
+
+  % ---------------- the solid: spherical caps  z = +- sqrt(a^2 - r^2) ----------------
+  \addplot3[surf, green!45!black, opacity=0.85,
+             domain=-90:90, y domain=0:1, samples=20, samples y=10]
+    ({y*cos(x)^2},{y*cos(x)*sin(x)},{sqrt(1-(y*cos(x))^2)});
+  \addplot3[surf, green!45!black, opacity=0.85,
+             domain=-90:90, y domain=0:1, samples=20, samples y=10]
+    ({y*cos(x)^2},{y*cos(x)*sin(x)},{-sqrt(1-(y*cos(x))^2)});
+
+  % ---------------- cylinder  r = a cos(theta) ----------------
+  \addplot3[surf, orange, opacity=0.16,
+             domain=-90:90, y domain=-1:1, samples=20, samples y=2]
+    ({cos(x)^2},{cos(x)*sin(x)},{y});
+  \addplot3[orange!80!black, thin, opacity=0.9, domain=-90:90, samples=60]
+    ({cos(x)^2},{cos(x)*sin(x)},{0});
+  \addplot3[orange!80!black, thin, opacity=0.9, domain=-1:1, samples=2] ({1},{0},{x});
+  \addplot3[orange!80!black, thin, opacity=0.9, domain=-1:1, samples=2] ({0.75},{0.433},{x});
+  \addplot3[orange!80!black, thin, opacity=0.9, domain=-1:1, samples=2] ({0.75},{-0.433},{x});
+  \addplot3[orange!80!black, thin, opacity=0.9, domain=-1:1, samples=2] ({0.25},{0.433},{x});
+  \addplot3[orange!80!black, thin, opacity=0.9, domain=-1:1, samples=2] ({0.25},{-0.433},{x});
+
+  % ---------------- Viviani intersection curves ----------------
+  \addplot3[red!80!black, thick, domain=-90:90, samples=80]
+    ({cos(x)^2},{cos(x)*sin(x)},{abs(sin(x))});
+  \addplot3[red!80!black, thick, domain=-90:90, samples=80]
+    ({cos(x)^2},{cos(x)*sin(x)},{-abs(sin(x))});
+
+  % ---------------- labels ----------------
+  \node[blue!55!black,font=\scriptsize] at (axis cs:-0.60,0,0.95) {sphere $\rho=a$};
+  \node[orange!80!black,font=\scriptsize] at (axis cs:0.10,0.90,-0.95) {cylinder $r=a\cos\theta$};
+  \node[green!40!black,font=\scriptsize] at (axis cs:-0.85,-0.55,0.30) {solid cut out};
+  \node[red!80!black,font=\scriptsize] at (axis cs:0.95,0.45,0.90) {Viviani curve};
+  \node[font=\scriptsize] at (axis cs:0.10,0.10,-0.16) {O};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+## Summary — how to attack this kind of problem
+
+1. **Rewrite every surface in $(r,\theta,z)$.** $r=a\cos\theta$ is a *cylinder* (complete the square: $(x-a/2)^2+y^2=(a/2)^2$), not a sphere; $\rho=a$ gives $z=\pm\sqrt{a^2-r^2}$.
+2. **Project to the plane to get the $\theta$- and $r$-limits.** Here $r\ge0$ forces $\cos\theta\ge0$, so $-\tfrac\pi2\le\theta\le\tfrac\pi2$ and $0\le r\le a\cos\theta$. Check that the inner wall really lies inside the outer surface ($a\cos\theta\le a$) so no case split is needed.
+3. **Integrate in the order $dz$, then $dr$, then $d\theta$** — $z$ first uses the $\pm$ symmetry, $r$ then yields to $u=a^2-r^2$.
+4. **Watch $(a^2\sin^2\theta)^{3/2}=a^3|\sin\theta|^3$.** Keep the absolute value, then split/even-out the $\theta$-integral.
+5. **Use evenness** in $\theta$ to reduce to $\int_0^{\pi/2}\sin^3\theta\,d\theta=\tfrac23$.
+6. **Sanity-check** against the enclosing ball's volume $\tfrac43\pi a^3$, and against a numerical or Monte-Carlo evaluation.
+
+### Final answer, part (a)
+
+$$
+\boxed{V=\dfrac{2a^{3}}{9}\,(3\pi-4)=\dfrac{2a^{3}}{3}\left(\pi-\dfrac{4}{3}\right)\approx 1.2055\,a^{3}}
+$$
+
+Part (b) is illustrated by the graphs above: the sphere $\rho=a$ (blue, transparent) and the cylinder $r=a\cos\theta$ (orange) on the same screen, with Viviani's solid (green) trapped between the caps $z=\pm\sqrt{a^2-r^2}$ and the red Viviani windows.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>qwen-3.8-omni-flash/calculus-15.8.26/chat_20260928_020715_309615_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_142318_159790_utc_0800 — Q&amp;A · tools-disabled-deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_142318_159790_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>tools-disabled-deepseek-flash/calculus-15.7.55/chat_20260928_142318_159790_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_142318_159790_utc_0800_0.png`. Alt text: Image: human_20260928_142318_159790_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_142318_159790_utc_0800_0.png" alt="Image: qna_20260928_142318_159790_utc_0800"><figcaption>20260928_142318_159790_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Part (a): region that maximizes the triple integral
+
+Let
+
+$$
+f(x,y,z)=1-x^2-2y^2-3z^2.
+$$
+
+For any region $E$ of finite volume, write it as the disjoint union of the parts where $f>0$, where $f<0$, and where $f=0$. Since the integral is additive,
+
+$$
+\iiint_E f\,dV
+= \iiint_{E\cap\{f>0\}} f\,dV
++ \iiint_{E\cap\{f<0\}} f\,dV.
+$$
+
+The second term is $\le 0$ because $f<0$ there, while the first term is maximized precisely when $E$ contains the entire set $\{f>0\}$. Thus the maximum occurs for
+
+$$
+E=\{f\ge 0\}
+=\{(x,y,z):x^2+2y^2+3z^2\le 1\}.
+$$
+
+The boundary $f=0$ can be included or excluded because it has zero volume and does not change the integral. This is an ellipsoid with semi-axes $1$, $1/\sqrt2$, and $1/\sqrt3$.
+
+---
+
+
+
+Image `pyplot_0.png` not found.
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">% verify_plot.tex
+% Figure for   I = \iiint_E (1 - x^2 - 2y^2 - 3z^2) dV ,  E : x^2 + 2y^2 + 3z^2 &lt;= 1 .
+% Exact value  I = 4*pi*sqrt(6)/45 = 8*pi/(15*sqrt(6)) ~= 0.6840266 .
+% Compile with:  lualatex verify_plot.tex  (or pdflatex)
+\documentclass[border=6pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\begin{document}
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={group size=2 by 1, horizontal sep=2.2cm, ylabels at=edge left},
+    width=7.2cm, height=7.2cm,
+  ]
+
+  % ---------------- (a) the ellipsoid x^2 + 2y^2 + 3z^2 = 1 ----------------
+  \nextgroupplot[
+      title={(a) ellipsoid $x^2+2y^2+3z^2=1$},
+      xlabel=$x$, ylabel=$y$, zlabel=$z$,
+      view={38}{22}, colormap/cool,
+      zmin=-0.75, zmax=0.75,
+    ]
+    \addplot3[
+        surf, shader=interp, opacity=0.9, z buffer=sort,
+        domain=0:360, y domain=0:180, samples=51, samples y=26,
+      ]
+      ({sin(y)*cos(x)}, {sin(y)*sin(x)/sqrt(2)}, {cos(y)/sqrt(3)});
+    % the z = 0 cross-section (the ellipse x^2 + 2y^2 = 1)
+    \addplot3[domain=0:360, samples=120, samples y=0, red, thick]
+      ({cos(x)}, {sin(x)/sqrt(2)}, {0});
+    \node[anchor=south, font=\scriptsize] at (axis cs:0,0,0.62)
+      {semi-axes $1,\;1/\sqrt2,\;1/\sqrt3$};
+
+  % ------- (b) integrand 1 - x^2 - 2y^2 over the z = 0 cross-section -------
+  \nextgroupplot[
+      title={(b) integrand $1-x^2-2y^2$ on the $z=0$ slice},
+      xlabel=$x$, ylabel=$y$, zlabel={$1-x^2-2y^2$},
+      view={38}{26}, colormap/hot,
+    ]
+    % parameterise the ellipse by radius r in [0,1] and angle t in [0,360]
+    \addplot3[
+        surf, shader=interp, z buffer=sort,
+        domain=0:1, y domain=0:360, samples=26, samples y=61,
+      ]
+      ({x*cos(y)}, {x*sin(y)/sqrt(2)}, {1-x^2});
+    \node[anchor=south west, font=\scriptsize] at (axis cs:0.85,-0.2,1.05)
+      {$I=\frac{4\pi\sqrt6}{45}\approx0.684027$};
+\end{groupplot}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+Image `pgfplots_0.png` not found.
+
+
+
+---
+
+## Part (b): exact maximum value
+
+The maximum is therefore
+
+$$
+I=\iiint_{x^2+2y^2+3z^2\le 1}(1-x^2-2y^2-3z^2)\,dV.
+$$
+
+Use the substitution
+
+$$
+u=x,\qquad v=\sqrt2\,y,\qquad w=\sqrt3\,z.
+$$
+
+Then $x^2+2y^2+3z^2=u^2+v^2+w^2$, and the Jacobian is
+
+$$
+\left|\frac{\partial(x,y,z)}{\partial(u,v,w)}\right|
+= \frac{1}{\sqrt2\sqrt3}=\frac1{\sqrt6}.
+$$
+
+So
+
+$$
+I=\frac1{\sqrt6}\iiint_{u^2+v^2+w^2\le 1}(1-u^2-v^2-w^2)\,du\,dv\,dw.
+$$
+
+In spherical coordinates the unit ball gives
+
+$$
+\iiint_B(1-\rho^2)\,dV
+= \int_0^{2\pi}\!\int_0^{\pi}\!\int_0^1(1-\rho^2)\rho^2\sin\phi\,d\rho\,d\phi\,d\theta
+= (2\pi)(2)\left(\frac13-\frac15\right)
+= \frac{8\pi}{15}.
+$$
+
+Hence
+
+$$
+I=\frac1{\sqrt6}\cdot\frac{8\pi}{15}
+= \frac{8\pi}{15\sqrt6}
+= \frac{4\pi\sqrt6}{45}
+\approx 0.6840265775.
+$$
+
+A CAS confirms this exactly. For example, in Mathematica,
+
+
+<pre><code class="language-mathematica">Integrate[1 - x^2 - 2 y^2 - 3 z^2,
+  {x, y, z} \[Element] Ellipsoid[{0, 0, 0}, {1, 1/Sqrt[2], 1/Sqrt[3]}]]
+</code></pre>
+
+
+returns $(4\pi\sqrt6)/45$.
+
+---
+
+$$
+\boxed{\text{(a) }E:\ x^2+2y^2+3z^2\le 1,\qquad \text{(b) } \iiint_E(1-x^2-2y^2-3z^2)\,dV=\frac{4\pi\sqrt6}{45}\approx 0.6840266.}
+$$
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>tools-disabled-deepseek-flash/calculus-15.7.55/chat_20260928_142318_159790_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

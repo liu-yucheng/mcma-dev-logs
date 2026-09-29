@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_142059_319401_utc_0800 — Q&amp;A · tools-disabled-deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_142059_319401_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>tools-disabled-deepseek-flash/calculus-15.7.46/chat_20260928_142059_319401_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_142059_319401_utc_0800_0.png`. Alt text: Image: human_20260928_142059_319401_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_142059_319401_utc_0800_0.png" alt="Image: qna_20260928_142059_319401_utc_0800"><figcaption>20260928_142059_319401_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Moment of inertia of a solid cone about the $z$-axis
+
+### The physical definition
+For a solid with density $k$, the **moment of inertia about the $z$-axis** is the integral of the density times the squared distance to the $z$-axis:
+
+$$
+I_z=\iiint_D (x^2+y^2)\,k\,dV,
+$$
+
+since $x^2+y^2$ is exactly the squared distance from $(x,y,z)$ to the $z$-axis.
+
+### Describing the region
+Here $D$ is the solid cone
+
+$$
+\sqrt{x^2+y^2}\;\le\;z\;\le\;h .
+$$
+
+At a fixed height $z$ the cross-section is the disk $x^2+y^2\le z^2$ of radius $z$. Thus the vertex sits at the origin, and the top at $z=h$ is a disk of radius $h$. It is natural to use **cylindrical coordinates**, where $x^2+y^2=r^2$ and $dV=r\,dr\,dz\,d\theta$:
+
+$$
+0\le\theta\le 2\pi,\qquad 0\le z\le h,\qquad 0\le r\le z .
+$$
+
+### Setting up and evaluating the integral
+Substituting $x^2+y^2=r^2$ and $dV=r\,dr\,dz\,d\theta$, so the integrand becomes $r^2\cdot r=r^3$:
+
+$$
+I_z=k\int_0^{2\pi}\int_0^{h}\int_0^{z} r^3\,dr\,dz\,d\theta .
+$$
+
+Evaluate inside–out. The inner integral:
+
+$$
+\int_0^z r^3\,dr=\frac{z^4}{4}.
+$$
+
+The middle integral:
+
+$$
+\int_0^h \frac{z^4}{4}\,dz=\frac{h^5}{20}.
+$$
+
+The outer integral just contributes the factor $2\pi$. Hence
+
+$$
+I_z=k\cdot 2\pi\cdot \frac{h^5}{20}=\frac{k\pi h^5}{10}.
+$$
+
+### Sanity check
+A solid right circular cone of mass $M$ and base radius $R$ satisfies the classic result $I_z=\tfrac{3}{10}MR^2$. Here $R=h$ and the volume is $\tfrac13\pi h^3$, so $M=k\cdot\tfrac13\pi h^3$ and
+
+$$
+I_z=\frac{3}{10}\Big(k\tfrac{\pi h^3}{3}\Big)h^2=\frac{k\pi h^5}{10},
+$$
+
+which matches. (One can also integrate in spherical coordinates using $\phi=\pi/4$ for the cone and $x^2+y^2=\rho^2\sin^2\phi$, obtaining the same value.)
+
+### Final answer
+
+$$
+\boxed{I_z=\frac{\pi k h^5}{10}}
+$$
+
+**Key technique:** the distance-squared weighting $x^2+y^2$ makes cylindrical coordinates the natural choice — the bounds become the simple box $0\le r\le z$, $0\le z\le h$, $0\le\theta\le 2\pi$ — and the integration reduces to integrating $z^4$.
+
+---
+
+No graphical results.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>tools-disabled-deepseek-flash/calculus-15.7.46/chat_20260928_142059_319401_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

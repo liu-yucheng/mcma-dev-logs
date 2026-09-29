@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260927_231146_145421_utc_0800 — Q&amp;A · qwen-3.8-omni-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260927_231146_145421_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>qwen-3.8-omni-flash/calculus-15.7.17/chat_20260927_231146_145421_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260927_231146_145421_utc_0800_0.png`. Alt text: Image: human_20260927_231146_145421_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260927_231146_145421_utc_0800_0.png" alt="Image: qna_20260927_231146_145421_utc_0800"><figcaption>20260927_231146_145421_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Evaluating $\iiint_E x\,dV$, where $E$ is bounded by $x=4y^2+4z^2$ and $x=4$
+
+### Step 1 — Read the geometry: which axis is the symmetry axis?
+
+The surface $x=4y^2+4z^2$ has $y$ and $z$ appearing **only** through $y^2+z^2$. That is the signature of a
+circular paraboloid whose axis is the **$x$-axis** (it opens in the $+x$ direction, vertex at the origin),
+capped on the right by the plane $x=4$.
+
+> **Rule of thumb.** Whenever two variables enter only as their sum of squares, take that axis as the
+cylinder axis and use cylindrical coordinates *about it*.
+
+So we set
+
+$$
+y=r\cos\theta,\qquad z=r\sin\theta,\qquad x=x,\qquad dV=r\,dx\,dr\,d\theta ,
+$$
+
+where $r=\sqrt{y^2+z^2}$ is the distance to the $x$-axis. In these variables the paraboloid is simply
+$x=4r^2$ — one variable, no angles.
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[view={-55}{16}, width=10cm, height=8cm,
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    xmin=0, xmax=4.4, ymin=-1.2, ymax=1.2, zmin=-1.2, zmax=1.2,
+    xtick={0,1,2,3,4}, ytick={-1,0,1}, ztick={-1,0,1},
+    grid=major,
+    title={Solid $E:\;4y^{2}+4z^{2}\leq x\leq 4$},
+    legend style={font=\tiny, at={(1.30,1.0)}, anchor=north east, draw=black!30, fill=white}]
+    \addplot3[surf, blue!55, opacity=0.28, shader=flat,
+          domain=0:1, domain y=0:6.283, samples=8, samples y=12]
+   ({4*x^2}, {x*cos(deg(y))}, {x*sin(deg(y))});
+   \addlegendentry{paraboloid $x=4r^2$}
+    \addplot3[surf, orange!80, opacity=0.55, shader=flat,
+          domain=0:1, domain y=0:6.283, samples=3, samples y=16]
+   ({4}, {x*cos(deg(y))}, {x*sin(deg(y))});
+   \addlegendentry{plane $x=4$ (cap disk $y^2+z^2\leq1$)}
+    \addplot3[black, very thick, domain=0:6.283, samples=48] ({4},{cos(x)},{sin(x)});
+   \addlegendentry{circle $x=4$, $y^2+z^2=1$}
+    \addplot3[red, dashed, thick] coordinates {(0,0,0) (4.4,0,0)};
+   \addlegendentry{$x$-axis (symmetry axis)}
+    \addplot3[green!60!black, ultra thick] coordinates {(1.44,0.6,0) (4,0.6,0)};
+   \addlegendentry{ray at $r=0.6$: $x$ from $4r^2$ to $4$}
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+### Step 2 — Find the shadow (the range of $r$)
+
+The paraboloid meets the plane where $4r^2=4$, i.e. at $r=1$. So the widest cross-section of $E$ is the
+unit disk $y^2+z^2\le 1$ in the plane $x=4$, and the intersection is the circle
+$\{(x,y,z):x=4,\;y^2+z^2=1\}$ (drawn in black above and to the right).
+
+Sweeping a ray **parallel to the $x$-axis** (the green ray in the plots) it enters $E$ through the
+paraboloid at $x=4r^2$ and leaves through the plane at $x=4$. Hence
+
+$$
+E=\Big\{(r,\theta,x):\;0\le\theta\le 2\pi,\quad 0\le r\le 1,\quad 4r^2\le x\le 4\Big\}.
+$$
+
+Because the bounds on $x$ involve only $r$ (never $\theta$), the $\theta$-integration is trivial and just
+contributes a factor $2\pi$. This is exactly why the cylindrical choice pays off.
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=9.6cm, height=7.4cm,
+    xlabel={$r=\sqrt{y^{2}+z^{2}}$}, ylabel={$x$},
+    xmin=-0.06, xmax=2.45, ymin=-0.4, ymax=5.2,
+    xtick={0,0.5,...,2.5}, ytick={0,1,...,5},
+    grid=major,
+    title={Meridional half-section of $E$ in the $(r,x)$-plane},
+    legend style={font=\tiny, at={(1.0,0.02)}, anchor=south east},
+]
+% helper paths (not drawn, not listed in legend)
+\addplot[name path=par, draw=none, forget plot, domain=0:1, samples=60] {4*x^2};
+\addplot[name path=cup, draw=none, forget plot, domain=0:1, samples=2] {4};
+% shade the region 4r^2 &lt;= x &lt;= 4
+\addplot[blue!14, forget plot] fill between[of=par and cup];
+
+\addplot[blue!80!black, very thick, domain=0:1, samples=60] {4*x^2};
+\addlegendentry{paraboloid trace $x=4r^{2}$}
+\addplot[orange, very thick, domain=-0.06:2.45, samples=2] {4};
+\addlegendentry{plane trace $x=4$}
+\addplot[black, only marks, mark=*, mark size=2.2pt, forget plot] coordinates {(1,4) (0,0)};
+\addplot[green!60!black, line width=2.2pt, mark=*] coordinates {(0.55,1.21) (0.55,4)};
+\addlegendentry{Type I: $r$ fixed, $x$ from $4r^{2}$ to $4$}
+\addplot[red, line width=2.2pt, mark=*] coordinates {(0,2) (0.7071,2)};
+\addlegendentry{Type II: $x$ fixed, $r$ from $0$ to $\sqrt{x}/2$}
+\node[font=\tiny, anchor=west] at (axis cs:1.14,4.55) {$4r^{2}=4$ gives $r=1$};
+\node[font=\tiny, align=center, gray] at (axis cs:1.85,3.3)
+     {shaded $D^{*}$ revolved about\\ the $x$-axis gives $E$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+### Step 3 — Integrate in the order $dx$, then $dr$, then $d\theta$
+
+$$
+\iiint_E x\,dV=\int_0^{2\pi}\!\!\int_0^1\!\!\int_{4r^2}^{4} x\;\underbrace{r\,dx\,dr\,d\theta}_{dV}
+$$
+
+**(a) Inner ($x$) integral** — the Jacobian factor $r$ rides along as a constant:
+
+$$
+\int_{4r^2}^{4} x\,dx=\left[\frac{x^2}{2}\right]_{4r^2}^{4}
+=\frac{16-16r^4}{2}=8\left(1-r^4\right)
+\quad\Longrightarrow\quad
+r\int_{4r^2}^{4}\!x\,dx=8r\left(1-r^4\right).
+$$
+
+**(b) Middle ($r$) integral** — expand and use the power rule:
+
+$$
+\int_0^1 8r\left(1-r^4\right)dr=8\int_0^1\left(r-r^5\right)dr
+=8\left[\frac{r^2}{2}-\frac{r^6}{6}\right]_0^1
+=8\left(\frac12-\frac16\right)=8\cdot\frac13=\frac{8}{3}.
+$$
+
+**(c) Outer ($\theta$) integral** — nothing depends on $\theta$:
+
+$$
+\int_0^{2\pi}\frac{8}{3}\,d\theta=\frac{8}{3}\cdot 2\pi=\frac{16\pi}{3}.
+$$
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_2.png" alt="pyplot-generated plot"><figcaption>pyplot_2.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_2.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=7.2cm, height=6.0cm, at={(0,0)},
+    xlabel={$r$}, ylabel={shell weight $\phi(r)$},
+    xmin=0, xmax=1, ymin=0, ymax=44,
+    grid=major,
+    title={$\phi(r)=16\pi r(1-r^{4})$: weight after the $x$- and $\theta$-integrations},
+    legend style={font=\tiny, at={(0.97,0.97)}, anchor=north east},
+    tick label style={font=\tiny}, label style={font=\scriptsize},
+    title style={font=\scriptsize, align=center, text width=7cm}]
+\addplot[blue!40!black, fill=blue!10, domain=0:1, samples=80] {16*pi*(x-x^5)};
+\addlegendentry{$\phi(r)=16\pi(r-r^5)$}
+\addplot[only marks, mark=*, mark options={fill=red}, forget plot] coordinates {(0.6687,29.72)};
+\node[font=\tiny, anchor=east] at (axis cs:0.63,31.0) {peak $r=5^{-1/4}\approx0.67$};
+\node[font=\tiny, gray, anchor=west, align=left] at (axis cs:0.04,13.0)
+     {$r\to0$: shell $\propto r$};
+\node[font=\tiny, gray, anchor=west, align=left] at (axis cs:0.46,5.0)
+     {$r\to1$: $x$-gap $[4r^2,4]$ closes};
+\end{axis}
+
+\begin{axis}[
+    width=7.2cm, height=6.0cm, at={(8.6cm,0)}, anchor=south west,
+    xlabel={$r$}, ylabel={accumulated value},
+    xmin=0, xmax=1, ymin=0, ymax=25,
+    grid=major,
+    title={$\int_0^1 16\pi(r-r^5)\,dr=16\pi\left(\frac{1}{2}-\frac{1}{6}\right)=\frac{16\pi}{3}$},
+    legend style={font=\tiny, at={(0.05,0.42)}, anchor=west},
+    tick label style={font=\tiny}, label style={font=\scriptsize},
+    title style={font=\scriptsize, align=center, text width=7.2cm}]
+\addplot[green!55!black, very thick, domain=0:1, samples=80] {16*pi*(x^2/2 - x^6/6)};
+\addlegendentry{running integral $\int_0^r\phi(s)\,ds$}
+\addplot[black, dashed, very thick, domain=0:1, samples=2] {16*pi/3};
+\addlegendentry{total $=16\pi/3\approx16.755$}
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_2.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_2.png</figcaption></figure>
+
+
+
+
+---
+
+### Step 4 — Checks
+
+**Order reversed (Type II, the red strip).** For fixed $x\in[0,4]$ the radius runs $0\le r\le \sqrt{x}/2$
+(from $x=4r^2$): $\;\int_0^{\sqrt{x}/2} r\,dr=\tfrac12\cdot\tfrac{x}{4}=\tfrac{x}{8}$, so
+
+$$
+\int_0^{2\pi}\!\int_0^4 x\cdot\frac{x}{8}\,dx\,d\theta
+=2\pi\cdot\frac18\left[\frac{x^3}{3}\right]_0^4
+=\frac{\pi}{4}\cdot\frac{64}{3}=\frac{16\pi}{3}.\;\checkmark
+$$
+
+**Shell picture (why the graph above looks like that).** After the $x$- and $\theta$-integrations the
+remaining integrand is $\phi(r)=16\pi\,r(1-r^4)$: it vanishes at $r=0$ (no shell area) *and* at $r=1$
+(the $x$-gap closes), peaking at $r=5^{-1/4}\approx0.67$. Its area is $16\pi(\tfrac12-\tfrac16)=\tfrac{16\pi}{3}$.
+
+**Numeric / Monte-Carlo.** Quadrature gives $16.7551608\ldots$, matching $16\pi/3$ to $\sim10^{-12}$
+relative error; a Monte-Carlo estimate over the bounding box gives $16.76$. A bonus interpretation:
+$\operatorname{Vol}(E)=\int_0^{2\pi}\!\int_0^1(4-4r^2)r\,dr\,d\theta=2\pi$, so the integral equals
+$\bar{x}\operatorname{Vol}(E)$ with centroid $\bar{x}=\dfrac{16\pi/3}{2\pi}=\dfrac{8}{3}$ — sensibly
+pushed past the mid-$x$ value $2$ toward the fat end of the paraboloid. $\checkmark$
+
+### Answer
+
+$$
+\boxed{\iiint_E x\,dV=\dfrac{16\pi}{3}}
+$$
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>qwen-3.8-omni-flash/calculus-15.7.17/chat_20260927_231146_145421_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

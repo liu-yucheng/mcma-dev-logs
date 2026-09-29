@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_004729_291592_utc_0800 — Q&amp;A · qwen-3.8-omni-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_004729_291592_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>qwen-3.8-omni-flash/calculus-15.7.47/chat_20260928_004729_291592_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_004729_291592_utc_0800_0.png`. Alt text: Image: human_20260928_004729_291592_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_004729_291592_utc_0800_0.png" alt="Image: qna_20260928_004729_291592_utc_0800"><figcaption>20260928_004729_291592_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Setting up the integral expressions
+
+**Problem.** Solid $E$ enclosed by the parabolic cylinder $y=x^{2}$ and the planes $z=0$ and $y+z=1$; density $\rho(x,y,z)=\sqrt{x^{2}+y^{2}}$. Give integral expressions for (a) the mass, (b) the center of mass, (c) the moment of inertia about the $z$-axis.
+
+---
+
+### Step 1 — Understand the solid
+
+The surface $y=x^{2}$ is a **cylinder**: the parabola $y=x^{2}$ in the $xy$-plane extruded parallel to the $z$-axis. The solid lies *inside* the parabolic trough ($y\ge x^{2}$), *above* $z=0$, and *below* the slanted plane $z=1-y$.
+
+Because $z$ runs from $0$ up to $1-y$, we need $1-y\ge 0$, i.e. $y\le 1$. Together with $y\ge x^{2}$ this forces
+
+$$
+x^{2}\le y\le 1\quad\Longrightarrow\quad -1\le x\le 1
+$$
+
+(the parabola $y=x^{2}$ meets the line $y=1$ exactly at $x=\pm 1$). Hence $E$ is a **type-1 region**:
+
+$$
+E=\{(x,y,z)\mid -1\le x\le 1,\ \ x^{2}\le y\le 1,\ \ 0\le z\le 1-y\}
+$$
+
+A vertical ray enters $E$ at $z=0$ and leaves at $z=1-y$, so $z$ is the innermost variable. The projection of $E$ onto the $xy$-plane is the region $D=\{x^{2}\le y\le 1\}$, which supplies the outer two pairs of limits.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=13cm, height=11cm,
+    view={-30}{24},
+    xmin=-1,xmax=1, ymin=0,ymax=1, zmin=0,zmax=1,
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    tick label style={font=\scriptsize}, label style={font=\small},
+    title={$E:\ -1\le x\le 1,\ x^2\le y\le 1,\ 0\le z\le 1-y$},
+    title style={font=\small},
+    legend pos=outer north east, legend style={font=\scriptsize, draw=none},
+    grid=major, grid style={gray!25},
+]
+% slanted plane z = 1-y (top lid)
+\addplot3[surf, color=orange!70!red, opacity=0.65, shader=flat,
+          domain=-1:1, samples=21, domain y=0:1, samples y=16]
+    ({x}, {x^2 + y*(1-x^2)}, {1-(x^2 + y*(1-x^2))});
+\addlegendentry{plane $y+z=1$ (top)}
+
+% bottom z = 0
+\addplot3[surf, color=green!45!black, opacity=0.55, shader=flat,
+          domain=-1:1, samples=21, domain y=0:1, samples y=16]
+    ({x}, {x^2 + y*(1-x^2)}, {0});
+\addlegendentry{bottom $z=0$}
+
+% parabolic cylinder y = x^2 (curved side wall)
+\addplot3[surf, color=blue!60!cyan, opacity=0.30, shader=flat,
+          domain=-1:1, samples=25, domain y=0:1, samples y=10]
+    ({x}, {x^2}, {(1-x^2)*y});
+\addlegendentry{cylinder $y=x^2$ (side)}
+
+\addplot3[thick, blue, domain=-1:1, samples=41] ({x},{x^2},{0});
+\addlegendentry{edge $y=x^2,\ z=0$}
+\addplot3[thick, violet, domain=-1:1, samples=41] ({x},{x^2},{1-x^2});
+\addlegendentry{edge $y=x^2$ with $y+z=1$}
+\addplot3[thick, red!80!black, domain=0:1, samples=11] ({1},{x},{1-x});
+\addplot3[thick, red!80!black, domain=0:1, samples=11] ({-1},{x},{1-x});
+\addplot3[thick, red!80!black, domain=-1:1, samples=11] ({x},{1},{0});
+\addplot3[very thick, black, domain=0:0.4, samples=11] ({0.45},{0.6},{x});
+\node[font=\scriptsize, anchor=west] at (axis cs:0.5,0.6,0.22) {$z\,:\,0\to 1-y$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+### Step 2 — Read the base region $D$ off the $xy$-plane
+
+Projecting $E$ straight down gives $D$, bounded below by the parabola $y=x^{2}$ and above by the line $y=1$ (that line is where the plane $y+z=1$ meets $z=0$, so it is the shadow of the slanted face). Two equivalent descriptions:
+
+$$
+D=\{(x,y)\mid -1\le x\le 1,\ x^{2}\le y\le 1\}=\{(x,y)\mid 0\le y\le 1,\ -\sqrt{y}\le x\le \sqrt{y}\}
+$$
+
+The first one (vertical strips, arrow $y:x^{2}\to 1$) is used below; the second (horizontal strips) gives the alternative order in Step 6.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta}
+\usepgfplotslibrary{fillbetween}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=9cm, height=8.6cm,
+    xmin=-1.35,xmax=1.35, ymin=-0.15,ymax=1.35,
+    axis lines=middle,
+    xlabel=$x$, ylabel=$y$,
+    xtick={-1,-0.5,0.5,1}, ytick={0.2,0.4,0.6,0.8,1},
+    tick label style={font=\scriptsize}, label style={font=\small},
+    title={Projection of $E$ onto the $xy$-plane},
+    title style={font=\small},
+    grid=major, grid style={gray!20},
+]
+
+% ---- visible, named boundary curves ----
+\addplot[thick, blue, name path=parab, domain=-1:1, samples=101] {x^2}
+    node[pos=0.06, above left, font=\scriptsize, text=blue] {$y=x^2$};
+\addplot[thick, red, name path=top, domain=-1:1, samples=2] {1}
+    node[pos=0.08, above, font=\scriptsize, text=red] {$y=1$};
+
+% ---- shaded base region D :  x^2 &lt;= y &lt;= 1 ----
+\addplot[green!45!black, opacity=0.22, draw=none] fill between[of=top and parab];
+\node[font=\scriptsize, green!40!black, anchor=center] at (axis cs:0.62,0.9)
+    {$D:\ x^2\le y\le 1$};
+
+\draw[dashed, gray!60] (axis cs:-1,0) -- (axis cs:-1,1);
+\draw[dashed, gray!60] (axis cs:1,0)  -- (axis cs:1,1);
+\addplot+[only marks, mark=*, mark size=1.8, black] coordinates {(-1,1) (1,1)};
+\node[font=\scriptsize, anchor=south east] at (axis cs:-1,1) {$(-1,1)$};
+\node[font=\scriptsize, anchor=south west] at (axis cs:1,1) {$(1,1)$};
+
+% ---- typical vertical strip:  y from x^2 to 1 ----
+\draw[{Stealth[length=2mm]}-{Stealth[length=2mm]}, very thick, black]
+    (axis cs:0.45,{0.45^2}) -- (axis cs:0.45,1);
+\node[font=\scriptsize, anchor=west] at (axis cs:0.5,0.58) {$y:x^2\to 1$};
+
+% ---- typical horizontal strip:  x from -sqrt(y) to sqrt(y) ----
+\draw[{Stealth[length=2mm]}-{Stealth[length=2mm]}, very thick, violet]
+    (axis cs:{-sqrt(0.35)},0.35) -- (axis cs:{sqrt(0.35)},0.35);
+\node[font=\scriptsize, anchor=north, violet] at (axis cs:-0.62,0.34)
+    {$x:-\sqrt{y}\to\sqrt{y}$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+---
+
+### Step 3 — (a) The mass
+
+$$
+m=\iiint_{E}\rho\,dV
+=\int_{-1}^{1}\!\int_{x^{2}}^{1}\!\int_{0}^{1-y}\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx
+$$
+
+The density is **independent of $z$**, so the innermost integral merely contributes the height $1-y$:
+
+$$
+m=\int_{-1}^{1}\!\int_{x^{2}}^{1}(1-y)\sqrt{x^{2}+y^{2}}\;dy\,dx\approx 0.29584
+$$
+
+(For reference, the volume alone is $\int_{-1}^{1}\!\int_{x^{2}}^{1}(1-y)\,dy\,dx=\tfrac{8}{15}$.)
+
+---
+
+### Step 4 — (b) The center of mass
+
+Use $M_{yz}=\iiint x\rho\,dV$, $M_{xz}=\iiint y\rho\,dV$, $M_{xy}=\iiint z\rho\,dV$, and
+
+$$
+\bar x=\frac{M_{yz}}{m},\qquad \bar y=\frac{M_{xz}}{m},\qquad \bar z=\frac{M_{xy}}{m}
+$$
+
+**Symmetry first.** Replacing $x$ by $-x$ leaves both $E$ and $\rho=\sqrt{x^{2}+y^{2}}$ unchanged, while $x\rho$ is odd in $x$. Therefore
+
+$$
+M_{yz}=0\qquad\Longrightarrow\qquad \bar x=0
+$$
+
+**The other two moments** use the same limits as the mass:
+
+$$
+M_{xz}=\int_{-1}^{1}\!\int_{x^{2}}^{1}\!\int_{0}^{1-y} y\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx
+=\int_{-1}^{1}\!\int_{x^{2}}^{1} y(1-y)\sqrt{x^{2}+y^{2}}\;dy\,dx
+$$
+
+$$
+M_{xy}=\int_{-1}^{1}\!\int_{x^{2}}^{1}\!\int_{0}^{1-y} z\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx
+=\int_{-1}^{1}\!\int_{x^{2}}^{1}\frac{(1-y)^{2}}{2}\sqrt{x^{2}+y^{2}}\;dy\,dx
+$$
+
+where $\int_{0}^{1-y}z\,dz=\tfrac{(1-y)^{2}}{2}$. So
+
+$$
+\bar y=\frac{1}{m}\int_{-1}^{1}\!\int_{x^{2}}^{1} y(1-y)\sqrt{x^{2}+y^{2}}\;dy\,dx,\qquad
+\bar z=\frac{1}{m}\int_{-1}^{1}\!\int_{x^{2}}^{1}\frac{(1-y)^{2}}{2}\sqrt{x^{2}+y^{2}}\;dy\,dx
+$$
+
+---
+
+---
+
+### Step 5 — (c) Moment of inertia about the $z$-axis
+
+The distance from $(x,y,z)$ to the $z$-axis satisfies $d^{2}=x^{2}+y^{2}$, so with $I_z=\iiint d^{2}\rho\,dV$:
+
+$$
+I_{z}=\int_{-1}^{1}\!\int_{x^{2}}^{1}\!\int_{0}^{1-y}(x^{2}+y^{2})\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx
+=\int_{-1}^{1}\!\int_{x^{2}}^{1}(1-y)(x^{2}+y^{2})^{3/2}\;dy\,dx
+$$
+
+Again the $z$-integration only produces the height $1-y$, because the integrand is free of $z$.
+
+---
+
+### Step 6 — Equivalent expressions in the order $dz\,dx\,dy$
+
+Using the horizontal-strip description of $D$, every integral above can equally be written
+
+$$
+\iiint_{E}(\ \cdot\ )\,dV=\int_{0}^{1}\!\int_{-\sqrt{y}}^{\sqrt{y}}\!\int_{0}^{1-y}(\ \cdot\ )\;dz\,dx\,dy
+$$
+
+This order is usually the friendlier one to actually evaluate, since $\int\sqrt{x^{2}+y^{2}}\,dx$ has a standard antiderivative.
+
+---
+
+### Step 7 — Numerical values (verification only — the exercise asks for the *setup*)
+
+| quantity | value |
+|---|---|
+| volume of $E$ | $8/15\approx 0.53333$ |
+| mass $m$ | $\approx 0.29584$ |
+| $M_{yz}$ | $0$ (by symmetry) $\Rightarrow \bar x = 0$ |
+| $M_{xz}$ | $\approx 0.15783\Rightarrow \bar y\approx 0.53351$ |
+| $M_{xy}$ | $\approx 0.06900\Rightarrow \bar z\approx 0.23325$ |
+| $I_{z}$ | $\approx 0.15865$ |
+
+These were confirmed by four independent computations (two different iterated orders, Monte Carlo, and a 3-D Gauss–Legendre rule), all agreeing to 5–6 decimals. Notice $\bar y>\tfrac12$ and $\bar z<\tfrac14$: the density grows with distance from the $z$-axis, pulling mass toward the wide back of the trough, while the wedge thins out as $z$ increases.
+
+**Take-away technique for this problem type:**
+1. A "cylinder $y=f(x)$" is a surface whose rulings are parallel to the $z$-axis; the solid it encloses is a type-1 region whose base is a plane region in the $xy$-plane.
+2. Intersect the top plane with the bottom plane ($z=0\Rightarrow y=1$) to *close* the base region — that is what turns $y\ge x^{2}$ into $x^{2}\le y\le 1$, and $-1\le x\le 1$ comes from the intersection points.
+3. If the integrand is independent of the innermost variable, that integral collapses to the interval length; do it first.
+4. Exploit symmetry before computing $\bar x,\bar y,\bar z$.
+
+---
+
+### Final answers
+
+**(a) Mass**
+
+$$
+\boxed{\,m=\int_{-1}^{1}\!\int_{x^{2}}^{1}\!\int_{0}^{1-y}\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx\,}
+$$
+
+**(b) Center of mass** $(\bar x,\bar y,\bar z)$ with
+
+$$
+\boxed{\;\bar x=0,\quad
+\bar y=\frac{1}{m}\int_{-1}^{1}\!\int_{x^{2}}^{1}\!\int_{0}^{1-y} y\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx,\quad
+\bar z=\frac{1}{m}\int_{-1}^{1}\!\int_{x^{2}}^{1}\!\int_{0}^{1-y} z\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx\;}
+$$
+
+**(c) Moment of inertia about the $z$-axis**
+
+$$
+\boxed{\,I_{z}=\int_{-1}^{1}\!\int_{x^{2}}^{1}\!\int_{0}^{1-y}(x^{2}+y^{2})^{3/2}\;dz\,dy\,dx\,}$$
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>qwen-3.8-omni-flash/calculus-15.7.47/chat_20260928_004729_291592_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>
