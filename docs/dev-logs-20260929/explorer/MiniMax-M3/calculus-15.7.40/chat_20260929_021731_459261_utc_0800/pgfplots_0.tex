@@ -1,0 +1,60 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm, height=10cm,
+    view={35}{25},
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    title={Solid $E$ with center of mass},
+    xmin=-0.1, xmax=1.15,
+    ymin=-1.2, ymax=1.2,
+    zmin=-0.05, zmax=1.15,
+    grid=major,
+    grid style={gray!20}
+]
+% Top: parabolic cylinder z = 1 - y^2, x in [0, 1-z]
+\addplot3[
+    surf, shader=interp, opacity=0.55,
+    samples=30, samples y=30, domain=-1:1, domain y=0:1,
+    point meta=1
+] ({ (1-y)*( (x*x <= (1-y)) ? 1 : nan ) }, x, y);
+
+% Side at x = 0 (triangle in yz-plane, z up to 1-y^2)
+\addplot3[
+    surf, shader=interp, opacity=0.4,
+    samples=30, samples y=30, domain=-1:1, domain y=0:1
+] (0, x, {x*x <= 1-y ? y : nan});
+
+% Side at x = 1-z (vertical plane through (0,?,0) to (1,?,0))
+\addplot3[
+    surf, shader=interp, opacity=0.4,
+    samples=30, samples y=30, domain=-1:1, domain y=0:1
+] ({1-y}, x, {x*x <= 1-y ? y : nan});
+
+% Bottom at z = 0
+\addplot3[
+    surf, shader=interp, opacity=0.5,
+    samples=20, samples y=20, domain=0:1, domain y=-1:1
+] (x, y, 0);
+
+% Edges (black outlines)
+\addplot3[black, thick] coordinates {(0,-1,0) (1,-1,0)};
+\addplot3[black, thick] coordinates {(0, 1,0) (1, 1,0)};
+\addplot3[black, thick] coordinates {(1,-1,0) (1, 1,0)};
+
+% Parabolic edges at top
+\addplot3[black, thick, samples=50, domain=-1:1] (0, x, {1-x*x});
+\addplot3[black, thick, samples=50, domain=-1:1] ({x*x}, x, {1-x*x});
+
+% Center of mass
+\addplot3[only marks, mark=*, mark size=3pt, color=purple] coordinates {(5/14, 0, 2/7)};
+\node[purple, anchor=west] at (axis cs:5/14, 0, 0.36) {\small $(5/14,\,0,\,2/7)$};
+
+% Drop line
+\addplot3[purple, dashed] coordinates {(5/14, 0, 0) (5/14, 0, 2/7)};
+\addplot3[only marks, mark=x, mark size=2pt, color=purple] coordinates {(5/14, 0, 0)};
+\end{axis}
+\end{tikzpicture}
+\end{document}

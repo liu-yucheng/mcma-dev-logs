@@ -1,0 +1,47 @@
+\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{groupplot}[
+    group style={group size=3 by 1, horizontal sep=1.4cm},
+    width=5.6cm, height=5.6cm, axis equal image,
+    xmin=-0.15,xmax=2.35,ymin=-0.15,ymax=2.35,
+    xtick={0,0.5,...,2},ytick={0,0.5,...,2},
+    tick label style={font=\scriptsize},
+    grid=major, axis x line=middle, axis y line=middle,
+    title style={font=\footnotesize},
+]
+\nextgroupplot[
+    xlabel=$x$, ylabel=$y$,
+    title={Shadow $D_{xy}$: orders $dz\,dy\,dx$, $dz\,dx\,dy$},
+]
+\addplot[fill=red,opacity=0.22,draw=red,thick] coordinates {(2,0)(2,2)(0,2)(2,0)};
+\addplot[only marks,mark=*,mark size=1.3pt,black] coordinates {(2,0)(2,2)(0,2)};
+\node[anchor=north west,font=\tiny,align=center,draw=red,fill=white,fill opacity=0.95,inner sep=2pt]
+  at (axis cs:-0.1,0.45)
+  {$2-x\le y\le 2,\ 0\le x\le 2$\\ $0\le y\le 2,\ 2-y\le x\le 2$\\ $z$-limits: $0$ to $(x+y-2)/2$};
+
+\nextgroupplot[
+    xlabel=$x$, ylabel=$z$,
+    title={Shadow $D_{xz}$: orders $dy\,dz\,dx$, $dy\,dx\,dz$},
+]
+\addplot[fill=cyan!60!blue,opacity=0.22,draw=cyan!50!blue,thick] coordinates {(0,0)(2,0)(2,1)(0,0)};
+\addplot[only marks,mark=*,mark size=1.3pt,black] coordinates {(0,0)(2,0)(2,1)};
+\node[anchor=north west,font=\tiny,align=center,draw=cyan!50!blue,fill=white,fill opacity=0.95,inner sep=2pt]
+  at (axis cs:-0.1,1.45)
+  {$0\le z\le x/2,\ 0\le x\le 2$\\ $0\le x\le 2z,\ 0\le z\le 1$\\ $y$-limits: $2+2z-x$ to $2$};
+
+\nextgroupplot[
+    xlabel=$y$, ylabel=$z$,
+    title={Shadow $D_{yz}$: orders $dx\,dz\,dy$, $dx\,dy\,dz$},
+]
+\addplot[fill=green!70!black,opacity=0.22,draw=green!70!black,thick] coordinates {(0,0)(2,0)(2,1)(0,0)};
+\addplot[only marks,mark=*,mark size=1.3pt,black] coordinates {(0,0)(2,0)(2,1)};
+\node[anchor=north west,font=\tiny,align=center,draw=green!70!black,fill=white,fill opacity=0.95,inner sep=2pt]
+  at (axis cs:-0.1,1.45)
+  {$0\le z\le y/2,\ 0\le y\le 2$\\ $0\le y\le 2z,\ 0\le z\le 1$\\ $x$-limits: $2+2z-y$ to $2$};
+\end{groupplot}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,26 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm, height=11cm,
+    xlabel={$y$}, ylabel={$z$},
+    title={Projection onto $yz$-plane: disk $y^2+z^2 \leq 9$},
+    xmin=-4, xmax=4, ymin=-4, ymax=4,
+    axis equal image, grid=major,
+    legend pos=south east, legend cell align=left]
+% disk
+\addplot[domain=0:360, samples=120, thick, blue, fill=blue!15] ({3*cos(x)}, {3*sin(x)});
+\addlegendentry{$y^2+z^2 \leq 9$ (cross-section at fixed $x$)}
+% horizontal red strip: fixed z, y from -sqrt(9-z^2) to +sqrt(9-z^2)
+\addplot[red, ultra thick, domain=1.5:1.5] ({-sqrt(9-x^2)}, {x});
+\addplot[red, ultra thick, domain=-1.9578:1.9578] ({x}, {1.5});
+\addplot[only marks, mark=*, red] coordinates {(-2.598,1.5) (2.598,1.5)};
+\addlegendentry{inner: $-\sqrt{9-z^2} \leq y \leq \sqrt{9-z^2}$}
+% vertical green strip: fixed y, z from -sqrt(9-y^2) to +sqrt(9-y^2)
+\addplot[green!50!black, ultra thick, domain=-1.9578:1.9578] ({1.5}, {x});
+\addlegendentry{inner: $-\sqrt{9-y^2} \leq z \leq \sqrt{9-y^2}$}
+\end{axis}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,31 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{colormaps}
+\pgfplotsset{trig format plots=rad}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={30}{30},
+    xlabel={$x$},
+    ylabel={$y$},
+    zlabel={$z$},
+    colormap/viridis,
+    domain=-2:2,
+    samples=20,
+    xmin=-2.5, xmax=2.5,
+    ymin=0, ymax=8,
+    zmin=-2.5, zmax=2.5,
+]
+% Surface y = x^2 + z^2
+% In PGFPlots, 'y' is usually the vertical axis if we specify it. 
+% But standard 3D plots are (x,y,z). 
+% Let's map: X -> x, Z -> y, Y -> z (the vertical axis in pgfplots is z)
+% We want y as the vertical axis.
+% Let's use PGFPlots standard: x=x, y=z, z=y
+% So surface 1: z = x^2 + y^2
+% Surface 2: z = 8 - x^2 - y^2
+\addplot3[surf, opacity=0.5, shader=interp] {x^2 + y^2};
+\addplot3[surf, opacity=0.5, shader=interp, colormap/plasma] {8 - x^2 - y^2};
+\end{axis}
+\end{tikzpicture}
+\end{document}

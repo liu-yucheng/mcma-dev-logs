@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260927_231928_088348_utc_0800 — Q&amp;A · qwen-3.8-omni-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260927_231928_088348_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>qwen-3.8-omni-flash/calculus-15.7.20/chat_20260927_231928_088348_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260927_231928_088348_utc_0800_0.png`. Alt text: Image: human_20260927_231928_088348_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260927_231928_088348_utc_0800_0.png" alt="Image: qna_20260927_231928_088348_utc_0800"><figcaption>20260927_231928_088348_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Volume of the solid enclosed by $y=x^2+z^2$ and $y=8-x^2-z^2$
+
+### Step 1 — Understand the geometry
+
+Both surfaces are **circular paraboloids whose axes are the $y$-axis** (each has the form $y=(x^2+z^2)$-expression):
+
+- $y=x^2+z^2$: vertex at the origin, opening in the $+y$ direction (a "cup" facing $+y$).
+- $y=8-x^2-z^2$: vertex at $(0,8,0)$, opening in the $-y$ direction (a "cap" facing $-y$).
+
+So the solid is a **lens-shaped region** trapped between them, symmetric about the plane $y=4$.
+
+Because the solid is described naturally as "$y$ runs between two surfaces lying over a region in the $xz$-plane," we take $y$ as the **innermost** variable:
+
+$$
+V=\iiint_E 1\;dV=\iint_D\left[\int_{x^2+z^2}^{\,8-x^2-z^2}dy\right]dA
+$$
+
+where $D$ is the shadow (projection) of $E$ onto the $xz$-plane.
+
+### Step 2 — Find the projection $D$ (where the surfaces meet)
+
+Set the two $y$-values equal:
+
+$$
+x^2+z^2=8-x^2-z^2\;\Longrightarrow\;2(x^2+z^2)=8\;\Longrightarrow\;x^2+z^2=4,\qquad y=4
+$$
+
+The surfaces intersect in the **circle** $x^2+z^2=4$ in the plane $y=4$. Hence
+
+$$
+D=\{(x,z):\;x^2+z^2\le 4\},\qquad\text{a disk of radius }2\text{ centered at the origin.}
+$$
+
+Over $D$ we have $8-x^2-z^2\ge x^2+z^2$, so the upper limit is $y=8-x^2-z^2$ and the lower limit is $y=x^2+z^2$.
+
+### Step 3 — Set up the triple integral (Cartesian form)
+
+$$
+V=\int_{-2}^{2}\!\int_{-\sqrt{4-x^2}}^{\sqrt{4-x^2}}\!\int_{x^2+z^2}^{\,8-x^2-z^2} 1\;dy\,dz\,dx
+$$
+
+The innermost integration gives the "height" of the solid in the $y$-direction:
+
+$$
+\int_{x^2+z^2}^{\,8-x^2-z^2}dy=\bigl(8-x^2-z^2\bigr)-\bigl(x^2+z^2\bigr)=8-2x^2-2z^2
+$$
+
+so $V=\iint_D\bigl(8-2x^2-2z^2\bigr)\,dA$. Directly integrating this over the disk is awkward — **this is the signal to switch to polar coordinates in the $xz$-plane.**
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=13.5cm, height=10.5cm,
+    view={16}{-55},
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=-2.4, xmax=2.4, ymin=0, ymax=8, zmin=-2.4, zmax=2.4,
+    ztick={-2,0,2}, ytick={0,2,4,6,8},
+    title={Solid enclosed by $y=x^2+z^2$ (blue) and $y=8-x^2-z^2$ (orange)},
+    legend pos=outer north east,
+]
+% --- lower paraboloid  y = x^2 + z^2 ---
+\addplot3[surf, domain=0:2, domain y=0:360, samples=22, samples y=28,
+          blue, opacity=0.55, shader=flat] ({x*cos(y)}, {x^2}, {x*sin(y)});
+\addlegendentry{$y=x^2+z^2$}
+% --- upper paraboloid  y = 8 - x^2 - z^2 ---
+\addplot3[surf, domain=0:2, domain y=0:360, samples=22, samples y=28,
+          orange, opacity=0.55, shader=flat] ({x*cos(y)}, {8-x^2}, {x*sin(y)});
+\addlegendentry{$y=8-x^2-z^2$}
+% --- intersection circle  x^2+z^2=4, y=4 ---
+\addplot3[ultra thick, black, domain=0:360, samples=120, samples y=1]
+         ({2*cos(x)}, {4}, {2*sin(x)});
+\addlegendentry{$x^2+z^2=4,\ y=4$}
+% --- projection disk D:  x^2+z^2 &lt;= 4  in the plane y = 0 ---
+\addplot3[surf, domain=0:2, domain y=0:360, samples=14, samples y=24,
+          gray, opacity=0.16, shader=flat] ({x*cos(y)}, {0}, {x*sin(y)});
+\addlegendentry{disk $D$}
+% --- typical integrating segment parallel to the y-axis, at r = 1 ---
+\addplot3[red, ultra thick, domain=0:1, samples=2, samples y=1]
+         ({1}, {1+6*x}, {0});
+\addplot3[only marks, red, mark=*, mark size=1.6] coordinates {(1,1,0)};
+\addplot3[only marks, red, mark=*, mark size=1.6] coordinates {(1,7,0)};
+\addlegendentry{$\Delta y=8-2r^2$}
+\node[red] at (axis cs:1,4,0.9) {$8-2r^2$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+The 3D picture above shows the two paraboloids (blue $y=x^2+z^2$, orange $y=8-x^2-z^2$), their intersection circle $x^2+z^2=4,\ y=4$ (black), and one typical integrating segment (red) parallel to the $y$-axis, of length $8-2r^2$. Its shadow on the plane $y=0$ is the disk $D$.
+
+### Step 4 — Evaluate with polar coordinates in the $xz$-plane
+
+Since $D$ is a disk and the integrand contains $x^2+z^2$, use
+
+$$
+x=r\cos\theta,\qquad z=r\sin\theta,\qquad x^2+z^2=r^2,\qquad dA=r\,dr\,d\theta
+$$
+
+$$
+0\le r\le 2,\qquad 0\le\theta\le 2\pi
+$$
+
+Therefore
+
+$$
+V=\int_0^{2\pi}\!\!\int_0^{2}\bigl(8-2r^2\bigr)\,r\;dr\,d\theta
+  =\int_0^{2\pi}\!\!\int_0^{2}\bigl(8r-2r^3\bigr)\;dr\,d\theta
+$$
+
+**Inner integral** (in $r$):
+
+$$
+\int_0^{2}\bigl(8r-2r^3\bigr)dr=\Bigl[4r^2-\tfrac{1}{2}r^4\Bigr]_0^{2}=(16-8)-0=8
+$$
+
+**Outer integral** (in $\theta$):
+
+$$
+V=\int_0^{2\pi}8\;d\theta=8(2\pi)=16\pi
+$$
+
+### Step 5 — Check
+
+- **Cartesian route:** $\displaystyle\int_{-\sqrt{4-x^2}}^{\sqrt{4-x^2}}(8-2x^2-2z^2)\,dz=\tfrac{8}{3}(4-x^2)^{3/2}$, and $\displaystyle\int_{-2}^{2}\tfrac{8}{3}(4-x^2)^{3/2}dx=16\pi$. ✔ (verified symbolically)
+- **Monte-Carlo estimate:** $\approx 50.33$, while $16\pi\approx 50.265$. ✔
+- **Sanity bound:** the solid sits inside the cylinder of radius $2$ and height $8$ (volume $\pi\cdot 2^2\cdot 8=32\pi$); $16\pi$ is exactly half of it, consistent with the symmetry of the two paraboloids about $y=4$. ✔
+
+$$
+\boxed{V=16\pi}
+$$
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm, height=8.5cm,
+    xlabel=$x$, ylabel=$y$,
+    xmin=-3.2, xmax=3.2, ymin=-0.8, ymax=9.4,
+    title={Cross-section in the plane $z=0$: the curves meet at $x=\pm2,\ y=4$},
+    legend pos=north west,
+    grid=major, grid style={black!10},
+]
+% invisible helper paths restricted to the overlap region |x| &lt;= 2
+\addplot[draw=none, domain=-2:2, samples=100, name path=L, forget plot] {x^2};
+\addplot[draw=none, domain=-2:2, samples=100, name path=U, forget plot] {8-x^2};
+% shaded lens = the solid seen edge-on
+\addplot[green!45, opacity=0.30, draw=none, forget plot] fill between[of=U and L];
+% the two parabolas
+\addplot[blue, ultra thick, domain=-3:3, samples=200] {x^2};
+\addlegendentry{$y=x^2+z^2\ (z=0)$}
+\addplot[orange, ultra thick, domain=-3:3, samples=200] {8-x^2};
+\addlegendentry{$y=8-x^2-z^2\ (z=0)$}
+% intersection points
+\addplot[only marks, mark=*, mark size=2, black, forget plot] coordinates {(-2,4) (2,4)};
+\node[below left] at (axis cs:-2,4) {$(-2,4)$};
+\node[below right] at (axis cs:2,4) {$(2,4)$};
+% a typical vertical strip = the limits of the innermost integral
+\addplot[red, ultra thick, forget plot] coordinates {(1,1) (1,7)};
+\draw[&lt;-&gt;, red, thick] (axis cs:1.3,1.8225) -- (axis cs:1.3,6.1775);
+\node[red] at (axis cs:2.0,6.4) {$8-2x^2$};
+\draw[red, thin, densely dotted] (axis cs:1.72,6.32) -- (axis cs:1.33,6.05);
+\node[black!75] at (axis cs:0,-0.45)
+     {integrate $y$ from $x^2+z^2$ up to $8-x^2-z^2$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+### How to approach this kind of problem (recipe)
+
+1. **Identify the axis of the paraboloids.** An equation of the form $y=f(x^2+z^2)$ is a paraboloid about the $y$-axis. Choose that axis as your *first* (innermost) integration variable, so the solid becomes "two graphs over a flat region."
+2. **Find the shadow $D$.** Equate the two surfaces: $x^2+z^2=8-x^2-z^2\Rightarrow x^2+z^2=4$. This gives the domain and simultaneously confirms which surface is on top ($y=8-x^2-z^2$, since it contains $(0,0,8)$... test the origin: $0<8$, so $x^2+z^2$ is the lower limit).
+3. **Write $V=\iiint_E 1\,dV$** with limits $\;x^2+z^2\le y\le 8-x^2-z^2\;$ over $(x,z)\in D$.
+4. **Exploit rotational symmetry in the remaining two variables.** Whenever $D$ is a disk and the integrand involves $x^2+z^2$, use polar coordinates **in the $xz$-plane**: $x=r\cos\theta$, $z=r\sin\theta$, Jacobian $r$. (Here $y$ plays the role the textbook usually gives $z$ — nothing about polar coordinates requires them to be in the $xy$-plane.)
+5. **Integrate outward** in the order $r$ then $\theta$; a constant $\int_0^{2\pi}d\theta=2\pi$ often appears at the end because the integrand is $\theta$-independent.
+
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>qwen-3.8-omni-flash/calculus-15.7.20/chat_20260927_231928_088348_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

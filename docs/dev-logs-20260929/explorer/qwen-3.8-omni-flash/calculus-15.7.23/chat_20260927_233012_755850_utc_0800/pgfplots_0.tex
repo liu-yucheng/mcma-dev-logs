@@ -1,0 +1,62 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=8.6cm, height=8.0cm,
+    view={-38}{22},
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=0, xmax=1, ymin=0, ymax=1, zmin=0, zmax=1,
+    z buffer=sort,
+    grid=major, grid style={black!12},
+    title={The wedge: under $z=\sqrt{1-y^{2}}$, above $0\le y\le x\le 1$},
+    title style={font=\small},
+    legend style={at={(1.04,1.04)}, anchor=north west, font=\scriptsize,
+                  fill=white, draw=black!25, cells={anchor=west}},
+    every axis plot post/.append style={shader=flat}]
+
+    % ---- back face  y = 0  (rectangle 0<=x<=1, 0<=z<=1) ----
+    \addplot3[surf, opacity=0.35, yellow!55!black, draw=none, forget plot,
+              domain=0:1, y domain=0:1, samples=3, samples y=3]
+              ({x},{0},{y});
+
+    % ---- bottom triangle z = 0 : 0<=y<=x<=1 ----
+    \addplot3[surf, opacity=0.30, gray, draw=none, forget plot,
+              domain=0:1, y domain=0:1, samples=3, samples y=3]
+              ({x},{x*y},{0});
+
+    % ---- curved top: cylinder y^2+z^2=1 over the triangle ----
+    \addplot3[surf, opacity=0.95, blue!65!black, draw=none,
+              domain=0:1, y domain=0:1, samples=18, samples y=18]
+              ({x},{x*y},{sqrt(1-x^2*y^2)});
+    \addlegendentry{cylinder $y^{2}+z^{2}=1$ (top)}
+
+    % ---- cutting plane x = 1 (quarter disk in the y z-plane) ----
+    \addplot3[surf, opacity=0.90, green!55!black, draw=none,
+              domain=0:1, y domain=0:1, samples=18, samples y=18]
+              ({1},{x},{y*sqrt(1-x^2)});
+    \addlegendentry{$x=1$}
+
+    % ---- cutting plane y = x ----
+    \addplot3[surf, opacity=0.90, orange!85!red, draw=none,
+              domain=0:1, y domain=0:1, samples=18, samples y=18]
+              ({x},{x},{y*sqrt(1-x^2)});
+    \addlegendentry{$y=x$}
+
+    % ---- plane y = 0 face, shown in legend ----
+    \addplot3[surf, opacity=0.35, yellow!55!black, draw=none,
+              domain=0:1, y domain=0:1, samples=2, samples y=2]
+              ({x},{0},{y});
+    \addlegendentry{$y=0$ \ ($xz$-plane)}
+
+    % ---- key edges of the solid ----
+    \addplot3[blue!40!black, line width=1.1pt, forget plot, domain=0:1, samples=60] ({x},{x},{sqrt(1-x^2)});
+    \addplot3[green!45!black, line width=1.1pt, forget plot, domain=0:1, samples=60] ({1},{x},{sqrt(1-x^2)});
+    \addplot3[yellow!60!black, line width=1.1pt, forget plot, domain=0:1, samples=60] ({x},{0},{1});
+    \addplot3[black, line width=0.9pt, forget plot, domain=0:1, samples=2] ({x},{x},{0});
+    \addplot3[black, line width=0.9pt, forget plot, domain=0:1, samples=2] ({x},{0},{0});
+    \addplot3[black, line width=0.9pt, forget plot, domain=0:1, samples=2] ({1},{x},{0});
+\end{axis}
+\end{tikzpicture}
+\end{document}
