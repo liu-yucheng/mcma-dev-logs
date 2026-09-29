@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_233727_831159_utc_0800 — Q&amp;A · glm-5.3-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_233727_831159_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>glm-5.3-flash/calculus-15.7.55/chat_20260928_233727_831159_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_233727_831159_utc_0800_0.png`. Alt text: Image: human_20260928_233727_831159_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_233727_831159_utc_0800_0.png" alt="Image: qna_20260928_233727_831159_utc_0800"><figcaption>20260928_233727_831159_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+# Triple Integral over the Best Region — Stewart 15.7, Exercise 55
+
+## Part (a): Find the region $E$ that maximizes the integral
+
+Let $f(x,y,z) = 1 - x^2 - 2y^2 - 3z^2$. The key principle:
+
+> **To maximize $\iiint_D f\,dV$ over all regions $D$, take $D$ to be exactly the set where $f \ge 0$.** Adding any point where $f<0$ decreases the integral, and omitting any point where $f>0$ throws away positive contribution.
+
+Find where $f \ge 0$:
+
+$$
+1 - x^2 - 2y^2 - 3z^2 \ge 0 \quad\Longleftrightarrow\quad x^2 + 2y^2 + 3z^2 \le 1.
+$$
+
+This is the **solid ellipsoid** centered at the origin with semi-axes $a = 1$, $b = 1/\sqrt{2}$, $c = 1/\sqrt{3}$ (the boundary ellipsoid passes through $(\pm1,0,0)$, $(0,\pm 1/\sqrt2,0)$, $(0,0,\pm 1/\sqrt3)$).
+
+$$
+\boxed{E = \{(x,y,z)\;:\; x^2 + 2y^2 + 3z^2 \le 1\}}
+$$
+
+On this ellipsoid the integrand is $\ge 0$ (maximum $f=1$ at the origin), and it vanishes on the boundary — see the $y=0$ cross-section below.
+
+## Part (b): Exact maximum value of the integral
+
+**Ellipsoidal (stretched-spherical) coordinates.** Map the unit ball $B$ onto $E$ by
+
+$$
+x = u, \qquad y = \frac{v}{\sqrt{2}}, \qquad z = \frac{w}{\sqrt{3}}.
+$$
+
+Then $x^2+2y^2+3z^2 = u^2+v^2+w^2$, so $E$ corresponds exactly to $B: u^2+v^2+w^2\le 1$, and the Jacobian is
+
+$$
+\frac{\partial(x,y,z)}{\partial(u,v,w)} = \begin{vmatrix} 1 & 0 & 0\\ 0 & 1/\sqrt2 & 0\\ 0 & 0 & 1/\sqrt3 \end{vmatrix} = \frac{1}{\sqrt{6}}.
+$$
+
+Therefore
+
+$$
+\iiint_E (1-x^2-2y^2-3z^2)\,dV = \frac{1}{\sqrt6}\iiint_B (1-u^2-v^2-w^2)\,dV.
+$$
+
+**Spherical coordinates on $B$** ($u = \rho\sin\varphi\cos\theta$, etc., $dV = \rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta$):
+
+$$
+\iiint_B (1-\rho^2)\,dV = \int_0^{2\pi}\!\int_0^{\pi}\!\int_0^1 (1-\rho^2)\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta
+= 2\pi\cdot 2\int_0^1 (\rho^2-\rho^4)\,d\rho = 4\pi\left(\frac13-\frac15\right) = \frac{8\pi}{15}.
+$$
+
+Hence
+
+$$
+\iiint_E (1-x^2-2y^2-3z^2)\,dV = \frac{1}{\sqrt6}\cdot\frac{8\pi}{15} = \frac{8\pi}{15\sqrt6} = \boxed{\frac{4\sqrt{6}\,\pi}{45} \approx 0.68403}
+$$
+
+**Cross-check (Cartesian):** slicing perpendicular to $z$, the inner integral over $z$ gives $\tfrac{4}{3\sqrt3}(1-x^2-2y^2)^{3/2}$, and integrating over the ellipse $x^2+2y^2\le 1$ with $x = r\cos t$, $y = \tfrac{r\sin t}{\sqrt2}$ gives the same $\tfrac{4\sqrt6\pi}{45}$. A Monte-Carlo simulation also agrees to $\sim 10^{-4}$.
+
+## How to solve problems of this type
+1. **Sign test:** the maximizing region is always ${(x,y,z) : f(x,y,z)\ge 0}$ — include positive integrand, exclude negative.
+2. **Recognize the quadric:** $f = 1 - x^2-2y^2-3z^2 \ge 0$ is an ellipsoid; its semi-axes come from the coefficients ($a=1,\ b=1/\sqrt2,\ c=1/\sqrt3$).
+3. **Stretch to a ball:** substitution $x = au,\ y = bv,\ z = cw$ turns ellipsoidal integrals into ball integrals, at the cost of the Jacobian $abc$.
+4. **Finish with spherical coordinates:** $\iiint_B(1-\rho^2)dV = 8\pi/15$; scale by $abc = 1/\sqrt6$.
+
+## Plots
+
+**Step 1 — The region $E$ in 3D (integrand is positive exactly on $E$):**
+
+---
+
+Left panel: interior points of $E$ colored by integrand value (max $=1$ at origin, $0$ on boundary). Right panel: $E$ is the unit ball scaled by $(1,\,1/\sqrt2,\,1/\sqrt3)$ — shown by the $y=0$ cross-sections (dashed circle vs. red ellipse).
+
+**Step 2 — Why the boundary of $E$ is where $f=0$ ($y=0$ slice):**
+
+---
+
+Left: the integrand (at $y=0$) is positive inside the black contour $x^2+3z^2=1$ and negative outside — any point outside the ellipsoid would subtract from the integral. Right: horizontal slices of the positive region $x^2+2y^2\le 1-3z^2$ shrink as $|z|$ grows toward $1/\sqrt3$.
+
+## Final Answers
+
+**(a)** $E$ is the solid ellipsoid
+
+$$
+E = \{(x,y,z)\;:\; x^2 + 2y^2 + 3z^2 \le 1\},
+$$
+
+with semi-axes $1$, $1/\sqrt{2}$, $1/\sqrt{3}$ along the $x$, $y$, $z$ axes.
+
+**(b)** The maximum value of the triple integral is
+
+$$
+\boxed{\iiint_E (1-x^2-2y^2-3z^2)\,dV = \frac{4\sqrt{6}\,\pi}{45} \approx 0.68403}
+$$
+
+---
+
+No graphical results.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>glm-5.3-flash/calculus-15.7.55/chat_20260928_233727_831159_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

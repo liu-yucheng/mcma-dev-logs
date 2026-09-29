@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_233905_729303_utc_0800 — Q&amp;A · glm-5.3-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_233905_729303_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>glm-5.3-flash/calculus-15.8.26/chat_20260928_233905_729303_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_233905_729303_utc_0800_0.png`. Alt text: Image: human_20260928_233905_729303_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_233905_729303_utc_0800_0.png" alt="Image: qna_20260928_233905_729303_utc_0800"><figcaption>20260928_233905_729303_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+# Stewart 15.8, Exercise 26 — Cylinder $r=a\cos\theta$ Cut from a Sphere
+
+## Setting up (why cylindrical coordinates work here)
+
+The solid is the region **inside the sphere** $x^2+y^2+z^2=a^2$ **and inside the cylinder** $r=a\cos\theta$. Cylindrical coordinates are ideal because:
+
+- The sphere is $r^2+z^2=a^2$, i.e. $-\sqrt{a^2-r^2}\le z\le \sqrt{a^2-r^2}$.
+- The cylinder $r=a\cos\theta$ **gives the upper bound for $r$ directly** — this is exactly the situation cylindrical coordinates are designed for.
+
+**First find the projection $D$ of the solid onto the $xy$-plane.** Converting $r=a\cos\theta$ to rectangular coordinates:
+
+$$
+r^2 = ar\cos\theta \;\Longrightarrow\; x^2+y^2 = ax \;\Longrightarrow\; \left(x-\tfrac{a}{2}\right)^2+y^2=\left(\tfrac{a}{2}\right)^2 .
+$$
+
+So $D$ is the disk of radius $a/2$ centered at $(a/2,0)$ — it lies entirely in the half-plane $x\ge 0$, i.e. $\cos\theta\ge 0$. Therefore
+
+$$
+-\frac{\pi}{2}\le\theta\le\frac{\pi}{2},\qquad 0\le r\le a\cos\theta .
+$$
+
+This projection region $D$ is shown below (green ray shows how $r$ runs from $0$ out to the cylinder $r=a\cos\theta$):
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    axis equal image,
+    xlabel={$x$}, ylabel={$y$},
+    xmin=-1.3, xmax=1.45, ymin=-1.3, ymax=1.3,
+    title={Top view: projection $D$ \ ($-\pi/2 \leq \theta \leq \pi/2$, \ $0 \leq r \leq a\cos\theta$)},
+    grid=both, grid style={gray!20}]
+% shaded region D = half-disk bounded by circle r=a cos(theta) and the y-axis
+\addplot[fill=yellow!80, draw=orange, very thick, domain=-90:90, samples=120]
+    ({cos(x)^2}, {cos(x)*sin(x)}) \closedcycle;
+% sphere footprint
+\addplot[blue, thick, domain=0:360, samples=180]
+    ({cos(x)}, {sin(x)});
+% ray r: 0 -&gt; a cos(theta) at theta = 30 degrees
+\addplot[green!60!black, very thick, domain=0:cos(30), samples=2]
+    ({x*cos(30)}, {x*sin(30)});
+% center of cylinder
+\addplot[only marks, mark=+, mark size=4, black] coordinates {(0.5,0)};
+\node[anchor=north] at (axis cs:0.5,-0.05) {\small $(a/2,\,0)$};
+\node[anchor=west] at (axis cs:1.03,0.1) {\small $(a,0)$};
+\node at (axis cs:0.55,-0.62) {\large $\color{orange!70!black}D$};
+\node[anchor=west] at (axis cs:0.28,0.36) {\small $\color{green!50!black}r:\,0 \to a\cos\theta$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+## Part (a): Compute the volume
+
+On $D$, the solid is bounded below by the lower hemisphere and above by the upper hemisphere:
+
+$$
+-r\;\text{to}\;+r:\quad -\sqrt{a^2-r^2}\le z\le \sqrt{a^2-r^2} .
+$$
+
+So
+
+$$
+V=\iiint_E dV=\int_{-\pi/2}^{\pi/2}\int_{0}^{a\cos\theta}\int_{-\sqrt{a^2-r^2}}^{\sqrt{a^2-r^2}} r\, dz\, dr\, d\theta .
+$$
+
+**Inner integral** (note the Jacobian factor $r$ in $dV = r\,dz\,dr\,d\theta$):
+
+$$
+\int_{-\sqrt{a^2-r^2}}^{\sqrt{a^2-r^2}} r\, dz = 2r\sqrt{a^2-r^2} .
+$$
+
+**Middle integral** — substitute $u=a^2-r^2$, $du=-2r\,dr$:
+
+$$
+\int_{0}^{a\cos\theta} 2r\sqrt{a^2-r^2}\, dr
+=\left[-\tfrac{2}{3}(a^2-r^2)^{3/2}\right]_{0}^{a\cos\theta}
+=\frac{2a^3}{3}\left(1-|\sin\theta|^3\right).
+$$
+
+(Here $(a^2-a^2\cos^2\theta)^{3/2}=a^3|\sin^3\theta|$; on $[-\pi/2,\pi/2]$ this is $a^3|\sin\theta|^3$.)
+
+**Outer integral** — the integrand is even in $\theta$, so use symmetry:
+
+$$
+V=\frac{4a^3}{3}\int_{0}^{\pi/2}\left(1-\sin^3\theta\right)d\theta .
+$$
+
+Using $\int_0^{\pi/2}d\theta=\frac{\pi}{2}$ and $\int_0^{\pi/2}\sin^3\theta\,d\theta=\frac{2}{3}$:
+
+$$
+V=\frac{4a^3}{3}\left(\frac{\pi}{2}-\frac{2}{3}\right)=\boxed{\;V=\left(\frac{2\pi}{3}-\frac{8}{9}\right)a^3\approx 1.2055\,a^3\;}
+$$
+
+**Verification (computer check, $a=1$):** symbolic evaluation gives $V=\frac{2\pi}{3}-\frac{8}{9}=1.2055062\ldots$, and an independent 3-D Monte Carlo simulation (3,000,000 random points in the unit cube) gives $1.2037$ — in agreement to within the sampling error. ✓
+
+*Sanity check:* the whole sphere has volume $\frac{4\pi}{3}a^3\approx 4.19\,a^3$; the cylinder cut-out has a base of area $\frac{\pi a^2}{4}$ and height up to $2a$, so a volume near $1.2\,a^3$ is very reasonable. ✓
+
+---
+
+## Part (b): Illustrating the solid
+
+The figure below shows the sphere (translucent blue, $x^2+y^2+z^2=a^2$) with the cylinder $(x-\frac{a}{2})^2+y^2=(\frac{a}{2})^2$ (orange) on the same screen. The cylinder is tangent to the $z$-axis at the origin, passes through $(a,0,0)$, and is trimmed where it meets the sphere. The **red curves** are the rims where the cylinder intersects the sphere — a single smooth curve through the origin; its upper half is exactly the graph of $z=\sqrt{a^2-r^2}$ over the boundary of $D$. The solid of part (a) is the column-like region inside the cylinder between the two hemispheres.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={55}{22},
+    axis equal image,
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    xmin=-1.1, xmax=1.1, ymin=-1.1, ymax=1.1, zmin=-1.1, zmax=1.1,
+    ticks=none,
+    title={Cylinder $r=a\cos\theta$ inside sphere $x^2+y^2+z^2=a^2$}]
+% sphere (semi-transparent)
+\addplot3[surf, shader=flat, opacity=0.12, color=blue!50,
+    domain=0:360, samples=25, y domain=0:180, samples y=25,
+    z buffer=sort]
+    ({cos(x)*sin(y)}, {sin(x)*sin(y)}, {cos(y)});
+% cylinder clipped to sphere: zmax = abs(sin(t/2))
+\addplot3[surf, shader=flat, opacity=0.5, color=orange,
+    domain=0:360, samples=40, y domain=-1:1, samples y=12,
+    z buffer=sort]
+    ({0.5+0.5*cos(x)}, {0.5*sin(x)}, {y*abs(sin(x/2))});
+% top rim: cylinder meets sphere
+\addplot3[red, very thick, domain=0:360, samples=100, samples y=0]
+    ({0.5+0.5*cos(x)}, {0.5*sin(x)}, {abs(sin(x/2))});
+% bottom rim
+\addplot3[red, dashed, thick, domain=0:360, samples=100, samples y=0]
+    ({0.5+0.5*cos(x)}, {0.5*sin(x)}, {-abs(sin(x/2))});
+% equator
+\addplot3[blue, dashed, domain=0:360, samples=80, samples y=0]
+    ({cos(x)}, {sin(x)}, {0});
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+## Key takeaways for this type of problem
+
+1. **Always start with the projection.** For a cylinder like $r=a\cos\theta$ (or $r=a\sin\theta$), convert to rectangular form $x^2+y^2=ax$ to *see* the region $D$; the constraint $\cos\theta\ge 0$ pins the $\theta$-range to $[-\pi/2,\pi/2]$.
+2. **$\theta$-bounds come from where $r=a\cos\theta\ge 0$**, not from a full $2\pi$ sweep — forgetting this is the most common error.
+3. **Order of integration:** $z$ first (hemisphere bounds $\pm\sqrt{a^2-r^2}$), then $r$ (from $0$ to the cylinder), then $\theta$. The Jacobian $r$ must appear in the innermost integrand.
+4. **The $u=a^2-r^2$ substitution** handles $\int 2r\sqrt{a^2-r^2}\,dr$ instantly, and **exploiting evenness in $\theta$** (doubling the $[0,\pi/2]$ integral) avoids absolute-value headaches.
+5. **Check plausibility:** compare against the full sphere volume $\frac{4\pi}{3}a^3$ — here the answer is a modest fraction of it, as expected for a cylinder of radius $a/2$ inscribed off-center.
+
+$$
+\boxed{V=\left(\frac{2\pi}{3}-\frac{8}{9}\right)a^3}
+$$
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>glm-5.3-flash/calculus-15.8.26/chat_20260928_233905_729303_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

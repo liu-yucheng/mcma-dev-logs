@@ -1,0 +1,43 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, trig format plots=deg}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=11cm, height=9cm,
+    view={35}{20},
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=-2.6, xmax=2.6, ymin=-3.4, ymax=3.4, zmin=-3.4, zmax=3.4,
+    xtick={-2,...,2}, ytick={-3,0,3}, ztick={-3,0,3},
+    tick label style={font=\scriptsize}, label style={font=\small},
+    title style={font=\small},
+    title={$E:\;y^{2}+z^{2}\le 9,\;-2\le x\le 2$ \ (cylinder, radius 3, axis $=$ $x$-axis)},
+    grid=major, grid style={dotted, gray!35},
+]
+% lateral surface
+\addplot3[blue!70!black, opacity=0.15, shader=flat, domain=0:360, y domain=-2:2,
+          samples=36, samples y=8] (y, {3*cos(x)}, {3*sin(x)});
+% end caps (disks in the planes x=-2 and x=2)
+\addplot3[red!60!black, opacity=0.22, shader=flat, domain=0:360, y domain=0:3,
+          samples=36, samples y=6] (-2, {y*cos(x)}, {y*sin(x)});
+\addplot3[orange!80!black, opacity=0.28, shader=flat, domain=0:360, y domain=0:3,
+          samples=36, samples y=6] (2, {y*cos(x)}, {y*sin(x)});
+% boundary circles
+\addplot3[blue!80!black, very thick, domain=0:360, samples=120] (2, {3*cos(x)}, {3*sin(x)});
+\addplot3[blue!80!black, very thick, domain=0:360, samples=120] (-2, {3*cos(x)}, {3*sin(x)});
+% four generators
+\addplot3[blue!80!black, thick] coordinates {(-2,3,0) (2,3,0)};
+\addplot3[blue!80!black, thick] coordinates {(-2,-3,0) (2,-3,0)};
+\addplot3[blue!80!black, thick] coordinates {(-2,0,3) (2,0,3)};
+\addplot3[blue!80!black, thick] coordinates {(-2,0,-3) (2,0,-3)};
+% typical segment parallel to the x-axis
+\addplot3[black, line width=1.6pt, forget plot, domain=-2:2, samples=2] (x, 1.6, 1.8);
+\addplot3[only marks, mark=*, forget plot, mark size=2pt, black] coordinates {(2,1.6,1.8)};
+\end{axis}
+% caption placed safely below the whole axis box
+\node[font=\scriptsize, anchor=north, align=center, text width=12cm]
+     at ([yshift=-6pt]current axis.south)
+     {thick black segment $=$ typical line parallel to the $x$-axis:\\
+      $-2\le x\le 2$ at fixed $(y_0,z_0)=(1.6,\,1.8)$, since $y_0^{2}+z_0^{2}=6.4\le 9$};
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,44 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={60}{28},
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    xmin=0,xmax=1.1,ymin=0,ymax=1.1,zmin=0,zmax=3.1,
+    title={Solid $E$: $0\le z\le 1+x+y$ over $D$},
+    grid=major,
+    width=11cm,height=9cm,
+]
+% top surface z=1+x+y over D
+\addplot3[surf, domain=0:1, y domain=0:1, samples=25, samples y=25,
+          opacity=0.85, color=blue!70, shader=interp, z buffer=sort]
+  ({x}, {y*sqrt(x)}, {1+x+y*sqrt(x)});
+% base z=0 over D
+\addplot3[surf, domain=0:1, y domain=0:1, samples=25, samples y=25,
+          opacity=0.45, color=orange!70, shader=interp, z buffer=sort]
+  ({x}, {y*sqrt(x)}, {0});
+% vertical wall y=0
+\addplot3[surf, domain=0:1, y domain=0:1, samples=15, samples y=15,
+          opacity=0.20, color=green!60!black, shader=flat]
+  ({x}, {0}, {y*(1+x)});
+% vertical wall x=1
+\addplot3[surf, domain=0:1, y domain=0:1, samples=15, samples y=15,
+          opacity=0.20, color=red!70, shader=flat]
+  ({1}, {x}, {y*(2+x)});
+% vertical curved wall y=sqrt(x)
+\addplot3[surf, domain=0:1, y domain=0:1, samples=25, samples y=15,
+          opacity=0.20, color=purple!70, shader=flat]
+  ({x}, {sqrt(x)}, {y*(1+x+sqrt(x))});
+% boundary curves
+\addplot3[domain=0:1, samples=120, very thick, blue]   ({x}, {sqrt(x)}, {1+x+sqrt(x)});
+\addplot3[domain=0:1, samples=120, thick, green!60!black] ({x}, {0}, {1+x});
+\addplot3[domain=0:1, samples=120, thick, red!80!black]   ({1}, {x}, {2+x});
+% base boundary dashed
+\addplot3[domain=0:1, samples=120, thick, dashed, blue]   ({x}, {sqrt(x)}, {0});
+\addplot3[domain=0:1, samples=2, thick, dashed, black]   ({x}, {0}, {0});
+\addplot3[domain=0:1, samples=2, thick, dashed, red!80!black]   ({1}, {x}, {0});
+\end{axis}
+\end{tikzpicture}
+\end{document}

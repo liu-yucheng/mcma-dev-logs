@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_142110_983352_utc_0800 — Q&amp;A · tools-disabled-deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_142110_983352_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>tools-disabled-deepseek-flash/calculus-15.7.47/chat_20260928_142110_983352_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_142110_983352_utc_0800_0.png`. Alt text: Image: human_20260928_142110_983352_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_142110_983352_utc_0800_0.png" alt="Image: qna_20260928_142110_983352_utc_0800"><figcaption>20260928_142110_983352_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Setting up the integrals
+
+**Solid, density:** $\;\rho(x,y,z)=\sqrt{x^{2}+y^{2}}$.
+
+### 1. Description of the solid region
+
+The solid is bounded by three surfaces:
+
+- the **parabolic cylinder** $y=x^{2}$ (extruded parallel to the $z$-axis),
+- the plane $z=0$ (bottom), and
+- the plane $y+z=1$, i.e. $z=1-y$ (top).
+
+The two planes meet where $z=0$ and $y=1$, along the line $y=1$. Take a cross-section at a fixed $x$ (viewed in the $yz$-plane): the cylinder becomes the vertical line $y=x^{2}$, the bottom is $z=0$, and the top is $z=1-y$. These three lines bound a triangle exactly when $x^{2}\le 1$. Hence the solid is
+
+$$
+E=\{(x,y,z):\ -1\le x\le 1,\quad x^{2}\le y\le 1,\quad 0\le z\le 1-y\},
+$$
+
+whose projection on the $xy$-plane is the parabolic region $D:\ -1\le x\le 1,\ x^{2}\le y\le 1$.
+
+*Check of the volume.* $\;V=\iint_{D}(1-y)\,dA=\int_{-1}^{1}\Big[(1-y)\,\Big|_{x^{2}}^{1}\Big]dx=\int_{-1}^{1}\Big(\tfrac12-x^{2}+\tfrac{x^{4}}{2}\Big)dx=\tfrac{8}{15}.$
+
+### (a) Mass
+
+$$
+m=\iiint_{E}\rho\,dV=\int_{-1}^{1}\!\!\int_{x^{2}}^{1}\!\!\int_{0}^{1-y}\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx.
+$$
+
+### (b) Center of mass
+
+The center of mass is $(\bar x,\bar y,\bar z)=\dfrac{1}{m}\big(M_{yz},\,M_{xz},\,M_{xy}\big)$, where $M_{yz}=\iiint x\rho\,dV$, etc.
+
+**Symmetry.** The region $E$ is invariant under $x\mapsto -x$, and $\rho$ is even in $x$. Therefore the integrand $x\rho$ is odd in $x$, so $M_{yz}=0$ and
+
+$$
+\bar x=0.
+$$
+
+The other two coordinates are
+
+$$
+\bar y=\frac{1}{m}\int_{-1}^{1}\!\!\int_{x^{2}}^{1}\!\!\int_{0}^{1-y} y\,\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx,
+\qquad
+\bar z=\frac{1}{m}\int_{-1}^{1}\!\!\int_{x^{2}}^{1}\!\!\int_{0}^{1-y} z\,\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx.
+$$
+
+### (c) Moment of inertia about the $z$-axis
+
+The squared distance from a point to the $z$-axis is $x^{2}+y^{2}$, so
+
+$$
+I_{z}=\iiint_{E}(x^{2}+y^{2})\,\rho\,dV=\int_{-1}^{1}\!\!\int_{x^{2}}^{1}\!\!\int_{0}^{1-y}(x^{2}+y^{2})^{3/2}\;dz\,dy\,dx.
+$$
+
+### 2. Simplification by doing the (trivial) $z$-integration
+
+Only the limits and the factor $(1-y)$ depend on $z$, so the inner integrals collapse:
+
+$$
+m=\int_{-1}^{1}\!\!\int_{x^{2}}^{1}(1-y)\sqrt{x^{2}+y^{2}}\,dy\,dx,
+$$
+
+$$
+\bar y=\frac{1}{m}\int_{-1}^{1}\!\!\int_{x^{2}}^{1} y\,(1-y)\sqrt{x^{2}+y^{2}}\,dy\,dx,
+\qquad
+\bar z=\frac{1}{m}\int_{-1}^{1}\!\!\int_{x^{2}}^{1}\frac{(1-y)^{2}}{2}\,\sqrt{x^{2}+y^{2}}\,dy\,dx,
+$$
+
+$$
+I_{z}=\int_{-1}^{1}\!\!\int_{x^{2}}^{1}(1-y)\,(x^{2}+y^{2})^{3/2}\,dy\,dx.
+$$
+
+**Boxed result (set up, not evaluated):**
+
+$$
+\boxed{
+\begin{aligned}
+m&=\int_{-1}^{1}\!\!\int_{x^{2}}^{1}\!\!\int_{0}^{1-y}\sqrt{x^{2}+y^{2}}\;dz\,dy\,dx,\\[4pt]
+\bar x&=0,\quad
+\bar y=\frac{1}{m}\int_{-1}^{1}\!\!\int_{x^{2}}^{1}\!\!\int_{0}^{1-y} y\sqrt{x^{2}+y^{2}}\,dz\,dy\,dx,\quad
+\bar z=\frac{1}{m}\int_{-1}^{1}\!\!\int_{x^{2}}^{1}\!\!\int_{0}^{1-y} z\sqrt{x^{2}+y^{2}}\,dz\,dy\,dx,\\[4pt]
+I_{z}&=\int_{-1}^{1}\!\!\int_{x^{2}}^{1}\!\!\int_{0}^{1-y}(x^{2}+y^{2})^{3/2}\,dz\,dy\,dx.
+\end{aligned}}
+$$
+
+
+---
+
+
+
+Image `pyplot_0.png` not found.
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[tikz,border=4pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  width=10cm, height=9cm,
+  xlabel=$x$, ylabel=$y$,
+  xmin=-1.3, xmax=1.3, ymin=-0.15, ymax=1.3,
+  axis lines=center,
+  samples=150,
+  grid=both,
+  legend pos=north west
+]
+\addplot[name path=A, blue, very thick, domain=-1:1]{x^2};
+\addplot[name path=B, red, very thick, domain=-1:1]{1};
+\addplot[teal!30, opacity=0.6] fill between[of=A and B];
+\addlegendentry{$y=x^2$ (cylinder wall)}
+\addlegendentry{$y=1$ (where $y+z=1$ meets $z=0$)}
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+Image `pgfplots_0.png` not found.
+
+
+
+---
+
+
+
+Image `pyplot_1.png` not found.
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[tikz,border=4pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  view={60}{28},
+  xlabel=$x$, ylabel=$y$, zlabel=$z$,
+  xmin=-1, xmax=1, ymin=0, ymax=1, zmin=0, zmax=1.05,
+  samples=25, samples y=25,
+  zbuffer=sort
+]
+% Parabolic-cylinder wall  y = x^2,  0 &lt;= z &lt;= 1 - x^2
+\addplot3[surf, opacity=0.55, fill=orange, faceted color=orange!50,
+  domain=-1:1, y domain=0:1]
+  (x, x^2, y*(1-x^2));
+% Floor  z = 0  over  x^2 &lt;= y &lt;= 1
+\addplot3[surf, opacity=0.30, fill=green!70, faceted color=green!50,
+  domain=-1:1, y domain=0:1]
+  (x, x^2 + y*(1-x^2), 0);
+% Roof   z = 1 - y  over  x^2 &lt;= y &lt;= 1
+\addplot3[surf, opacity=0.30, fill=cyan, faceted color=cyan!50,
+  domain=-1:1, y domain=0:1]
+  (x, x^2 + y*(1-x^2), 1-(x^2 + y*(1-x^2)));
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+Image `pgfplots_1.png` not found.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>tools-disabled-deepseek-flash/calculus-15.7.47/chat_20260928_142110_983352_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

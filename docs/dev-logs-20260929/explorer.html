@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore and compare the MCMA calculus results side by side: canonical solutions, model remarks, and chat transcripts, laid out like a 2-pane file explorer.">
+<title>MCMA &mdash; Results Explorer</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>Results Explorer</h1>
+    <p class="lede">🖥️ Browse the full run record in a 2-pane file explorer. Inspect two results at a time, side by side. A single click opens every folder and file. Navigation buttons and a path bar sit in the toolbar at the top.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="agents.html">Agents</a>
+    <a href="experiment.html">Experiment</a>
+    <a href="briefing.html">Results Briefing</a>
+    <a href="explorer.html" aria-current="page">Results Explorer</a>
+    <a href="demo-video.html">Demo Video</a>
+    <a href="plans.html">Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="legend">
+  <h2>📚 Legends</h2>
+  <table>
+    <thead><tr><th>Leaf</th><th>Location</th><th>Contents</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip chip-cs">C</span> <code>canonical-solution.html</code></td><td><code>canonical-solutions/&lt;problem&gt;/</code></td><td>The printed problem and the reference solution image.</td></tr>
+      <tr><td><span class="chip chip-rm">R</span> <code>remarks.html</code></td><td><code>&lt;model&gt;/&lt;problem&gt;/</code></td><td>Attempt count and per-attempt outcomes. Without a <code>manual_remarks.txt</code>, the last attempt (in natural order) is the successful one. All earlier attempts failed. With a <code>manual_remarks.txt</code>, every attempt failed.</td></tr>
+      <tr><td><span class="chip chip-q">Q</span> <code>qna.html</code></td><td><code>&lt;model&gt;/&lt;problem&gt;/&lt;chat&gt;/</code></td><td>The <code>qna_&lt;timestamp&gt;.md</code> transcript: prompt and answer, with generated plots.</td></tr>
+      <tr><td><span class="chip chip-qna">S</span> <code>qna_&lt;timestamp&gt;.html</code></td><td><code>&lt;model&gt;/&lt;problem&gt;/</code></td><td>A shortcut (redirect) to the chat transcript, so a Q&amp;A is reachable at the short <code>&lt;model&gt;/&lt;problem&gt;/qna_&lt;timestamp&gt;.html</code> path instead of drilling into <code>&lt;chat&gt;/</code>.</td></tr>
+      <tr><td><span class="chip chip-d">D</span> <code>.</code> &amp; <code>..</code></td><td>any folder</td><td>Virtual entries at the top of the list: <code>.</code> stays in (refreshes) the current folder, <code>..</code> moves up to the parent folder.</td></tr>
+      <tr><td><span class="chip chip-d">D</span> folder</td><td>any</td><td>A directory node. A single click opens it.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="explorer">
+  <h2>🖥️ 2-pane explorer</h2>
+  <div class="explorer" id="explorer">
+    <div class="explorer-row">
+    <div class="panel" data-panel="left">
+      <div class="panel-head">
+        <div class="navbtns" role="group" aria-label="Navigation">
+          <button type="button" class="btn icon" data-act="back" title="Back" aria-label="Back" disabled>&#8249;</button>
+          <button type="button" class="btn icon" data-act="forward" title="Forward" aria-label="Forward" disabled>&#8250;</button>
+          <button type="button" class="btn icon" data-act="up" title="Up one level" aria-label="Up one level">&#8593;</button>
+          <button type="button" class="btn icon" data-act="home" title="Go to home" aria-label="Go to home">&#8962;</button>
+        </div>
+        <div class="addrbar"><input class="path" type="text" spellcheck="false" autocomplete="off" aria-label="Current path" value="/" title="Type a path and press Enter to jump"></div>
+      </div>
+      <div class="panel-body">
+        <div class="files-col" role="listbox" aria-label="Files"></div>
+      </div>
+      <div class="h-splitter" role="separator" aria-orientation="horizontal" title="Drag to resize the file list / viewer; double-click to reset" tabindex="0"></div>
+      <div class="preview">
+        <iframe title="Left panel viewer"></iframe>
+      </div>
+      <div class="status">&mdash;</div>
+      <div class="panel-resizer" role="separator" aria-orientation="horizontal" title="Drag to resize the left pane height; double-click to reset" tabindex="0"></div>
+    </div>
+
+    <div class="splitter" role="separator" aria-orientation="vertical" title="Drag to resize; double-click to reset" tabindex="0"></div>
+
+    <div class="panel" data-panel="right">
+      <div class="panel-head">
+        <div class="navbtns" role="group" aria-label="Navigation">
+          <button type="button" class="btn icon" data-act="back" title="Back" aria-label="Back" disabled>&#8249;</button>
+          <button type="button" class="btn icon" data-act="forward" title="Forward" aria-label="Forward" disabled>&#8250;</button>
+          <button type="button" class="btn icon" data-act="up" title="Up one level" aria-label="Up one level">&#8593;</button>
+          <button type="button" class="btn icon" data-act="home" title="Go to home" aria-label="Go to home">&#8962;</button>
+        </div>
+        <div class="addrbar"><input class="path" type="text" spellcheck="false" autocomplete="off" aria-label="Current path" value="/" title="Type a path and press Enter to jump"></div>
+      </div>
+      <div class="panel-body">
+        <div class="files-col" role="listbox" aria-label="Files"></div>
+      </div>
+      <div class="h-splitter" role="separator" aria-orientation="horizontal" title="Drag to resize the file list / viewer; double-click to reset" tabindex="0"></div>
+      <div class="preview">
+        <iframe title="Right panel viewer"></iframe>
+      </div>
+      <div class="status">&mdash;</div>
+      <div class="panel-resizer" role="separator" aria-orientation="horizontal" title="Drag to resize the right pane height; double-click to reset" tabindex="0"></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section id="use">
+  <h2>🧭 How to use the explorer</h2>
+  <p>Each of the two independent panels is styled like a file explorer window. The toolbar on top offers navigation buttons (back, forward, up, home). The address bar shows the current location with <code>/</code> as the separator. The address bar is editable. Type a path such as <code>deepseek-flash/calculus-15.7.17</code> and press <code>Enter</code> to jump straight to it. The single main view lists the subdirectories and files of the current folder. The view shows <code>.</code> (current folder) and <code>..</code> (parent folder) at the top. Click a folder to open it. Click a leaf (<code>canonical-solution.html</code>, <code>remarks.html</code>, <code>qna.html</code>) to view it in the panel&rsquo;s viewer. Everything opens with a single click. Both panes start at the root. The root holds <code>canonical-solutions/</code> and the model directories.</p>
+  <p class="small">📁 The folders mirror <code>explorer/</code>. The paths are <code>canonical-solutions/&lt;problem&gt;/canonical-solution.html</code>, <code>&lt;model&gt;/&lt;problem&gt;/remarks.html</code>, and <code>&lt;model&gt;/&lt;problem&gt;/&lt;chat&gt;/qna.html</code>. Each chat transcript is also reachable through a shortcut leaf at <code>&lt;model&gt;/&lt;problem&gt;/qna_&lt;timestamp&gt;.html</code>. This leaf redirects to the deep <code>qna.html</code>.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<style>
+.explorer {
+  display: flex;
+  flex-direction: column;
+  font-weight: 300;
+}
+.explorer-row {
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 0%;
+  min-height: 0;
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 0 0 var(--left-w, 50%);
+  height: var(--panel-h, 1000px);
+  border: 1px solid #cfd5dd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(24, 32, 42, 0.08);
+}
+.panel[data-panel="right"] { flex: 1 1 0%; }
+.splitter {
+  flex: 0 0 7px;
+  align-self: stretch;
+  border-left: 1px solid #d0d5dd;
+  border-right: 1px solid #d0d5dd;
+  background: #e2e6ec;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+}
+.splitter:hover { background: #c8d0da; }
+.h-splitter {
+  flex: 0 0 7px;
+  border-top: 1px solid #d0d5dd;
+  border-bottom: 1px solid #d0d5dd;
+  background: #e2e6ec;
+  cursor: row-resize;
+  touch-action: none;
+}
+.h-splitter:hover { background: #c8d0da; }
+.panel-resizer {
+  flex: 0 0 10px;
+  border-top: 1px solid #d0d5dd;
+  background: #e6eaef;
+  cursor: row-resize;
+  touch-action: none;
+  user-select: none;
+}
+.panel-resizer:hover { background: #ccd4de; }
+body.resizing { cursor: col-resize; user-select: none; }
+body.resizing-v { cursor: row-resize; user-select: none; }
+@media (max-width: 1120px) {
+  .explorer { display: block; height: auto; }
+  .explorer-row { display: block; }
+  .splitter {
+    display: block;
+    width: auto;
+    height: 7px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #d0d5dd;
+    border-bottom: 1px solid #d0d5dd;
+    cursor: row-resize;
+  }
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #dfe4ea;
+  background: #f5f6f8;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+}
+.navbtns {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-right: 8px;
+  border-right: 1px solid #dfe4ea;
+}
+.addrbar {
+  flex: 1 1 220px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+.addrbar .path {
+  flex: 1;
+  min-width: 0;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: .8rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #d4d9e0;
+  border-radius: 6px;
+  padding: 4px 10px;
+  box-shadow: inset 0 1px 2px rgba(24, 32, 42, 0.05);
+}
+.addrbar .path:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(15, 98, 176, 0.18);
+}
+.btn {
+  font-size: .78rem;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+}
+.btn:hover { background: #e9edf2; border-color: #d5dbe3; }
+.btn:active { background: #dfe4eb; border-color: #c6cdd6; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.btn:disabled { opacity: .45; cursor: default; background: transparent; border-color: transparent; }
+.btn.icon { font-size: .95rem; padding: 5px 8px; min-width: 30px; text-align: center; }
+
+.panel-body { flex: 0 0 var(--body-h, calc(100% - 600px)); min-height: 120px; display: flex; }
+.files-col { flex: 1 1 auto; min-width: 0; overflow: auto; padding: 6px 4px; background: #fff; }
+
+.preview {
+  border-top: 1px solid #dfe4ea;
+  flex: 1 1 0%;
+  min-height: 120px;
+  background: #fff;
+}
+.preview iframe { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
+.status {
+  border-top: 1px solid #dfe4ea;
+  padding: 4px 10px;
+  font-size: .78rem;
+  color: var(--muted);
+  font-family: Consolas, "Courier New", monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: #f5f6f8;
+  flex: 0 0 auto;
+}
+
+.files-title {
+  font-size: .74rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 3px 4px;
+  border-bottom: 1px solid #e6eaef;
+  margin-bottom: 6px;
+}
+
+.f-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 6px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.f-row:hover { background: #f0f3f7; }
+.f-row.selected { background: #e3f0fc; border-color: #b9d8f1; }
+.f-row.dir { font-weight: 500; }
+.f-row.virtual .f-name { color: var(--muted); }
+.f-name { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  font-size: .66rem;
+  font-weight: 600;
+  color: #fff;
+  flex: 0 0 auto;
+}
+.chip-d { background: #5b6b7e; }
+.chip-cs { background: #2f446f; }
+.chip-rm { background: #0f52b0; }
+.chip-q { background: #e08a24; }
+.chip-qna { background: #8e44ad; }
+.empty-hint { color: var(--muted); font-size: .84rem; padding: 10px 6px; }
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  //RESULTS_TREE:BEGIN
+  var RESULTS_TREE = [{"n": "canonical-solutions", "c": [{"n": "calculus-15.7.17", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.17/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.18", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.18/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.20", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.20/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.21", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.21/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.22", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.22/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.23", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.23/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.27", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.27/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.28", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.28/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.29", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.29/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.30", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.30/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.31", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.31/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.32", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.32/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.39", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.39/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.40", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.40/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.46", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.46/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.47", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.47/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.49", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.49/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.50", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.50/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.54", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.54/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.7.55", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.7.55/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.8.14", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.8.14/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.8.26", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.8.26/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.9.43", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.9.43/canonical-solution.html", "t": "html"}]}, {"n": "calculus-15.9.45", "c": [{"n": "canonical-solution.html", "p": "canonical-solutions/calculus-15.9.45/canonical-solution.html", "t": "html"}]}]}, {"n": "deepseek-flash", "c": [{"n": "calculus-15.7.17", "c": [{"n": "chat_20260928_144933_987903_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.17/chat_20260928_144933_987903_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_144933_987903_utc_0800.html", "p": "deepseek-flash/calculus-15.7.17/qna_20260928_144933_987903_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.17/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.18", "c": [{"n": "chat_20260928_144933_984902_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.18/chat_20260928_144933_984902_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_144933_984902_utc_0800.html", "p": "deepseek-flash/calculus-15.7.18/qna_20260928_144933_984902_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.18/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.20", "c": [{"n": "chat_20260928_144933_989904_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.20/chat_20260928_144933_989904_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_144933_989904_utc_0800.html", "p": "deepseek-flash/calculus-15.7.20/qna_20260928_144933_989904_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.20/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.21", "c": [{"n": "chat_20260928_144933_979902_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.21/chat_20260928_144933_979902_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_144933_979902_utc_0800.html", "p": "deepseek-flash/calculus-15.7.21/qna_20260928_144933_979902_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.21/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.22", "c": [{"n": "chat_20260928_145156_308322_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.22/chat_20260928_145156_308322_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145156_308322_utc_0800.html", "p": "deepseek-flash/calculus-15.7.22/qna_20260928_145156_308322_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.22/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.23", "c": [{"n": "chat_20260928_145222_454386_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.23/chat_20260928_145222_454386_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145222_454386_utc_0800.html", "p": "deepseek-flash/calculus-15.7.23/qna_20260928_145222_454386_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.23/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.27", "c": [{"n": "chat_20260928_145342_502717_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.27/chat_20260928_145342_502717_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145342_502717_utc_0800.html", "p": "deepseek-flash/calculus-15.7.27/qna_20260928_145342_502717_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.27/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.28", "c": [{"n": "chat_20260928_145413_669661_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.28/chat_20260928_145413_669661_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145413_669661_utc_0800.html", "p": "deepseek-flash/calculus-15.7.28/qna_20260928_145413_669661_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.28/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.29", "c": [{"n": "chat_20260928_145438_614408_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.29/chat_20260928_145438_614408_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145438_614408_utc_0800.html", "p": "deepseek-flash/calculus-15.7.29/qna_20260928_145438_614408_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.29/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.30", "c": [{"n": "chat_20260928_145503_654762_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.30/chat_20260928_145503_654762_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145503_654762_utc_0800.html", "p": "deepseek-flash/calculus-15.7.30/qna_20260928_145503_654762_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.30/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.31", "c": [{"n": "chat_20260928_145732_631268_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.31/chat_20260928_145732_631268_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145732_631268_utc_0800.html", "p": "deepseek-flash/calculus-15.7.31/qna_20260928_145732_631268_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.31/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.32", "c": [{"n": "chat_20260928_145815_327787_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.32/chat_20260928_145815_327787_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145815_327787_utc_0800.html", "p": "deepseek-flash/calculus-15.7.32/qna_20260928_145815_327787_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.32/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.39", "c": [{"n": "chat_20260928_145910_999892_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.39/chat_20260928_145910_999892_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145910_999892_utc_0800.html", "p": "deepseek-flash/calculus-15.7.39/qna_20260928_145910_999892_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.39/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.40", "c": [{"n": "chat_20260928_145917_101590_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.40/chat_20260928_145917_101590_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_145917_101590_utc_0800.html", "p": "deepseek-flash/calculus-15.7.40/qna_20260928_145917_101590_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.40/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.46", "c": [{"n": "chat_20260928_150031_743581_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.46/chat_20260928_150031_743581_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150031_743581_utc_0800.html", "p": "deepseek-flash/calculus-15.7.46/qna_20260928_150031_743581_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.46/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.47", "c": [{"n": "chat_20260928_150038_818919_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.47/chat_20260928_150038_818919_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150038_818919_utc_0800.html", "p": "deepseek-flash/calculus-15.7.47/qna_20260928_150038_818919_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.47/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.49", "c": [{"n": "chat_20260928_150139_666133_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.49/chat_20260928_150139_666133_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150139_666133_utc_0800.html", "p": "deepseek-flash/calculus-15.7.49/qna_20260928_150139_666133_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.49/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.50", "c": [{"n": "chat_20260928_150144_941798_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.50/chat_20260928_150144_941798_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150144_941798_utc_0800.html", "p": "deepseek-flash/calculus-15.7.50/qna_20260928_150144_941798_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.50/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.54", "c": [{"n": "chat_20260928_150400_380872_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.54/chat_20260928_150400_380872_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150400_380872_utc_0800.html", "p": "deepseek-flash/calculus-15.7.54/qna_20260928_150400_380872_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.54/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.55", "c": [{"n": "chat_20260928_150409_751021_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.7.55/chat_20260928_150409_751021_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150409_751021_utc_0800.html", "p": "deepseek-flash/calculus-15.7.55/qna_20260928_150409_751021_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.7.55/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.14", "c": [{"n": "chat_20260928_150507_141450_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.8.14/chat_20260928_150507_141450_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150507_141450_utc_0800.html", "p": "deepseek-flash/calculus-15.8.14/qna_20260928_150507_141450_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.8.14/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.26", "c": [{"n": "chat_20260928_150513_163255_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.8.26/chat_20260928_150513_163255_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150513_163255_utc_0800.html", "p": "deepseek-flash/calculus-15.8.26/qna_20260928_150513_163255_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.8.26/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.43", "c": [{"n": "chat_20260928_150612_298057_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.9.43/chat_20260928_150612_298057_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150612_298057_utc_0800.html", "p": "deepseek-flash/calculus-15.9.43/qna_20260928_150612_298057_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.9.43/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.45", "c": [{"n": "chat_20260928_150622_507162_utc_0800", "c": [{"n": "qna.html", "p": "deepseek-flash/calculus-15.9.45/chat_20260928_150622_507162_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_150622_507162_utc_0800.html", "p": "deepseek-flash/calculus-15.9.45/qna_20260928_150622_507162_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "deepseek-flash/calculus-15.9.45/remarks.html", "t": "html"}]}]}, {"n": "gemma-4-26b-a4b-it", "c": [{"n": "calculus-15.7.17", "c": [{"n": "chat_20260928_151550_580480_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.17/chat_20260928_151550_580480_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_151550_580480_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.17/qna_20260928_151550_580480_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.17/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.18", "c": [{"n": "chat_20260928_151550_598756_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.18/chat_20260928_151550_598756_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_001253_238527_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.18/chat_20260929_001253_238527_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_004732_344943_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.18/chat_20260929_004732_344943_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_151550_598756_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.18/qna_20260928_151550_598756_utc_0800.html", "t": "html"}, {"n": "qna_20260929_001253_238527_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.18/qna_20260929_001253_238527_utc_0800.html", "t": "html"}, {"n": "qna_20260929_004732_344943_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.18/qna_20260929_004732_344943_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.18/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.20", "c": [{"n": "chat_20260928_151550_626590_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.20/chat_20260928_151550_626590_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_151550_626590_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.20/qna_20260928_151550_626590_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.20/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.21", "c": [{"n": "chat_20260928_151758_659099_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.21/chat_20260928_151758_659099_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_151758_659099_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.21/qna_20260928_151758_659099_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.21/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.22", "c": [{"n": "chat_20260928_151815_266649_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.22/chat_20260928_151815_266649_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_151815_266649_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.22/qna_20260928_151815_266649_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.22/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.23", "c": [{"n": "chat_20260928_151911_915011_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/chat_20260928_151911_915011_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_001253_108411_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/chat_20260929_001253_108411_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_004732_345943_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/chat_20260929_004732_345943_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_011138_505608_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/chat_20260929_011138_505608_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_013135_059558_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/chat_20260929_013135_059558_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_151911_915011_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/qna_20260928_151911_915011_utc_0800.html", "t": "html"}, {"n": "qna_20260929_001253_108411_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/qna_20260929_001253_108411_utc_0800.html", "t": "html"}, {"n": "qna_20260929_004732_345943_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/qna_20260929_004732_345943_utc_0800.html", "t": "html"}, {"n": "qna_20260929_011138_505608_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/qna_20260929_011138_505608_utc_0800.html", "t": "html"}, {"n": "qna_20260929_013135_059558_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/qna_20260929_013135_059558_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.23/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.27", "c": [{"n": "chat_20260928_152026_916546_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.27/chat_20260928_152026_916546_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_152026_916546_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.27/qna_20260928_152026_916546_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.27/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.28", "c": [{"n": "chat_20260928_152206_692882_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.28/chat_20260928_152206_692882_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_152206_692882_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.28/qna_20260928_152206_692882_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.28/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.29", "c": [{"n": "chat_20260928_152243_867957_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.29/chat_20260928_152243_867957_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260928_235618_700059_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.29/chat_20260928_235618_700059_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_152243_867957_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.29/qna_20260928_152243_867957_utc_0800.html", "t": "html"}, {"n": "qna_20260928_235618_700059_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.29/qna_20260928_235618_700059_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.29/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.30", "c": [{"n": "chat_20260928_152638_167201_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.30/chat_20260928_152638_167201_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_152638_167201_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.30/qna_20260928_152638_167201_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.30/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.31", "c": [{"n": "chat_20260928_152808_393989_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.31/chat_20260928_152808_393989_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_001253_222057_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.31/chat_20260929_001253_222057_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_005356_941103_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.31/chat_20260929_005356_941103_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_011138_489609_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.31/chat_20260929_011138_489609_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_152808_393989_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.31/qna_20260928_152808_393989_utc_0800.html", "t": "html"}, {"n": "qna_20260929_001253_222057_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.31/qna_20260929_001253_222057_utc_0800.html", "t": "html"}, {"n": "qna_20260929_005356_941103_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.31/qna_20260929_005356_941103_utc_0800.html", "t": "html"}, {"n": "qna_20260929_011138_489609_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.31/qna_20260929_011138_489609_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.31/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.32", "c": [{"n": "chat_20260928_152934_108290_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.32/chat_20260928_152934_108290_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_152934_108290_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.32/qna_20260928_152934_108290_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.32/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.39", "c": [{"n": "chat_20260928_153145_291556_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.39/chat_20260928_153145_291556_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260928_235815_890668_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.39/chat_20260928_235815_890668_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_153145_291556_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.39/qna_20260928_153145_291556_utc_0800.html", "t": "html"}, {"n": "qna_20260928_235815_890668_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.39/qna_20260928_235815_890668_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.39/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.40", "c": [{"n": "chat_20260928_153216_466614_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.40/chat_20260928_153216_466614_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_001446_252235_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.40/chat_20260929_001446_252235_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_153216_466614_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.40/qna_20260928_153216_466614_utc_0800.html", "t": "html"}, {"n": "qna_20260929_001446_252235_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.40/qna_20260929_001446_252235_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.40/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.46", "c": [{"n": "chat_20260928_153327_985528_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.46/chat_20260928_153327_985528_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_153327_985528_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.46/qna_20260928_153327_985528_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.46/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.47", "c": [{"n": "chat_20260928_153452_657090_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.47/chat_20260928_153452_657090_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_001459_947628_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.47/chat_20260929_001459_947628_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_153452_657090_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.47/qna_20260928_153452_657090_utc_0800.html", "t": "html"}, {"n": "qna_20260929_001459_947628_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.47/qna_20260929_001459_947628_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.47/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.49", "c": [{"n": "chat_20260928_153507_027481_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.49/chat_20260928_153507_027481_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_001720_711796_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.49/chat_20260929_001720_711796_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_153507_027481_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.49/qna_20260928_153507_027481_utc_0800.html", "t": "html"}, {"n": "qna_20260929_001720_711796_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.49/qna_20260929_001720_711796_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.49/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.50", "c": [{"n": "chat_20260928_154250_886531_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/chat_20260928_154250_886531_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_002036_977089_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/chat_20260929_002036_977089_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_005641_417637_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/chat_20260929_005641_417637_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_012707_350767_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/chat_20260929_012707_350767_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_013135_057555_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/chat_20260929_013135_057555_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_154250_886531_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/qna_20260928_154250_886531_utc_0800.html", "t": "html"}, {"n": "qna_20260929_002036_977089_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/qna_20260929_002036_977089_utc_0800.html", "t": "html"}, {"n": "qna_20260929_005641_417637_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/qna_20260929_005641_417637_utc_0800.html", "t": "html"}, {"n": "qna_20260929_012707_350767_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/qna_20260929_012707_350767_utc_0800.html", "t": "html"}, {"n": "qna_20260929_013135_057555_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/qna_20260929_013135_057555_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.50/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.54", "c": [{"n": "chat_20260928_154429_031899_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.54/chat_20260928_154429_031899_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_154429_031899_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.54/qna_20260928_154429_031899_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.54/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.55", "c": [{"n": "chat_20260928_154619_928928_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.55/chat_20260928_154619_928928_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_154619_928928_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.55/qna_20260928_154619_928928_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.7.55/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.14", "c": [{"n": "chat_20260928_154641_649424_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.8.14/chat_20260928_154641_649424_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_154641_649424_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.8.14/qna_20260928_154641_649424_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.8.14/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.26", "c": [{"n": "chat_20260928_154808_673621_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.8.26/chat_20260928_154808_673621_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_154808_673621_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.8.26/qna_20260928_154808_673621_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.8.26/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.43", "c": [{"n": "chat_20260928_155237_205044_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.9.43/chat_20260928_155237_205044_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_155237_205044_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.9.43/qna_20260928_155237_205044_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.9.43/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.45", "c": [{"n": "chat_20260928_155415_205348_utc_0800", "c": [{"n": "qna.html", "p": "gemma-4-26b-a4b-it/calculus-15.9.45/chat_20260928_155415_205348_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_155415_205348_utc_0800.html", "p": "gemma-4-26b-a4b-it/calculus-15.9.45/qna_20260928_155415_205348_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "gemma-4-26b-a4b-it/calculus-15.9.45/remarks.html", "t": "html"}]}]}, {"n": "glm-5.3-flash", "c": [{"n": "calculus-15.7.17", "c": [{"n": "chat_20260928_172606_816138_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.17/chat_20260928_172606_816138_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_172606_816138_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.17/qna_20260928_172606_816138_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.17/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.18", "c": [{"n": "chat_20260928_223758_765428_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.18/chat_20260928_223758_765428_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_223758_765428_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.18/qna_20260928_223758_765428_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.18/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.20", "c": [{"n": "chat_20260928_223758_777057_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.20/chat_20260928_223758_777057_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_223758_777057_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.20/qna_20260928_223758_777057_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.20/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.21", "c": [{"n": "chat_20260928_172606_808802_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.21/chat_20260928_172606_808802_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_172606_808802_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.21/qna_20260928_172606_808802_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.21/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.22", "c": [{"n": "chat_20260928_232306_535423_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.22/chat_20260928_232306_535423_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232306_535423_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.22/qna_20260928_232306_535423_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.22/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.23", "c": [{"n": "chat_20260928_232306_489412_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.23/chat_20260928_232306_489412_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232306_489412_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.23/qna_20260928_232306_489412_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.23/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.27", "c": [{"n": "chat_20260928_232306_534422_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.27/chat_20260928_232306_534422_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232306_534422_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.27/qna_20260928_232306_534422_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.27/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.28", "c": [{"n": "chat_20260928_232306_489412_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.28/chat_20260928_232306_489412_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232306_489412_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.28/qna_20260928_232306_489412_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.28/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.29", "c": [{"n": "chat_20260928_232527_295267_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.29/chat_20260928_232527_295267_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232527_295267_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.29/qna_20260928_232527_295267_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.29/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.30", "c": [{"n": "chat_20260928_232648_082094_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.30/chat_20260928_232648_082094_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232648_082094_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.30/qna_20260928_232648_082094_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.30/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.31", "c": [{"n": "chat_20260928_232801_686208_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.31/chat_20260928_232801_686208_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232801_686208_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.31/qna_20260928_232801_686208_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.31/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.32", "c": [{"n": "chat_20260928_232918_585813_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.32/chat_20260928_232918_585813_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_003943_770758_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.32/chat_20260929_003943_770758_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232918_585813_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.32/qna_20260928_232918_585813_utc_0800.html", "t": "html"}, {"n": "qna_20260929_003943_770758_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.32/qna_20260929_003943_770758_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.32/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.39", "c": [{"n": "chat_20260928_232942_862493_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.39/chat_20260928_232942_862493_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232942_862493_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.39/qna_20260928_232942_862493_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.39/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.40", "c": [{"n": "chat_20260928_232943_916030_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.40/chat_20260928_232943_916030_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_232943_916030_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.40/qna_20260928_232943_916030_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.40/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.46", "c": [{"n": "chat_20260928_233053_618724_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.46/chat_20260928_233053_618724_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_233053_618724_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.46/qna_20260928_233053_618724_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.46/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.47", "c": [{"n": "chat_20260928_233320_804417_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.47/chat_20260928_233320_804417_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_233320_804417_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.47/qna_20260928_233320_804417_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.47/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.49", "c": [{"n": "chat_20260928_233422_620567_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.49/chat_20260928_233422_620567_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_233422_620567_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.49/qna_20260928_233422_620567_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.49/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.50", "c": [{"n": "chat_20260928_233557_418034_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.50/chat_20260928_233557_418034_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_233557_418034_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.50/qna_20260928_233557_418034_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.50/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.54", "c": [{"n": "chat_20260928_233624_289045_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.54/chat_20260928_233624_289045_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_233624_289045_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.54/qna_20260928_233624_289045_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.54/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.55", "c": [{"n": "chat_20260928_233727_831159_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.55/chat_20260928_233727_831159_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_003943_774267_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.7.55/chat_20260929_003943_774267_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_233727_831159_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.55/qna_20260928_233727_831159_utc_0800.html", "t": "html"}, {"n": "qna_20260929_003943_774267_utc_0800.html", "p": "glm-5.3-flash/calculus-15.7.55/qna_20260929_003943_774267_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.7.55/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.14", "c": [{"n": "chat_20260928_233817_262964_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.8.14/chat_20260928_233817_262964_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_233817_262964_utc_0800.html", "p": "glm-5.3-flash/calculus-15.8.14/qna_20260928_233817_262964_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.8.14/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.26", "c": [{"n": "chat_20260928_233905_729303_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.8.26/chat_20260928_233905_729303_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_233905_729303_utc_0800.html", "p": "glm-5.3-flash/calculus-15.8.26/qna_20260928_233905_729303_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.8.26/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.43", "c": [{"n": "chat_20260928_234340_040964_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.9.43/chat_20260928_234340_040964_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_234340_040964_utc_0800.html", "p": "glm-5.3-flash/calculus-15.9.43/qna_20260928_234340_040964_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.9.43/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.45", "c": [{"n": "chat_20260928_234358_670725_utc_0800", "c": [{"n": "qna.html", "p": "glm-5.3-flash/calculus-15.9.45/chat_20260928_234358_670725_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_234358_670725_utc_0800.html", "p": "glm-5.3-flash/calculus-15.9.45/qna_20260928_234358_670725_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "glm-5.3-flash/calculus-15.9.45/remarks.html", "t": "html"}]}]}, {"n": "MiniMax-M3", "c": [{"n": "calculus-15.7.17", "c": [{"n": "chat_20260929_020845_310446_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.17/chat_20260929_020845_310446_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_020845_310446_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.17/qna_20260929_020845_310446_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.17/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.18", "c": [{"n": "chat_20260929_020845_323412_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.18/chat_20260929_020845_323412_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_020845_323412_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.18/qna_20260929_020845_323412_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.18/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.20", "c": [{"n": "chat_20260929_020845_344146_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.20/chat_20260929_020845_344146_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_020845_344146_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.20/qna_20260929_020845_344146_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.20/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.21", "c": [{"n": "chat_20260929_020845_333164_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.21/chat_20260929_020845_333164_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_020845_333164_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.21/qna_20260929_020845_333164_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.21/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.22", "c": [{"n": "chat_20260929_020922_317781_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.22/chat_20260929_020922_317781_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_020922_317781_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.22/qna_20260929_020922_317781_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.22/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.23", "c": [{"n": "chat_20260929_020949_028191_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.23/chat_20260929_020949_028191_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_020949_028191_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.23/qna_20260929_020949_028191_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.23/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.27", "c": [{"n": "chat_20260929_021023_594415_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.27/chat_20260929_021023_594415_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_021023_594415_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.27/qna_20260929_021023_594415_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.27/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.28", "c": [{"n": "chat_20260929_021036_667958_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.28/chat_20260929_021036_667958_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_021036_667958_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.28/qna_20260929_021036_667958_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.28/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.29", "c": [{"n": "chat_20260929_021120_031232_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.29/chat_20260929_021120_031232_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_021120_031232_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.29/qna_20260929_021120_031232_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.29/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.30", "c": [{"n": "chat_20260929_021200_904567_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.30/chat_20260929_021200_904567_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_021200_904567_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.30/qna_20260929_021200_904567_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.30/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.31", "c": [{"n": "chat_20260929_021326_527414_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.31/chat_20260929_021326_527414_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_021326_527414_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.31/qna_20260929_021326_527414_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.31/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.32", "c": [{"n": "chat_20260929_021519_044300_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.32/chat_20260929_021519_044300_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_021519_044300_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.32/qna_20260929_021519_044300_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.32/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.39", "c": [{"n": "chat_20260929_021528_676763_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.39/chat_20260929_021528_676763_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_021528_676763_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.39/qna_20260929_021528_676763_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.39/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.40", "c": [{"n": "chat_20260929_021731_459261_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.40/chat_20260929_021731_459261_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_021731_459261_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.40/qna_20260929_021731_459261_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.40/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.46", "c": [{"n": "chat_20260929_021737_594053_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.46/chat_20260929_021737_594053_utc_0800/qna.html", "t": "html"}]}, {"n": "chat_20260929_030821_300006_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.46/chat_20260929_030821_300006_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_021737_594053_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.46/qna_20260929_021737_594053_utc_0800.html", "t": "html"}, {"n": "qna_20260929_030821_300006_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.46/qna_20260929_030821_300006_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.46/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.47", "c": [{"n": "chat_20260929_022002_702061_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.47/chat_20260929_022002_702061_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_022002_702061_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.47/qna_20260929_022002_702061_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.47/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.49", "c": [{"n": "chat_20260929_022019_293284_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.49/chat_20260929_022019_293284_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_022019_293284_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.49/qna_20260929_022019_293284_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.49/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.50", "c": [{"n": "chat_20260929_022111_657164_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.50/chat_20260929_022111_657164_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_022111_657164_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.50/qna_20260929_022111_657164_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.50/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.54", "c": [{"n": "chat_20260929_022658_738043_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.54/chat_20260929_022658_738043_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_022658_738043_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.54/qna_20260929_022658_738043_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.54/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.55", "c": [{"n": "chat_20260929_022840_274066_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.7.55/chat_20260929_022840_274066_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_022840_274066_utc_0800.html", "p": "MiniMax-M3/calculus-15.7.55/qna_20260929_022840_274066_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.7.55/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.14", "c": [{"n": "chat_20260929_022922_243588_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.8.14/chat_20260929_022922_243588_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_022922_243588_utc_0800.html", "p": "MiniMax-M3/calculus-15.8.14/qna_20260929_022922_243588_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.8.14/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.26", "c": [{"n": "chat_20260929_023017_551746_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.8.26/chat_20260929_023017_551746_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_023017_551746_utc_0800.html", "p": "MiniMax-M3/calculus-15.8.26/qna_20260929_023017_551746_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.8.26/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.43", "c": [{"n": "chat_20260929_023131_854341_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.9.43/chat_20260929_023131_854341_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_023131_854341_utc_0800.html", "p": "MiniMax-M3/calculus-15.9.43/qna_20260929_023131_854341_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.9.43/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.45", "c": [{"n": "chat_20260929_023512_111996_utc_0800", "c": [{"n": "qna.html", "p": "MiniMax-M3/calculus-15.9.45/chat_20260929_023512_111996_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260929_023512_111996_utc_0800.html", "p": "MiniMax-M3/calculus-15.9.45/qna_20260929_023512_111996_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "MiniMax-M3/calculus-15.9.45/remarks.html", "t": "html"}]}]}, {"n": "qwen-3.8-omni-flash", "c": [{"n": "calculus-15.7.17", "c": [{"n": "chat_20260927_231146_145421_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.17/chat_20260927_231146_145421_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_231146_145421_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.17/qna_20260927_231146_145421_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.17/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.18", "c": [{"n": "chat_20260927_231146_155425_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.18/chat_20260927_231146_155425_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_231146_155425_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.18/qna_20260927_231146_155425_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.18/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.20", "c": [{"n": "chat_20260927_231928_088348_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.20/chat_20260927_231928_088348_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_231928_088348_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.20/qna_20260927_231928_088348_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.20/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.21", "c": [{"n": "chat_20260927_232629_615484_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.21/chat_20260927_232629_615484_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_232629_615484_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.21/qna_20260927_232629_615484_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.21/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.22", "c": [{"n": "chat_20260927_233006_164968_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.22/chat_20260927_233006_164968_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_233006_164968_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.22/qna_20260927_233006_164968_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.22/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.23", "c": [{"n": "chat_20260927_233012_755850_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.23/chat_20260927_233012_755850_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_233012_755850_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.23/qna_20260927_233012_755850_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.23/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.27", "c": [{"n": "chat_20260927_233831_532383_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.27/chat_20260927_233831_532383_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_233831_532383_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.27/qna_20260927_233831_532383_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.27/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.28", "c": [{"n": "chat_20260927_234055_540943_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.28/chat_20260927_234055_540943_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_234055_540943_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.28/qna_20260927_234055_540943_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.28/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.29", "c": [{"n": "chat_20260927_234819_075583_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.29/chat_20260927_234819_075583_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_234819_075583_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.29/qna_20260927_234819_075583_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.29/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.30", "c": [{"n": "chat_20260927_235211_090288_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.30/chat_20260927_235211_090288_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260927_235211_090288_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.30/qna_20260927_235211_090288_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.30/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.31", "c": [{"n": "chat_20260928_000248_903412_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.31/chat_20260928_000248_903412_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_000248_903412_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.31/qna_20260928_000248_903412_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.31/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.32", "c": [{"n": "chat_20260928_001743_456309_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.32/chat_20260928_001743_456309_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_001743_456309_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.32/qna_20260928_001743_456309_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.32/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.39", "c": [{"n": "chat_20260928_002518_451991_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.39/chat_20260928_002518_451991_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_002518_451991_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.39/qna_20260928_002518_451991_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.39/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.40", "c": [{"n": "chat_20260928_002613_641702_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.40/chat_20260928_002613_641702_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_002613_641702_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.40/qna_20260928_002613_641702_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.40/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.46", "c": [{"n": "chat_20260928_003648_227939_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.46/chat_20260928_003648_227939_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_003648_227939_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.46/qna_20260928_003648_227939_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.46/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.47", "c": [{"n": "chat_20260928_004729_291592_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.47/chat_20260928_004729_291592_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_004729_291592_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.47/qna_20260928_004729_291592_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.47/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.49", "c": [{"n": "chat_20260928_010220_201116_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.49/chat_20260928_010220_201116_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_010220_201116_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.49/qna_20260928_010220_201116_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.49/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.50", "c": [{"n": "chat_20260928_011012_501919_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.50/chat_20260928_011012_501919_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_011012_501919_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.50/qna_20260928_011012_501919_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.50/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.54", "c": [{"n": "chat_20260928_013335_250560_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.54/chat_20260928_013335_250560_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_013335_250560_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.54/qna_20260928_013335_250560_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.54/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.55", "c": [{"n": "chat_20260928_014205_657319_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.7.55/chat_20260928_014205_657319_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_014205_657319_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.7.55/qna_20260928_014205_657319_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.7.55/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.14", "c": [{"n": "chat_20260928_020350_787732_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.8.14/chat_20260928_020350_787732_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_020350_787732_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.8.14/qna_20260928_020350_787732_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.8.14/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.26", "c": [{"n": "chat_20260928_020715_309615_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.8.26/chat_20260928_020715_309615_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_020715_309615_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.8.26/qna_20260928_020715_309615_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.8.26/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.43", "c": [{"n": "chat_20260928_021601_542272_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.9.43/chat_20260928_021601_542272_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_021601_542272_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.9.43/qna_20260928_021601_542272_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.9.43/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.45", "c": [{"n": "chat_20260928_022104_550463_utc_0800", "c": [{"n": "qna.html", "p": "qwen-3.8-omni-flash/calculus-15.9.45/chat_20260928_022104_550463_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_022104_550463_utc_0800.html", "p": "qwen-3.8-omni-flash/calculus-15.9.45/qna_20260928_022104_550463_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "qwen-3.8-omni-flash/calculus-15.9.45/remarks.html", "t": "html"}]}]}, {"n": "tools-disabled-deepseek-flash", "c": [{"n": "calculus-15.7.17", "c": [{"n": "chat_20260928_141519_394212_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.17/chat_20260928_141519_394212_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141519_394212_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.17/qna_20260928_141519_394212_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.17/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.18", "c": [{"n": "chat_20260928_141519_531187_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.18/chat_20260928_141519_531187_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141519_531187_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.18/qna_20260928_141519_531187_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.18/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.20", "c": [{"n": "chat_20260928_141519_464355_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.20/chat_20260928_141519_464355_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141519_464355_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.20/qna_20260928_141519_464355_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.20/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.21", "c": [{"n": "chat_20260928_141519_544188_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.21/chat_20260928_141519_544188_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141519_544188_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.21/qna_20260928_141519_544188_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.21/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.22", "c": [{"n": "chat_20260928_141531_526425_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.22/chat_20260928_141531_526425_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141531_526425_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.22/qna_20260928_141531_526425_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.22/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.23", "c": [{"n": "chat_20260928_141541_613518_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.23/chat_20260928_141541_613518_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141541_613518_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.23/qna_20260928_141541_613518_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.23/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.27", "c": [{"n": "chat_20260928_141656_249283_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.27/chat_20260928_141656_249283_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141656_249283_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.27/qna_20260928_141656_249283_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.27/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.28", "c": [{"n": "chat_20260928_141712_243451_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.28/chat_20260928_141712_243451_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141712_243451_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.28/qna_20260928_141712_243451_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.28/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.29", "c": [{"n": "chat_20260928_141803_791455_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.29/chat_20260928_141803_791455_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141803_791455_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.29/qna_20260928_141803_791455_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.29/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.30", "c": [{"n": "chat_20260928_141846_287540_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.30/chat_20260928_141846_287540_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141846_287540_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.30/qna_20260928_141846_287540_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.30/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.31", "c": [{"n": "chat_20260928_141937_310800_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.31/chat_20260928_141937_310800_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141937_310800_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.31/qna_20260928_141937_310800_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.31/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.32", "c": [{"n": "chat_20260928_141947_942517_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.32/chat_20260928_141947_942517_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_141947_942517_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.32/qna_20260928_141947_942517_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.32/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.39", "c": [{"n": "chat_20260928_142001_353197_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.39/chat_20260928_142001_353197_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142001_353197_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.39/qna_20260928_142001_353197_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.39/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.40", "c": [{"n": "chat_20260928_142031_407188_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.40/chat_20260928_142031_407188_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142031_407188_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.40/qna_20260928_142031_407188_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.40/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.46", "c": [{"n": "chat_20260928_142059_319401_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.46/chat_20260928_142059_319401_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142059_319401_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.46/qna_20260928_142059_319401_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.46/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.47", "c": [{"n": "chat_20260928_142110_983352_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.47/chat_20260928_142110_983352_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142110_983352_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.47/qna_20260928_142110_983352_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.47/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.49", "c": [{"n": "chat_20260928_142121_635239_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.49/chat_20260928_142121_635239_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142121_635239_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.49/qna_20260928_142121_635239_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.49/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.50", "c": [{"n": "chat_20260928_142147_096509_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.50/chat_20260928_142147_096509_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142147_096509_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.50/qna_20260928_142147_096509_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.50/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.54", "c": [{"n": "chat_20260928_142305_539205_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.54/chat_20260928_142305_539205_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142305_539205_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.54/qna_20260928_142305_539205_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.54/remarks.html", "t": "html"}]}, {"n": "calculus-15.7.55", "c": [{"n": "chat_20260928_142318_159790_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.55/chat_20260928_142318_159790_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142318_159790_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.55/qna_20260928_142318_159790_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.7.55/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.14", "c": [{"n": "chat_20260928_142326_300929_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.8.14/chat_20260928_142326_300929_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142326_300929_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.8.14/qna_20260928_142326_300929_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.8.14/remarks.html", "t": "html"}]}, {"n": "calculus-15.8.26", "c": [{"n": "chat_20260928_142433_521463_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.8.26/chat_20260928_142433_521463_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142433_521463_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.8.26/qna_20260928_142433_521463_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.8.26/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.43", "c": [{"n": "chat_20260928_142507_203584_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.9.43/chat_20260928_142507_203584_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142507_203584_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.9.43/qna_20260928_142507_203584_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.9.43/remarks.html", "t": "html"}]}, {"n": "calculus-15.9.45", "c": [{"n": "chat_20260928_142726_718111_utc_0800", "c": [{"n": "qna.html", "p": "tools-disabled-deepseek-flash/calculus-15.9.45/chat_20260928_142726_718111_utc_0800/qna.html", "t": "html"}]}, {"n": "qna_20260928_142726_718111_utc_0800.html", "p": "tools-disabled-deepseek-flash/calculus-15.9.45/qna_20260928_142726_718111_utc_0800.html", "t": "html"}, {"n": "remarks.html", "p": "tools-disabled-deepseek-flash/calculus-15.9.45/remarks.html", "t": "html"}]}]}];
+  //RESULTS_TREE:END
+
+  var ROOT = RESULTS_TREE || [];
+
+  function findDir(dir) {
+    for (var i = 0; i < ROOT.length; i++) {
+      var n = ROOT[i];
+      if (n.c && n.n === dir) return n;
+    }
+    return null;
+  }
+
+  function getDirNode(path) {
+    if (!path.length) return { n: "", c: ROOT };
+    var node = findDir(path[0]);
+    if (!node) return null;
+    for (var i = 1; i < path.length; i++) {
+      var child = null;
+      (node.c || []).forEach(function (ch) {
+        if (ch.c && ch.n === path[i]) child = ch;
+      });
+      if (!child) return null;
+      node = child;
+    }
+    return node;
+  }
+
+  function dirsOf(node) {
+    return (node.c || []).filter(function (ch) { return !!ch.c; });
+  }
+  function filesOf(node) {
+    return (node.c || []).filter(function (ch) { return !ch.c; });
+  }
+
+  /* Windows-style natural sort: digit runs compare numerically so that
+     "calculus-12.6.2" sorts before "calculus-12.6.10"; folders and files
+     are ranked separately by the caller. Comparisons are case-insensitive
+     and equal-valued runs keep their order (shorter run first, like
+     "12.6.02" after "12.6.2"). */
+  function _numRun(s, pos) {
+    var value = 0, len = 0, k = pos;
+    while (k < s.length && s.charAt(k) >= "0" && s.charAt(k) <= "9") {
+      value = value * 10 + (s.charCodeAt(k) - 48);
+      len++; k++;
+    }
+    return { value: value, len: len, end: k };
+  }
+  function natCompare(a, b) {
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+    var i = 0, j = 0;
+    while (i < a.length && j < b.length) {
+      var ca = a.charAt(i), cb = b.charAt(j);
+      var ad = ca >= "0" && ca <= "9", bd = cb >= "0" && cb <= "9";
+      if (ad && bd) {
+        var ra = _numRun(a, i), rb = _numRun(b, j);
+        if (ra.value !== rb.value) return ra.value - rb.value;
+        if (ra.len !== rb.len) return ra.len - rb.len;
+        i = ra.end; j = rb.end;
+      } else {
+        if (ca !== cb) return ca < cb ? -1 : 1;
+        i++; j++;
+      }
+    }
+    if (i < a.length) return 1;
+    if (j < b.length) return -1;
+    return 0;
+  }
+
+  var panels = {
+    left: { path: [], sel: null, back: [], fwd: [] },
+    right: { path: [], sel: null, back: [], fwd: [] }
+  };
+
+  function panelEl(name) {
+    return document.querySelector('.panel[data-panel="' + name + '"]');
+  }
+  function filesEl(p) { return panelEl(p).querySelector(".files-col"); }
+  function pathEl(p) { return panelEl(p).querySelector(".path"); }
+  function statusEl(p) { return panelEl(p).querySelector(".status"); }
+  function iframeEl(p) { return panelEl(p).querySelector(".preview iframe"); }
+
+  function relOf(node) {
+    return "explorer/" + node.p;
+  }
+
+  function view(p, node) {
+    if (!node || node.c) return;
+    panels[p].sel = node;
+    iframeEl(p).src = relOf(node);
+    statusEl(p).textContent = node.p;
+    highlightSel(p);
+  }
+
+  function setPath(p, path) {
+    panels[p].path = path.slice();
+    renderFiles(p);
+    pathEl(p).value = path.join("/") || "/";
+  }
+
+  function updateNav(p) {
+    var st = panels[p];
+    panelEl(p).querySelector('[data-act="back"]').disabled = !st.back.length;
+    panelEl(p).querySelector('[data-act="forward"]').disabled = !st.fwd.length;
+  }
+
+  /* User-initiated navigation: remember the current location so the
+     toolbar's Back / Forward buttons can retrace it. */
+  function navigate(p, path) {
+    var st = panels[p];
+    var same = st.path.join("/") === path.slice().join("/");
+    st.fwd = [];
+    if (!same) st.back.push(st.path.slice());
+    setPath(p, path);
+    updateNav(p);
+  }
+
+  function goBack(p) {
+    var st = panels[p];
+    if (!st.back.length) return;
+    st.fwd.push(st.path.slice());
+    setPath(p, st.back.pop());
+    updateNav(p);
+  }
+
+  function goForward(p) {
+    var st = panels[p];
+    if (!st.fwd.length) return;
+    st.back.push(st.path.slice());
+    setPath(p, st.fwd.pop());
+    updateNav(p);
+  }
+
+  function renderFiles(p) {
+    var node = getDirNode(panels[p].path);
+    var host = filesEl(p);
+    host.textContent = "";
+    if (!node) {
+      var h = document.createElement("div");
+      h.className = "empty-hint";
+      h.textContent = "(empty)";
+      host.appendChild(h);
+      return;
+    }
+    var title = document.createElement("div");
+    title.className = "files-title";
+    title.textContent = "Files — " + (panels[p].path.join("/") || "roots");
+    host.appendChild(title);
+
+    function virtualRow(label, isDot) {
+      var r = document.createElement("div");
+      r.className = "f-row dir virtual";
+      if (isDot) r.classList.add("dot");
+      else r.classList.add("up");
+      var chip = document.createElement("span");
+      chip.className = "chip chip-d";
+      chip.textContent = "D";
+      var name = document.createElement("span");
+      name.className = "f-name";
+      name.innerHTML = "<strong>" + label + "</strong>";
+      r.appendChild(chip);
+      r.appendChild(name);
+      r.title = isDot ? "Current folder — click to refresh" : "Parent folder — click to go up";
+      r.addEventListener("click", function () {
+        panels[p].sel = null;
+        highlightSel(p);
+        if (isDot) {
+          setPath(p, panels[p].path);
+        } else if (panels[p].path.length) {
+          navigate(p, panels[p].path.slice(0, -1));
+        }
+      });
+      return r;
+    }
+
+    function row(item, isDir) {
+      var r = document.createElement("div");
+      r.className = "f-row" + (isDir ? " dir" : "");
+      var chip = document.createElement("span");
+      var name = document.createElement("span");
+      name.className = "f-name";
+      if (isDir) {
+        chip.className = "chip chip-d";
+        chip.textContent = "D";
+        name.innerHTML = "<strong>" + item.n + "</strong>";
+      } else {
+        var leaf = item.n === "canonical-solution.html" ? "C" :
+                   item.n === "remarks.html" ? "R" :
+                   item.n === "qna.html" ? "Q" :
+                   item.n.indexOf("qna_") === 0 ? "S" : "F";
+        chip.className = "chip " + (leaf === "C" ? "chip-cs" : leaf === "R" ? "chip-rm" : leaf === "Q" ? "chip-q" : leaf === "S" ? "chip-qna" : "chip-d");
+        chip.textContent = leaf;
+        name.textContent = item.n;
+      }
+      r.appendChild(chip);
+      r.appendChild(name);
+      r.title = isDir ? panels[p].path.concat([item.n]).join("/") : item.p;
+      r.addEventListener("click", function () {
+        if (isDir) {
+          panels[p].sel = null;
+          highlightSel(p);
+          navigate(p, panels[p].path.concat([item.n]));
+        } else {
+          panels[p].sel = item;
+          view(p, item);
+        }
+      });
+      if (!isDir) {
+        r.addEventListener("keydown", function (ev) {
+          if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); view(p, item); }
+        });
+        r.addEventListener("dblclick", function (ev) {
+          ev.preventDefault();
+          window.open(relOf(item), "_blank");
+        });
+      }
+      return r;
+    }
+
+    if (panels[p].path.length) host.appendChild(virtualRow(".. | parent directory", false));
+    host.appendChild(virtualRow(". | current directory", true));
+
+    var dirs = dirsOf(node).slice().sort(function (a, b) { return natCompare(a.n, b.n); });
+    var files = filesOf(node).slice().sort(function (a, b) { return natCompare(a.n, b.n); });
+    dirs.forEach(function (d) { host.appendChild(row(d, true)); });
+    files.forEach(function (f) { host.appendChild(row(f, false)); });
+  }
+
+  function highlightSel(p) {
+    var sel = panels[p].sel;
+    [].forEach.call(filesEl(p).querySelectorAll(".f-row"), function (r) {
+      var focused = sel && r.querySelector(".f-name").textContent === sel.n;
+      r.classList.toggle("selected", focused);
+    });
+  }
+
+  function doAct(p, act) {
+    if (act === "back") {
+      goBack(p);
+    } else if (act === "forward") {
+      goForward(p);
+    } else if (act === "up") {
+      if (panels[p].path.length) navigate(p, panels[p].path.slice(0, -1));
+    } else if (act === "home") {
+      navigate(p, []);
+    } else if (act === "newtab") {
+      if (panels[p].sel) window.open(relOf(panels[p].sel), "_blank");
+    } else if (act === "copy-to-right") {
+      if (panels[p].sel) view("right", panels[p].sel);
+    } else if (act === "copy-to-left") {
+      if (panels[p].sel) view("left", panels[p].sel);
+    }
+  }
+
+  function initSplit() {
+    var exp = document.getElementById("explorer");
+    var split = exp.querySelector(".splitter");
+    if (!split) return;
+
+    var savedW = null;
+    try { savedW = parseFloat(localStorage.getItem("mcma-explorer-split")); } catch (e) {}
+    if (savedW > 10 && savedW < 90) exp.style.setProperty("--left-w", savedW + "%");
+
+    function isStacked() {
+      try { return window.matchMedia("(max-width: 1120px)").matches; } catch (e) { return false; }
+    }
+    function leftPan() { return exp.querySelector('.panel[data-panel="left"]'); }
+    function rightPan() { return exp.querySelector('.panel[data-panel="right"]'); }
+    function stackedSize() {
+      return leftPan().offsetHeight + split.offsetHeight + rightPan().offsetHeight;
+    }
+    function setStacked(lh, rh) {
+      leftPan().style.setProperty("--panel-h", lh + "px");
+      rightPan().style.setProperty("--panel-h", rh + "px");
+      try {
+        localStorage.setItem("mcma-explorer-panel-h-left", String(lh));
+        localStorage.setItem("mcma-explorer-panel-h-right", String(rh));
+      } catch (e) {}
+    }
+    function nudgeStacked(delta) {
+      var l = leftPan();
+      var total = stackedSize();
+      var cur = parseFloat(l.style.getPropertyValue("--panel-h"));
+      if (!(cur > 0)) cur = l.getBoundingClientRect().height;
+      var max = total - split.offsetHeight - PANEL_H_MIN;
+      var lh = Math.max(PANEL_H_MIN, Math.min(max, cur + delta));
+      setStacked(lh, total - split.offsetHeight - lh);
+    }
+    function resetStacked() {
+      leftPan().style.removeProperty("--panel-h");
+      rightPan().style.removeProperty("--panel-h");
+      try {
+        localStorage.removeItem("mcma-explorer-panel-h-left");
+        localStorage.removeItem("mcma-explorer-panel-h-right");
+      } catch (e) {}
+    }
+
+    var dragging = false;
+    function startDragging(ev) {
+      ev.preventDefault();
+      dragging = true;
+      document.body.classList.add(isStacked() ? "resizing-v" : "resizing");
+      try { split.setPointerCapture(ev.pointerId); } catch (e) {}
+      document.addEventListener("pointermove", onMove);
+      document.addEventListener("pointerup", onUp);
+    }
+    function stopDragging() {
+      if (!dragging) return;
+      dragging = false;
+      document.body.classList.remove("resizing", "resizing-v");
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+      if (!isStacked()) {
+        try { localStorage.setItem("mcma-explorer-split", exp.style.getPropertyValue("--left-w")); } catch (e) {}
+      }
+    }
+    split.addEventListener("pointerdown", startDragging);
+    split.addEventListener("pointercancel", stopDragging);
+    split.addEventListener("dblclick", function () {
+      if (isStacked()) {
+        resetStacked();
+      } else {
+        exp.style.setProperty("--left-w", "50%");
+        try { localStorage.setItem("mcma-explorer-split", "50"); } catch (e) {}
+      }
+    });
+    split.addEventListener("keydown", function (ev) {
+      var k = ev.key;
+      if (isStacked()) {
+        var delta = k === "ArrowUp" ? -40 : k === "ArrowDown" ? 40 : 0;
+        if (!delta) return;
+        ev.preventDefault();
+        nudgeStacked(delta);
+      } else {
+        var deltaW = k === "ArrowLeft" ? -5 : k === "ArrowRight" ? 5 : 0;
+        if (!deltaW) return;
+        ev.preventDefault();
+        var cur = parseFloat(exp.style.getPropertyValue("--left-w")) || 50;
+        var pct = Math.max(15, Math.min(85, cur + deltaW));
+        exp.style.setProperty("--left-w", pct + "%");
+        try { localStorage.setItem("mcma-explorer-split", String(pct)); } catch (e) {}
+      }
+    });
+
+    function onMove(ev) {
+      if (!dragging) return;
+      if (isStacked()) {
+        var l = leftPan();
+        var total = stackedSize();
+        var max = total - split.offsetHeight - PANEL_H_MIN;
+        var lh = Math.max(PANEL_H_MIN, Math.min(max, ev.clientY - l.getBoundingClientRect().top));
+        setStacked(lh, total - split.offsetHeight - lh);
+      } else {
+        var rect = exp.getBoundingClientRect();
+        var pct = ((ev.clientX - rect.left) / rect.width) * 100;
+        pct = Math.max(15, Math.min(85, pct));
+        exp.style.setProperty("--left-w", pct + "%");
+      }
+    }
+    function onUp() { stopDragging(); }
+  }
+
+  var PANEL_H_MIN = 380, PANEL_H_MAX = 1800;
+
+  function initPanelHeightResizers() {
+    [].forEach.call(document.querySelectorAll(".panel"), function (pl) {
+      var handle = pl.querySelector(".panel-resizer");
+      if (!handle) return;
+      var pname = pl.getAttribute("data-panel");
+
+      var saved = null;
+      try { saved = parseFloat(localStorage.getItem("mcma-explorer-panel-h-" + pname)); } catch (e) {}
+      if (saved >= PANEL_H_MIN) pl.style.setProperty("--panel-h", saved + "px");
+
+      var dragging = false;
+      var onMove, onUp;
+
+      function setH(px) {
+        px = Math.max(PANEL_H_MIN, Math.min(PANEL_H_MAX, px));
+        pl.style.setProperty("--panel-h", px + "px");
+      }
+
+      handle.addEventListener("pointerdown", function (ev) {
+        ev.preventDefault();
+        dragging = true;
+        document.body.classList.add("resizing-v");
+        try { handle.setPointerCapture(ev.pointerId); } catch (e) {}
+        document.addEventListener("pointermove", onMove);
+        document.addEventListener("pointerup", onUp);
+      });
+      handle.addEventListener("pointercancel", function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+      });
+      handle.addEventListener("dblclick", function () {
+        pl.style.removeProperty("--panel-h");
+        try { localStorage.removeItem("mcma-explorer-panel-h-" + pname); } catch (e) {}
+      });
+      handle.addEventListener("keydown", function (ev) {
+        var delta = ev.key === "ArrowUp" ? -40 : ev.key === "ArrowDown" ? 40 : 0;
+        if (!delta) return;
+        ev.preventDefault();
+        var cur = parseFloat(pl.style.getPropertyValue("--panel-h"));
+        if (!(cur > 0)) cur = pl.getBoundingClientRect().height;
+        setH(cur + delta);
+      });
+      onMove = function (ev) {
+        if (!dragging) return;
+        setH(ev.clientY - pl.getBoundingClientRect().top);
+      };
+      onUp = function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+        try {
+          var h = pl.style.getPropertyValue("--panel-h").replace("px", "");
+          if (h) localStorage.setItem("mcma-explorer-panel-h-" + pname, h);
+        } catch (e) {}
+      };
+    });
+  }
+
+  function initPanelResizers() {
+    var exp = document.getElementById("explorer");
+    [].forEach.call(exp.querySelectorAll(".panel"), function (pl) {
+      var split = pl.querySelector(".h-splitter");
+      if (!split) return;
+      var body = pl.querySelector(".panel-body");
+      var head = pl.querySelector(".panel-head");
+      var status = pl.querySelector(".status");
+      var preview = pl.querySelector(".preview");
+      var resizer = pl.querySelector(".panel-resizer");
+      var pname = pl.getAttribute("data-panel");
+
+      try {
+        var saved = localStorage.getItem("mcma-explorer-body-" + pname);
+        if (saved) pl.style.setProperty("--body-h", saved);
+      } catch (e) {}
+
+      var dragging = false;
+      var onMove, onUp;
+
+      function applyPx(px) {
+        var previewMin = parseFloat(window.getComputedStyle(preview).minHeight) || 120;
+        var reserved = head.getBoundingClientRect().height + split.offsetHeight +
+                       previewMin + status.getBoundingClientRect().height +
+                       (resizer ? resizer.offsetHeight : 0);
+        px = Math.max(120, Math.min(pl.clientHeight - reserved, px));
+        pl.style.setProperty("--body-h", px + "px");
+      }
+
+      split.addEventListener("pointerdown", function (ev) {
+        ev.preventDefault();
+        dragging = true;
+        document.body.classList.add("resizing-v");
+        try { split.setPointerCapture(ev.pointerId); } catch (e) {}
+        document.addEventListener("pointermove", onMove);
+        document.addEventListener("pointerup", onUp);
+      });
+      split.addEventListener("pointercancel", function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+      });
+      split.addEventListener("dblclick", function () {
+        pl.style.removeProperty("--body-h");
+        try { localStorage.removeItem("mcma-explorer-body-" + pname); } catch (e) {}
+      });
+      split.addEventListener("keydown", function (ev) {
+        var delta = ev.key === "ArrowUp" ? -40 : ev.key === "ArrowDown" ? 40 : 0;
+        if (!delta) return;
+        ev.preventDefault();
+        var cur = parseInt(pl.style.getPropertyValue("--body-h"), 10);
+        if (!(cur > 0)) cur = Math.round(body.getBoundingClientRect().height);
+        applyPx(cur + delta);
+      });
+      onMove = function (ev) {
+        if (!dragging) return;
+        var top = head.getBoundingClientRect().bottom;
+        applyPx(ev.clientY - top);
+      };
+      onUp = function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+        try { localStorage.setItem("mcma-explorer-body-" + pname, pl.style.getPropertyValue("--body-h")); } catch (e) {}
+      };
+    });
+  }
+
+  function init() {
+    initSplit();
+    initPanelHeightResizers();
+    initPanelResizers();
+
+    [].forEach.call(document.querySelectorAll(".panel"), function (pl) {
+      var name = pl.getAttribute("data-panel");
+      [].forEach.call(pl.querySelectorAll(".btn"), function (b) {
+        b.addEventListener("click", function () { doAct(name, b.getAttribute("data-act")); });
+      });
+      var input = pl.querySelector(".path");
+      if (input) {
+        input.addEventListener("keydown", function (ev) {
+          if (ev.key === "Enter") {
+            ev.preventDefault();
+            var parts = input.value.split("/").filter(function (s) { return !!s.trim(); });
+            if (getDirNode(parts)) navigate(name, parts);
+            else input.value = panels[name].path.join("/") || "/";
+          }
+        });
+        input.addEventListener("focus", function () { input.select(); });
+        input.addEventListener("blur", function () {
+          input.value = panels[name].path.join("/") || "/";
+        });
+      }
+    });
+
+    setPath("left", []);
+    setPath("right", []);
+
+    updateNav("left");
+    updateNav("right");
+
+    document.addEventListener("keydown", function (ev) {
+      if (ev.target && ev.target.tagName === "INPUT") return;
+      if (ev.key === "F5") { ev.preventDefault(); doAct("left", "copy-to-right"); }
+    });
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>

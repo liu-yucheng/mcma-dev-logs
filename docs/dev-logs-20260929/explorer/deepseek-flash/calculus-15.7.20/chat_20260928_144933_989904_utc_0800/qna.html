@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_144933_989904_utc_0800 — Q&amp;A · deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_144933_989904_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>deepseek-flash/calculus-15.7.20/chat_20260928_144933_989904_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_144933_989904_utc_0800_0.png`. Alt text: Image: human_20260928_144933_989904_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_144933_989904_utc_0800_0.png" alt="Image: qna_20260928_144933_989904_utc_0800"><figcaption>20260928_144933_989904_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+**Problem.** Use a triple integral to find the volume of the solid enclosed by the paraboloids
+
+$$
+y=x^2+z^2,\qquad y=8-x^2-z^2.
+$$
+
+**Step 1 — Find the intersection of the two surfaces.**
+
+Set the two paraboloids equal:
+
+$$
+x^2+z^2=8-x^2-z^2
+\;\Longrightarrow\;
+2(x^2+z^2)=8
+\;\Longrightarrow\;
+x^2+z^2=4.
+$$
+
+So the intersection is the circle $x^2+z^2=4$ in the plane $y=4$. The solid projects onto the disk
+
+$$
+D=\{(x,z): x^2+z^2\le 4\}.
+$$
+
+The two paraboloids and their intersection circle are shown below.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={120}{25},
+    axis lines=box,
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=-3, xmax=3,
+    ymin=0, ymax=9,
+    zmin=-3, zmax=3,
+    samples=25, samples y=50,
+    domain=0:2, y domain=0:360,
+    width=11cm, height=9cm,
+    tick label style={font=\small},
+    legend style={font=\small, at={(0.02,0.98)}, anchor=north west, fill=white, fill opacity=0.85, text opacity=1}
+]
+\addplot3[surf, shader=interp, opacity=0.65,
+    colormap={bluecmap}{color=(blue!25) color=(blue!75)},
+    draw opacity=0.15]
+    ({x*cos(y)}, {x^2}, {x*sin(y)});
+\addlegendentry{$y=x^2+z^2$}
+\addplot3[surf, shader=interp, opacity=0.65,
+    colormap={orangecmap}{color=(orange!35) color=(orange!85)},
+    draw opacity=0.15]
+    ({x*cos(y)}, {8-x^2}, {x*sin(y)});
+\addlegendentry{$y=8-x^2-z^2$}
+\addplot3[thick, black, domain=0:360, samples=120, samples y=1]
+    ({2*cos(x)}, {4}, {2*sin(x)});
+\addlegendentry{intersection $x^2+z^2=4$}
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+**Step 2 — Set up the triple integral.**
+
+For each $(x,z)\in D$, the solid lies between the lower paraboloid and the upper paraboloid:
+
+$$
+x^2+z^2 \le y \le 8-x^2-z^2.
+$$
+
+Thus, using vertical strips, the volume is the triple integral
+
+$$
+V=\iiint_E dV
+=\int_{-2}^{2}\int_{-\sqrt{4-z^2}}^{\sqrt{4-z^2}}\int_{x^2+z^2}^{8-x^2-z^2} dy\,dx\,dz
+=\iint_D \int_{x^2+z^2}^{8-x^2-z^2} dy\,dA.
+$$
+
+The vertical slice at $z=0$ shows the two bounding curves meeting at $(\pm 2,4)$.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel=$x$, ylabel=$y$,
+    xmin=-2.7, xmax=2.7,
+    ymin=-0.5, ymax=8.8,
+    width=11cm, height=8cm,
+    grid=both,
+    grid style={gray!25},
+    legend style={font=\small, at={(0.98,0.98)}, anchor=north east, fill=white, fill opacity=0.85, text opacity=1}
+]
+\addplot[name path=A, blue, thick, domain=-2:2, samples=100] {x^2};
+\addlegendentry{$y=x^2$}
+\addplot[name path=B, orange, thick, domain=-2:2, samples=100] {8-x^2};
+\addlegendentry{$y=8-x^2$}
+\addplot[green!25] fill between[of=A and B];
+\addlegendentry{vertical slice}
+\addplot[only marks, mark=*, mark size=2.5pt, black] coordinates {(-2,4) (2,4)};
+\node[above left, font=\small] at (axis cs:-2,4) {$(-2,4)$};
+\node[above right, font=\small] at (axis cs:2,4) {$(2,4)$};
+\node[font=\small, anchor=west] at (axis cs:-1.9,1.2) {$y=x^2+z^2$};
+\node[font=\small, anchor=west] at (axis cs:-1.9,7.0) {$y=8-x^2-z^2$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+**Step 3 — Evaluate using polar coordinates.**
+
+Because $D$ is a disk of radius $2$, use
+
+$$
+x=r\cos\theta,\qquad z=r\sin\theta,\qquad dA=r\,dr\,d\theta,
+$$
+
+with
+
+$$
+0\le r\le 2,\qquad 0\le \theta\le 2\pi.
+$$
+
+The projection disk and a polar area element are shown below.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_2.png" alt="pyplot-generated plot"><figcaption>pyplot_2.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_2.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel=$x$, ylabel=$z$,
+    xmin=-2.7, xmax=2.7,
+    ymin=-2.7, ymax=2.7,
+    width=10cm, height=10cm,
+    unit vector ratio=1 1 1,
+    grid=both,
+    grid style={gray!25},
+    legend style={font=\small, at={(0.98,0.98)}, anchor=north east, fill=white, fill opacity=0.85, text opacity=1}
+]
+\addplot[fill=blue!10, draw=none, domain=0:360, samples=100] ({2*cos(x)},{2*sin(x)}) \closedcycle;
+\addlegendentry{projection region $D$}
+\addplot[black, thick, domain=0:360, samples=200] ({2*cos(x)},{2*sin(x)});
+\addlegendentry{$x^2+z^2=4$}
+\addplot[red, thick] coordinates {(0,0) (1.732,1)};
+\addlegendentry{$r=2$ ray}
+\addplot[dashed, black, domain=0:1.732, samples=2] {0};
+\node[font=\small] at (axis cs:0.75,0.28) {$\theta$};
+\node[font=\small] at (axis cs:0.9,0.7) {$r$};
+\node[font=\small] at (axis cs:0.0,-1.75) {$dA=r\,dr\,d\theta$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_2.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_2.png</figcaption></figure>
+
+
+
+
+---
+
+Therefore
+
+$$
+V=\int_0^{2\pi}\int_0^2\int_{r^2}^{8-r^2} r\,dy\,dr\,d\theta.
+$$
+
+Evaluate the inner integral:
+
+$$
+\int_{r^2}^{8-r^2} r\,dy
+= r\bigl[(8-r^2)-r^2\bigr]
+= r(8-2r^2)
+= 8r-2r^3.
+$$
+
+Then
+
+$$
+\int_0^2 (8r-2r^3)\,dr
+=\left[4r^2-\frac12 r^4\right]_0^2
+=16-8=8.
+$$
+
+Finally,
+
+$$
+V=\int_0^{2\pi} 8\,d\theta=16\pi.
+$$
+
+$$
+\boxed{16\pi}
+$$
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>deepseek-flash/calculus-15.7.20/chat_20260928_144933_989904_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>
