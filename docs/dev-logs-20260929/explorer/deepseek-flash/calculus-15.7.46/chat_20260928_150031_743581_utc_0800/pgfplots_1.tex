@@ -1,0 +1,40 @@
+\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={45}{25},
+    axis lines=center,
+    clip=false,
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=-1, xmax=1, ymin=-1, ymax=1, zmin=0, zmax=1.12,
+    domain=0:360, samples=80,
+    trig format plots=rad,
+]
+% light cone wireframe
+\addplot3[blue!30, thin] ({0.25*cos(x)}, {0.25*sin(x)}, {0.25});
+\addplot3[blue!30, thin] ({0.50*cos(x)}, {0.50*sin(x)}, {0.50});
+\addplot3[blue!30, thin] ({0.75*cos(x)}, {0.75*sin(x)}, {0.75});
+\addplot3[blue!30, thin] ({1.00*cos(x)}, {1.00*sin(x)}, {1.00});
+% cone top circle
+\addplot3[thick, orange!70!black] ({cos(x)}, {sin(x)}, {1});
+% cylindrical shell patch
+\addplot3[very thick, red!80!black, domain=20:160, samples=60]
+    ({0.65*cos(x)}, {0.65*sin(x)}, {0.65});
+\addplot3[very thick, red!80!black, domain=20:160, samples=60]
+    ({0.65*cos(x)}, {0.65*sin(x)}, {1.00});
+% vertical edges of the shell patch
+\addplot3[red!80!black, thick] coordinates {(0.6107,0.2223,0.65) (0.6107,0.2223,1)};
+\addplot3[red!80!black, thick] coordinates {(0,0.65,0.65) (0,0.65,1)};
+\addplot3[red!80!black, thick] coordinates {(-0.6107,0.2223,0.65) (-0.6107,0.2223,1)};
+% z-axis
+\addplot3[thick, black] coordinates {(0,0,0) (0,0,1.1)};
+% radial and height guides
+\addplot3[very thick, black] coordinates {(0,0,0) (0,0.65,0)};
+\addplot3[very thick, green!60!black] coordinates {(0,0.65,0) (0,0.65,1)};
+\node[black] at (axis cs:0.02,0.33,-0.08) {$r$};
+\node[green!50!black] at (axis cs:0.08,0.73,0.82) {$h-r$};
+\end{axis}
+\end{tikzpicture}
+\end{document}

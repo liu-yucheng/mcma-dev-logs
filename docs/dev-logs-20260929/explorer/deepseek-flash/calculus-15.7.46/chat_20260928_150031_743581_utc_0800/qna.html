@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_150031_743581_utc_0800 — Q&amp;A · deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_150031_743581_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>deepseek-flash/calculus-15.7.46/chat_20260928_150031_743581_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_150031_743581_utc_0800_0.png`. Alt text: Image: human_20260928_150031_743581_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_150031_743581_utc_0800_0.png" alt="Image: qna_20260928_150031_743581_utc_0800"><figcaption>20260928_150031_743581_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Moment of inertia of a solid cone about its axis
+
+For a solid $E$ with density $k$, the moment of inertia about the $z$-axis is
+
+$$
+I_z=\iiint_E k(x^2+y^2)\,dV.
+$$
+
+The cone is
+
+$$
+E=\{(x,y,z):\sqrt{x^2+y^2}\le z\le h\}.
+$$
+
+At height $z$, its horizontal cross-section is a disk of radius $z$; hence the base radius is $h$.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={45}{25},
+    axis lines=center,
+    clip=false,
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=-1, xmax=1, ymin=-1, ymax=1, zmin=0, zmax=1.22,
+    domain=0:360, samples=80,
+    trig format plots=rad,
+]
+% horizontal circles on the cone z = r
+\addplot3[blue!60, thick] ({0.25*cos(x)}, {0.25*sin(x)}, {0.25});
+\addplot3[blue!60, thick] ({0.50*cos(x)}, {0.50*sin(x)}, {0.50});
+\addplot3[blue!60, thick] ({0.75*cos(x)}, {0.75*sin(x)}, {0.75});
+\addplot3[blue!60, thick] ({1.00*cos(x)}, {1.00*sin(x)}, {1.00});
+% radial generators
+\addplot3[blue!60, thick] coordinates {(0,0,0) (1,0,1)};
+\addplot3[blue!60, thick] coordinates {(0,0,0) (0.707,0.707,1)};
+\addplot3[blue!60, thick] coordinates {(0,0,0) (0,1,1)};
+\addplot3[blue!60, thick] coordinates {(0,0,0) (-0.707,0.707,1)};
+\addplot3[blue!60, thick] coordinates {(0,0,0) (-1,0,1)};
+\addplot3[blue!60, thick] coordinates {(0,0,0) (-0.707,-0.707,1)};
+\addplot3[blue!60, thick] coordinates {(0,0,0) (0,-1,1)};
+\addplot3[blue!60, thick] coordinates {(0,0,0) (0.707,-0.707,1)};
+% top circle highlighted
+\addplot3[very thick, orange!80!black] ({cos(x)}, {sin(x)}, {1});
+% z-axis
+\addplot3[thick, black] coordinates {(0,0,0) (0,0,1.1)};
+% sample radius and height
+\addplot3[very thick, red] coordinates {(0,0,0) (0.5,0.4195,0)};
+\addplot3[very thick, green!60!black] coordinates {(0.5,0.4195,0) (0.5,0.4195,0.65)};
+\node[red] at (axis cs:0.23,0.19,-0.08) {$r$};
+\node[green!50!black] at (axis cs:0.58,0.47,0.33) {$z$};
+\node[align=center] at (axis cs:0,0,1.16) {solid cone\\[-2pt] $\sqrt{x^2+y^2}\le z\le h$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+Use cylindrical coordinates:
+
+$$
+x=r\cos\theta,\qquad y=r\sin\theta,\qquad x^2+y^2=r^2,\qquad dV=r\,dz\,dr\,d\theta.
+$$
+
+Since $\sqrt{x^2+y^2}=r$, the cone is described by
+
+$$
+0\le\theta\le 2\pi,\qquad 0\le r\le h,\qquad r\le z\le h.
+$$
+
+Therefore
+
+$$
+I_z=k\int_0^{2\pi}\!\!\int_0^h\!\!\int_r^h r^2(r)\,dz\,dr\,d\theta
+=2\pi k\int_0^h r^3(h-r)\,dr.
+$$
+
+Equivalently, slice the cone into thin cylindrical shells of radius $r$, thickness $dr$, and height $h-r$: the volume of such a shell is $dV=2\pi r(h-r)\,dr$, and its contribution to $I_z$ is $r^2\,dm$, giving the same integral.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={45}{25},
+    axis lines=center,
+    clip=false,
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=-1, xmax=1, ymin=-1, ymax=1, zmin=0, zmax=1.12,
+    domain=0:360, samples=80,
+    trig format plots=rad,
+]
+% light cone wireframe
+\addplot3[blue!30, thin] ({0.25*cos(x)}, {0.25*sin(x)}, {0.25});
+\addplot3[blue!30, thin] ({0.50*cos(x)}, {0.50*sin(x)}, {0.50});
+\addplot3[blue!30, thin] ({0.75*cos(x)}, {0.75*sin(x)}, {0.75});
+\addplot3[blue!30, thin] ({1.00*cos(x)}, {1.00*sin(x)}, {1.00});
+% cone top circle
+\addplot3[thick, orange!70!black] ({cos(x)}, {sin(x)}, {1});
+% cylindrical shell patch
+\addplot3[very thick, red!80!black, domain=20:160, samples=60]
+    ({0.65*cos(x)}, {0.65*sin(x)}, {0.65});
+\addplot3[very thick, red!80!black, domain=20:160, samples=60]
+    ({0.65*cos(x)}, {0.65*sin(x)}, {1.00});
+% vertical edges of the shell patch
+\addplot3[red!80!black, thick] coordinates {(0.6107,0.2223,0.65) (0.6107,0.2223,1)};
+\addplot3[red!80!black, thick] coordinates {(0,0.65,0.65) (0,0.65,1)};
+\addplot3[red!80!black, thick] coordinates {(-0.6107,0.2223,0.65) (-0.6107,0.2223,1)};
+% z-axis
+\addplot3[thick, black] coordinates {(0,0,0) (0,0,1.1)};
+% radial and height guides
+\addplot3[very thick, black] coordinates {(0,0,0) (0,0.65,0)};
+\addplot3[very thick, green!60!black] coordinates {(0,0.65,0) (0,0.65,1)};
+\node[black] at (axis cs:0.02,0.33,-0.08) {$r$};
+\node[green!50!black] at (axis cs:0.08,0.73,0.82) {$h-r$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+In the $(r,z)$-plane the integration region is the triangle $0\le r\le z\le h$.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_2.png" alt="pyplot-generated plot"><figcaption>pyplot_2.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_2.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=8pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=left,
+    xlabel={$r=\sqrt{x^2+y^2}$}, ylabel={$z$},
+    xmin=-0.03, xmax=1.05, ymin=-0.03, ymax=1.08,
+    width=10cm, height=7.5cm,
+    ytick={0,0.2,...,1}, xtick={0,0.2,...,1},
+    grid=both, grid style={gray!25},
+]
+% shaded region 0 &lt;= r &lt;= z &lt;= h
+\addplot[fill=cyan!35, draw=none] coordinates {(0,0) (1,1) (0,1)} \closedcycle;
+% boundaries
+\addplot[very thick, blue!70!black, domain=0:1] {x};
+\addplot[very thick, orange!80!black, domain=0:1] {1};
+\addplot[very thick, gray, domain=0:1] coordinates {(0,0) (0,1)};
+% sample strip
+\addplot[very thick, red] coordinates {(0.63,0.63) (0.63,1)};
+% annotations
+\node[red, right] at (axis cs:0.65,0.82) {height $h-r$};
+\node[black, right] at (axis cs:0.30,0.10) {$r$};
+\node[blue!70!black, right] at (axis cs:0.72,0.64) {$z=r$};
+\node[orange!80!black, right] at (axis cs:0.72,1.0) {$z=h$};
+\node[gray, right] at (axis cs:0.01,0.85) {$r=0$};
+\node at (axis cs:0.63,0.60) {$\bullet$};
+\node[below right] at (axis cs:0.63,0.60) {$(r,r)$};
+\legend{}
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_2.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_2.png</figcaption></figure>
+
+
+
+
+---
+
+Now evaluate the remaining single integral:
+
+$$
+\int_0^h r^3(h-r)\,dr
+=\int_0^h (h r^3-r^4)\,dr
+=\left[\frac{h r^4}{4}-\frac{r^5}{5}\right]_0^h
+=\frac{h^5}{4}-\frac{h^5}{5}
+=\frac{h^5}{20}.
+$$
+
+Thus
+
+$$
+I_z=2\pi k\cdot\frac{h^5}{20}
+=\boxed{\frac{\pi k h^5}{10}}.
+$$
+
+For a check, the mass is
+
+$$
+M=k\cdot\frac13\pi h^2\cdot h=\frac{\pi k h^3}{3},
+$$
+
+so
+
+$$
+I_z=\frac{3}{10}M h^2,
+$$
+
+which is the standard formula for a solid cone about its axis.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>deepseek-flash/calculus-15.7.46/chat_20260928_150031_743581_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

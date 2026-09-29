@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_150038_818919_utc_0800 — Q&amp;A · deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_150038_818919_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>deepseek-flash/calculus-15.7.47/chat_20260928_150038_818919_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_150038_818919_utc_0800_0.png`. Alt text: Image: human_20260928_150038_818919_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_150038_818919_utc_0800_0.png" alt="Image: qna_20260928_150038_818919_utc_0800"><figcaption>20260928_150038_818919_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## 1. Geometry of the solid
+
+The solid is bounded by the parabolic cylinder
+
+$$
+y=x^2
+$$
+
+and the two planes
+
+$$
+z=0,\qquad y+z=1 \iff z=1-y.
+$$
+
+The plane $z=0$ intersects the cylinder along the parabola $y=x^2$ in the $xy$-plane. The plane $y+z=1$ intersects the cylinder along the curve $y=x^2,\ z=1-x^2$. The two planes intersect along the line $y=1,\ z=0$.
+
+Therefore the projection (shadow) of the solid on the $xy$-plane is the region between the parabola and the line:
+
+$$
+R=\{(x,y):-1\le x\le1,\ x^2\le y\le1\}
+=\{(x,y):0\le y\le1,\ -\sqrt y\le x\le\sqrt y\}.
+$$
+
+For each $(x,y)\in R$, the vertical coordinate runs from the lower plane to the upper plane:
+
+$$
+0\le z\le1-y.
+$$
+
+Thus the solid is
+
+$$
+S=\{(x,y,z):-1\le x\le1,\ x^2\le y\le1,\ 0\le z\le1-y\}.
+$$
+
+The density is $\rho(x,y,z)=\sqrt{x^2+y^2}$, the distance to the $z$-axis.
+
+---
+
+### Visualizing the solid
+
+The first figure shows the parabolic cylinder $y=x^2$, the plane $z=1-y$, and the plane $z=0$. The second figure shows the projection $R$ onto the $xy$-plane; the dashed segment represents the interval $x^2\le y\le1$ at a fixed $x$. The third figure shows the cross-section at $x=0$, which is the triangle $0\le y\le1,\ 0\le z\le1-y$.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={120}{30},
+    axis lines=middle,
+    xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+    xmin=-1.2, xmax=1.2,
+    ymin=0, ymax=1.2,
+    zmin=0, zmax=1.2,
+    width=10cm, height=8cm,
+    grid=major,
+]
+% parabolic cylinder y=x^2, 0&lt;=z&lt;=1-x^2
+\addplot3[
+    surf, opacity=0.35,
+    domain=-1:1, domain y=0:1,
+    samples=25, samples y=25,
+    color=red,
+] ({x}, {x^2}, {y*(1-x^2)});
+
+% top plane z=1-y over x^2&lt;=y&lt;=1
+\addplot3[
+    surf, opacity=0.35,
+    domain=-1:1, domain y=0:1,
+    samples=25, samples y=25,
+    color=green!70!black,
+] ({x}, {x^2 + y*(1-x^2)}, {(1-y)*(1-x^2)});
+
+% bottom plane z=0
+\addplot3[
+    surf, opacity=0.25,
+    domain=-1:1, domain y=0:1,
+    samples=25, samples y=25,
+    color=blue,
+] ({x}, {x^2 + y*(1-x^2)}, {0});
+
+% boundary curves
+\addplot3[domain=-1:1, samples=60, thick, black] ({x},{x^2},{0});
+\addplot3[domain=-1:1, samples=60, thick, black] ({x},{x^2},{1-x^2});
+\addplot3[domain=-1:1, samples=2, thick, black] ({x},{1},{0});
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel={$x$}, ylabel={$y$},
+    xmin=-1.2, xmax=1.2, ymin=-0.1, ymax=1.2,
+    domain=-1:1, samples=200,
+    width=8cm, height=7cm,
+    legend pos=south east,
+    legend style={font=\small},
+]
+\addplot[name path=A, red, thick] {x^2};
+\addlegendentry{$y=x^2$}
+\addplot[name path=B, green, thick] {1};
+\addlegendentry{$y=1$}
+\addplot[blue, opacity=0.3] fill between[of=A and B];
+\addlegendentry{$x^2\le y\le1$}
+\draw[dashed] (axis cs:0.5,0.25) -- (axis cs:0.5,1);
+\filldraw (axis cs:0.5,0.25) circle (1.5pt);
+\filldraw (axis cs:0.5,1) circle (1.5pt);
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_2.png" alt="pyplot-generated plot"><figcaption>pyplot_2.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_2.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel={$y$}, ylabel={$z$},
+    xmin=-0.05, xmax=1.15, ymin=-0.05, ymax=1.15,
+    domain=0:1, samples=200,
+    width=7cm, height=7cm,
+    legend pos=north east,
+    legend style={font=\small},
+]
+\addplot[name path=A, draw=none, domain=0:1] {0};
+\addplot[name path=B, blue, thick, domain=0:1] {1-x};
+\addlegendentry{$z=1-y$}
+\addplot[blue, opacity=0.3] fill between[of=A and B];
+\addlegendentry{$0\le z\le 1-y$}
+\draw[red, thick] (axis cs:0,0) -- (axis cs:0,1);
+\draw[red, thick] (axis cs:0,0) -- (axis cs:0,1);
+\filldraw (axis cs:0,0) circle (1.5pt);
+\filldraw (axis cs:1,0) circle (1.5pt);
+\filldraw (axis cs:0,1) circle (1.5pt);
+\node at (axis cs:0.25,0.25) {$x=0$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_2.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_2.png</figcaption></figure>
+
+
+
+
+---
+
+## 2. Mass
+
+The mass is the triple integral of the density:
+
+$$
+M=\iiint_S \rho(x,y,z)\,dV
+=\int_{-1}^{1}\int_{x^2}^{1}\int_0^{1-y}\sqrt{x^2+y^2}\,dz\,dy\,dx.
+$$
+
+Equivalently, using the other description of $R$,
+
+$$
+M=\int_{0}^{1}\int_{-\sqrt y}^{\sqrt y}\int_0^{1-y}\sqrt{x^2+y^2}\,dz\,dx\,dy.
+$$
+
+---
+
+## 3. Center of mass
+
+The coordinates of the center of mass are
+
+$$
+\bar x=\frac{1}{M}\iiint_S x\rho\,dV,\qquad
+\bar y=\frac{1}{M}\iiint_S y\rho\,dV,\qquad
+\bar z=\frac{1}{M}\iiint_S z\rho\,dV.
+$$
+
+By symmetry, $\bar x=0$: the region is symmetric about the plane $x=0$, and the integrand $x\sqrt{x^2+y^2}$ is odd in $x$ while the limits in $x$ are symmetric. Hence
+
+$$
+\bar x=\frac{1}{M}\int_{-1}^{1}\int_{x^2}^{1}\int_0^{1-y}x\sqrt{x^2+y^2}\,dz\,dy\,dx=0.
+$$
+
+The other two coordinates are
+
+$$
+\bar y=\frac{1}{M}\int_{-1}^{1}\int_{x^2}^{1}\int_0^{1-y}y\sqrt{x^2+y^2}\,dz\,dy\,dx,
+$$
+
+$$
+\bar z=\frac{1}{M}\int_{-1}^{1}\int_{x^2}^{1}\int_0^{1-y}z\sqrt{x^2+y^2}\,dz\,dy\,dx.
+$$
+
+Since $\int_0^{1-y}dz=1-y$ and $\int_0^{1-y}z\,dz=\frac12(1-y)^2$, these may also be written as
+
+$$
+\bar y=\frac{1}{M}\int_{-1}^{1}\int_{x^2}^{1}y(1-y)\sqrt{x^2+y^2}\,dy\,dx,
+$$
+
+$$
+\bar z=\frac{1}{2M}\int_{-1}^{1}\int_{x^2}^{1}(1-y)^2\sqrt{x^2+y^2}\,dy\,dx.
+$$
+
+Thus the center of mass is $(\bar x,\bar y,\bar z)=\left(0,\bar y,\bar z\right)$ with the expressions above.
+
+---
+
+## 4. Moment of inertia about the $z$-axis
+
+The squared distance from a point $(x,y,z)$ to the $z$-axis is $x^2+y^2$. Therefore
+
+$$
+I_z=\iiint_S (x^2+y^2)\rho(x,y,z)\,dV
+=\int_{-1}^{1}\int_{x^2}^{1}\int_0^{1-y}(x^2+y^2)^{3/2}\,dz\,dy\,dx.
+$$
+
+After integrating in $z$,
+
+$$
+I_z=\int_{-1}^{1}\int_{x^2}^{1}(1-y)(x^2+y^2)^{3/2}\,dy\,dx.
+$$
+
+---
+
+## Final answers (set up, not evaluated)
+
+$$
+\boxed{
+\begin{aligned}
+M&=\int_{-1}^{1}\int_{x^2}^{1}\int_0^{1-y}\sqrt{x^2+y^2}\,dz\,dy\,dx,\\
+(\bar x,\bar y,\bar z)&=\left(0,\ 
+\frac{1}{M}\int_{-1}^{1}\int_{x^2}^{1}\int_0^{1-y}y\sqrt{x^2+y^2}\,dz\,dy\,dx,\ 
+\frac{1}{M}\int_{-1}^{1}\int_{x^2}^{1}\int_0^{1-y}z\sqrt{x^2+y^2}\,dz\,dy\,dx\right),\\
+I_z&=\int_{-1}^{1}\int_{x^2}^{1}\int_0^{1-y}(x^2+y^2)^{3/2}\,dz\,dy\,dx.
+\end{aligned}}
+$$
+
+All integrals may equivalently be written with the order $dz\,dx\,dy$ using $0\le y\le1$ and $-\sqrt y\le x\le\sqrt y$.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>deepseek-flash/calculus-15.7.47/chat_20260928_150038_818919_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_144933_979902_utc_0800 — Q&amp;A · deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_144933_979902_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>deepseek-flash/calculus-15.7.21/chat_20260928_144933_979902_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_144933_979902_utc_0800_0.png`. Alt text: Image: human_20260928_144933_979902_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_144933_979902_utc_0800_0.png" alt="Image: qna_20260928_144933_979902_utc_0800"><figcaption>20260928_144933_979902_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Problem
+
+Use a triple integral to find the volume of the solid enclosed by the cylinder $y=x^2$ and the planes $z=0$ and $y+z=1$.
+
+---
+
+## 1. Understanding the solid
+
+The three bounding surfaces are:
+
+* **cylinder** $y=x^2$ — a parabolic trough, independent of $z$ (it runs parallel to the $z$-axis);
+* **plane** $z=0$ — the flat *bottom*;
+* **plane** $y+z=1$, i.e. $z=1-y$ — the slanted *top*, which is meaningful wherever $y\le 1$.
+
+The top plane meets the bottom plane along the line $y=1,\ z=0$. So the solid is the "wedge" that sits **above** the bottom plane, is capped by the slanted roof $z=1-y$, and is cut off by the parabolic wall $y=x^2$.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\definecolor{steelblue}{rgb}{0.27,0.51,0.71}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  view={15}{30},
+  width=11cm, height=10cm,
+  xlabel={$x$}, ylabel={$y$}, zlabel={$z$},
+  xmin=-1.2, xmax=1.2, ymin=0, ymax=1.2, zmin=0, zmax=1,
+  title={Solid bounded by $y=x^2$, $z=0$, $y+z=1$},
+  samples=45, samples y=25,
+  domain=-1:1, y domain=0:1,
+  axis lines=box,
+]
+\addplot3[surf, shader=flat, color=orange, fill opacity=0.95]
+  ({x}, {x^2+(1-x^2)*y}, {(1-x^2)*(1-y)});
+\addplot3[surf, shader=flat, color=gray!70, fill opacity=0.45]
+  ({x}, {x^2+(1-x^2)*y}, {0});
+\addplot3[surf, shader=flat, color=steelblue, fill opacity=0.4]
+  ({x}, {x^2}, {y*(1-x^2)});
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+## 2. The base region in the $xy$-plane
+
+Projecting the solid down onto the plane $z=0$ gives the base region $\mathcal{D}$ sandwiched between the parabola and the line $y=1$:
+
+$$
+\mathcal{D}=\{(x,y):\ -1\le x\le 1,\quad x^2\le y\le 1\}.
+$$
+
+The limits $x=\pm 1$ come from where the parabola meets the line, $x^2=1$.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=9cm, height=8cm,
+    xmin=-1.6, xmax=1.6, ymin=-0.35, ymax=1.6,
+    xlabel={$x$}, ylabel={$y$},
+    title={Base region $\mathcal{D}$ in the $xy$-plane},
+    grid=both, samples=200,
+]
+\addplot[name path=par, blue, very thick, domain=-1:1] {x^2};
+\addplot[name path=line, red, very thick, domain=-1.6:1.6] {1};
+\addplot[cyan!25] fill between[of=par and line, soft clip={domain=-1:1}];
+\node[blue] at (axis cs:1.2,1.3) {$y=x^2$};
+\node[red]  at (axis cs:-1.3,1.15) {$y=1$};
+\addplot[only marks, mark=*, mark size=2.2pt, black] coordinates {(-1,1) (1,1) (0,0)};
+\node[below left]  at (axis cs:-1,1) {$(-1,1)$};
+\node[below right] at (axis cs:1,1) {$(1,1)$};
+\node[below right] at (axis cs:0,0) {$(0,0)$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+## 3. Setting up the triple integral
+
+For a point $(x,y)\in\mathcal{D}$, standing on the base region, the solid extends **vertically** from the bottom plane $z=0$ up to the roof $z=1-y$. This makes the $z$-limits the innermost ones:
+
+$$
+V=\iiint_S dV=\int_{-1}^{1}\int_{x^2}^{1}\int_{0}^{1-y} dz\,dy\,dx.
+$$
+
+Equivalently, slicing the solid with the plane $x=\text{const}$ gives a **right triangle** in the $yz$-plane with both legs equal to $1-x^2$.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_2.png" alt="pyplot-generated plot"><figcaption>pyplot_2.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_2.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=8cm, height=8cm,
+    xmin=0, xmax=1.25, ymin=-0.1, ymax=1.1,
+    xlabel={$y$}, ylabel={$z$},
+    title={Cross-section at $x=x_0=0.6$},
+    grid=both, samples=100,
+]
+\addplot[name path=top, red, very thick, domain=0.36:1] {1-x};
+\addplot[name path=bot, blue, very thick, domain=0.36:1] {0};
+\addplot[cyan!25] fill between[of=top and bot];
+\draw[green!60!black, very thick] (axis cs:0.36,0) -- (axis cs:0.36,0.64);
+\node[red]   at (axis cs:0.88,0.28) {$z=1-y$};
+\node[blue]  at (axis cs:0.75,-0.06) {$z=0$};
+\node[green!60!black, anchor=west] at (axis cs:0.30,0.5) {$y=x_0^2$};
+\addplot[only marks, mark=*, mark size=2.2pt, black]
+  coordinates {(0.36,0) (1,0) (0.36,0.64)};
+\node[below] at (axis cs:0.36,0) {$(x_0^2,0)$};
+\node[below right] at (axis cs:1,0) {$(1,0)$};
+\node[above right] at (axis cs:0.36,0.64) {$(x_0^2,1-x_0^2)$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_2.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_2.png</figcaption></figure>
+
+
+
+
+---
+
+## 4. Evaluating the integral
+
+**Inner integral (height of a column):**
+
+$$
+\int_{0}^{1-y} dz = 1-y.
+$$
+
+**Middle integral (over $y$):**
+
+$$
+\int_{x^2}^{1}(1-y)\,dy=\Big[y-\tfrac{y^2}{2}\Big]_{x^2}^{1}=\tfrac12-x^2+\tfrac{x^4}{2}.
+$$
+
+**Outer integral (over $x$), using even symmetry:**
+
+$$
+V=\int_{-1}^{1}\Big(\tfrac12-x^2+\tfrac{x^4}{2}\Big)dx
+=2\int_{0}^{1}\Big(\tfrac12-x^2+\tfrac{x^4}{2}\Big)dx
+=2\Big[\tfrac{x}{2}-\tfrac{x^3}{3}+\tfrac{x^5}{10}\Big]_{0}^{1}.
+$$
+
+$$
+V=2\Big(\tfrac12-\tfrac13+\tfrac1{10}\Big)=2\cdot\frac{15-10+3}{30}=2\cdot\frac{8}{30}=\frac{8}{15}.
+$$
+
+**Cross-section check.** The slice at fixed $x$ has area
+$A(x)=\tfrac12(1-x^2)^2$ (a right triangle with legs $1-x^2$), so
+$V=\int_{-1}^{1}A(x)\,dx=\tfrac12\int_{-1}^{1}(1-x^2)^2\,dx=\tfrac{8}{15}$ — the same result.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_3.png" alt="pyplot-generated plot"><figcaption>pyplot_3.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_3.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=10cm, height=8cm,
+    xmin=-1.15, xmax=1.15, ymin=0, ymax=0.58,
+    xlabel={$x$}, ylabel={cross-sectional area $A(x)$},
+    title={Volume as the integral of cross-sectional areas},
+    grid=both, samples=200,
+]
+\addplot[name path=A, green!60!black, very thick, domain=-1:1] {0.5*(1-x^2)^2};
+\addplot[name path=z, draw=none, domain=-1:1] {0};
+\addplot[green!25] fill between[of=A and z];
+\node[draw=green!60!black, fill=white, rounded corners] at (axis cs:0,0.30)
+   {$V=\displaystyle\int_{-1}^{1} A(x)\,dx=\frac{8}{15}$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_3.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_3.png</figcaption></figure>
+
+
+
+
+---
+
+## 5. Answer
+
+The volume of the solid enclosed by the cylinder $y=x^2$ and the planes $z=0$ and $y+z=1$ is
+
+$$
+\boxed{\dfrac{8}{15}}
+$$
+
+**Key idea:** the parabolic cylinder controls the *base region* in the $xy$-plane, the two planes control the *vertical* extent of each column, so the natural order is $dz\,dy\,dx$ with $0\le z\le 1-y$, $x^2\le y\le 1$, $-1\le x\le 1$.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>deepseek-flash/calculus-15.7.21/chat_20260928_144933_979902_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

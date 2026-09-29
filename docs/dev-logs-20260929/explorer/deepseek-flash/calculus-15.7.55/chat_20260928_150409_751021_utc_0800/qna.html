@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_150409_751021_utc_0800 — Q&amp;A · deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_150409_751021_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>deepseek-flash/calculus-15.7.55/chat_20260928_150409_751021_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_150409_751021_utc_0800_0.png`. Alt text: Image: human_20260928_150409_751021_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_150409_751021_utc_0800_0.png" alt="Image: qna_20260928_150409_751021_utc_0800"><figcaption>20260928_150409_751021_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Problem
+
+**(a)** Find the region $E$ that **maximizes** $\displaystyle\iiint_E \bigl(1-x^2-2y^2-3z^2\bigr)\,dV$.
+
+**(b)** Use a CAS to get the exact maximum value.
+
+---
+
+## Part (a) — The maximizing region
+
+Write the integrand as a scalar field
+
+$$
+f(x,y,z)=1-x^2-2y^2-3z^2 .
+$$
+
+**Key idea (why we keep only where $f\ge 0$).** For any region $E$, split it by the sign of the integrand:
+
+$$
+E_+ = E\cap\{f\ge 0\},\qquad E_- = E\cap\{f<0\}.
+$$
+
+Then
+
+$$
+\iiint_E f\,dV = \underbrace{\iiint_{E_+} f\,dV}_{\ \ge\,0} + \underbrace{\iiint_{E_-} f\,dV}_{\ \le\,0}.
+$$
+
+- **Remove every point with $f<0$:** the second term is $\le 0$, so deleting $E_-$ can only *increase* the integral.
+- **Keep every point with $f>0$:** the first term is positive, so adding such a point also *increases* the integral.
+
+Hence the integral is largest exactly when $E$ is the set where the integrand is non-negative:
+
+$$
+E = \{(x,y,z): f(x,y,z)\ge 0\}
+  = \{(x,y,z): x^2+2y^2+3z^2\le 1\}.
+$$
+
+This is the **solid ellipsoid** centered at the origin with semi-axes
+
+$$
+a=1\ \text{along }x,\qquad b=\tfrac{1}{\sqrt2}\ \text{along }y,\qquad c=\tfrac{1}{\sqrt3}\ \text{along }z.
+$$
+
+(The boundary $x^2+2y^2+3z^2=1$ has measure zero, so including it or not does not affect the value.)
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, trig format plots=rad}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  view={60}{25},
+  xlabel=$x$, ylabel=$y$, zlabel=$z$,
+  xmin=-1, xmax=1, ymin=-1, ymax=1, zmin=-1, zmax=1,
+  samples=45, samples y=35,
+  width=9cm, height=8cm,
+]
+\addplot3[surf, domain=0:2*pi, domain y=0:pi, shader=interp,
+          colormap={royal}{rgb255(0cm)=(65,105,225); rgb255(1cm)=(65,105,225)},
+          opacity=0.5]
+  ({sin(y)*cos(x)}, {sin(y)*sin(x)/sqrt(2)}, {cos(y)/sqrt(3)});
+\addplot3[red, very thick] coordinates {(0,0,0) (1,0,0)};
+\addplot3[green!60!black, very thick] coordinates {(0,0,0) (0,0.7071,0)};
+\addplot3[magenta, very thick] coordinates {(0,0,0) (0,0,0.5774)};
+\node[red] at (axis cs:1.0,0,0.18) {$a=1$};
+\node[green!60!black] at (axis cs:0,0.85,0) {$b=1/\sqrt{2}$};
+\node[magenta] at (axis cs:0,0,0.78) {$c=1/\sqrt{3}$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+The picture below shows the resulting ellipsoid: it is **widest along $x$** and **narrowest along $z$**, because the limiting quadratic coefficients $1,2,3$ make the half-axes shrink like $1,\tfrac1{\sqrt2},\tfrac1{\sqrt3}$.
+
+**Cross-section check.** Slicing with $z=0$ gives the ellipse $x^2+2y^2\le 1$; the shading shows the height $f(x,y,0)=1-x^2-2y^2$, which is precisely $\ge 0$ inside that ellipse. This confirms the region is exactly the ellipsoid.
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18, trig format plots=deg}
+\definecolor{v0}{HTML}{440154}\definecolor{v1}{HTML}{414487}
+\definecolor{v2}{HTML}{2a788e}\definecolor{v3}{HTML}{22a884}
+\definecolor{v4}{HTML}{44bf70}\definecolor{v5}{HTML}{7ad151}
+\definecolor{v6}{HTML}{bddf26}\definecolor{v7}{HTML}{fde725}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+  axis equal image,
+  xlabel=$x$, ylabel=$y$,
+  xmin=-1.25, xmax=1.25, ymin=-0.95, ymax=0.95,
+  width=10cm, height=8cm,
+  title={Cross-section at $z=0$: $x^2+2y^2\leq 1$},
+]
+\addplot[fill=v0, draw=none, domain=0:360, samples=120] ({1.000*cos(x)}, {0.7071*1.000*sin(x)});
+\addplot[fill=v1, draw=none, domain=0:360, samples=120] ({0.935*cos(x)}, {0.7071*0.935*sin(x)});
+\addplot[fill=v2, draw=none, domain=0:360, samples=120] ({0.866*cos(x)}, {0.7071*0.866*sin(x)});
+\addplot[fill=v3, draw=none, domain=0:360, samples=120] ({0.791*cos(x)}, {0.7071*0.791*sin(x)});
+\addplot[fill=v4, draw=none, domain=0:360, samples=120] ({0.707*cos(x)}, {0.7071*0.707*sin(x)});
+\addplot[fill=v5, draw=none, domain=0:360, samples=120] ({0.612*cos(x)}, {0.7071*0.612*sin(x)});
+\addplot[fill=v6, draw=none, domain=0:360, samples=120] ({0.500*cos(x)}, {0.7071*0.500*sin(x)});
+\addplot[fill=v7, draw=none, domain=0:360, samples=120] ({0.354*cos(x)}, {0.7071*0.354*sin(x)});
+\addplot[red, very thick, domain=0:360, samples=160] ({cos(x)}, {0.7071*sin(x)});
+\addplot[red, dashed] coordinates {(0,0) (1,0)};
+\addplot[red, dashed] coordinates {(0,0) (0,0.7071)};
+\addplot[only marks, mark=*, mark size=1.5pt, black] coordinates {(0,0)};
+\node[red, anchor=east] at (axis cs:1.02,0.08) {$x=1$};
+\node[red, anchor=south] at (axis cs:0,0.72) {$y=1/\sqrt{2}$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+---
+
+## Part (b) — The exact maximum value
+
+We evaluate
+
+$$
+V_{\max}=\iiint_E \bigl(1-x^2-2y^2-3z^2\bigr)\,dV,\qquad 
+E:\ x^2+2y^2+3z^2\le 1.
+$$
+
+**Change of variables to turn the ellipsoid into a ball.** Let
+
+$$
+x=u,\qquad y=\frac{v}{\sqrt2},\qquad z=\frac{w}{\sqrt3}.
+$$
+
+Then $x^2+2y^2+3z^2 = u^2+v^2+w^2$, so $E$ maps to the **unit ball** $B:\ u^2+v^2+w^2\le 1$, and the Jacobian is constant:
+
+$$
+\left|\frac{\partial(x,y,z)}{\partial(u,v,w)}\right|
+=1\cdot\frac{1}{\sqrt2}\cdot\frac{1}{\sqrt3}=\frac{1}{\sqrt6}.
+$$
+
+Therefore
+
+$$
+V_{\max}=\frac{1}{\sqrt6}\iiint_B \bigl(1-u^2-v^2-w^2\bigr)\,dV.
+$$
+
+**Spherical coordinates** with $u^2+v^2+w^2=r^2$ and $dV=r^2\sin\theta\,dr\,d\theta\,d\phi$:
+
+$$
+V_{\max}=\frac{1}{\sqrt6}\int_0^{2\pi}\!\!\int_0^{\pi}\!\!\int_0^{1}(1-r^2)\,r^2\sin\theta\,dr\,d\theta\,d\phi.
+$$
+
+The three single integrals separate:
+
+$$
+\int_0^{1}(r^2-r^4)\,dr=\frac13-\frac15=\frac{2}{15},\qquad
+\int_0^{\pi}\sin\theta\,d\theta=2,\qquad
+\int_0^{2\pi}d\phi=2\pi.
+$$
+
+Their product is $\dfrac{2}{15}\cdot 2\cdot 2\pi=\dfrac{8\pi}{15}$, hence
+
+$$
+V_{\max}=\frac{1}{\sqrt6}\cdot\frac{8\pi}{15}
+       =\frac{8\pi}{15\sqrt6}
+       =\frac{8\pi\sqrt6}{15\cdot 6}
+       =\frac{4\pi\sqrt6}{45}\approx 0.684026.
+$$
+
+**CAS verification.** In Mathematica, for example,
+
+
+<pre><code>Integrate[(1 - x^2 - 2 y^2 - 3 z^2), 
+  {x, -1, 1}, {y, -Sqrt[1 - x^2]/Sqrt[2], Sqrt[1 - x^2]/Sqrt[2]},
+  {z, -Sqrt[1 - x^2 - 2 y^2]/Sqrt[3], Sqrt[1 - x^2 - 2 y^2]/Sqrt[3]}]
+</code></pre>
+
+
+returns exactly $\dfrac{4\pi\sqrt6}{45}$, agreeing with the hand computation (numerically $0.684026576\ldots$).
+
+---
+
+## Answers
+
+**(a)** $E$ is the ellipsoid $\;x^2+2y^2+3z^2\le 1$.
+
+**(b)** The exact maximum value is
+
+$$
+\boxed{\dfrac{4\pi\sqrt6}{45}}
+$$
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>deepseek-flash/calculus-15.7.55/chat_20260928_150409_751021_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

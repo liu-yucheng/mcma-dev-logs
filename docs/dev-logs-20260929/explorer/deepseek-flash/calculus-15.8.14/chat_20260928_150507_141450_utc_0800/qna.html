@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_150507_141450_utc_0800 — Q&amp;A · deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_150507_141450_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>deepseek-flash/calculus-15.8.14/chat_20260928_150507_141450_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_150507_141450_utc_0800_0.png`. Alt text: Image: human_20260928_150507_141450_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_150507_141450_utc_0800_0.png" alt="Image: qna_20260928_150507_141450_utc_0800"><figcaption>20260928_150507_141450_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Problem
+
+Draw the solid enclosed by the paraboloids
+$$z=x^2+y^2 \qquad\text{and}\qquad z=5-x^2-y^2.$$
+
+**Key idea.** In cylindrical coordinates $(r,\theta,z)$, with $x=r\cos\theta$, $y=r\sin\theta$, the surfaces become
+$$z=r^2 \quad\text{(upward-opening paraboloid)}$$
+and
+$$z=5-r^2 \quad\text{(downward-opening paraboloid)}.$$
+The solid is the region between these two surfaces.
+
+
+---
+
+### 1. Intersection of the two surfaces
+
+Set the right-hand sides equal:
+$$r^2=5-r^2 \implies 2r^2=5 \implies r=\sqrt{\frac52}.$$
+Thus the two paraboloids meet on the circle
+$$x^2+y^2=\frac52,\qquad z=\frac52.$$
+This circle is the "equator" of the solid.
+
+
+---
+
+### 2. Which surface is the top and which is the bottom?
+
+For $0\le r\le \sqrt{5/2}$,
+$$5-r^2-r^2=5-2r^2\ge 0,$$
+so
+$$r^2\le 5-r^2.$$
+Hence the solid is
+$$r^2\le z\le 5-r^2,\qquad 0\le r\le \sqrt{5/2}.$$
+It is a lens-shaped solid that is widest at $z=5/2$.
+
+
+---
+
+### 3. 3D rendering
+
+A graphing device draws both paraboloids over the disk $r\le\sqrt{5/2}$ and highlights their intersection circle (red). The solid is the region trapped between the two sheets.
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_0.png" alt="pyplot-generated plot"><figcaption>pyplot_0.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_0.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{colormaps}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={55}{25},
+    axis lines=center,
+    xlabel=$x$, ylabel=$y$, zlabel=$z$,
+    xmin=-2, xmax=2, ymin=-2, ymax=2, zmin=0, zmax=5.5,
+    title={Solid enclosed by $z=x^2+y^2$ and $z=5-x^2-y^2$},
+    grid=major,
+]
+% lower paraboloid z = x^2+y^2 over disk r&lt;=sqrt(5/2)
+\addplot3[
+    surf, shader=interp,
+    colormap/viridis,
+    domain=0:1.58113883, y domain=0:360,
+    samples=25, samples y=50,
+    opacity=0.6,
+    trig format plots=deg,
+    point meta=z,
+]
+({x*cos(y)}, {x*sin(y)}, {x^2});
+% upper paraboloid z = 5 - x^2 - y^2 over same disk
+\addplot3[
+    surf, shader=interp,
+    colormap/hot,
+    domain=0:1.58113883, y domain=0:360,
+    samples=25, samples y=50,
+    opacity=0.6,
+    trig format plots=deg,
+    point meta=z,
+]
+({x*cos(y)}, {x*sin(y)}, {5-x^2});
+% intersection circle
+\addplot3[
+    no markers, red, very thick,
+    domain=0:360, samples=120, samples y=0,
+    trig format plots=deg,
+]
+({1.58113883*cos(x)}, {1.58113883*sin(x)}, {2.5});
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_0.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_0.png</figcaption></figure>
+
+
+
+
+---
+
+### 4. 2D cross-section
+
+A useful check is the radial–vertical cross-section. In the $rz$-plane the region becomes
+$$r^2\le z\le 5-r^2,\qquad 0\le r\le \sqrt{\frac52}.$$
+Rotating this shaded profile about the $z$-axis gives the solid.
+
+
+---
+
+
+
+<figure class="refimg"><img class="zimg" src="pyplot_1.png" alt="pyplot-generated plot"><figcaption>pyplot_1.png</figcaption></figure>
+
+
+
+
+[PGFplots / tikz plot.](./pgfplots_1.tex)
+
+
+<pre><code class="language-latex">\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{fillbetween}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    width=13cm, height=8cm,
+    xlabel={radial coordinate $r=\sqrt{x^2+y^2}$},
+    ylabel={$z$},
+    xmin=-2, xmax=2, ymin=0, ymax=5.2,
+    title={Cross-section of the solid in the $rz$-plane},
+    legend pos=south west,
+    grid=both,
+]
+\addplot[name path=A, domain=-2:2, samples=200, very thick, blue] {x^2};
+\addlegendentry{$z=r^2$ (lower paraboloid)}
+\addplot[name path=B, domain=-2:2, samples=200, very thick, orange] {5-x^2};
+\addlegendentry{$z=5-r^2$ (upper paraboloid)}
+\addplot[green, opacity=0.25] fill between[of=A and B, soft clip={domain=-1.58113883:1.58113883}];
+\addlegendentry{solid cross-section}
+\draw[dashed, red] (axis cs:-2,2.5) -- (axis cs:2,2.5);
+\draw[dotted, red] (axis cs:1.58113883,0) -- (axis cs:1.58113883,2.5);
+\draw[dotted, red] (axis cs:-1.58113883,0) -- (axis cs:-1.58113883,2.5);
+\addplot[only marks, red, mark=*, mark size=2pt] coordinates {(1.58113883,2.5) (-1.58113883,2.5)};
+\node[red, anchor=south] at (axis cs:0,2.6) {intersection: $z=\frac{5}{2},\ r=\sqrt{\frac{5}{2}}$};
+\node[red, anchor=west] at (axis cs:1.35,0.32) {$r=\sqrt{5/2}$};
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
+</code></pre>
+
+
+
+
+<figure class="refimg"><img class="zimg" src="pgfplots_1.png" alt="PGFplots / tikz plot (converted to PNG)"><figcaption>pgfplots_1.png</figcaption></figure>
+
+
+
+
+---
+
+### 5. Optional: volume
+
+If desired, the enclosed volume is
+$$V=\int_0^{2\pi}\!\int_0^{\sqrt{5/2}}\bigl[(5-r^2)-r^2\bigr]\,r\,dr\,d\theta
+=2\pi\int_0^{\sqrt{5/2}}(5r-2r^3)\,dr
+=2\pi\left[\frac52r^2-\frac12r^4\right]_0^{\sqrt{5/2}}
+=\frac{25\pi}{4}.$$
+
+
+---
+
+### Final answer
+
+$$\boxed{\text{Solid: }\ r^2\le z\le 5-r^2,\ \ 0\le r\le \sqrt{\frac52};\quad \text{intersection circle } r=\sqrt{\frac52},\ z=\frac52;\quad \text{volume } \frac{25\pi}{4}.}$$
+
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>deepseek-flash/calculus-15.8.14/chat_20260928_150507_141450_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>

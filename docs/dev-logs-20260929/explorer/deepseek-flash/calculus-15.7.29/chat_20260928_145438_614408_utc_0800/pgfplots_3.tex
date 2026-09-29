@@ -1,0 +1,23 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    xmin=-1.15, xmax=1.15, ymin=-0.3, ymax=4.4,
+    xlabel=$z$, ylabel=$y$,
+    width=10cm, height=7cm,
+    grid=both,
+    clip=false,
+    legend style={at={(0.98,0.98)}, anchor=north east, font=\small, fill=white, fill opacity=0.85},
+]
+\addplot[fill=orange!25, draw=none, domain=-1:1, samples=120] {4-4*x^2} \closedcycle;
+\addplot[orange, very thick, domain=-1:1, samples=120] {4-4*x^2};
+\addlegendentry{$y=4-4z^2$}
+\addplot[only marks, mark=*, red, mark size=2.2pt, forget plot] coordinates {(0.4,3.36)};
+\draw[red, ->, thick] (axis cs:-0.55,2.65) -- (axis cs:0.4,3.36);
+\node[red, anchor=west, font=\scriptsize, align=left] at (axis cs:-1.08,2.3)
+    {for fixed $(y,z)$,\\ $x:-\sqrt{4-4z^2-y}$\\ $\to+\sqrt{4-4z^2-y}$};
+\end{axis}
+\end{tikzpicture}
+\end{document}

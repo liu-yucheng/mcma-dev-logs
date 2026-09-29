@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="How to watch the MCMA agents work through a multivariable-calculus problem step by step, using the transcript records in the Results Explorer.">
+<title>MCMA &mdash; Demo Video</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>Demo Video</h1>
+    <p class="lede">🎬 No standalone recording was published for this dev log. Instead, the full step-by-step trace of every run is saved as a transcript. You can replay the trace in the Results Explorer. The explorer shows each model solving a problem from start to finish.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="agents.html">Agents</a>
+    <a href="experiment.html">Experiment</a>
+    <a href="briefing.html">Results Briefing</a>
+    <a href="explorer.html">Results Explorer</a>
+    <a href="demo-video.html" aria-current="page">Demo Video</a>
+    <a href="plans.html">Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="demo">
+  <h2>🎬 Replaying a run as a transcript</h2>
+  <p>📄 Every run in this dev log is stored as a <code>qna_&lt;timestamp&gt;.md</code> transcript. The transcript sits inside the <code>&lt;model&gt;/&lt;problem&gt;/&lt;chat&gt;/</code> record. The <a href="explorer.html">Results Explorer</a> renders each one as a readable page. The page shows the printed problem on top. It then shows every reasoning step, every tool call, and every plot the agent produced. It ends at the boxed final answer.</p>
+  <div class="card">
+    <p>🎬 To watch a solve, open the Results Explorer. Click a model, then a problem. Open its <code>qna_&lt;timestamp&gt;.html</code> transcript. You can place two problems side by side in the two panes for comparison.</p>
+    <p>🖼️ The <a href="https://player.bilibili.com/player.html?isOutside=true&aid=117168368851548&bvid=BV1be4d6rELe&cid=41335849159&p=1" target="_blank" rel="noopener">screen-recording demo from the previous dev log</a> (<code>dev-logs-20260824</code>) still shows the same agent loop in action. The model thinks, calls a tool, looks at the graphical result, and revises until the plot is satisfactory.</p>
+  </div>
+  <p class="small">🔄 The transcript replay shows the loop in full detail. The model reads the problem image, verifies its calculations with Python, draws the pyplot and PGFplots versions, inspects them, and writes the final answer.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

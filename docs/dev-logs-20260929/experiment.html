@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Why the MCMA experiment was run and how the agents solved 24 multivariable-calculus plotting problems. The Agents chapter explains the agent and its tools for a non-technical reader.">
+<title>MCMA &mdash; Experiment</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="../lightbox.css">
+<style>
+.stat.contrast-red { background: #fdf1ee; border-color: #ecb7a6; }
+.stat.contrast-red .num { color: #b23a1c; }
+.stat.contrast-red .lbl { color: #8a4a38; }
+.stat.contrast-green { background: #eef8f1; border-color: #aed8bd; }
+.stat.contrast-green .num, .stat.contrast-green .lbl { color: #2f6f4f; }
+.timeline { margin: 18px 0; }
+.tl-item { display: flex; gap: 14px; align-items: flex-start; padding: 10px 0; border-left: 3px solid var(--accent); margin-left: 6px; padding-left: 16px; }
+.tl-item strong { display: block; }
+.tl-sub { margin: 2px 0 0; font-size: .9rem; color: var(--muted); }
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="../lightbox.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>Experiment</h1>
+    <p class="lede">Two conditions drew the same 24 regions. The tools-disabled model drew none. The MCMA agents produced plots in 118 of the 120 cases. The <a href="agents.html">Agents</a> chapter explains what an agent is and why the tools matter.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">Overview</a>
+    <a href="agents.html">Agents</a>
+    <a href="experiment.html" aria-current="page">Experiment</a>
+    <a href="briefing.html">Results Briefing</a>
+    <a href="explorer.html">Results Explorer</a>
+    <a href="demo-video.html">Demo Video</a>
+    <a href="plans.html">Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="design">
+  <h2>🧪 Design</h2>
+  <p>🗓️ LIU Yucheng ran the experiment from Sep&nbsp;23 to Sep&nbsp;29, 2026. The experiment evaluated the MCMA development done from Aug&nbsp;25 to Sep&nbsp;22. 📚 The problems come from <em>Calculus, Early Transcendentals</em>, Sections&nbsp;15.7, &quot;Triple Integrals,&quot; 15.8, &quot;Triple Integrals in Cylindrical Coordinates,&quot; and 15.9, &quot;Triple Integrals in Spherical Coordinates.&quot; 📐 Each problem gives a solid region in $x$, $y$, and $z$. Each problem asks the solver to set up the volume integral and to show the region with plots. The mathematics is standard textbook material. This page does not repeat it in detail. The technical machinery behind the agent is the part that needs explanation.</p>
+  <p>🎯 The tested subject is the development of VLM-powered Math-Capable Multimodal Agents (MCMA). More specifically, the subject is the MCMA software updates that LIU Yucheng worked on from Aug&nbsp;25 to Sep&nbsp;22, before the experiment run. The experiment run of Sep&nbsp;23 to Sep&nbsp;29 evaluates the project.</p>
+  <p>🗂️ Three problem groups cover 24 exercises.</p>
+  <ul>
+    <li>15.7.17 &ndash; 15.7.55 (20 problems)</li>
+    <li>15.8.14 &ndash; 15.8.26 (2 problems)</li>
+    <li>15.9.43 &ndash; 15.9.45 (2 problems)</li>
+  </ul>
+  <p>The 15.7 problems are 17, 18, 20 &ndash; 23, 27 &ndash; 32, 39, 40, 46, 47, 49, 50, 54, and 55. The 15.8 problems are 14 and 26. The 15.9 problems are 43 and 45.</p>
+  <h3>🗓️ The experiment timeline</h3>
+  <div class="timeline">
+    <div class="tl-item"><div><strong>Aug&nbsp;25 &ndash; Sep&nbsp;22</strong><div class="tl-sub">📝 Project development. The MCMA agent and its tools were extended for multivariable-integral problems.</div></div></div>
+    <div class="tl-item"><div><strong>Sep&nbsp;23 &ndash; Sep&nbsp;29</strong><div class="tl-sub">🧪 The experiment run. Two conditions solved the same 24 regions.</div></div></div>
+  </div>
+  <p>📸 A typical example is 15.7.17, the solid under the paraboloid $x=4(y^2+z^2)$ and the plane $x=4$. The printed question arrives as an image, not as text. ✏️ The answer must include plots that show the region and its cross-sections, not only a sentence. This one requirement &mdash; <em>produce pictures</em> &mdash; is the whole point of the experiment.</p>
+</section>
+
+<section id="conditions">
+  <h2>🧭 Conditions</h2>
+  <p>🔄 Two conditions ran side by side.</p>
+  <p>🤖 An AI model can be used by MCMA only if it is a vision-language model (VLM) and supports tool-calling.</p>
+  <p>🌐 In this experiment, we selected a set of the latest open-source VLMs that support tool-calling. AI service provider SiliconFlow (China) hosts these models.</p>
+  <ul>
+    <li>🤖 <strong>Tools disabled:</strong> the language model alone. It reads the problem image and replies with text. It has no tools, so it can reason but cannot compute, plot, or write files.</li>
+    <li>🛠️ <strong>MCMA agent:</strong> a multimodal model plus DeepAgents plus four custom tools. It can run Python, draw plots in two formats, and write a final answer file.</li>
+  </ul>
+  <table>
+    <thead>
+      <tr><th>Setup</th><th>Model</th><th>Tools</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Tools disabled</td><td>deepseek-flash</td><td>None</td></tr>
+      <tr><td>MCMA</td><td>deepseek-flash</td><td>DeepAgents + 4 custom tools</td></tr>
+      <tr><td>MCMA</td><td>gemma-4-26b-a4b-it</td><td>DeepAgents + 4 custom tools</td></tr>
+      <tr><td>MCMA</td><td>glm-5.3-flash</td><td>DeepAgents + 4 custom tools</td></tr>
+      <tr><td>MCMA</td><td>MiniMax-M3</td><td>DeepAgents + 4 custom tools</td></tr>
+      <tr><td>MCMA</td><td>qwen-3.8-omni-flash</td><td>DeepAgents + 4 custom tools</td></tr>
+    </tbody>
+  </table>
+  <p>The tools-disabled model and the first MCMA row share the same model, deepseek-flash. Only the tool layer differs. This pair is the controlled comparison: one model, with and without tools. The other rows show the same agent layer on four more models of different sizes and makers, all of them open-sourced.</p>
+
+  <h3>💪 What each condition can do</h3>
+  <table>
+    <thead><tr><th>Capability</th><th>Tools disabled</th><th>MCMA agent</th></tr></thead>
+    <tbody>
+      <tr><td>👁️ Read the problem image</td><td><span class="badge good">✅ Yes</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>🧠 Reason about the region</td><td><span class="badge good">✅ Yes</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>🧮 Run calculations (numpy &amp; sympy)</td><td><span class="badge bad">❌ No</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>📈 Draw plots (pyplot, PGFplots)</td><td><span class="badge bad">❌ No</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>📄 Write the final result file</td><td><span class="badge good">✅ Yes</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+      <tr><td>🖼️ Sketch the region and its cross-sections</td><td><span class="badge bad">❌ No</span></td><td><span class="badge good">✅ Yes</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="data-planned-to-collect">
+  <h2>🗂️ Data planned to collect</h2>
+  <p>This experiment plans to collect statistical data in four categories. For each of the six configurations it plans to record:</p>
+  <ul>
+    <li><strong>Success and attempt counts</strong> &mdash; solved cases, first-attempt solves, total and average attempts, and re-attempts, scored per the <code>remarks.html</code> convention in the Results Explorer.</li>
+    <li><strong>Token usage</strong> &mdash; from each run&rsquo;s <code>usages.json</code>: input and output tokens (totals and averages per attempt), with cache-read input and reasoning-output breakdowns where a model reports them.</li>
+    <li><strong>Time usage</strong> &mdash; from <code>usages.json</code>: per-attempt chat durations and total chat time.</li>
+    <li><strong>Cost</strong> &mdash; from each run&rsquo;s <code>costs.json</code>: estimated spend in CNY and USD, with peak- and off-peak pricing where a model quotes both.</li>
+  </ul>
+  <p class="small">The success and attempt data come from the per-problem <code>chat_&lt;timestamp&gt;/</code> records and the <code>canonical-solutions/</code> scans. The token, time, and cost data come from the audit functions the MCMA repository added, stored in the per-configuration <code>usages.json</code> and <code>costs.json</code> files. The <a href="briefing.html">Results Briefing</a> chapter reports each category for all six configurations.</p>
+</section>
+
+<section id="baseline">
+  <h2>❌ Baseline&rsquo;s Failure</h2>
+  <p class="small">Recent updates to the MCMA repository added token- and time-usage audit functions: each configuration records a <code>usages.json</code> and a <code>costs.json</code>. The <a href="briefing.html">Results Briefing</a> chapter reports token, time, and cost consumption for all six configurations.</p>
+  <p>📉 The tools-disabled model failed every problem. It reasoned about the region in some runs, but it had no way to emit a picture. Its final outputs for every problem never included a plot.</p>
+  <p>The failure was 🧩 structural, not intellectual. A &quot;sketch the region&quot; task requires a plot, and a plot requires a plotting tool. 🔇 Words alone cannot satisfy the exercise. This contrast is the crux of the experiment: capability came from the tools, not from extra math knowledge.</p>
+  <p>Tools-disabled success: <strong>0 of 24 problems (0%)</strong>. <span class="badge bad">❌ Failed 24 / 24</span></p>
+  <div class="stat-grid">
+    <div class="stat contrast-red"><div class="num">0 / 24</div><div class="lbl">❌ Problems solved (0%)</div></div>
+    <div class="stat contrast-red"><div class="num">24 / 24</div><div class="lbl">❌ Problems failed</div></div>
+    <div class="stat contrast-red"><div class="num">0 / 24</div><div class="lbl">❌ Problems solved on the first attempt</div></div>
+  </div>
+</section>
+
+<section id="success">
+  <h2>✅ Agents&rsquo; Success</h2>
+  <p>🏆 The MCMA agents produced plots in 118 of the 120 cases, each within 5 attempts. Each successful agent identified the region, set up the integral, drew a plot of the region, and wrote a boxed answer. The tools carried out every calculation and every drawing. The model made every decision.</p>
+  <div class="stat-grid">
+    <div class="stat contrast-green"><div class="num">5 / 5</div><div class="lbl">✅ MCMA agents; 4 of 5 solved all 24 problems (100%), the last solved 22</div></div>
+    <div class="stat contrast-green"><div class="num">118 / 120</div><div class="lbl">✅ Cases with a plot within 5 attempts (98%)</div></div>
+    <div class="stat contrast-green"><div class="num">108 / 120</div><div class="lbl">✅ Cases solved on the first attempt (90%)</div></div>
+    <div class="stat contrast-green"><div class="num">1.18</div><div class="lbl">🔁 Average attempts per MCMA case</div></div>
+  </div>
+  <p>The success was structural, just as the failure was. The agents had tools and they used them. 🧮 numpy and sympy verified every calculation. 🖼️ pyplot and PGFplots drew every plot. 📄 The results tool wrote every answer. The same model that failed without tools succeeded with tools. This is the mirror image of the baseline result.</p>
+  <p>🔁 Not every case succeeded on the first try. Five models produced almost all of their plots on the first attempt. Only <code>gemma-4-26b-a4b-it</code> re-attempted often: it took 42 attempts across its 24 problems, and on two of them (15.7.23 and 15.7.50) none of the five attempts included an image in the final solution. 📉 Those two cases are the only failures in the 120.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+});
+</script>
+
+</body>
+</html>

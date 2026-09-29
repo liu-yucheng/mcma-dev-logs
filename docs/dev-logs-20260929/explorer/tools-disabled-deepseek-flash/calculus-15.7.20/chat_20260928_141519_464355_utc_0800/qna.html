@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20260928_141519_464355_utc_0800 — Q&amp;A · tools-disabled-deepseek-flash &mdash; MCMA results explorer</title>
+<link rel="stylesheet" href="../../../../../styles.css">
+<link rel="stylesheet" href="../../../../../preview.css">
+<link rel="stylesheet" href="../../../../../lightbox.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/latex.min.js"></script>
+<script defer src="../../../../../lightbox.js"></script>
+</head>
+<body>
+<header class="site">
+  <div class="container">
+    <div class="kicker">Question &amp; answer transcript</div>
+    <h1>20260928_141519_464355_utc_0800</h1>
+    <p class="lede">The <code>qna_&lt;timestamp&gt;.md</code> record: the problem given to the agent and the agent&rsquo;s answer, with the plots it produced.</p>
+  </div>
+</header>
+<main class="container">
+<p class="small">Path: <code>tools-disabled-deepseek-flash/calculus-15.7.20/chat_20260928_141519_464355_utc_0800</code></p>
+<div class="turn human">
+
+
+
+
+
+<div class="seg">Problem</div>
+
+
+
+
+
+<div class="turn human">
+
+
+
+Please solve the problem in the following image.
+
+
+
+
+
+
+
+
+
+(Image `20260928_141519_464355_utc_0800_0.png`. Alt text: Image: human_20260928_141519_464355_utc_0800)
+
+<figure class="refimg"><img class="zimg" src="20260928_141519_464355_utc_0800_0.png" alt="Image: qna_20260928_141519_464355_utc_0800"><figcaption>20260928_141519_464355_utc_0800_0.png</figcaption></figure>
+
+
+
+
+
+</div>
+
+
+
+
+
+<div class="seg seg-end">End of problem</div>
+
+
+
+
+
+</div>
+
+<div class="turn ai">
+
+
+
+
+
+<div class="seg">Answer</div>
+
+
+
+## Solution
+
+The solid is enclosed by two paraboloids:
+
+$$
+y=x^2+z^2 \qquad \text{(lower surface)}
+$$
+
+$$
+y=8-x^2-z^2 \qquad \text{(upper surface)}
+$$
+
+First find the intersection curve by equating the two surfaces:
+
+$$
+x^2+z^2=8-x^2-z^2
+$$
+
+$$
+2(x^2+z^2)=8 \quad\Longrightarrow\quad x^2+z^2=4
+$$
+
+Thus the projection of the solid onto the \(xz\)-plane is the disk
+
+$$
+D:\ x^2+z^2\le 4
+$$
+
+Use cylindrical coordinates in the \(xz\)-plane:
+
+$$
+x=r\cos\theta,\qquad z=r\sin\theta,\qquad dV=r\,dy\,dr\,d\theta
+$$
+
+The triple integral for the volume is therefore
+
+$$
+V=\int_0^{2\pi}\int_0^2\int_{r^2}^{\,8-r^2} r\,dy\,dr\,d\theta
+$$
+
+Evaluate the inner integral with respect to \(y\):
+
+$$
+\int_{r^2}^{\,8-r^2} r\,dy
+= r\bigl[(8-r^2)-r^2\bigr]
+= r(8-2r^2)
+= 8r-2r^3
+$$
+
+Now integrate with respect to \(r\):
+
+$$
+\int_0^2 (8r-2r^3)\,dr
+= \left[4r^2-\frac12 r^4\right]_0^2
+= (16-8)-0
+= 8
+$$
+
+Finally integrate with respect to \(\theta\):
+
+$$
+V=\int_0^{2\pi} 8\,d\theta=16\pi
+$$
+
+**Check by horizontal slicing.**  
+For \(0\le y\le 4\), the cross-section is a disk of radius \(\sqrt{y}\), area \(\pi y\).  
+For \(4\le y\le 8\), the cross-section is a disk of radius \(\sqrt{8-y}\), area \(\pi(8-y)\). Thus
+
+$$
+V=\int_0^4 \pi y\,dy+\int_4^8 \pi(8-y)\,dy
+=8\pi+8\pi=16\pi
+$$
+
+which agrees with the triple-integral result.
+
+$$
+\boxed{16\pi}
+$$
+
+
+---
+
+No graphical results.
+
+
+
+<div class="seg seg-end">End of answer</div>
+
+
+
+
+
+</div>
+</main>
+<footer class="site">
+  <div class="container">
+    <p><strong>MCMA &mdash; Math-Capable Multimodal Agents.</strong> Record <code>tools-disabled-deepseek-flash/calculus-15.7.20/chat_20260928_141519_464355_utc_0800</code>, experiment log <code>dev-logs-20260929</code>. Licensed under the GNU AGPL 3.0.</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  renderMathInElement(document.body, {
+    delimiters: [
+      { left: "$$", right: "$$", display: true },
+      { left: "\\[", right: "\\]", display: true },
+      { left: "\\(", right: "\\)", display: false },
+      { left: "$", right: "$", display: false }
+    ],
+    throwOnError: false
+  });
+  if (window.hljs) {
+    hljs.configure({ languages: ["latex", "markdown", "python", "bash", "json"] });
+    hljs.highlightAll();
+  }
+});
+</script>
+</body>
+</html>
