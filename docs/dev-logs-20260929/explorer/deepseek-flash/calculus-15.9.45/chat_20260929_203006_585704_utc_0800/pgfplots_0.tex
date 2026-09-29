@@ -1,0 +1,31 @@
+\documentclass[border=6pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[
+    view={35}{22},
+    axis equal image,
+    axis lines=none,
+    colormap/cool,
+    clip=false,
+    colorbar,
+    colorbar style={ylabel={$\rho$}},
+]
+\addplot3[
+    surf,
+    shader=interp,
+    domain=0:360,
+    y domain=0:180,
+    samples=81,
+    samples y=81,
+    point meta={sqrt(x^2+y^2+z^2)},
+    point meta min=0.8,
+    point meta max=1.2,
+]
+({(1+0.2*sin(6*x)*sin(5*y))*sin(y)*cos(x)},
+ {(1+0.2*sin(6*x)*sin(5*y))*sin(y)*sin(x)},
+ {(1+0.2*sin(6*x)*sin(5*y))*cos(y)});
+\end{axis}
+\end{tikzpicture}
+\end{document}
