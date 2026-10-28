@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="DeepSeek Harness standard mode solved all 24 Stewart Calculus problems. The run reproduces the earlier MCMA pipeline with public plugins and no handwritten code.">
+<title>DSH &mdash; Overview</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.chapter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 18px 0; }
+.chapter-card { display: block; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; text-decoration: none; color: var(--ink); }
+.chapter-card:hover { border-color: var(--accent); background: #eef4fc; }
+.chapter-card .ico { font-size: 1.5rem; }
+.chapter-card h3 { margin: 6px 0 4px; font-size: 1.05rem; }
+.chapter-card p { margin: 0; font-size: .9rem; color: var(--muted); }
+.stat-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-10-27</div>
+    <h1>&#129518; DeepSeek Harness Solves 24 Calculus Problems</h1>
+    <p class="lede">The DeepSeek Harness standard agent solved all 24 problems. It made 49 figures and 24 PDF solutions. It reproduces the MCMA result with public plugins and no new agent code. The run used 76 minutes, 2,298 steps, and 236.4 million recorded tokens.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html" aria-current="page">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Agents</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="reproduction">
+  <h2>&#129516; Reproduction in 4 weeks</h2>
+  <p>&#128204; From Jun 29 to Sep 29, 2026, the MCMA project built math-capable multimodal agents on DeepAgents and LangChain. In the 4 weeks before this log, the operator rebuilt the same functions on DeepSeek Harness with public plugins. The operator did not write code for the agent.</p>
+  <p>&#9989; The new agent uses the same workflow: read the problem image, solve, verify with Python, draw the figures, compile the PDF, and check the result. Each solution also teaches the reader how to solve similar problems.</p>
+</section>
+
+<section id="answer">
+  <h2>&#9889; Short answer</h2>
+  <p>&#9989; <strong>Yes.</strong> The agent solved all 24 problems. Each problem has a LaTeX solution, a compiled PDF, Python verification scripts, and at least two figures. The setup did not use a special prompt for one problem type. It used one general workflow.</p>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="num">24 / 24</div><div class="lbl">&#9989; Problems solved</div></div>
+    <div class="stat"><div class="num">49</div><div class="lbl">&#128200; Figures drawn</div></div>
+    <div class="stat"><div class="num">2,298</div><div class="lbl">&#129518; Agent steps</div></div>
+    <div class="stat"><div class="num">236.4M</div><div class="lbl">&#129689; Recorded tokens (97.3% cache reads)</div></div>
+    <div class="stat"><div class="num">$3.77</div><div class="lbl">&#128176; Estimated model cost</div></div>
+    <div class="stat"><div class="num">76 min</div><div class="lbl">&#9201; Logged solve window</div></div>
+  </div>
+
+  <div class="card">
+    <p>&#128204; <strong>Parallel work.</strong> The parent agent started 8 subagents. Each subagent got 3 problems. Two problems needed a second pass. The parent started 2 more single-problem agents.</p>
+    <p>&#128176; <strong>Cost.</strong> The recorded cost is $3.77. This is about 3.1 times the peak-hour cost of the earlier MCMA <code>deepseek-flash</code> run.</p>
+    <p>&#129689; <strong>Tokens.</strong> The session recorded 236.4M tokens. 97.3% are cache reads. New input and output are 6.4M tokens.</p>
+    <p>&#128218; <strong>Teaching.</strong> Every solution explains the symbols and shows how to solve similar problems. This is a prompt rule, not an optional extra.</p>
+    <p>&#128034; <strong>Overhead.</strong> The remark file reports 3 times more tokens and 3 times more time. The cause is the DSH PowerShell support: recurring command-exception cycles. The <a href="plans.html">Future Plans</a> chapter gives the fix.</p>
+  </div>
+</section>
+
+<section id="chapters">
+  <h2>&#128218; Chapters</h2>
+  <div class="chapter-grid">
+    <a class="chapter-card" href="agents.html">
+      <div class="ico">&#129302;</div>
+      <h3>Agents</h3>
+      <p>The DeepSeek Harness setup, the 19 plugins, the standard-mode configs, and the full <code>instructions.md</code> prompt.</p>
+    </a>
+    <a class="chapter-card" href="briefing.html">
+      <div class="ico">&#128202;</div>
+      <h3>Results Briefing</h3>
+      <p>Success, steps, tokens, cost, and time. Charts show the token mix, the parallel timeline, and the cost comparison.</p>
+    </a>
+    <a class="chapter-card" href="explorer.html">
+      <div class="ico">&#128269;</div>
+      <h3>Results Explorer</h3>
+      <p>The problem stays on top. The solution pages scroll below at 200 DPI. Use the zoom controls, open the PDF, or collapse the problem list.</p>
+    </a>
+    <a class="chapter-card" href="plans.html">
+      <div class="ico">&#128506;</div>
+      <h3>Future Plans</h3>
+      <p>Make the agent a multimodal math tutor, then a math grader. Fix the Windows shell overhead with Git Bash and replace LaTeX with Typst + mitex.</p>
+    </a>
+  </div>
+</section>
+
+<section id="scope">
+  <h2>&#128300; Scope</h2>
+  <table>
+    <tbody>
+      <tr><th>&#129518; Problems</th><td>24 exercises from Stewart, <em>Calculus: Early Transcendentals</em>, Sections 15.7, 15.8, and 15.9 (20 + 2 + 2)</td></tr>
+      <tr><th>&#129516; Baseline</th><td>MCMA on DeepAgents and LangChain, Jun&nbsp;29 &ndash; Sep&nbsp;29, 2026</td></tr>
+      <tr><th>&#128104;&#8205;&#128187; New agent code</th><td>None. The run uses DeepSeek Harness and public plugins only.</td></tr>
+      <tr><th>&#128736; Harness</th><td>DeepSeek Harness (DSH)</td></tr>
+      <tr><th>&#129504; Model</th><td><code>deepseek-flash</code>, reasoning effort <code>high</code></td></tr>
+      <tr><th>&#9881; Agent preset</th><td><code>standard</code></td></tr>
+      <tr><th>&#128268; Plugins</th><td>19 installed plugins</td></tr>
+      <tr><th>&#129309; Solver agents</th><td>10 subagents: 8 first-pass agents and 2 redo agents</td></tr>
+      <tr><th>&#128230; Output</th><td>24 PDF solutions (14.5 MB), 49 figures, 79 verification scripts, and a teaching section in each solution</td></tr>
+      <tr><th>&#128193; Data</th><td><code>.raw_data/dev-logs-20261027/</code></td></tr>
+    </tbody>
+  </table>
+  <p class="small">The remark file records 76 minutes. The session log gives the same 76 minutes from the first subagent launch to the last finish. The remark file also records 3 times the tokens and 3 times the time. The session data shows the token and cost increase, but not a 3-times wall-clock slowdown, because the subagents run in parallel. The window includes one out-of-video-memory crash. The remark file links that crash to too many concurrent LaTeX compilations. The briefing chapter gives the measured values. The <a href="plans.html">Future Plans</a> chapter gives the fixes.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

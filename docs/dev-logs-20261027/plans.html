@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Future plans for the DeepSeek Harness agent: a multimodal math tutor, a multimodal math grader, a Git Bash shell fix with dsh-gitbash-new, and Typst + mitex in place of full LaTeX.">
+<title>DSH &mdash; Future Plans</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-10-27</div>
+    <h1>&#128302; Future Plans</h1>
+    <p class="lede">&#9989; The 24-problem run is complete. The plans have two parts. &#127919; First, make the agent a math tutor and then a math grader. &#128736; Second, remove two platform limits: the PowerShell overhead and the LaTeX crash risk.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Agents</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html" aria-current="page">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="roadmap">
+  <h2>&#128506; The Roadmap</h2>
+  <p>&#128204; The plans follow the order below. Plans 3 and 4 are enablers. They make Plans 1 and 2 cheaper and more stable.</p>
+  <ol>
+    <li>&#129489;&#8205;&#127979; Make a multimodal AI math tutor. &rarr; <em>Plan 1.</em></li>
+    <li>&#128221; Make a multimodal AI math grader. &rarr; <em>Plan 2.</em></li>
+    <li>&#128034; Replace PowerShell with Git Bash. &rarr; <em>Plan 3.</em></li>
+    <li>&#128220; Replace full LaTeX with Typst + mitex. &rarr; <em>Plan 4.</em></li>
+  </ol>
+  <p>&#128161; The run already gives the base for Plan 1 and Plan 2. Each solution is detailed and computationally verified. Each solution also has tutorial content about how to approach similar problems.</p>
+</section>
+
+<section id="plan-tutor">
+  <h2>&#129489;&#8205;&#127979; Plan 1. Make a Multimodal AI Math Tutor</h2>
+  <div class="card">
+    <h3>&#127919; Goal</h3>
+    <p>Turn the agent into a multimodal AI math tutor. The tutor reads a problem image, solves the problem, and teaches the method.</p>
+  </div>
+  <div class="card">
+    <h3>&#128295; Actions</h3>
+    <p>&#129518; <strong>Keep the verified workflow.</strong> Read the image, solve, verify with Python, draw the figures, and compile the result.</p>
+    <p>&#128172; <strong>Add a dialog.</strong> Ask the student what they tried. Give hints before the full solution. Let the student ask questions at each step.</p>
+    <p>&#128218; <strong>Use the tutorial sections.</strong> The current output already explains the symbols and shows how to solve similar problems. The tutor reuses that content.</p>
+    <p>&#129514; <strong>Check each hint.</strong> The agent verifies a hint with Python before it sends the hint.</p>
+    <p>&#129489;&#8205;&#127891; <strong>Test with students.</strong> Use new problems and student questions. Check that the hints are correct and useful.</p>
+  </div>
+  <div class="card">
+    <h3>&#9989; Outcome</h3>
+    <p>A tutor that gives correct answers and teaches the method. The student learns how to approach the next problem, not only this problem.</p>
+  </div>
+</section>
+
+<section id="plan-grader">
+  <h2>&#128221; Plan 2. Make a Multimodal AI Math Grader</h2>
+  <div class="card">
+    <h3>&#127919; Goal</h3>
+    <p>Then make the agent a multimodal AI math grader. The grader reads a photo of student work and gives a score with reasons.</p>
+  </div>
+  <div class="card">
+    <h3>&#128295; Actions</h3>
+    <p>&#128203; <strong>Define a rubric.</strong> Write the score points for each problem. Include the method, the steps, and the final answer.</p>
+    <p>&#128269; <strong>Read the student steps.</strong> The agent reads the work from the image and writes the steps in a machine-readable form.</p>
+    <p>&#129518; <strong>Check the math.</strong> The agent checks each step with Python and symbolic math. A correct final answer does not hide a wrong step.</p>
+    <p>&#9878;&#65039; <strong>Compare the methods.</strong> Compare the student method with the canonical method. Give part credit for a valid method that differs from the canonical method.</p>
+    <p>&#128172; <strong>Write feedback.</strong> Name the error. Show the fix. Keep the feedback short and clear.</p>
+    <p>&#129514; <strong>Measure agreement.</strong> Compare the agent scores with human scores. Record the differences.</p>
+  </div>
+  <div class="card">
+    <h3>&#9989; Outcome</h3>
+    <p>A draft grader with evidence, part credit, and feedback. A human teacher stays in the loop.</p>
+  </div>
+  <p>&#9888; Grading is harder than solving. The agent must judge work that is not its own. A wrong step can look correct in an image. The Python checks and the human review are necessary.</p>
+</section>
+
+<section id="plan-shell">
+  <h2>&#128034; Plan 3. Replace PowerShell with Git Bash</h2>
+  <div class="card">
+    <h3>&#127919; Goal</h3>
+    <p>Remove the PowerShell overhead. The DSH PowerShell support causes recurring command-exception cycles. The cycles add tokens and time to each step.</p>
+  </div>
+  <div class="card">
+    <h3>&#128295; Actions</h3>
+    <p>&#128230; <strong>Install the plugin.</strong> Add <a href="https://github.com/riverzhou/dsh-gitbash-new">dsh-gitbash-new</a> to the DSH profile.</p>
+    <p>&#128034; <strong>Install Git Bash.</strong> Install <a href="https://gitforwindows.org/">Git for Windows</a> and use its Bash shell.</p>
+    <p>&#128736; <strong>Install MSYS2.</strong> Add the <a href="https://www.msys2.org/">MSYS2</a> tools that the shell commands need.</p>
+    <p>&#128260; <strong>Route the shell calls.</strong> Send the agent shell calls through Git Bash, not PowerShell.</p>
+    <p>&#129514; <strong>Re-run the suite.</strong> Run the 24 problems again. Compare the tokens, the time, and the cost with this run.</p>
+  </div>
+  <div class="card">
+    <h3>&#9989; Outcome</h3>
+    <p>Fewer retries and less overhead on Windows. The agent and the prompt stay the same. The shell becomes stable.</p>
+  </div>
+  <p>&#128204; This fix is for Windows only. The remark file names the DSH PowerShell support as the cause of the 3 times more tokens and the 3 times more time. The measured values are in the <a href="briefing.html">Results Briefing</a>.</p>
+</section>
+
+<section id="plan-typst">
+  <h2>&#128220; Plan 4. Replace Full LaTeX with Typst + mitex</h2>
+  <div class="card">
+    <h3>&#127919; Goal</h3>
+    <p>Replace full LaTeX support with Typst and mitex. The run crashed one time with an out-of-video-memory error. Too many concurrent LaTeX compilation processes caused it.</p>
+  </div>
+  <div class="card">
+    <h3>&#128295; Actions</h3>
+    <p>&#128196; <strong>Convert the document.</strong> Write the solution as a <a href="https://typst.app/">Typst</a> document.</p>
+    <p>&#10133; <strong>Convert the math.</strong> Use <a href="https://typst.app/universe/package/mitex/">mitex</a> for the LaTeX math expressions.</p>
+    <p>&#128200; <strong>Keep the figures.</strong> Keep the Python figure scripts and the PNG files. Insert the figures near the related steps.</p>
+    <p>&#9881; <strong>Compile with Typst.</strong> Compile each solution to a PDF. Check the math, the figures, and the labels.</p>
+    <p>&#129514; <strong>Re-run in parallel.</strong> Run the 24 problems with parallel jobs. Watch the video memory.</p>
+  </div>
+  <div class="card">
+    <h3>&#9989; Outcome</h3>
+    <p>A lighter compile step. The run uses less video memory and does not crash from concurrent LaTeX jobs.</p>
+  </div>
+  <p>&#128204; The solution content does not change. Only the typesetting engine changes. The PDFs stay the final output.</p>
+</section>
+
+<section id="status">
+  <h2>&#128203; Plan Status</h2>
+  <table>
+    <thead><tr><th>Plan</th><th>Type</th><th>Why</th><th>First check</th></tr></thead>
+    <tbody>
+      <tr><td>&#129489;&#8205;&#127979; Math tutor</td><td>Product</td><td>Add a teaching service.</td><td>A correct hint on a new problem.</td></tr>
+      <tr><td>&#128221; Math grader</td><td>Product</td><td>Add a grading service.</td><td>Agreement with human scores.</td></tr>
+      <tr><td>&#128034; Git Bash</td><td>Platform</td><td>Remove the 3 times overhead.</td><td>Lower token and time totals.</td></tr>
+      <tr><td>&#128220; Typst + mitex</td><td>Platform</td><td>Remove the OOM crash risk.</td><td>24 PDFs with parallel jobs.</td></tr>
+    </tbody>
+  </table>
+  <p>&#128204; The plans come from the updated experiment remark file. They are plans, not results. This chapter will change when a plan has a measured result.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>
