@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Results briefing for the DeepSeek Harness standard-mode calculus run: 24 of 24 solved, 2,298 steps, 236.4M recorded tokens, $3.77, and a 76-minute solve window. The run reproduces the MCMA pipeline with public plugins and no handwritten code.">
+<title>DSH &mdash; Results Briefing</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.chart-canvas { position: relative; height: 300px; }
+.chart-canvas.tall { height: 400px; }
+.chart-note { font-size: .84rem; color: var(--muted); margin: 8px 0 0; }
+.badge.audit { background: #e8e2f6; border-color: #c9bce6; color: #4c3a7a; }
+.callout { background: #fff8e6; border: 1px solid #eddcae; border-radius: 10px; padding: 16px 20px; margin: 18px 0; }
+.callout h3 { margin-top: 0; }
+.gallery img { max-height: 300px; object-fit: contain; background: #fff; }
+.stat-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+td.num.good-num { color: #2f6f4f; font-weight: 600; }
+td.num.warn-num { color: #b23a1c; font-weight: 600; }
+</style>
+<script src="assets/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>&#128202; Results Briefing</h1>
+    <p class="lede">&#9989; The agent solved all 24 problems. &#128200; It made 49 figures and 24 PDFs in 76 minutes. &#129518; It used 2,298 steps and 236.4M recorded tokens. &#129516; It reproduces the MCMA pipeline with public plugins and no new agent code. &#128034; The remark file reports 3 times the tokens and 3 times the time. It crashed once with an out-of-video-memory error. This chapter shows where the time, tokens, and money went.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Agents</a>
+    <a href="briefing.html" aria-current="page">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="glance">
+  <h2>&#127937; Result at a glance</h2>
+  <div class="stat-grid">
+    <div class="stat"><div class="num">24 / 24</div><div class="lbl">&#9989; Problems with a PDF solution</div></div>
+    <div class="stat"><div class="num">49</div><div class="lbl">&#128200; Figures in the final folders</div></div>
+    <div class="stat"><div class="num">79</div><div class="lbl">&#129518; Python step scripts</div></div>
+    <div class="stat"><div class="num">2,298</div><div class="lbl">&#128260; Recorded agent steps</div></div>
+    <div class="stat"><div class="num">236.4M</div><div class="lbl">&#129689; Recorded tokens (97.3% cache reads)</div></div>
+    <div class="stat"><div class="num">$3.77</div><div class="lbl">&#128176; Estimated model cost</div></div>
+  </div>
+  <p>&#128204; The agent made <strong>49 figure PNG files</strong>, <strong>49 figure scripts</strong>, <strong>79 step scripts</strong>, and <strong>24 PDFs</strong>. The PDFs total 14.5 MB. Each problem has at least 2 figures.</p>
+  <p>&#128204; The parent agent used 10 solver subagents: 8 first-pass agents and 2 redo agents. The 8 first-pass agents each got 3 problems. The two redo agents solved one problem each.</p>
+  <p>&#129516; The run is a reproduction, not a rewrite. The operator used DeepSeek Harness and public plugins to rebuild the functions of the MCMA agents that were built on DeepAgents and LangChain. The operator wrote no new agent code. Each PDF also contains a tutorial section about how to approach similar problems.</p>
+</section>
+
+<section id="records">
+  <h2>&#129534; Two records of the same run</h2>
+  <p>&#128204; The remark file is a short summary. The session log is the machine record. The two records agree on the result, the 76-minute wall clock, and the extra token cost. They use different measures for speed, tokens, and stability.</p>
+  <table>
+    <thead><tr><th>Item</th><th>Remark file</th><th>Session log</th></tr></thead>
+    <tbody>
+      <tr><td>&#9989; Solved</td><td>24 / 24</td><td>24 / 24 PDFs are present</td></tr>
+      <tr><td>&#9201; Wall clock</td><td>76 minutes</td><td>76 minutes from the first subagent launch to the last finish</td></tr>
+      <tr><td>&#128034; Speed</td><td>&ldquo;3 times slower than the original MCMA&rdquo;</td><td>76 minutes; the MCMA reference is 81.5 minutes; 8 subagents run in parallel</td></tr>
+      <tr><td>&#129689; Token load</td><td>&ldquo;burns 3 times the tokens used by the original MCMA&rdquo;</td><td>236.4M recorded tokens; 97.3% are cache reads</td></tr>
+      <tr><td>&#128176; Cost</td><td>Not stated</td><td>$3.77; 3.1 times the MCMA peak-hour cost</td></tr>
+      <tr><td>&#129504; Process</td><td>&ldquo;All solutions are detailed and computationally verified.&rdquo;</td><td>2,298 steps; 2 redo agents; 95.8 steps per problem</td></tr>
+      <tr><td>&#128218; Teaching</td><td>&ldquo;Solutions also include tutorial contents about how to approach similar math problems.&rdquo;</td><td>Every solution has a teaching section; prompt rule 7 requires it</td></tr>
+      <tr><td>&#128737; Stability</td><td>1 crash (out-of-video-memory)</td><td>1 crash and 1 freeze; both recovered</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <p>&#128161; <strong>Why the token counts differ from the remark.</strong> The DSH total counts every cache read. The earlier MCMA total also includes cache reads, but the DSH agent sends much more context. The raw token total is 10.6 times larger. The cost is 3.1 times larger. The output token total is 2.5 times larger. The 3-times claim in the remark matches the cost factor.</p>
+  </div>
+  <div class="callout">
+    <p>&#128034; <strong>Why the speed claim needs a note.</strong> The remark file says the agent is 3 times slower. The recorded wall clock does not show a 3-times slowdown: DSH finishes in 76 minutes, and the MCMA reference takes 81.5 minutes. DSH runs 8 subagents in parallel. The remark file attributes the extra work to the DSH PowerShell support. Recurring command-exception cycles cause a retry at each step. The token and cost totals show the extra work. The wall clock does not show it, because many subagents run at the same time.</p>
+  </div>
+</section>
+
+<section id="tokens">
+  <h2>&#129689; Where the tokens went</h2>
+  <p>&#128204; The session recorded <strong>236,381,391 tokens</strong>. Cache reads are <strong>229,987,072</strong> (97.3%). New input is <strong>4,673,799</strong> (2.0%). Output is <strong>1,720,520</strong> (0.7%). The agent re-sends the full context at each step, so cache reads dominate.</p>
+  <div class="chart-grid">
+    <div class="chart-box">
+      <div class="chart-canvas"><canvas id="chartTokenMix"></canvas></div>
+      <p class="chart-note">&#129689; Chart 1 &mdash; Token mix. Cache reads, new input, and output.</p>
+    </div>
+    <div class="chart-box">
+      <div class="chart-canvas"><canvas id="chartSteps"></canvas></div>
+      <p class="chart-note">&#128260; Chart 2 &mdash; Steps per agent. The parent does the planning. The subagents do the math.</p>
+    </div>
+  </div>
+  <div class="chart-box" style="margin-top:18px">
+    <div class="chart-canvas"><canvas id="chartGroupTokens"></canvas></div>
+    <p class="chart-note">&#129689; Chart 3 &mdash; Recorded tokens per agent, in millions. The redo agents are amber.</p>
+  </div>
+</section>
+
+<section id="time">
+  <h2>&#9201; Time and parallelism</h2>
+  <p>&#128204; The first 8 subagents start together at about 13:43. The first pass ends at 14:22. The two redo agents start at 14:29 and end at 14:59. The parent session runs from 13:30 to 15:14 and includes setup, one crash, and one freeze.</p>
+  <div class="chart-box">
+    <div class="chart-canvas tall"><canvas id="chartGantt"></canvas></div>
+    <p class="chart-note">&#9201; Chart 4 &mdash; Solve windows in minutes after 13:30 (Asia/Shanghai). Blue: first pass. Amber: redo. Green: parent wall clock.</p>
+  </div>
+  <p>&#9888; The remark file records one crash. The cause is an out-of-video-memory error. The remark file says too many concurrent LaTeX compilation processes cause it. The session log also records a parent freeze while it read job output. The operator restarted the run after the crash and told the agent to continue after the freeze. The 76-minute solve window includes the crash recovery.</p>
+  <p>&#128034; The extra work has a platform cause. The remark file says the DSH PowerShell support is bad. It causes recurring command-exception cycles. Each cycle costs a retry. The run uses 3 times the tokens of the MCMA baseline, and the cost is 3.1 times the MCMA peak-hour cost. The wall clock stays near the baseline value because 8 subagents run in parallel. The <a href="plans.html">Future Plans</a> chapter gives the fix: <code>dsh-gitbash-new</code>, Git Bash, and MSYS2.</p>
+</section>
+
+<section id="groups">
+  <h2>&#128203; Solver groups</h2>
+  <p>&#128204; The table uses the 10 solver subagents plus the parent and the Explore subagent. Minutes are from the subagent start to its last message. The parent row is wall clock and overlaps all other rows.</p>
+  <table>
+    <thead>
+      <tr><th>Agent</th><th class="num">Problems</th><th class="num">Steps</th><th class="num">Minutes</th><th class="num">Tokens (M)</th><th class="num">Cost (USD)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>&#129309; 15.7.17–20</td><td class="num">3</td><td class="num">279</td><td class="num">29.6</td><td class="num">28.49</td><td class="num">0.4018</td></tr>
+      <tr><td>&#129309; 15.7.21–23</td><td class="num">3</td><td class="num">122</td><td class="num">18.9</td><td class="num">11.52</td><td class="num">0.1563</td></tr>
+      <tr><td>&#129309; 15.7.27–29</td><td class="num">3</td><td class="num">262</td><td class="num">30.1</td><td class="num">29.35</td><td class="num">0.3519</td></tr>
+      <tr><td>&#129309; 15.7.30–32</td><td class="num">3</td><td class="num">157</td><td class="num">37.6</td><td class="num">12.27</td><td class="num">0.2152</td></tr>
+      <tr><td>&#129309; 15.7.39, 40, 46</td><td class="num">3</td><td class="num">218</td><td class="num">22.1</td><td class="num">24.23</td><td class="num">0.2047</td></tr>
+      <tr><td>&#129309; 15.7.47, 49, 50</td><td class="num">3</td><td class="num">136</td><td class="num">25.9</td><td class="num">12.60</td><td class="num">0.2293</td></tr>
+      <tr><td>&#129309; 15.7.54, 55, 15.8.14</td><td class="num">3</td><td class="num">315</td><td class="num">38.9</td><td class="num">34.20</td><td class="num">0.4383</td></tr>
+      <tr><td>&#129309; 15.8.26, 15.9.43, 15.9.45</td><td class="num">3</td><td class="num">227</td><td class="num">28.2</td><td class="num">23.66</td><td class="num">0.3289</td></tr>
+      <tr><td>&#128260; 15.7.31 redo</td><td class="num">1</td><td class="num">144</td><td class="num">23.6</td><td class="num">12.87</td><td class="num">0.3827</td></tr>
+      <tr><td>&#128260; 15.7.32 redo</td><td class="num">1</td><td class="num">226</td><td class="num">29.9</td><td class="num">29.33</td><td class="num">0.6277</td></tr>
+      <tr><td>&#129513; Parent orchestration</td><td class="num">&mdash;</td><td class="num">195</td><td class="num">103.8</td><td class="num">17.34</td><td class="num">0.4198</td></tr>
+      <tr><td>&#128269; Explore check</td><td class="num">&mdash;</td><td class="num">17</td><td class="num">2.3</td><td class="num">0.51</td><td class="num">0.0098</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The 15.7 set has no exercise 19. The group 15.7.17&ndash;20 covers 17, 18, and 20. The two redo rows repeat 15.7.31 and 15.7.32, so the Problems column sums to 26 agent assignments for 24 unique problems.</p>
+  <p class="small">&#128204; The 10 solver agents total 2,086 steps. The parent and the Explore agent add 212 steps. The total is 2,298 steps.</p>
+</section>
+
+<section id="compare">
+  <h2>&#128176; Comparison with the earlier MCMA run</h2>
+  <p>&#128204; The reference is the <code>(MCMA+)deepseek-flash</code> run in <code>dev-logs-20260929</code>. It also solved 24 of 24 problems. The DSH run costs more and uses more steps. It also draws more figures and keeps a full LaTeX source tree.</p>
+  <table>
+    <thead><tr><th>Configuration</th><th class="num">Solved</th><th class="num">Steps</th><th class="num">Recorded tokens</th><th class="num">Cost (USD)</th><th class="num">Wall time</th></tr></thead>
+    <tbody>
+      <tr><td>&#129302; DSH standard mode, <code>deepseek-flash</code></td><td class="num good-num">24 / 24</td><td class="num">2,298</td><td class="num">236.4M</td><td class="num">3.77</td><td class="num">76 min</td></tr>
+      <tr><td>&#129513; MCMA, <code>deepseek-flash</code></td><td class="num good-num">24 / 24</td><td class="num">&mdash;</td><td class="num">22.3M</td><td class="num">1.20 peak / 0.60 off-peak</td><td class="num">81.5 min</td></tr>
+    </tbody>
+  </table>
+  <div class="chart-grid">
+    <div class="chart-box">
+      <div class="chart-canvas"><canvas id="chartCostSolve"></canvas></div>
+      <p class="chart-note">&#128176; Chart 5 &mdash; Cost per solved problem. DSH is about 3.1 times the MCMA peak-hour value.</p>
+    </div>
+    <div class="chart-box">
+      <div class="chart-canvas"><canvas id="chartTokenSolve"></canvas></div>
+      <p class="chart-note">&#129689; Chart 6 &mdash; Recorded tokens per solved problem. DSH re-sends much more context.</p>
+    </div>
+  </div>
+  <p>&#128161; The DSH run is not cheaper. It is more thorough. It keeps step scripts, figure scripts, figures, LaTeX sources, and compiled PDFs. The earlier MCMA run writes a final result file and figures.</p>
+</section>
+
+<section id="visual">
+  <h2>&#128200; Visual check</h2>
+  <p>&#128204; These four figures come from the final DSH folders. They show the requested geometry, the cross-sections, and the labels. Click a figure to zoom.</p>
+  <div class="gallery">
+    <figure>
+      <img class="zimg" src="assets/briefing/fig-15.7.17.png" alt="Solid E for problem 15.7.17, with the intersection circle and slice lines.">
+      <figcaption>&#128200; 15.7.17 &mdash; Solid <em>E</em>, intersection circle, and slice lines.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/fig-15.7.55.png" alt="Ellipsoid for problem 15.7.55, with level curves and semi-axes.">
+      <figcaption>&#128200; 15.7.55 &mdash; Ellipsoid, level curves, and semi-axes.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/fig-15.8.14.png" alt="Two paraboloids for problem 15.8.14, with a 3D view and a 2D cross-section.">
+      <figcaption>&#128200; 15.8.14 &mdash; Two bowls, the lens, and a 2D cross-section.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/fig-15.9.45.png" alt="Three-dimensional polar surface for problem 15.9.45.">
+      <figcaption>&#128200; 15.9.45 &mdash; A 3D polar surface with a color map.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="issues">
+  <h2>&#9888; Problems found and fixed</h2>
+  <div class="callout">
+    <h3>&#128736; The run had one crash, one freeze, and one bad figure</h3>
+    <ol>
+      <li><strong>OOM crash, 1 time.</strong> The OS stopped because of out-of-video-memory. The remark file says too many concurrent LaTeX compilation processes cause it. The operator restarted the run and told the agent to continue. The agent continued from the saved state. The plan is to drop full LaTeX support and use Typst with mitex for LaTeX math expressions. See <a href="plans.html">Future Plans</a>.</li>
+      <li><strong>Parent freeze.</strong> The parent stopped while it read job output. The operator told it to continue.</li>
+      <li><strong>Bad figure in 15.7.32.</strong> A QA pass found that <code>part1_figure1.png</code> was a 353-byte text stub. The agent replaced it. The parent also started a new single-problem agent for 15.7.31.</li>
+    </ol>
+    <p>&#128204; The two redo agents added <strong>42.2M tokens</strong> and <strong>$1.01</strong>. The final set still has all 24 PDFs and 49 figures. The remark file also records the PowerShell overhead: recurring command-exception cycles add tokens and time to each step. The next run will use Git Bash through <code>dsh-gitbash-new</code> and MSYS2.</p>
+  </div>
+</section>
+
+<section id="bottom-line">
+  <h2>&#128204; Bottom line</h2>
+  <ul>
+    <li>&#129516; <strong>Reproduction.</strong> The run rebuilds the MCMA functions on DeepSeek Harness with public plugins. The operator wrote no new agent code.</li>
+    <li>&#9989; <strong>Reliability.</strong> The standard agent solved all 24 problems. The run recovered from one OOM crash and one freeze.</li>
+    <li>&#128260; <strong>Effort.</strong> The agent uses 95.8 steps per problem. It checks each deduction and each figure again and again. This makes the process slow and is the main source of cost.</li>
+    <li>&#128218; <strong>Teaching.</strong> Each solution is detailed, verified by Python, and includes tutorial content for similar problems.</li>
+    <li>&#128200; <strong>Output.</strong> The run gives 49 figures and 24 PDFs (14.5 MB). The figures are clear and labeled.</li>
+    <li>&#128176; <strong>Cost.</strong> The run costs $3.77. This is 3.1 times the earlier MCMA peak-hour cost for the same success rate.</li>
+    <li>&#128034; <strong>Overhead.</strong> The remark file reports 3 times the tokens and 3 times the time. The cause is the DSH PowerShell support. The plan is Git Bash, MSYS2, and <code>dsh-gitbash-new</code>. See <a href="plans.html">Future Plans</a>.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<script src="../lightbox.js"></script>
+<script>
+Chart.defaults.font.family = "Arial, sans-serif";
+Chart.defaults.color = "#1c2128";
+
+const BLUE = "#2f446f";
+const AMBER = "#e8a33d";
+const RED = "#b23a1c";
+const GREEN = "#2f6f4f";
+const GREY = "#5b6b7e";
+const LIGHT = "#9ec0f0";
+
+const fmtM = function (v) { return v.toFixed(2) + "M"; };
+
+new Chart(document.getElementById("chartTokenMix"), {
+  type: "doughnut",
+  data: {
+    labels: ["Cache reads", "New input", "Output"],
+    datasets: [{
+      data: [229.987, 4.674, 1.721],
+      backgroundColor: [LIGHT, BLUE, AMBER],
+      borderColor: "#fff",
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    cutout: "58%",
+    plugins: {
+      title: { display: true, text: "Token mix (millions)" },
+      legend: { position: "bottom" },
+      tooltip: {
+        callbacks: {
+          label: function (c) {
+            const total = 236.381;
+            return c.label + ": " + fmtM(c.raw) + " (" + (c.raw / total * 100).toFixed(1) + "%)";
+          }
+        }
+      }
+    }
+  }
+});
+
+const AGENTS = [
+  "15.7.17–20", "15.7.21–23", "15.7.27–29", "15.7.30–32",
+  "15.7.39,40,46", "15.7.47,49,50", "15.7.54,55,15.8.14", "15.8.26,15.9.43,15.9.45",
+  "15.7.31 redo", "15.7.32 redo", "Parent", "Explore"
+];
+const AGENT_COLORS = [BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, AMBER, AMBER, GREEN, GREY];
+const STEPS = [279, 122, 262, 157, 218, 136, 315, 227, 144, 226, 195, 17];
+const TOKENS = [28.49, 11.52, 29.35, 12.27, 24.23, 12.60, 34.20, 23.66, 12.87, 29.33, 17.34, 0.51];
+
+new Chart(document.getElementById("chartSteps"), {
+  type: "bar",
+  data: {
+    labels: AGENTS,
+    datasets: [{ label: "Steps", data: STEPS, backgroundColor: AGENT_COLORS, borderRadius: 4 }]
+  },
+  options: {
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Steps per agent" },
+      legend: { display: false }
+    },
+    scales: {
+      x: { beginAtZero: true, title: { display: true, text: "Steps" } }
+    }
+  }
+});
+
+new Chart(document.getElementById("chartGroupTokens"), {
+  type: "bar",
+  data: {
+    labels: AGENTS,
+    datasets: [{ label: "Tokens (M)", data: TOKENS, backgroundColor: AGENT_COLORS, borderRadius: 4 }]
+  },
+  options: {
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Recorded tokens per agent (millions)" },
+      legend: { display: false },
+      tooltip: { callbacks: { label: function (c) { return fmtM(c.raw) + " tokens"; } } }
+    },
+    scales: {
+      x: { beginAtZero: true, title: { display: true, text: "Million tokens" } }
+    }
+  }
+});
+
+const GANTT_LABELS = ["Parent (wall clock)"].concat(AGENTS.slice(0, 10));
+const GANTT_DATA = [
+  [0, 103.8],
+  [13.1, 42.7], [13.1, 31.9], [13.1, 43.2], [13.1, 50.7],
+  [13.4, 35.5], [13.4, 39.3], [13.4, 52.3], [13.4, 41.6],
+  [59.0, 82.6], [59.0, 88.9]
+];
+const GANTT_COLORS = [GREEN].concat([BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, AMBER, AMBER]);
+
+new Chart(document.getElementById("chartGantt"), {
+  type: "bar",
+  data: {
+    labels: GANTT_LABELS,
+    datasets: [{ label: "Active window", data: GANTT_DATA, backgroundColor: GANTT_COLORS, borderRadius: 4 }]
+  },
+  options: {
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Solve windows after 13:30 (Asia/Shanghai)" },
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: function (c) {
+            return c.raw[0].toFixed(0) + " to " + c.raw[1].toFixed(0) + " min";
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        max: 110,
+        title: { display: true, text: "Minutes after 13:30" },
+        ticks: { stepSize: 10 }
+      }
+    }
+  }
+});
+
+new Chart(document.getElementById("chartCostSolve"), {
+  type: "bar",
+  data: {
+    labels: ["DSH standard", "MCMA peak", "MCMA off-peak"],
+    datasets: [{ label: "USD per solved problem", data: [0.157, 0.050, 0.025], backgroundColor: [RED, BLUE, LIGHT], borderRadius: 5 }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Cost per solved problem (USD)" },
+      legend: { display: false }
+    },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "USD" } } }
+  }
+});
+
+new Chart(document.getElementById("chartTokenSolve"), {
+  type: "bar",
+  data: {
+    labels: ["DSH standard", "MCMA"],
+    datasets: [{ label: "Million tokens per solved problem", data: [9.85, 0.93], backgroundColor: [RED, BLUE], borderRadius: 5 }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Recorded tokens per solved problem" },
+      legend: { display: false },
+      tooltip: { callbacks: { label: function (c) { return c.raw.toFixed(2) + "M tokens"; } } }
+    },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "Million tokens" } } }
+  }
+});
+</script>
+
+</body>
+</html>
