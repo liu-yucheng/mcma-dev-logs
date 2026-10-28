@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The DeepSeek Harness setup for the 24-problem calculus run: standard-mode configs, 19 plugins, the orchestration shape, and the full instructions.md prompt.">
+<title>DSH &mdash; Agents</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin: 18px 0; }
+.step { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.step .step-n { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: .78rem; margin-right: 8px; }
+.prompt { max-height: 620px; overflow: auto; white-space: pre-wrap; }
+.cfg td:first-child { width: 34%; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
+.quote { border-left: 4px solid var(--accent); background: #f3f7fd; padding: 12px 16px; border-radius: 0 8px 8px 0; font-family: "Cascadia Mono", "Courier New", monospace; font-size: .88rem; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>&#129302; Agents</h1>
+    <p class="lede">This chapter shows the DeepSeek Harness setup, the 19 public plugins, the standard-mode configs, and the full task prompt. The run adds no handwritten agent code. The prompt is a 38-line file: <code>instructions.md</code>.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html" aria-current="page">&#129302; Agents</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="reproduction">
+  <h2>&#129516; Reproduction setup</h2>
+  <p>&#128204; The MCMA project built the baseline on DeepAgents and LangChain from Jun&nbsp;29 to Sep&nbsp;29, 2026. This run uses DeepSeek Harness and public plugins. It rebuilds the same functions: read the image, solve, verify, plot, compile, and check.</p>
+  <p>&#9989; The operator wrote no new agent code. All plugins are public packages. The task prompt is one general workflow, so it also applies to other calculus problems.</p>
+  <div class="quote">The run reaches complete functional parity with the earlier MCMA pipeline.</div>
+  <p>&#128034; The run has two platform limits. The DSH PowerShell support causes recurring command-exception cycles. Those cycles add work at each step. The agent also crashed one time with an out-of-video-memory error. Too many LaTeX jobs compiled at the same time. The <a href="plans.html">Future Plans</a> chapter gives the fixes.</p>
+</section>
+
+<section id="setup">
+  <h2>&#129302; Agent setup</h2>
+  <p>&#9881; The test uses DeepSeek Harness (DSH) in standard mode. The default model is <code>deepseek-flash</code> with reasoning effort <code>high</code>. The session uses a workspace-write sandbox and an approval policy of <code>ask</code>.</p>
+
+  <table>
+    <tbody>
+      <tr><th>&#128736; Harness</th><td>DeepSeek Harness (DSH)</td></tr>
+      <tr><th>&#127970; Provider</th><td><code>deepseek-account</code></td></tr>
+      <tr><th>&#129504; Model</th><td><code>deepseek-flash</code></td></tr>
+      <tr><th>&#9881; Agent preset</th><td><code>standard</code></td></tr>
+      <tr><th>&#129300; Reasoning effort</th><td><code>high</code></td></tr>
+      <tr><th>&#128274; File policy</th><td><code>workspace-write</code></td></tr>
+      <tr><th>&#9989; Approval policy</th><td><code>ask</code></td></tr>
+      <tr><th>&#127760; Web search</th><td><code>ddg</code> (DuckDuckGo)</td></tr>
+      <tr><th>&#128193; Working folder</th><td><code>.raw_data/dev-logs-20261027/dsh-standard-mode/</code></td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The session log records the run folder as <code>dsh-plugins-enabled</code>. The published data folder is <code>dsh-standard-mode</code>. The files are the same 24 problem folders.</p>
+
+  <h3>&#128295; Standard-mode configs</h3>
+  <p>&#128204; The profile uses the name <code>standard</code> for two settings: the account process and the agent preset. The values below come from <code>cordis.patch.yml</code> and the session metadata.</p>
+  <div class="two-col">
+    <table class="cfg">
+      <thead><tr><th>Config</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Agent preset</td><td><code>standard</code></td></tr>
+        <tr><td>Account process</td><td><code>standard</code></td></tr>
+        <tr><td>Account step</td><td><code>done</code></td></tr>
+        <tr><td>Purpose</td><td><code>both</code></td></tr>
+        <tr><td>Completion</td><td><code>completed</code></td></tr>
+        <tr><td>Usage display</td><td><code>detailed</code></td></tr>
+        <tr><td>Developer tools</td><td><code>true</code></td></tr>
+      </tbody>
+    </table>
+    <table class="cfg">
+      <thead><tr><th>Config</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Transcript view</td><td><code>standard</code></td></tr>
+        <tr><td>Performance usage</td><td><code>detailed</code></td></tr>
+        <tr><td>Default model</td><td><code>deepseek-flash</code></td></tr>
+        <tr><td>Reasoning effort</td><td><code>high</code></td></tr>
+        <tr><td>Search provider</td><td><code>ddg</code></td></tr>
+        <tr><td>Fetch provider</td><td><code>fs-quality-fetch</code></td></tr>
+        <tr><td>Sandbox</td><td><code>workspace-write</code></td></tr>
+        <tr><td>Approval</td><td><code>ask</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="plugins">
+  <h2>&#128268; Plugins</h2>
+  <p>&#128230; The active profile installs 19 plugin packages. 14 load as profile bundles. 5 are installed packages. The DSH system prompt adds their tools and instructions to the session.</p>
+  <table>
+    <thead><tr><th>Plugin</th><th>Role in this run</th></tr></thead>
+    <tbody>
+      <tr><td>&#128269; <code>dsh-free-search</code></td><td>Free web search with provider fallback.</td></tr>
+      <tr><td>&#128269; <code>@liustack/modsearch</code></td><td>Search commands for packages and code.</td></tr>
+      <tr><td>&#129504; <code>dsh-mnemon</code></td><td>Long-term memory and recall.</td></tr>
+      <tr><td>&#128451; <code>dsh-context</code></td><td>Context management.</td></tr>
+      <tr><td>&#128451; <code>billion-context</code></td><td>Large-context handling.</td></tr>
+      <tr><td>&#128737; <code>cc-safety-net</code></td><td>Safety checks for shell commands.</td></tr>
+      <tr><td>&#128736; <code>dsh-ops</code></td><td>Shell and operations tools, including <code>ops_bash</code>.</td></tr>
+      <tr><td>&#129309; <code>@nanmicoder/dsh-agent-teams</code></td><td>Subagent teams and delegation.</td></tr>
+      <tr><td>&#128176; <code>dsh-cost-meter</code></td><td>Token and cost meter.</td></tr>
+      <tr><td>&#127991; <code>dshmarket</code></td><td>Plugin market.</td></tr>
+      <tr><td>&#127899; <code>dsh-preset-workbench</code></td><td>Preset management.</td></tr>
+      <tr><td>&#127760; <code>dsh-git-graph</code></td><td>Git graph view.</td></tr>
+      <tr><td>&#128444; <code>dsh-better-sidebar</code></td><td>Sidebar UI.</td></tr>
+      <tr><td>&#128421; <code>@michengai/dsh-codex-ui</code></td><td>Session UI.</td></tr>
+      <tr><td>&#128230; <code>@michengai/dsh-archive-manager</code></td><td>Archive manager.</td></tr>
+      <tr><td>&#128218; <code>@michengai/dsh-skills-manager</code></td><td>Skills manager.</td></tr>
+      <tr><td>&#128172; <code>@xmanrui/dsh-im</code></td><td>Messaging integration.</td></tr>
+      <tr><td>&#128196; <code>dsh-univer-office</code></td><td>Office file preview.</td></tr>
+      <tr><td>&#128011; <code>dsh-whale-widget</code></td><td>Desktop widget.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The experiment notes also name <code>dsh-token-saver</code>. It is not in the active profile package, so it did not load in this run.</p>
+  <p class="small">&#128034; The DSH PowerShell support causes recurring command-exception cycles. The remark file names these cycles as the cause of the extra tokens and the extra time. The next run will use <code>dsh-gitbash-new</code> with Git Bash and MSYS2. See <a href="plans.html">Future Plans</a>.</p>
+</section>
+
+<section id="shape">
+  <h2>&#129513; How the run was organized</h2>
+  <p>&#128204; The parent agent does not solve the 24 problems in one sequence. It divides the work into groups. The groups run in parallel. This keeps the wall-clock time at 76 minutes.</p>
+  <div class="steps">
+    <div class="step"><span class="step-n">1</span>&#128214; Read <code>instructions.md</code> and the problem folders.</div>
+    <div class="step"><span class="step-n">2</span>&#9881; Check Python, numpy, sympy, matplotlib, and TeX Live.</div>
+    <div class="step"><span class="step-n">3</span>&#129309; Start 8 subagents. Each subagent gets 3 problems.</div>
+    <div class="step"><span class="step-n">4</span>&#128221; Each subagent writes <code>solution.tex</code>, Python checks, figures, and a PDF.</div>
+    <div class="step"><span class="step-n">5</span>&#128260; Check the output. Start 2 single-problem agents for 15.7.31 and 15.7.32.</div>
+    <div class="step"><span class="step-n">6</span>&#9989; Check the 24 PDFs and finish.</div>
+  </div>
+  <p>&#128202; Total: 1 parent session, 10 solver subagents, 1 Explore subagent, and 2,298 recorded steps. The Results Briefing chapter gives the step and token counts per agent.</p>
+</section>
+
+<section id="prompt">
+  <h2>&#128220; Prompt: <code>instructions.md</code></h2>
+  <p>&#128204; The user sends one short message: <em>&ldquo;Follow ./instructions.md and complete the tasks.&rdquo;</em> The file has 38 lines and 1,845 bytes. It is reproduced below without change.</p>
+  <pre class="prompt"><code># Task Instructions
+
+Solve all math problems in this directory.
+
+This directory consists of:
+
+1. The problem subdirectories.
+2. This `instructions.md`.
+
+Each problem subdirectory contains:
+
+1. A `problem.png`.
+
+In each subdirectory `&lt;subdir&gt;/`, your task is:
+
+1. Read and analyze `&lt;subdir&gt;/problem.png`.
+2. Create a `&lt;subdir&gt;/solution/` directory.
+3. Solve the math problem in `&lt;subdir&gt;/problem.png`.
+Put intermediate step files in the `&lt;subdir&gt;/solution/` directory.
+4. Compose the final solution.
+Put the final solution in a new file at `&lt;subdir&gt;/solution.pdf`.
+
+For each part (part `&lt;i&gt;`) of the math problem, you do the following:
+
+1. Write a step-by-step solution in a LaTeX file at `&lt;subdir&gt;/solution/solution.tex`.
+2. Verify all math deductions by writing and running python script files at `&lt;subdir&gt;/solution/part&lt;i&gt;_step&lt;j&gt;.py`.
+3. Draw all explicitly and implicitly required figures by writing and running python script files at `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.py`.
+4. Save all figures from step 3 at `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.png`.
+5. Insert the figures into your solution LaTeX file at positions close to their corresponding parts.
+6. Explain all math symbols and notations the reader might be unfamiliar with.
+7. In the solution, teach the reader how to solve similar problems.
+8. Use `latexmk` to compile your solution LaTeX file to `&lt;subdir&gt;/solution/solution.pdf`.
+9. Check the solution.
+Ensure that the solution is logically correct and visually clear.
+10. Copy `&lt;subdir&gt;/solution/solution.pdf` to `&lt;subdir&gt;/solution.pdf` when it is ready.
+11. Solution language style: ASD-STE100 non-strict mode with academic US English fallback.
+12. Use `python` to access python. Use `pip` to install necessary libraries like `numpy, sympy, matplotlib`.
+13. TeXLive is already installed.</code></pre>
+
+  <h3>&#128269; What the prompt requires</h3>
+  <table>
+    <thead><tr><th>Rule</th><th>Effect on the run</th></tr></thead>
+    <tbody>
+      <tr><td>&#128247; Read the image</td><td>The agent must analyze <code>problem.png</code> before it writes a solution.</td></tr>
+      <tr><td>&#128193; Use a fixed layout</td><td>Each problem gets <code>solution/solution.tex</code>, step scripts, figure scripts, figures, and <code>solution.pdf</code>.</td></tr>
+      <tr><td>&#129518; Verify with Python</td><td>Each deduction needs a script. The agent must run the script.</td></tr>
+      <tr><td>&#128200; Draw the figures</td><td>The agent must draw every explicit and implicit figure. It must save each figure as PNG.</td></tr>
+      <tr><td>&#128221; Teach the reader</td><td>The solution must explain symbols and show how to solve similar problems.</td></tr>
+      <tr><td>&#128230; Compile and copy</td><td><code>latexmk</code> makes the PDF. The agent copies it to <code>&lt;subdir&gt;/solution.pdf</code>.</td></tr>
+      <tr><td>&#128260; Check the result</td><td>The agent must check that the solution is correct and visually clear.</td></tr>
+      <tr><td>&#9997; Use a fixed style</td><td>ASD-STE100 non-strict mode, with academic US English as the fallback.</td></tr>
+    </tbody>
+  </table>
+  <p>&#128218; The teaching rule is not decoration. The remark file records that all solutions include tutorial contents about how to approach similar math problems. The step scripts and the figures support that goal: each solution is detailed and computationally verified.</p>
+
+  <h3>&#129302; System prompt</h3>
+  <p>&#128204; The DSH system prompt gives the role and the plugin tools. The first two lines are below. The plugin sections add search, memory, safety, cost, and shell rules.</p>
+  <div class="quote">You are an AI agent powered by DeepSeek Harness.<br>You are a coding agent powered by the deepseek-flash model.</div>
+  <p>&#127919; The task prompt does not name a problem family. It defines a general workflow: read, solve, verify, plot, compile, check. This is why the same prompt can serve other calculus problems.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

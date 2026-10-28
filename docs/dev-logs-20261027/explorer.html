@@ -1,0 +1,442 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Result explorer for the 24 canonical solutions and the 24 DeepSeek Harness standard-mode solutions. The problem stays on top. Solution pages scroll below with zoom controls.">
+<title>DSH &mdash; Results Explorer</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../lightbox.css">
+<style>
+.explorer-toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 16px 0 12px; }
+.pill { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; font-size: .78rem; color: var(--muted); }
+.explorer-wrap { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 14px; align-items: start; transition: grid-template-columns .18s ease; }
+.explorer-wrap.sidebar-hidden { grid-template-columns: 0 minmax(0, 1fr); gap: 0; }
+.explorer-wrap.sidebar-hidden .sidebar { display: none; }
+.sidebar { grid-column: 1; border: 1px solid #cfd5dd; border-radius: 10px; background: #fff; overflow: hidden; position: sticky; top: 12px; max-height: calc(100vh - 24px); display: flex; flex-direction: column; }
+.side-head { padding: 10px 12px; background: #f5f6f8; border-bottom: 1px solid #dfe4ea; }
+#search { width: 100%; font: inherit; font-size: .85rem; padding: 7px 11px; border: 1px solid #d4d9e0; border-radius: 7px; background: #fff; }
+#search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(15, 82, 176, .14); }
+.side-hint { margin-top: 6px; font-size: .75rem; color: var(--muted); }
+.collections { overflow: auto; }
+.collection-head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; border: 0; border-bottom: 1px solid var(--line); background: #fff; padding: 9px 12px; font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; text-align: left; }
+.collection-head:hover { background: #f0f3f7; }
+.collection-head .left { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.count { background: #e9edf2; color: var(--muted); border-radius: 999px; padding: 1px 8px; font-size: .72rem; font-weight: 500; }
+.collection.collapsed .problem-list { display: none; }
+.problem-list { list-style: none; margin: 0; padding: 4px; }
+.problem-item { width: 100%; text-align: left; border: 1px solid transparent; background: transparent; border-radius: 6px; padding: 6px 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; font: inherit; font-size: .84rem; color: var(--ink); }
+.problem-item:hover { background: #f0f3f7; }
+.problem-item.active { background: #e3f0fc; border-color: #b9d8f1; }
+.problem-item .grow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.problem-item .meta { color: var(--muted); font-size: .72rem; flex: 0 0 auto; }
+.problem-item.hidden { display: none; }
+.viewer { grid-column: 2; border: 1px solid #cfd5dd; border-radius: 10px; background: #fff; overflow: hidden; height: auto; min-height: 0; position: static; display: flex; flex-direction: column; }
+.explorer-wrap.sidebar-hidden .viewer { grid-column: 1 / -1; }
+.viewer-head { padding: 10px 14px; border-bottom: 1px solid #dfe4ea; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; flex-wrap: wrap; background: #f5f6f8; flex: 0 0 auto; }
+.viewer-head h2 { border: 0; margin: 0; padding: 0; font-size: 1.1rem; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
+.chip2 { background: #fff; border: 1px solid #d4d9e0; border-radius: 999px; padding: 2px 9px; font-size: .74rem; color: var(--muted); }
+.viewer-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.btn2 { border: 1px solid #d4d9e0; background: #fff; border-radius: 6px; padding: 5px 10px; font: inherit; font-size: .8rem; cursor: pointer; color: var(--ink); line-height: 1; }
+.btn2:hover { background: #e9edf2; }
+.btn2:disabled { opacity: .4; cursor: default; }
+.btn2.icon { font-size: .95rem; padding: 5px 8px; min-width: 30px; text-align: center; }
+.tabs { display: flex; gap: 6px; padding: 9px 14px 0; flex-wrap: wrap; flex: 0 0 auto; }
+.tab { border: 1px solid #d4d9e0; background: #fff; border-radius: 6px 6px 0 0; padding: 6px 11px; font: inherit; font-size: .84rem; cursor: pointer; color: var(--muted); }
+.tab:hover { background: #f0f3f7; }
+.tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.viewer-body { flex: 0 0 auto; min-height: 0; display: flex; flex-direction: column; gap: 11px; padding: 11px 14px; overflow: visible; }
+.block { border: 1px solid var(--line); border-radius: 9px; background: #fff; overflow: hidden; display: flex; flex-direction: column; }
+.block-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 7px 11px; background: var(--bg-soft); border-bottom: 1px solid var(--line); font-size: .83rem; flex: 0 0 auto; }
+.block-title { font-weight: 600; }
+.block-meta { color: var(--muted); font-size: .75rem; }
+.problem-block { flex: 0 0 auto; }
+.problem-frame { padding: 9px 11px; display: flex; align-items: center; justify-content: center; max-height: 32vh; overflow: hidden; background: #fff; }
+.problem-img { max-width: 100%; max-height: 30vh; width: auto; height: auto; display: block; cursor: zoom-in; }
+.solution-block { flex: 0 0 auto; min-height: 0; }
+.solution-scroll { flex: 0 0 auto; height: 90vh; min-height: 0; overflow: auto; background: #e9edf2; padding: 11px; }
+.page-stack { --zoom: 1; }
+.page-card { width: calc(var(--zoom) * 100%); margin: 0 auto 12px; }
+.page-card:last-child { margin-bottom: 0; }
+.page-img { width: 100%; max-width: none; height: auto; display: block; background: #fff; box-shadow: 0 2px 10px rgba(24, 32, 42, .18); cursor: zoom-in; }
+.page-card figcaption { text-align: center; font-size: .73rem; color: var(--muted); margin-top: 5px; }
+.zoom-controls { display: flex; align-items: center; gap: 4px; }
+.zoom-label { min-width: 46px; text-align: center; font-size: .77rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.solution-foot { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding: 7px 11px; border-top: 1px solid var(--line); font-size: .77rem; color: var(--muted); }
+.solution-foot a { color: var(--accent); text-decoration: none; }
+.solution-foot a:hover { text-decoration: underline; }
+.status { border-top: 1px solid #dfe4ea; padding: 5px 14px; font-size: .74rem; color: var(--muted); font-family: Consolas, "Courier New", monospace; background: #f5f6f8; flex: 0 0 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 980px) {
+  .explorer-wrap { grid-template-columns: 1fr; gap: 12px; }
+  .explorer-wrap.sidebar-hidden { grid-template-columns: 1fr; }
+  .sidebar { grid-column: 1; position: static; max-height: 340px; }
+  .viewer { grid-column: 1; position: static; height: auto; min-height: 0; }
+  .viewer-body { overflow: visible; }
+  .problem-frame { max-height: 40vh; }
+  .problem-img { max-height: 38vh; }
+}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report</div>
+    <h1>&#128269; Results Explorer</h1>
+    <p class="lede">The problem stays on top. The solution pages scroll below at 200 DPI. Use the zoom buttons to enlarge the pages, or click a page to open the full-size viewer. The sidebar holds the problem list and collapses to free horizontal space.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Agents</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html" aria-current="page">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<div class="explorer-toolbar">
+  <button class="btn2" type="button" data-sidebar-toggle aria-expanded="true" aria-controls="sidebar">&#128218; Hide list</button>
+  <span class="pill">&#128230; 24 problems</span>
+  <span class="pill">&#128196; 137 PDF pages</span>
+  <span class="pill">&#128200; 49 figures</span>
+</div>
+
+<div class="explorer-wrap" id="explorerWrap">
+
+  <aside class="sidebar" id="sidebar" aria-label="Problem collections">
+    <div class="side-head">
+      <input id="search" type="search" placeholder="&#128269; Filter problem IDs" aria-label="Filter problem IDs">
+      <div class="side-hint">Click a problem. Use &#8592; and &#8594; to move.</div>
+    </div>
+    <div class="collections">
+      <div class="collection" id="collection-dsh">
+        <button class="collection-head" type="button" aria-expanded="true" data-target="list-dsh">
+          <span class="left">&#129302; DSH standard mode</span>
+          <span class="count">24</span>
+        </button>
+        <ul class="problem-list" id="list-dsh"></ul>
+      </div>
+      <div class="collection" id="collection-canonical">
+        <button class="collection-head" type="button" aria-expanded="true" data-target="list-canonical">
+          <span class="left">&#128218; Canonical solutions</span>
+          <span class="count">24</span>
+        </button>
+        <ul class="problem-list" id="list-canonical"></ul>
+      </div>
+    </div>
+  </aside>
+
+  <div class="viewer">
+    <div class="viewer-head">
+      <div>
+        <h2 id="viewerTitle">&#128196; calculus-15.7.17</h2>
+        <div class="chips" id="viewerChips"></div>
+      </div>
+      <div class="viewer-actions">
+        <button class="btn2 icon" type="button" data-sidebar-toggle data-icon-toggle="true" aria-label="Toggle problem list" title="Toggle problem list">&#128218;</button>
+        <button class="btn2" type="button" id="prevBtn" aria-label="Previous problem">&#8592; Prev</button>
+        <button class="btn2" type="button" id="nextBtn" aria-label="Next problem">Next &#8594;</button>
+      </div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Solution source">
+      <button class="tab active" type="button" data-mode="dsh" role="tab" aria-selected="true">&#129302; DSH standard mode</button>
+      <button class="tab" type="button" data-mode="canonical" role="tab" aria-selected="false">&#128218; Canonical solution</button>
+    </div>
+    <div class="viewer-body" id="viewerBody"></div>
+    <div class="status" id="status">Ready.</div>
+  </div>
+
+</div>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<script src="../lightbox.js"></script>
+<script>
+const PROBLEMS = [
+  { id: "calculus-15.7.17", figures: 2, scripts: 4, pdfMB: 0.60, pages: 5 },
+  { id: "calculus-15.7.18", figures: 2, scripts: 4, pdfMB: 0.60, pages: 6 },
+  { id: "calculus-15.7.20", figures: 2, scripts: 4, pdfMB: 0.60, pages: 6 },
+  { id: "calculus-15.7.21", figures: 2, scripts: 3, pdfMB: 0.65, pages: 5 },
+  { id: "calculus-15.7.22", figures: 2, scripts: 3, pdfMB: 0.84, pages: 5 },
+  { id: "calculus-15.7.23", figures: 3, scripts: 5, pdfMB: 0.60, pages: 6 },
+  { id: "calculus-15.7.27", figures: 2, scripts: 3, pdfMB: 0.30, pages: 5 },
+  { id: "calculus-15.7.28", figures: 2, scripts: 3, pdfMB: 0.39, pages: 5 },
+  { id: "calculus-15.7.29", figures: 2, scripts: 3, pdfMB: 0.42, pages: 6 },
+  { id: "calculus-15.7.30", figures: 2, scripts: 3, pdfMB: 0.62, pages: 6 },
+  { id: "calculus-15.7.31", figures: 2, scripts: 3, pdfMB: 0.53, pages: 7 },
+  { id: "calculus-15.7.32", figures: 2, scripts: 3, pdfMB: 0.48, pages: 8 },
+  { id: "calculus-15.7.39", figures: 2, scripts: 3, pdfMB: 0.65, pages: 6 },
+  { id: "calculus-15.7.40", figures: 2, scripts: 3, pdfMB: 0.60, pages: 6 },
+  { id: "calculus-15.7.46", figures: 2, scripts: 3, pdfMB: 0.46, pages: 5 },
+  { id: "calculus-15.7.47", figures: 2, scripts: 4, pdfMB: 0.57, pages: 5 },
+  { id: "calculus-15.7.49", figures: 2, scripts: 3, pdfMB: 0.58, pages: 6 },
+  { id: "calculus-15.7.50", figures: 2, scripts: 3, pdfMB: 0.52, pages: 5 },
+  { id: "calculus-15.7.54", figures: 2, scripts: 3, pdfMB: 0.55, pages: 5 },
+  { id: "calculus-15.7.55", figures: 2, scripts: 5, pdfMB: 0.60, pages: 6 },
+  { id: "calculus-15.8.14", figures: 2, scripts: 2, pdfMB: 0.55, pages: 5 },
+  { id: "calculus-15.8.26", figures: 2, scripts: 5, pdfMB: 1.17, pages: 7 },
+  { id: "calculus-15.9.43", figures: 2, scripts: 2, pdfMB: 0.28, pages: 6 },
+  { id: "calculus-15.9.45", figures: 2, scripts: 2, pdfMB: 1.29, pages: 5 }
+];
+
+const ZOOM_MIN = 0.5;
+const ZOOM_MAX = 2.5;
+const ZOOM_STEP = 0.25;
+const LS_ZOOM = "dsh-explorer-zoom";
+const LS_SIDEBAR = "dsh-explorer-sidebar";
+
+function readZoom() {
+  const v = parseFloat(localStorage.getItem(LS_ZOOM));
+  if (!isFinite(v)) return 1;
+  return Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, v));
+}
+
+const state = { index: 0, mode: "dsh", zoom: readZoom() };
+const $ = function (id) { return document.getElementById(id); };
+const wrap = $("explorerWrap");
+
+function shortName(id) { return id.replace("calculus-", ""); }
+
+function buildList(listId, mode) {
+  const list = $(listId);
+  list.innerHTML = "";
+  PROBLEMS.forEach(function (p, i) {
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "problem-item";
+    btn.dataset.mode = mode;
+    btn.dataset.id = p.id;
+    const meta = mode === "dsh" ? p.figures + " fig" : "ref";
+    btn.innerHTML = '<span class="grow">&#128196; ' + shortName(p.id) + '</span><span class="meta">' + meta + '</span>';
+    btn.addEventListener("click", function () { select(i, mode, true); });
+    li.appendChild(btn);
+    list.appendChild(li);
+  });
+}
+
+function markActive() {
+  document.querySelectorAll(".problem-item").forEach(function (el) {
+    const on = el.dataset.mode === state.mode && el.dataset.id === PROBLEMS[state.index].id;
+    el.classList.toggle("active", on);
+  });
+  document.querySelectorAll(".tab").forEach(function (el) {
+    const on = el.dataset.mode === state.mode;
+    el.classList.toggle("active", on);
+    el.setAttribute("aria-selected", on ? "true" : "false");
+  });
+}
+
+function updateStatus() {
+  const p = PROBLEMS[state.index];
+  const what = state.mode === "dsh" ? "DSH standard mode · " + p.pages + " pages" : "Canonical solution · 1 image";
+  $("status").textContent = what + " · zoom " + Math.round(state.zoom * 100) + "%";
+}
+
+function applyZoom() {
+  const stack = $("pageStack");
+  if (stack) stack.style.setProperty("--zoom", state.zoom);
+  const label = $("zoomLabel");
+  if (label) label.textContent = Math.round(state.zoom * 100) + "%";
+  const out = $("zoomOut");
+  const inn = $("zoomIn");
+  if (out) out.disabled = state.zoom <= ZOOM_MIN;
+  if (inn) inn.disabled = state.zoom >= ZOOM_MAX;
+  updateStatus();
+}
+
+function changeZoom(delta) {
+  state.zoom = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, Math.round((state.zoom + delta) / ZOOM_STEP) * ZOOM_STEP));
+  localStorage.setItem(LS_ZOOM, String(state.zoom));
+  applyZoom();
+}
+
+function setZoom(value) {
+  state.zoom = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, value));
+  localStorage.setItem(LS_ZOOM, String(state.zoom));
+  applyZoom();
+}
+
+function problemBlock(id, mode) {
+  const src = mode === "dsh"
+    ? "assets/dsh-standard-mode/" + id + "/problem.png"
+    : "assets/canonical-solutions/" + id + "/problem.png";
+  const source = mode === "dsh" ? "DSH standard mode" : "Canonical set";
+  return '<section class="block problem-block">' +
+    '<div class="block-head">' +
+      '<span class="block-title">&#10067; problem.png</span>' +
+      '<span class="block-meta">' + source + ' · click the image to zoom</span>' +
+    '</div>' +
+    '<div class="problem-frame"><img class="problem-img zimg" src="' + src + '" alt="Problem statement for ' + id + '"></div>' +
+  '</section>';
+}
+
+function solutionBlock(p, mode) {
+  const id = p.id;
+  let cards;
+  let title;
+  let foot;
+
+  if (mode === "dsh") {
+    const items = [];
+    for (let n = 1; n <= p.pages; n++) {
+      items.push('<figure class="page-card">' +
+        '<img class="page-img zimg" loading="lazy" src="assets/dsh-standard-mode/' + id + '/pages/page-' + n + '.webp" alt="Solution page ' + n + ' for ' + id + '">' +
+        '<figcaption>Page ' + n + ' / ' + p.pages + '</figcaption>' +
+      '</figure>');
+    }
+    cards = items.join("");
+    title = '&#128196; solution.pdf · ' + p.pages + ' pages · 200 DPI renders';
+    foot = '<span>&#9989; ' + p.pages + ' pages · ' + p.pdfMB.toFixed(2) + ' MB</span>' +
+      '<span><a href="assets/dsh-standard-mode/' + id + '/solution.pdf" target="_blank" rel="noopener">Open original PDF &#8599;</a> · <a href="assets/dsh-standard-mode/' + id + '/solution.pdf" download>Download</a></span>';
+  } else {
+    cards = '<figure class="page-card">' +
+      '<img class="page-img zimg" loading="lazy" src="assets/canonical-solutions/' + id + '/solution.png" alt="Canonical solution for ' + id + '">' +
+      '<figcaption>Canonical solution</figcaption>' +
+    '</figure>';
+    title = '&#9989; Canonical solution · click to zoom';
+    foot = '<span>&#128218; Reference set</span><span>1 solution image</span>';
+  }
+
+  return '<section class="block solution-block">' +
+    '<div class="block-head">' +
+      '<span class="block-title">' + title + '</span>' +
+      '<div class="zoom-controls" role="group" aria-label="Zoom solution">' +
+        '<button class="btn2" type="button" id="zoomOut" aria-label="Zoom out">&#8722;</button>' +
+        '<span class="zoom-label" id="zoomLabel">' + Math.round(state.zoom * 100) + '%</span>' +
+        '<button class="btn2" type="button" id="zoomIn" aria-label="Zoom in">+</button>' +
+        '<button class="btn2" type="button" id="zoomFit" aria-label="Fit to width">Fit</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="solution-scroll" id="solutionScroll"><div class="page-stack" id="pageStack">' + cards + '</div></div>' +
+    '<div class="solution-foot">' + foot + '</div>' +
+  '</section>';
+}
+
+function render() {
+  const p = PROBLEMS[state.index];
+  const id = p.id;
+  $("viewerTitle").textContent = "📄 " + id;
+  $("viewerChips").innerHTML = state.mode === "dsh"
+    ? '<span class="chip2">&#128200; ' + p.figures + ' figures</span>' +
+      '<span class="chip2">&#129518; ' + p.scripts + ' step scripts</span>' +
+      '<span class="chip2">&#128196; ' + p.pages + '-page PDF</span>' +
+      '<span class="chip2">&#9989; solved</span>'
+    : '<span class="chip2">&#128200; 2 images</span>' +
+      '<span class="chip2">&#128218; reference set</span>' +
+      '<span class="chip2">&#9989; canonical</span>';
+
+  $("viewerBody").innerHTML = problemBlock(id, state.mode) + solutionBlock(p, state.mode);
+  $("solutionScroll").scrollTop = 0;
+
+  $("zoomOut").addEventListener("click", function () { changeZoom(-ZOOM_STEP); });
+  $("zoomIn").addEventListener("click", function () { changeZoom(ZOOM_STEP); });
+  $("zoomFit").addEventListener("click", function () { setZoom(1); });
+  applyZoom();
+  markActive();
+}
+
+function select(index, mode, updateHash) {
+  state.index = (index + PROBLEMS.length) % PROBLEMS.length;
+  state.mode = mode;
+  render();
+  if (updateHash) {
+    history.replaceState(null, "", "#" + mode + "/" + PROBLEMS[state.index].id);
+  }
+}
+
+function parseHash() {
+  const raw = location.hash.replace(/^#/, "");
+  const parts = raw.split("/");
+  if (parts.length === 2 && (parts[0] === "dsh" || parts[0] === "canonical")) {
+    const i = PROBLEMS.findIndex(function (p) { return p.id === parts[1]; });
+    if (i >= 0) { state.index = i; state.mode = parts[0]; }
+  }
+}
+
+function filter() {
+  const q = $("search").value.trim().toLowerCase();
+  PROBLEMS.forEach(function (p) {
+    const match = p.id.toLowerCase().indexOf(q) >= 0;
+    document.querySelectorAll('.problem-item[data-id="' + p.id + '"]').forEach(function (el) {
+      el.classList.toggle("hidden", !match);
+    });
+  });
+  const shown = document.querySelectorAll(".problem-item:not(.hidden)").length / 2;
+  $("status").textContent = q ? "Filter: " + q + " (" + shown + " problems)" : "";
+  if (!q) updateStatus();
+}
+
+function setSidebarHidden(hidden, persist) {
+  wrap.classList.toggle("sidebar-hidden", hidden);
+  if (persist) localStorage.setItem(LS_SIDEBAR, hidden ? "hidden" : "open");
+  document.querySelectorAll("[data-sidebar-toggle]").forEach(function (btn) {
+    btn.setAttribute("aria-expanded", hidden ? "false" : "true");
+    if (btn.dataset.iconToggle !== "true") {
+      btn.innerHTML = hidden ? "&#128218; Show list" : "&#128218; Hide list";
+    }
+  });
+}
+
+buildList("list-dsh", "dsh");
+buildList("list-canonical", "canonical");
+parseHash();
+render();
+
+document.querySelectorAll(".tab").forEach(function (el) {
+  el.addEventListener("click", function () { select(state.index, el.dataset.mode, true); });
+});
+
+$("prevBtn").addEventListener("click", function () { select(state.index - 1, state.mode, true); });
+$("nextBtn").addEventListener("click", function () { select(state.index + 1, state.mode, true); });
+$("search").addEventListener("input", filter);
+
+document.querySelectorAll("[data-sidebar-toggle]").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    setSidebarHidden(!wrap.classList.contains("sidebar-hidden"), true);
+  });
+});
+
+document.querySelectorAll(".collection-head").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    const col = btn.closest(".collection");
+    col.classList.toggle("collapsed");
+    btn.setAttribute("aria-expanded", col.classList.contains("collapsed") ? "false" : "true");
+  });
+});
+
+document.addEventListener("keydown", function (e) {
+  if (document.activeElement && document.activeElement.tagName === "INPUT") return;
+  if (e.key === "ArrowLeft") { e.preventDefault(); select(state.index - 1, state.mode, true); }
+  if (e.key === "ArrowRight") { e.preventDefault(); select(state.index + 1, state.mode, true); }
+  if (e.key === "+" || e.key === "=") { e.preventDefault(); changeZoom(ZOOM_STEP); }
+  if (e.key === "-" || e.key === "_") { e.preventDefault(); changeZoom(-ZOOM_STEP); }
+  if (e.key === "0") { e.preventDefault(); setZoom(1); }
+});
+
+window.addEventListener("hashchange", function () {
+  parseHash();
+  render();
+});
+
+if (localStorage.getItem(LS_SIDEBAR) === "hidden") {
+  setSidebarHidden(true, false);
+}
+</script>
+
+</body>
+</html>
