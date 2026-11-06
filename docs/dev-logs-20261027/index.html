@@ -64,7 +64,7 @@
     <p>&#128176; <strong>Cost.</strong> The recorded cost is $3.77. This is about 3.1 times the peak-hour cost of the earlier MCMA <code>deepseek-flash</code> run.</p>
     <p>&#129689; <strong>Tokens.</strong> The session recorded 236.4M tokens. 97.3% are cache reads. New input and output are 6.4M tokens.</p>
     <p>&#128218; <strong>Teaching.</strong> Every solution explains the symbols and shows how to solve similar problems. This is a prompt rule, not an optional extra.</p>
-    <p>&#128034; <strong>Overhead.</strong> The remark file reports 3 times more tokens and 3 times more time. The cause is the DSH PowerShell support: recurring command-exception cycles. The <a href="plans.html">Future Plans</a> chapter gives the fix.</p>
+    <p>&#128034; <strong>Overhead.</strong> The remark file reports 3 times more tokens. The cause is the DSH PowerShell support: recurring command-exception cycles. The <a href="plans.html">Future Plans</a> chapter gives the fix.</p>
   </div>
 </section>
 
@@ -110,7 +110,7 @@
       <tr><th>&#128193; Data</th><td><code>.raw_data/dev-logs-20261027/</code></td></tr>
     </tbody>
   </table>
-  <p class="small">The remark file records 76 minutes. The session log gives the same 76 minutes from the first subagent launch to the last finish. The remark file also records 3 times the tokens and 3 times the time. The session data shows the token and cost increase, but not a 3-times wall-clock slowdown, because the subagents run in parallel. The window includes one out-of-video-memory crash. The remark file links that crash to too many concurrent LaTeX compilations. The briefing chapter gives the measured values. The <a href="plans.html">Future Plans</a> chapter gives the fixes.</p>
+  <p class="small">The remark file records 76 minutes. The session log gives the same 76 minutes from the first subagent launch to the last finish. The remark file also records 3 times the tokens. The session data shows the token and cost increase. The wall clock stays close to the earlier run because the subagents run in parallel. The window includes one out-of-video-memory crash. The remark file links that crash to too many concurrent LaTeX compilations. The briefing chapter gives the measured values. The <a href="plans.html">Future Plans</a> chapter gives the fixes.</p>
 </section>
 
 </main>

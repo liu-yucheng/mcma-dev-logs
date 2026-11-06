@@ -26,7 +26,7 @@ td.num.warn-num { color: #b23a1c; font-weight: 600; }
   <div class="container">
     <div class="kicker">Experiment Report</div>
     <h1>&#128202; Results Briefing</h1>
-    <p class="lede">&#9989; The agent solved all 24 problems. &#128200; It made 49 figures and 24 PDFs in 76 minutes. &#129518; It used 2,298 steps and 236.4M recorded tokens. &#129516; It reproduces the MCMA pipeline with public plugins and no new agent code. &#128034; The remark file reports 3 times the tokens and 3 times the time. It crashed once with an out-of-video-memory error. This chapter shows where the time, tokens, and money went.</p>
+    <p class="lede">&#9989; The agent solved all 24 problems. &#128200; It made 49 figures and 24 PDFs in 76 minutes. &#129518; It used 2,298 steps and 236.4M recorded tokens. &#129516; It reproduces the MCMA pipeline with public plugins and no new agent code. &#128034; The remark file reports 3 times the tokens. It does not state a speed factor. The agent crashed once with an out-of-video-memory error. This chapter shows where the time, tokens, and money went.</p>
   </div>
 </header>
 
@@ -61,13 +61,13 @@ td.num.warn-num { color: #b23a1c; font-weight: 600; }
 
 <section id="records">
   <h2>&#129534; Two records of the same run</h2>
-  <p>&#128204; The remark file is a short summary. The session log is the machine record. The two records agree on the result, the 76-minute wall clock, and the extra token cost. They use different measures for speed, tokens, and stability.</p>
+  <p>&#128204; The remark file is a short summary. The session log is the machine record. The two records agree on the result, the 76-minute wall clock, and the extra token cost. The session log gives the measured timing, tokens, cost, and stability. The remark file gives the operator summary.</p>
   <table>
     <thead><tr><th>Item</th><th>Remark file</th><th>Session log</th></tr></thead>
     <tbody>
       <tr><td>&#9989; Solved</td><td>24 / 24</td><td>24 / 24 PDFs are present</td></tr>
       <tr><td>&#9201; Wall clock</td><td>76 minutes</td><td>76 minutes from the first subagent launch to the last finish</td></tr>
-      <tr><td>&#128034; Speed</td><td>&ldquo;3 times slower than the original MCMA&rdquo;</td><td>76 minutes; the MCMA reference is 81.5 minutes; 8 subagents run in parallel</td></tr>
+      <tr><td>&#128034; Speed</td><td>Not stated</td><td>76 minutes; the MCMA reference is 81.5 minutes; 8 subagents run in parallel</td></tr>
       <tr><td>&#129689; Token load</td><td>&ldquo;burns 3 times the tokens used by the original MCMA&rdquo;</td><td>236.4M recorded tokens; 97.3% are cache reads</td></tr>
       <tr><td>&#128176; Cost</td><td>Not stated</td><td>$3.77; 3.1 times the MCMA peak-hour cost</td></tr>
       <tr><td>&#129504; Process</td><td>&ldquo;All solutions are detailed and computationally verified.&rdquo;</td><td>2,298 steps; 2 redo agents; 95.8 steps per problem</td></tr>
@@ -79,7 +79,7 @@ td.num.warn-num { color: #b23a1c; font-weight: 600; }
     <p>&#128161; <strong>Why the token counts differ from the remark.</strong> The DSH total counts every cache read. The earlier MCMA total also includes cache reads, but the DSH agent sends much more context. The raw token total is 10.6 times larger. The cost is 3.1 times larger. The output token total is 2.5 times larger. The 3-times claim in the remark matches the cost factor.</p>
   </div>
   <div class="callout">
-    <p>&#128034; <strong>Why the speed claim needs a note.</strong> The remark file says the agent is 3 times slower. The recorded wall clock does not show a 3-times slowdown: DSH finishes in 76 minutes, and the MCMA reference takes 81.5 minutes. DSH runs 8 subagents in parallel. The remark file attributes the extra work to the DSH PowerShell support. Recurring command-exception cycles cause a retry at each step. The token and cost totals show the extra work. The wall clock does not show it, because many subagents run at the same time.</p>
+    <p>&#128034; <strong>Why the wall clock needs a note.</strong> The remark file does not state a speed factor. The recorded wall clock is 76 minutes, and the MCMA reference takes 81.5 minutes. DSH runs 8 subagents in parallel. The remark file attributes the extra token work to the DSH PowerShell support. Recurring command-exception cycles cause a retry at each step. The token and cost totals show the extra work. The wall clock does not show it, because many subagents run at the same time.</p>
   </div>
 </section>
 
@@ -207,7 +207,7 @@ td.num.warn-num { color: #b23a1c; font-weight: 600; }
     <li>&#128218; <strong>Teaching.</strong> Each solution is detailed, verified by Python, and includes tutorial content for similar problems.</li>
     <li>&#128200; <strong>Output.</strong> The run gives 49 figures and 24 PDFs (14.5 MB). The figures are clear and labeled.</li>
     <li>&#128176; <strong>Cost.</strong> The run costs $3.77. This is 3.1 times the earlier MCMA peak-hour cost for the same success rate.</li>
-    <li>&#128034; <strong>Overhead.</strong> The remark file reports 3 times the tokens and 3 times the time. The cause is the DSH PowerShell support. The plan is Git Bash, MSYS2, and <code>dsh-gitbash-new</code>. See <a href="plans.html">Future Plans</a>.</li>
+    <li>&#128034; <strong>Overhead.</strong> The remark file reports 3 times the tokens. It does not report a wall-clock factor. The cause is the DSH PowerShell support. The plan is Git Bash, MSYS2, and <code>dsh-gitbash-new</code>. See <a href="plans.html">Future Plans</a>.</li>
   </ul>
 </section>
 
