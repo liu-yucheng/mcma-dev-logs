@@ -273,7 +273,7 @@ function setZoom(value) {
 
 function problemBlock(id, mode) {
   const src = mode === "dsh"
-    ? "assets/dsh-standard-mode/" + id + "/problem.png"
+    ? "assets/dsh-deepseek-flash/" + id + "/problem.png"
     : "assets/canonical-solutions/" + id + "/problem.png";
   const source = mode === "dsh" ? "DSH standard mode" : "Canonical set";
   return '<section class="block problem-block">' +
@@ -295,14 +295,14 @@ function solutionBlock(p, mode) {
     const items = [];
     for (let n = 1; n <= p.pages; n++) {
       items.push('<figure class="page-card">' +
-        '<img class="page-img zimg" loading="lazy" src="assets/dsh-standard-mode/' + id + '/pages/page-' + n + '.webp" alt="Solution page ' + n + ' for ' + id + '">' +
+        '<img class="page-img zimg" loading="lazy" src="assets/dsh-deepseek-flash/' + id + '/pages/page-' + n + '.webp" alt="Solution page ' + n + ' for ' + id + '">' +
         '<figcaption>Page ' + n + ' / ' + p.pages + '</figcaption>' +
       '</figure>');
     }
     cards = items.join("");
     title = '&#128196; solution.pdf · ' + p.pages + ' pages · 200 DPI renders';
     foot = '<span>&#9989; ' + p.pages + ' pages · ' + p.pdfMB.toFixed(2) + ' MB</span>' +
-      '<span><a href="assets/dsh-standard-mode/' + id + '/solution.pdf" target="_blank" rel="noopener">Open original PDF &#8599;</a> · <a href="assets/dsh-standard-mode/' + id + '/solution.pdf" download>Download</a></span>';
+      '<span><a href="assets/dsh-deepseek-flash/' + id + '/solution.pdf" target="_blank" rel="noopener">Open original PDF &#8599;</a> · <a href="assets/dsh-deepseek-flash/' + id + '/solution.pdf" download>Download</a></span>';
   } else {
     cards = '<figure class="page-card">' +
       '<img class="page-img zimg" loading="lazy" src="assets/canonical-solutions/' + id + '/solution.png" alt="Canonical solution for ' + id + '">' +
