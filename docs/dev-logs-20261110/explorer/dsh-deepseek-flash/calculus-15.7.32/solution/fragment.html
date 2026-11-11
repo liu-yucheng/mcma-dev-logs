@@ -1,0 +1,147 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 32</p>
+<h1>Six Iterated Integrals for a Tetrahedron</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Express the integral</p>
+<div class="equation">\[ \iiint_{E} f(x,y,z) \, dV \]</div>
+<p>as an iterated integral in six different ways. The solid \(E\) is bounded by the planes
+\(x = 2\), \(y = 2\), \(z = 0\), and \(x + y - 2z = 2\).</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>Each plane cuts a face of the solid. A corner is the common point of three of the planes:</p>
+<div class="equation">\[ x = 2,\ z = 0,\ x + y - 2z = 2 \ \Longrightarrow\ y = 0, \]</div>
+<div class="equation">\[ y = 2,\ z = 0,\ x + y - 2z = 2 \ \Longrightarrow\ x = 0, \]</div>
+<div class="equation">\[ x = 2,\ y = 2,\ z = 0 \ \Longrightarrow\ z = 0, \]</div>
+<div class="equation">\[ x = 2,\ y = 2,\ x + y - 2z = 2 \ \Longrightarrow\ z = 1. \]</div>
+<p>The corners are \(A = (2,0,0)\), \(B = (0,2,0)\), \(C = (2,2,0)\), and \(D = (2,2,1)\).
+The solid is the tetrahedron \(ABCD\). Its faces are the triangle \(ABC\) in the plane \(z = 0\),
+the triangle \(ACD\) in the plane \(x = 2\), the triangle \(BCD\) in the plane \(y = 2\), and
+the triangle \(ABD\) in the plane \(x + y - 2z = 2\).</p>
+
+<figure>
+<img data-figure="part1_figure1.png" alt="The tetrahedron with vertices A(2,0,0), B(0,2,0), C(2,2,0), D(2,2,1) and its four faces">
+<figcaption>The tetrahedron \(E\). Each of the four translucent panels lies in one of the
+bounding planes, and the legend names the plane of each panel. The vertices are labelled
+\(A\), \(B\), and \(D\). The vertex \(C = (2,2,0)\) sits at the foot of the edge \(DC\)
+near the center of the base, where a label would overlap the base outline, so it is omitted.
+The red segment is a typical vertical fibre. It starts on the base \(z = 0\) and ends on the
+sloping face at \(z = (x + y - 2)/2\).</figcaption>
+</figure>
+
+<p>Every point of the base has \(z = 0\) and \(x + y \ge 2\), and the apex \(D\) gives
+\(x + y - 2z = 2\). Thus \(E\) lies in the half-space \(x + y - 2z \ge 2\), together with
+\(x \le 2\), \(y \le 2\), and \(z \ge 0\). Solve the first inequality for \(z\):</p>
+<div class="equation">\[ z \le \frac{x + y - 2}{2}. \]</div>
+<p>The upper bound is negative when \(x + y < 2\), so the base is the triangle
+\(T = \{(x,y) : 0 \le x \le 2,\ 2 - x \le y \le 2\}\). The base has area \(2\) and the apex
+\(D\) has height \(1\), so the volume is \(2/3\).</p>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Put \(z\) first</h3>
+<p>Fix a point \((x,y)\) of the base \(T\). The vertical fibre above it runs from the base to the
+sloping face:</p>
+<div class="equation">\[ 0 \le z \le \frac{x + y - 2}{2}. \]</div>
+<p>Integrate \(z\) first, then \(y\), then \(x\). The base \(T\) gives \(0 \le x \le 2\) and
+\(2 - x \le y \le 2\):</p>
+<div class="equation">\[ \iiint_{E} f \, dV
+= \int_{0}^{2} \int_{2-x}^{2} \int_{0}^{(x+y-2)/2} f(x,y,z) \, dz \, dy \, dx. \]</div>
+<p>Swap the two outer integrations. The same triangle \(T\) reads \(0 \le y \le 2\) and
+\(2 - y \le x \le 2\):</p>
+<div class="equation">\[ \iiint_{E} f \, dV
+= \int_{0}^{2} \int_{2-y}^{2} \int_{0}^{(x+y-2)/2} f(x,y,z) \, dz \, dx \, dy. \]</div>
+
+<h3>Step 2 &mdash; Put \(y\) first</h3>
+<p>Project \(E\) onto the \(xz\)-plane. The face \(x = 2\) and the face \(z = 0\) are vertical
+planes, and the sloping plane gives the lower limit for \(y\):</p>
+<div class="equation">\[ x + y - 2z \ge 2 \ \Longrightarrow\ y \ge 2 + 2z - x. \]</div>
+<p>The plane \(y = 2\) gives the upper limit. The projection is the triangle
+\(0 \le x \le 2\), \(0 \le z \le x/2\), because the lower limit must not exceed \(2\):</p>
+<div class="equation">\[ \iiint_{E} f \, dV
+= \int_{0}^{2} \int_{0}^{x/2} \int_{2+2z-x}^{2} f(x,y,z) \, dy \, dz \, dx. \]</div>
+<p>Swap the two outer integrations again. The triangle \(0 \le x \le 2\), \(0 \le z \le x/2\)
+also reads \(0 \le z \le 1\) and \(2z \le x \le 2\):</p>
+<div class="equation">\[ \iiint_{E} f \, dV
+= \int_{0}^{1} \int_{2z}^{2} \int_{2+2z-x}^{2} f(x,y,z) \, dy \, dx \, dz. \]</div>
+
+<h3>Step 3 &mdash; Put \(x\) first</h3>
+<p>The solid is symmetric in \(x\) and \(y\): the planes \(x = 2\) and \(y = 2\) play the same
+role, and the sloping plane is symmetric under the exchange of \(x\) and \(y\). Project \(E\)
+onto the \(yz\)-plane instead. The sloping plane gives the lower limit for \(x\):</p>
+<div class="equation">\[ x \ge 2 + 2z - y, \qquad x \le 2, \]</div>
+<p>and the projection is the triangle \(0 \le y \le 2\), \(0 \le z \le y/2\). Hence</p>
+<div class="equation">\[ \iiint_{E} f \, dV
+= \int_{0}^{2} \int_{0}^{y/2} \int_{2+2z-y}^{2} f(x,y,z) \, dx \, dz \, dy. \]</div>
+<p>Swap the two outer integrations. The triangle \(0 \le y \le 2\), \(0 \le z \le y/2\) also reads
+\(0 \le z \le 1\) and \(2z \le y \le 2\):</p>
+<div class="equation">\[ \iiint_{E} f \, dV
+= \int_{0}^{1} \int_{2z}^{2} \int_{2+2z-y}^{2} f(x,y,z) \, dx \, dy \, dz. \]</div>
+
+<h3>Step 4 &mdash; Check the six orders with \(f = 1\)</h3>
+<p>Set \(f = 1\). Each iterated integral then returns the volume of \(E\), which is \(2/3\).
+Substitute \(f = 1\) in the first order and integrate:</p>
+<div class="equation">\[ \int_{0}^{2} \int_{2-x}^{2} \frac{x + y - 2}{2} \, dy \, dx
+= \int_{0}^{2} \left[ \frac{(x + y - 2)^{2}}{4} \right]_{2-x}^{2} dx
+= \int_{0}^{2} \frac{x^{2}}{4} \, dx
+= \frac{2}{3}. \]</div>
+<p>The middle integral uses \(y = 2\), where the numerator is \(x\), and \(y = 2 - x\), where the
+numerator is \(0\). All six orders give \(2/3\) (see the verification section).</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<p>The six orders of integration are</p>
+<div class="equation">\[
+\begin{aligned}
+&\int_{0}^{2} \int_{2-x}^{2} \int_{0}^{(x+y-2)/2} f \, dz \, dy \, dx
+&&\hspace{2.4em}\int_{0}^{2} \int_{2-y}^{2} \int_{0}^{(x+y-2)/2} f \, dz \, dx \, dy \\[2pt]
+&\int_{0}^{2} \int_{0}^{x/2} \int_{2+2z-x}^{2} f \, dy \, dz \, dx
+&&\hspace{2.4em}\int_{0}^{1} \int_{2z}^{2} \int_{2+2z-x}^{2} f \, dy \, dx \, dz \\[2pt]
+&\int_{0}^{2} \int_{0}^{y/2} \int_{2+2z-y}^{2} f \, dx \, dz \, dy
+&&\hspace{2.4em}\int_{0}^{1} \int_{2z}^{2} \int_{2+2z-y}^{2} f \, dx \, dy \, dz
+\end{aligned}
+\]</div>
+<p>Every order equals the volume \(2/3\) when \(f = 1\).</p>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(\iiint_{E} f \, dV\)</td><td>The triple integral of \(f\) over the solid \(E\), the limit of sums of \(f\) times small volumes.</td></tr>
+<tr><td>\(E\)</td><td>The tetrahedron with vertices \(A\), \(B\), \(C\), \(D\).</td></tr>
+<tr><td>\(dV\)</td><td>The volume element, \(dV = dz \, dy \, dx\) in any order of the three differentials.</td></tr>
+<tr><td>\(A, B, C, D\)</td><td>The four vertices of \(E\): \((2,0,0)\), \((0,2,0)\), \((2,2,0)\), and \((2,2,1)\).</td></tr>
+<tr><td>\(x + y - 2z = 2\)</td><td>The sloping face \(ABD\). It meets the base along the line \(x + y = 2\).</td></tr>
+<tr><td>\(T\)</td><td>The base triangle \(ABC\) in the plane \(z = 0\), \(0 \le x \le 2\), \(2 - x \le y \le 2\).</td></tr>
+<tr><td>\((x+y-2)/2\)</td><td>The height of the sloping face above the point \((x,y)\) of \(T\).</td></tr>
+<tr><td>\(2 + 2z - x\)</td><td>The value of \(y\) on the sloping face at fixed \(x\) and \(z\), obtained from \(x + y - 2z = 2\).</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Three independent computations support the six orders.</p>
+<ul>
+<li><code>part1_step1.py</code> builds the tetrahedron from the four planes. The scalar triple
+product of the edges at \(A\) is \(-4\), so the volume is \(2/3 = 0.666666666667\). The base has
+area \(2\) and the apex has height \(1\), which gives the same volume. A Monte Carlo estimate
+is \(0.66758 \pm 0.00075\), which is \(1.23\) standard errors above \(2/3\).</li>
+<li><code>part1_step2.py</code> evaluates all six orders with SymPy. With \(f = 1\) every order
+gives \(2/3\). With \(f = xyz\) every order gives \(19/45\), and the inner \(z\)-integral is
+\(xy(x + y - 2)^{2}/8\).</li>
+<li><code>part1_step3.py</code> evaluates all six orders with 60-point Gauss-Legendre quadrature.
+With \(f = 1\) every order gives \(0.666666666666669\), with a spread of \(8.882 \times 10^{-16}\).
+With \(f = xyz\) the six orders give values from \(0.422222222222220\) to
+\(0.422222222222228\), a spread of \(7.827 \times 10^{-15}\). The exact value is
+\(19/45 = 0.422222222222222\). An mpmath
+computation of one order gives \(0.6666666666666667\).</li>
+</ul>
+</section>

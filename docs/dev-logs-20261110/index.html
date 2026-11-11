@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Four math-agent recipes on 24 Stewart calculus problems, 2026-11-10. DeepSeek Flash with LaTeX and with HTML+KaTeX worked. Qwen3.8-27B with HTML+KaTeX worked but was 6.6 times slower. Qwen3.6-27B with Typst failed.">
+<title>Recipes 2026-11-10 &mdash; Overview</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.chapter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 18px 0; }
+.chapter-card { display: block; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; text-decoration: none; color: var(--ink); }
+.chapter-card:hover { border-color: var(--accent); background: #eef4fc; }
+.chapter-card .ico { font-size: 1.5rem; }
+.chapter-card h3 { margin: 6px 0 4px; font-size: 1.05rem; }
+.chapter-card p { margin: 0; font-size: .9rem; color: var(--muted); }
+.stat-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.stat-fail { background: #fdf1ee; border-color: #ecb7a6; }
+.stat-fail .num { color: #b23a1c; }
+.recipe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 18px 0; }
+.recipe { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+.recipe.ok { border-left: 5px solid #2f6f4f; }
+.recipe.fail { border-left: 5px solid #b23a1c; }
+.recipe h3 { margin: 0 0 6px; font-size: 1rem; }
+.recipe .meta { font-size: .84rem; color: var(--muted); margin: 0; }
+.recipe .big { font-size: 1.35rem; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-11-10</div>
+    <h1>&#129514; Four Recipes for 24 Calculus Problems</h1>
+    <p class="lede">&#129518; Two model families, two renderers, and one problem set. &#9989; Three recipes gave usable solutions. &#10060; One recipe gave garbage. &#9201; The fastest recipe took 71 minutes. &#128034; The slowest usable recipe took 7 hours 46 minutes. &#128202; The renderer was the main risk, not the math. &#128187; All four recipes run DeepSeek Harness on the PC.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html" aria-current="page">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Recipes</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="answer">
+  <h2>&#9889; Short answer</h2>
+  <p>&#9989; <strong>The problem set is solved.</strong> 24 exercises from Stewart, <em>Calculus: Early Transcendentals</em>, Sections 15.7, 15.8, and 15.9. Each usable recipe gives one solution for each problem.</p>
+  <p>&#129514; <strong>The recipe is the variable.</strong> The same 24 problems went through four recipes. Three recipes produced usable solutions. One recipe produced files that do not open as valid documents.</p>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="num">3 / 4</div><div class="lbl">&#9989; Recipes with usable output</div></div>
+    <div class="stat"><div class="num">71 min</div><div class="lbl">&#9889; Fastest recipe (DeepSeek Flash, HTML)</div></div>
+    <div class="stat"><div class="num">466 min</div><div class="lbl">&#128034; Slowest usable recipe (Qwen3.8-27B, HTML)</div></div>
+    <div class="stat"><div class="num">48</div><div class="lbl">&#128196; Usable solution pages</div></div>
+    <div class="stat"><div class="num">72</div><div class="lbl">&#128200; Figures in the two HTML runs</div></div>
+    <div class="stat"><div class="num">169</div><div class="lbl">&#129518; Python step and figure scripts</div></div>
+  </div>
+
+  <div class="recipe-grid">
+    <div class="recipe ok">
+      <h3>&#9989; DeepSeek Flash (Internet) + LaTeX</h3>
+      <p class="big">82 min</p>
+      <p class="meta">&#128196; Output: PDF from TeX Live 2026 and <code>latexmk</code>. &#9888; One crash from parallel LaTeX jobs. The operator resumed the run by hand. Raw data: <code>dev-logs-20261027</code>.</p>
+    </div>
+    <div class="recipe fail">
+      <h3>&#10060; Qwen3.6-27B (HPC x****9) + Typst</h3>
+      <p class="big">91 min</p>
+      <p class="meta">&#128465; Output: garbage Typst files from the <code>typst</code> CLI. The model claimed success. The operator deleted the raw data.</p>
+    </div>
+    <div class="recipe ok">
+      <h3>&#9989; DeepSeek Flash (Internet) + HTML</h3>
+      <p class="big">71 min</p>
+      <p class="meta">&#128196; Output: a self-contained HTML page with KaTeX math. Good visual quality. No LaTeX compile step. Raw data: <code>dsh-deepseek-flash</code>.</p>
+    </div>
+    <div class="recipe ok">
+      <h3>&#9989; Qwen3.8-27B (HPC y*****8) + HTML</h3>
+      <p class="big">466 min</p>
+      <p class="meta">&#128034; Same output form. Very low speed. One subagent hit an output loop. The parent agent recovered.</p>
+    </div>
+  </div>
+
+  <p class="small">&#128204; All four recipes run DeepSeek Harness on the PC and Python (numpy, sympy, matplotlib) next to it. The model is served from the Internet API for DeepSeek Flash or from an HPC VLLM server for the Qwen models. Only the renderer and the model change.</p>
+  <p class="small">&#128204; The times come from the operator remark file. The earlier log gives 76 minutes for the LaTeX recipe. The remark file gives 82 minutes. The difference is the start and end points of the clock.</p>
+</section>
+
+<section id="finding">
+  <h2>&#128161; Main finding</h2>
+  <p>&#128295; <strong>HTML with KaTeX removes the renderer risk.</strong> The page is one file. The math, the fonts, and the figures are inside the file. No compile step runs on the machine. The LaTeX crash in the first recipe cannot occur.</p>
+  <p>&#129504; <strong>A renderer is only safe when the model knows it.</strong> Qwen3.6-27B writes Typst code that looks plausible but is not valid. The run reported success. The files are not usable. A correct final claim needs a check of the output, not a check of the model text.</p>
+  <p>&#128034; <strong>Speed does not follow from the output form.</strong> Qwen3.8-27B used the same HTML form as DeepSeek Flash. It took 6.6 times longer. The model and the server, not the renderer, set the speed.</p>
+  <p>&#128200; <strong>Detail is stable across the two usable HTML runs.</strong> DeepSeek Flash wrote 42,107 words in 24 solutions. Qwen3.8-27B wrote 43,417 words. Each solution has a notation table. 23 of the 24 Qwen3.8-27B solutions have a separate verification section.</p>
+</section>
+
+<section id="changed">
+  <h2>&#128260; What changed since the last log</h2>
+  <table>
+    <tbody>
+      <tr><th>&#128203; Scope</th><td>The last log tested one recipe. This log tests four recipes on the same problem set.</td></tr>
+      <tr><th>&#128196; Renderer</th><td>The new recipes write a self-contained HTML page with KaTeX. The earlier recipe wrote LaTeX and compiled a PDF.</td></tr>
+      <tr><th>&#128187; Harness</th><td>All four recipes run DeepSeek Harness on the PC. The last log also did. The new part is the model location: an Internet API or an HPC VLLM server.</td></tr>
+      <tr><th>&#129302; Models</th><td>The new recipes use DeepSeek Flash from the Internet API and Qwen3.8-27B from an HPC VLLM server. Both use the same harness and the same Python tools.</td></tr>
+      <tr><th>&#9888; Failed recipe</th><td>Qwen3.6-27B with Typst failed on output quality. This is the first failed recipe in the series.</td></tr>
+      <tr><th>&#128451; Data</th><td>The data folder holds two recipe trees and one canonical set. The Typst data is not in the folder. It was deleted.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="chapters">
+  <h2>&#128218; Chapters</h2>
+  <div class="chapter-grid">
+    <a class="chapter-card" href="agents.html">
+      <div class="ico">&#129302;</div>
+      <h3>Recipes</h3>
+      <p>The four recipes, the two HPC workspaces, the VLLM build, the task prompt, and the steps the agent follows.</p>
+    </a>
+    <a class="chapter-card" href="briefing.html">
+      <div class="ico">&#128202;</div>
+      <h3>Results Briefing</h3>
+      <p>Success, time, figures, step scripts, and solution length. Charts compare the recipes. Two screenshots show the failures.</p>
+    </a>
+    <a class="chapter-card" href="explorer.html">
+      <div class="ico">&#128269;</div>
+      <h3>Results Explorer</h3>
+      <p>A 2-pane file explorer. Open two solutions side by side. Read the HTML solutions, the scripts, the figures, and the remarks.</p>
+    </a>
+    <a class="chapter-card" href="plans.html">
+      <div class="ico">&#128506;</div>
+      <h3>Future Plans</h3>
+      <p>Next two weeks: revise the math-tutor prompts for plot quality with human-involved RSI, move DeepSeek Harness to the HPC, and raise inference speed on the A800 node. Longer term: multi-instance DSH, the tutor and grader website, and commercialization.</p>
+    </a>
+  </div>
+</section>
+
+<section id="scope">
+  <h2>&#128300; Scope</h2>
+  <table>
+    <tbody>
+      <tr><th>&#128218; Problems</th><td>24 exercises from Stewart, <em>Calculus: Early Transcendentals</em>, Sections 15.7, 15.8, and 15.9 (20 + 2 + 2)</td></tr>
+      <tr><th>&#129514; Recipes</th><td>4: DeepSeek Flash (Internet) + LaTeX, Qwen3.6-27B (HPC x****9) + Typst, DeepSeek Flash (Internet) + HTML, Qwen3.8-27B (HPC y*****8) + HTML</td></tr>
+      <tr><th>&#128187; Harness</th><td>DeepSeek Harness on the PC for all four recipes, with Python (numpy, sympy, matplotlib)</td></tr>
+      <tr><th>&#129302; Models</th><td>DeepSeek Flash from the Internet API; Qwen3.6-27B and Qwen3.8-27B from an HPC VLLM server</td></tr>
+      <tr><th>&#128196; Output</th><td>PDF for the LaTeX recipe, a self-contained HTML page for the HTML recipes, nothing usable for the Typst recipe</td></tr>
+      <tr><th>&#128200; Figures</th><td>38 in the DeepSeek Flash HTML run and 34 in the Qwen3.8-27B HTML run, drawn with matplotlib</td></tr>
+      <tr><th>&#129518; Checks</th><td>169 Python files: 66 DeepSeek step scripts, 31 Qwen step scripts, 38 DeepSeek figure scripts, 34 Qwen figure scripts</td></tr>
+      <tr><th>&#128203; Canonical set</th><td>24 problem scans and 24 reference solution scans</td></tr>
+      <tr><th>&#128193; Data</th><td><code>.raw_data/dev-logs-20261110/</code></td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The canonical problem scans are byte-identical to the problem scans in both recipe folders. The explorer keeps one copy in <code>canonical-solutions/</code> and one copy in each recipe folder, because each folder is a full record of that run.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

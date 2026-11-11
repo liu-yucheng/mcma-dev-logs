@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The four recipes in the 2026-11-10 calculus run: DeepSeek Flash with LaTeX, Qwen3.6-27B with Typst, DeepSeek Flash with HTML and KaTeX, and Qwen3.8-27B with HTML and KaTeX. Includes the HPC setup and the full instructions.md prompt.">
+<title>Recipes 2026-11-10 &mdash; Recipes</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.recipe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin: 18px 0; }
+.recipe { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+.recipe.ok { border-left: 5px solid #2f6f4f; }
+.recipe.fail { border-left: 5px solid #b23a1c; }
+.recipe h3 { margin: 0 0 8px; font-size: 1rem; }
+.recipe table { margin: 8px 0 0; font-size: .86rem; }
+.recipe td, .recipe th { padding: 5px 6px; }
+.recipe th { width: 38%; background: #f6f8fa; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin: 18px 0; }
+.step { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.step .step-n { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: .78rem; margin-right: 8px; }
+.prompt { max-height: 620px; overflow: auto; white-space: pre-wrap; }
+.callout { background: #fff8e6; border: 1px solid #eddcae; border-radius: 10px; padding: 16px 20px; margin: 18px 0; }
+.callout h3 { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-11-10</div>
+    <h1>&#129302; Recipes</h1>
+    <p class="lede">&#129514; This chapter shows the four recipes, the two HPC workspaces, the VLLM build, the task prompt, and the steps the agent follows. &#128204; All four recipes use the same 24 problems and the same <code>instructions.md</code>. The output form is the main difference.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html" aria-current="page">&#129302; Recipes</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="matrix">
+  <h2>&#128203; The four recipes</h2>
+  <p>&#128204; A recipe is a model, a Python tool, and a renderer. All four recipes run DeepSeek Harness on the PC. The model is served from the Internet or from the HPC. The operator ran each recipe on the same problem set. The table gives the status and the solve window from the remark file.</p>
+  <div class="recipe-grid">
+    <div class="recipe ok">
+      <h3>&#9989; 1. DeepSeek Flash (Internet) + LaTeX</h3>
+      <table>
+        <tbody>
+          <tr><th>&#128187; Harness</th><td>DeepSeek Harness (PC)</td></tr>
+          <tr><th>&#129504; Model</th><td><code>deepseek-flash</code>, Internet API</td></tr>
+          <tr><th>&#128196; Output</th><td>PDF from TeX Live 2026 CLI and <code>latexmk</code></td></tr>
+          <tr><th>&#9201; Window</th><td>82 min (76 min in the earlier log)</td></tr>
+          <tr><th>&#128230; Status</th><td>Worked</td></tr>
+          <tr><th>&#128193; Data</th><td><code>dev-logs-20261027</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="recipe fail">
+      <h3>&#10060; 2. Qwen3.6-27B (HPC x****9) + Typst</h3>
+      <table>
+        <tbody>
+          <tr><th>&#128187; Harness</th><td>DeepSeek Harness (PC)</td></tr>
+          <tr><th>&#129504; Model</th><td>Qwen3.6-27B, HPC VLLM workspace <code>x****9</code></td></tr>
+          <tr><th>&#128196; Output</th><td>Typst source and PDF from the <code>typst</code> CLI</td></tr>
+          <tr><th>&#9201; Window</th><td>91 min</td></tr>
+          <tr><th>&#128230; Status</th><td>Failed on output quality</td></tr>
+          <tr><th>&#128465; Data</th><td>Deleted. The files are not usable.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="recipe ok">
+      <h3>&#9989; 3. DeepSeek Flash (Internet) + HTML</h3>
+      <table>
+        <tbody>
+          <tr><th>&#128187; Harness</th><td>DeepSeek Harness (PC)</td></tr>
+          <tr><th>&#129504; Model</th><td><code>deepseek-flash</code>, Internet API</td></tr>
+          <tr><th>&#128196; Output</th><td>One self-contained HTML page with KaTeX</td></tr>
+          <tr><th>&#9201; Window</th><td>71 min</td></tr>
+          <tr><th>&#128230; Status</th><td>Worked. Good visual quality.</td></tr>
+          <tr><th>&#128193; Data</th><td><code>dsh-deepseek-flash</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="recipe ok">
+      <h3>&#9989; 4. Qwen3.8-27B (HPC y*****8) + HTML</h3>
+      <table>
+        <tbody>
+          <tr><th>&#128187; Harness</th><td>DeepSeek Harness (PC)</td></tr>
+          <tr><th>&#129504; Model</th><td>Qwen3.8-27B, HPC VLLM workspace <code>y*****8</code></td></tr>
+          <tr><th>&#128196; Output</th><td>One self-contained HTML page with KaTeX</td></tr>
+          <tr><th>&#9201; Window</th><td>466 min (7 h 46 min)</td></tr>
+          <tr><th>&#128230; Status</th><td>Worked. Very low speed.</td></tr>
+          <tr><th>&#128193; Data</th><td><code>dsh-qwen3.8-27b-hpc</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="small">&#128204; Recipes 1 and 3 use the same model, the same harness, and the same tools. Only the renderer changes. Recipes 3 and 4 use the same harness, the same tools, and the same renderer. Only the model and its server change. This gives two clean comparisons.</p>
+</section>
+
+<section id="compare">
+  <h2>&#128260; What each comparison shows</h2>
+  <table>
+    <thead><tr><th>Comparison</th><th>Change</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td>&#128196; 1 &rarr; 3</td><td>LaTeX PDF to HTML with KaTeX</td><td>Time falls from 82 to 71 minutes. The LaTeX compile step and its memory crash go away. The output keeps good visual quality.</td></tr>
+      <tr><td>&#129302; 3 &rarr; 4</td><td>Internet API to HPC VLLM; both on the PC harness</td><td>Time rises from 71 to 466 minutes. The output form is the same. Detail is similar: 42,107 words against 43,417 words.</td></tr>
+      <tr><td>&#128295; 2 &rarr; 4</td><td>Qwen3.6-27B with Typst to Qwen3.8-27B with HTML</td><td>The latter recipe works. The earlier recipe fails. A newer model and a known renderer both help.</td></tr>
+      <tr><td>&#128034; 1 &rarr; 2</td><td>LaTeX to Typst; the harness stays on the PC</td><td>The output form is not the only risk. The model must know the markup language.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="ingredients">
+  <h2>&#129514; Recipe ingredients</h2>
+  <table>
+    <thead><tr><th>Ingredient</th><th>Version or value</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>&#128187; Harness</td><td>DeepSeek Harness (PC)</td><td>Runs the agent loop and the tools for all four recipes.</td></tr>
+      <tr><td>&#129504; Model (Internet)</td><td><code>deepseek-flash</code></td><td>Reads the image, writes the math, and calls the tools.</td></tr>
+      <tr><td>&#129504; Models (HPC)</td><td>Qwen3.6-27B, Qwen3.8-27B</td><td>Served by VLLM on the HPC for recipes 2 and 4. One A800 GPU for each server.</td></tr>
+      <tr><td>&#128421; HPC</td><td>NVIDIA A800 GPU</td><td>Runs the VLLM server. The driver supports CUDA 12.8 or later.</td></tr>
+      <tr><td>&#128736; VLLM</td><td>0.24.0, built with CUDA 12.8</td><td>The prebuilt package needs CUDA 13 or later. The operator compiled this build on the HPC.</td></tr>
+      <tr><td>&#128013; Python</td><td><code>numpy</code>, <code>sympy</code>, <code>matplotlib</code></td><td>Checks each deduction and draws each figure.</td></tr>
+      <tr><td>&#128290; Math renderer</td><td>KaTeX</td><td>Renders LaTeX math inside the HTML page, with no external request.</td></tr>
+      <tr><td>&#128196; Page</td><td>One HTML file</td><td>Holds the text, the fonts, the math, and the Base64 figures.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The page is self-contained. It has no <code>http</code> reference. It opens without a network connection and inside an <code>iframe</code>. This property makes the explorer simple and stable.</p>
+</section>
+
+<section id="hpc">
+  <h2>&#128421; HPC setup</h2>
+  <p>&#128204; The HPC provides the model server only. The harness and the Python tools stay on the PC. Each workspace has its own model server and its own data folder.</p>
+  <table>
+    <thead><tr><th>Workspace</th><th>Model</th><th>Result</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>x****9</code></td><td>Qwen3.6-27B</td><td>&#10060; Failed</td><td>The server often refused connections. The same process also ran grading tasks.</td></tr>
+      <tr><td><code>y*****8</code></td><td>Qwen3.8-27B</td><td>&#9989; Worked</td><td>VLLM 0.24.0 built with CUDA 12.8. One subagent loop. The parent agent recovered.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <h3>&#128736; The CUDA build</h3>
+    <p>&#128204; The A800 driver on the HPC supports CUDA 12.8 or later. The precompiled VLLM package supports CUDA 13 or later only. The server cannot start with the precompiled package.</p>
+    <p>&#9989; The operator compiled VLLM 0.24.0 with CUDA 12.8 on the HPC. The server then started. The model served all 24 problems.</p>
+    <p>&#128034; The build is a local patch. The next plan puts the harness on the HPC next to this server, so the model request does not cross the network. See <a href="plans.html">Future Plans</a>.</p>
+  </div>
+</section>
+
+<section id="shape">
+  <h2>&#129513; How the agent works</h2>
+  <p>&#128204; The parent agent runs on the PC. It follows one general workflow. The workflow does not name a problem family. The same steps apply to all 24 exercises.</p>
+  <div class="steps">
+    <div class="step"><span class="step-n">1</span>&#128247; Read <code>problem.png</code> in each problem folder.</div>
+    <div class="step"><span class="step-n">2</span>&#128193; Make <code>solution/</code> and write the solution in HTML with KaTeX.</div>
+    <div class="step"><span class="step-n">3</span>&#129518; Write and run step scripts. Each script checks one deduction.</div>
+    <div class="step"><span class="step-n">4</span>&#128200; Write and run figure scripts. Save each figure as PNG.</div>
+    <div class="step"><span class="step-n">5</span>&#128230; Convert each figure to Base64 text and embed it in the page.</div>
+    <div class="step"><span class="step-n">6</span>&#9989; Copy <code>solution/solution.html</code> to <code>&lt;problem&gt;/solution.html</code>.</div>
+  </div>
+  <p>&#128202; The run writes these files for each problem: one solution page, one problem scan, 1 or 2 figures, 1 or 2 figure scripts, 1 to 4 step scripts, one Base64 file per figure, and one <code>fragment.html</code>. The explorer shows the full set.</p>
+</section>
+
+<section id="prompt">
+  <h2>&#128220; Prompt: <code>instructions.md</code></h2>
+  <p>&#128204; The user sends one short message: <em>&ldquo;Follow ./instructions.md and complete the tasks.&rdquo;</em> The file has 64 lines and 3,245 bytes. All four recipes use the same file. It is reproduced below without change.</p>
+  <pre class="prompt"><code># Task Instructions
+
+Solve all math problems in this directory.
+
+This directory consists of:
+
+- The problem subdirectories.
+- This `instructions.md`.
+
+Each problem subdirectory contains:
+
+- A `problem.png`.
+
+In each subdirectory `&lt;subdir&gt;/`, your task is:
+
+- Read and analyze `&lt;subdir&gt;/problem.png`.
+- Create a `&lt;subdir&gt;/solution/` directory.
+- Solve the math problem in `&lt;subdir&gt;/problem.png`.
+  - Put intermediate step files in the `&lt;subdir&gt;/solution/` directory.
+- Compose the final solution in `&lt;subdir&gt;/solution.html`.
+
+For each part (part `&lt;i&gt;`) of the math problem, you do the following:
+
+- Write a step-by-step solution in a standalone HTML file at `&lt;subdir&gt;/solution/solution.html`.
+  - In the HTML file, write all math equations in LaTeX, and render them in KaTeX.
+  - In the HTML file, use Cambria as natural language font and XITS as math font.
+- Verify all math deductions by writing and running Python script files at `&lt;subdir&gt;/solution/part&lt;i&gt;_step&lt;j&gt;.py`.
+  - Trust computational results over hand calculation results.
+- Draw all explicitly and implicitly required figures by writing and running python script files at `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.py`.
+  - Save all figures at `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.png`.
+  - Convert the figures to HTML-compatible Base64 text. Save them at `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.b64.txt`.
+  - Embed the Base64 figures into your solution HTML file.
+- Explain all math symbols and notations the reader might be unfamiliar with.
+- Ensure that the solution is logically correct and visually clear.
+- Copy `&lt;subdir&gt;/solution/solution.html` to `&lt;subdir&gt;/solution.html` when it is ready.
+- Use `python` to access python.
+  - Use `pip` to install necessary libraries like `numpy, sympy, matplotlib`.
+- If you need to write temporary files, put them in existing or new directories whose base-name starts with a dot `**/.*/`.
+  - Clear all temporary files before task completion.
+- Use the language and code styles below.
+
+## Natural Language Styles
+
+- English: ASD-STE100 non-strict mode with academic US English fallback.
+- Chinese: Simplified Technical Chinese non-strict mode.
+
+## Python Code Styles
+
+- Use Google Python Style as code style reference with the following exceptions.
+  - Enforce a line break at the end of each complete docstring sentence.
+  - Follow the custom line length rules.
+  - Follow the custom indentation rules.
+- Use ASD-STE-100 non-strict mode with academic US English fallback as natural language style reference.
+- Use a maximum line length limit of 119 characters.
+  - Use "smart" line breaks to improve sentence and code readability.
+  - Do not use "dumb" line breaks that affects sentence and code readability just to satisfy the rules.
+- Use 4-space indentation.
+  - Use horizontally aligned hanging indents.
+  - Do not use vertically aligned indents.
+- Use complete and meaningful words to name things instead of short and confusing mathematical notations.
+  - Long and clear names are better than single character names that makes no sense.
+  - Do not use overly abbreviated names.
+- Use `from ... import ...` and `from ... import ... as ...` wherever possible.
+- Organize imports.</code></pre>
+
+  <h3>&#128269; What the prompt requires</h3>
+  <table>
+    <thead><tr><th>Rule</th><th>Effect on the run</th></tr></thead>
+    <tbody>
+      <tr><td>&#128247; Read the image</td><td>The agent analyzes <code>problem.png</code> before it writes a solution.</td></tr>
+      <tr><td>&#128193; Use a fixed layout</td><td>Each problem gets <code>solution/solution.html</code>, step scripts, figure scripts, figures, and a root <code>solution.html</code>.</td></tr>
+      <tr><td>&#128290; Render with KaTeX</td><td>All math is LaTeX source, rendered by KaTeX inside the page.</td></tr>
+      <tr><td>&#129518; Verify with Python</td><td>Each deduction needs a script. The agent must run the script. A computed result has priority over a hand result.</td></tr>
+      <tr><td>&#128200; Draw the figures</td><td>The agent draws every explicit and implicit figure and saves each one as PNG.</td></tr>
+      <tr><td>&#128230; Embed the figures</td><td>Each figure becomes Base64 text and goes inside the page, near the related step.</td></tr>
+      <tr><td>&#128218; Explain the symbols</td><td>The solution must explain each symbol that the reader might not know.</td></tr>
+      <tr><td>&#9989; Check the result</td><td>The agent must check that the solution is correct and visually clear.</td></tr>
+      <tr><td>&#128465; Clean the temporary files</td><td>The agent puts temporary files in a dot folder and removes them at the end.</td></tr>
+      <tr><td>&#9997; Use a fixed style</td><td>ASD-STE100 non-strict mode, with academic US English as the fallback.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <h3>&#128161; Difference from the last log</h3>
+    <p>&#128204; The prompt in this run has no rule to teach the reader how to solve similar problems. It requires the explanation of symbols only. The earlier prompt had the teaching rule.</p>
+    <p>&#9989; The solution pages still explain every symbol in a notation table. The teaching rule is a product decision for a later run.</p>
+  </div>
+</section>
+
+<section id="quality">
+  <h2>&#128269; What the agent checks</h2>
+  <p>&#128204; The prompt requires a Python check for each deduction. The solution pages report the checks in a verification section. The example below comes from problem 15.7.17 in the DeepSeek Flash HTML run.</p>
+  <table>
+    <thead><tr><th>Script</th><th>Method</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td><code>part1_step1.py</code></td><td>Monte Carlo estimate of the integral</td><td>16.746, inside one standard error of 16&pi;/3 = 16.755</td></tr>
+      <tr><td><code>part1_step2.py</code></td><td>Symbolic evaluation with SymPy</td><td>16&pi;/3</td></tr>
+      <tr><td><code>part1_step3.py</code></td><td>Numerical evaluation with mpmath in two integration orders</td><td>Both values agree to twelve digits</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The number of step scripts varies from 1 to 4 for each problem. A simple problem gets 1 script. A problem with 6 integration orders or 3 parts gets 3 or 4 scripts. The briefing chapter gives the counts.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 54</p>
+<h1>The Average Value of a Function over a Paraboloid Cap</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>The average value of a function \(f(x,y,z)\) over a solid region \(E\) is</p>
+<div class="equation">\[ f_{\mathrm{ave}} = \frac{1}{V(E)} \iiint_{E} f(x,y,z) \, dV, \]</div>
+<p>where \(V(E)\) is the volume of \(E\). Find the average value of
+\(f(x,y,z) = x^{2}z + y^{2}z\) over the region enclosed by the paraboloid
+\(z = 1 - x^{2} - y^{2}\) and the plane \(z = 0\).</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>The paraboloid opens downward from its vertex \((0,0,1)\). The two surfaces meet on
+the rim where both equations hold, that is, where \(1 - x^{2} - y^{2} = 0\). This equation
+describes the unit circle \(x^{2} + y^{2} = 1\). The solid therefore projects onto the
+unit disk</p>
+<div class="equation">\[ D = \{(x,y) : x^{2} + y^{2} \le 1\}. \]</div>
+<p>Fix a point \((x,y)\) in \(D\). The vertical line through that point enters \(E\) on the
+floor \(z = 0\) and leaves \(E\) on the paraboloid. The solid is the set of points between
+these two surfaces:</p>
+<div class="equation">\[ E = \{(x,y,z) : x^{2} + y^{2} \le 1,\ 0 \le z \le 1 - x^{2} - y^{2}\}. \]</div>
+<figure>
+<img data-figure="part1_figure1.png" alt="The paraboloid z = 1 - x^2 - y^2 above the unit disk in the plane z = 0">
+<figcaption>The solid \(E\) under the paraboloid \(z = 1 - x^{2} - y^{2}\) (colored surface). The tan disk is the floor \(z = 0\), and its edge is the rim \(x^{2} + y^{2} = 1\). The color code on the surface gives the height \(z\). The cap is highest on the axis and has zero height on the rim.</figcaption>
+</figure>
+<p>Introduce polar coordinates in the \(xy\)-plane, \(x = r\cos\theta\) and
+\(y = r\sin\theta\), so that \(x^{2} + y^{2} = r^{2}\). A small polar rectangle has area
+\(r \, dr \, d\theta\), hence the volume element is</p>
+<div class="equation">\[ dV = dz \, r \, dr \, d\theta = r \, dz \, dr \, d\theta. \]</div>
+<p>In these coordinates the cap has constant bounds in two of the three variables:</p>
+<div class="equation">\[ 0 \le z \le 1 - r^{2}, \qquad 0 \le r \le 1, \qquad 0 \le \theta \le 2\pi. \]</div>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Compute the volume \(V(E)\)</h3>
+<p>The denominator of the average value is the volume of the cap. Integrate the volume
+element over the three ranges of the polar description:</p>
+<div class="equation">\[ V(E) = \int_{0}^{2\pi} \int_{0}^{1} \int_{0}^{1-r^{2}} r \, dz \, dr \, d\theta
+= \int_{0}^{2\pi} \int_{0}^{1} r\left(1 - r^{2}\right) dr \, d\theta. \]</div>
+<p>The radial integral is elementary:</p>
+<div class="equation">\[ \int_{0}^{1} \left(r - r^{3}\right) dr
+= \left[ \frac{r^{2}}{2} - \frac{r^{4}}{4} \right]_{0}^{1}
+= \frac{1}{2} - \frac{1}{4} = \frac{1}{4}. \]</div>
+<p>The result does not depend on \(\theta\), so the outer integral multiplies it by \(2\pi\):</p>
+<div class="equation">\[ V(E) = 2\pi \cdot \frac{1}{4} = \frac{\pi}{2} \approx 1.5708. \]</div>
+<figure>
+<img data-figure="part1_figure2.png" alt="Vertical cross-section of the cap in the plane y = 0 with one vertical fibre of length 1 - r^2">
+<figcaption>Cross-section of \(E\) in the plane \(y = 0\). The blue region is the solid, the dark curve is the paraboloid \(z = 1 - x^{2}\), and the brown line is the floor \(z = 0\). The red double arrow is one vertical fibre at \(r = 0.55\). Its length is \(1 - r^{2} = 0.698\), the height that the inner integral covers.</figcaption>
+</figure>
+
+<h3>Step 2 &mdash; Simplify the integrand</h3>
+<p>Both terms of \(f\) carry the factor \(z\), and the two squared terms add to
+\(x^{2} + y^{2} = r^{2}\):</p>
+<div class="equation">\[ f(x,y,z) = x^{2}z + y^{2}z = \left(x^{2} + y^{2}\right) z = r^{2}z. \]</div>
+<p>This step matters: after the substitution the integrand no longer contains \(x\) or
+\(y\) separately, so no trigonometric term survives the integration.</p>
+
+<h3>Step 3 &mdash; Integrate \(f\) over the cap</h3>
+<p>Multiply the integrand by the volume element and integrate in the order \(z\), then
+\(r\), then \(\theta\):</p>
+<div class="equation">\[ \iiint_{E} \left(x^{2} + y^{2}\right) z \, dV
+= \int_{0}^{2\pi} \int_{0}^{1} \int_{0}^{1-r^{2}} r^{2} z \cdot r \, dz \, dr \, d\theta. \]</div>
+<p>With respect to \(z\), the factor \(r^{3}\) is constant:</p>
+<div class="equation">\[ \int_{0}^{1-r^{2}} r^{3} z \, dz
+= r^{3} \left[ \frac{z^{2}}{2} \right]_{0}^{1-r^{2}}
+= \frac{r^{3}\left(1 - r^{2}\right)^{2}}{2}
+= \frac{1}{2}\left(r^{3} - 2r^{5} + r^{7}\right). \]</div>
+<p>Integrate this polynomial over \(0 \le r \le 1\):</p>
+<div class="equation">\[ \int_{0}^{1} \frac{1}{2}\left(r^{3} - 2r^{5} + r^{7}\right) dr
+= \frac{1}{2}\left( \frac{1}{4} - \frac{2}{6} + \frac{1}{8} \right)
+= \frac{1}{2} \cdot \frac{1}{24}
+= \frac{1}{48}. \]</div>
+<p>The outer integral adds the factor \(2\pi\):</p>
+<div class="equation">\[ \iiint_{E} \left(x^{2} + y^{2}\right) z \, dV = 2\pi \cdot \frac{1}{48} = \frac{\pi}{24} \approx 0.1309. \]</div>
+
+<h3>Step 4 &mdash; Divide by the volume</h3>
+<p>Insert the two results into the definition of the average value:</p>
+<div class="equation">\[ f_{\mathrm{ave}} = \frac{1}{V(E)} \iiint_{E} f \, dV
+= \frac{\pi/24}{\pi/2}
+= \frac{\pi}{24} \cdot \frac{2}{\pi}
+= \frac{1}{12} \approx 0.0833. \]</div>
+<p>The two factors of \(\pi\) cancel, so the average value is a rational number even
+though both the volume and the integral contain \(\pi\). The value is small because
+\(f\) vanishes on the rim and stays small near the axis, where the cap is high but
+\(r^{2}\) is small.</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<div class="equation">\[ f_{\mathrm{ave}} = \frac{1}{12} \approx 0.0833. \]</div>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(f_{\mathrm{ave}}\)</td><td>The average value of the function \(f\) over the solid \(E\), that is, the integral of \(f\) divided by the volume of \(E\).</td></tr>
+<tr><td>\(V(E)\)</td><td>The volume of the solid region \(E\), in cubic units.</td></tr>
+<tr><td>\(\iiint_{E} f \, dV\)</td><td>The triple integral of \(f\) over \(E\); it is the limit of sums of \(f\) times small volumes.</td></tr>
+<tr><td>\(dV\)</td><td>The volume element. In Cartesian coordinates \(dV = dx\,dy\,dz\); in the polar coordinates used here \(dV = r\,dz\,dr\,d\theta\).</td></tr>
+<tr><td>\(E\)</td><td>The solid region of integration, here the cap between the paraboloid and the plane \(z = 0\).</td></tr>
+<tr><td>\(D\)</td><td>The projection of \(E\) onto the \(xy\)-plane, here the unit disk.</td></tr>
+<tr><td>\(z = 1 - x^{2} - y^{2}\)</td><td>A downward paraboloid with vertex \((0,0,1)\); it is the upper boundary of \(E\).</td></tr>
+<tr><td>\(r, \theta\)</td><td>Polar coordinates in the \(xy\)-plane: \(r\) is the distance from the \(z\)-axis and \(\theta\) is the angle in the plane.</td></tr>
+<tr><td>the factor \(r\)</td><td>The Jacobian factor of polar coordinates. A small polar rectangle has area \(r\,dr\,d\theta\), not \(dr\,d\theta\).</td></tr>
+<tr><td>\(\pi\)</td><td>The ratio of a circle's circumference to its diameter, \(\pi \approx 3.14159\).</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Three scripts check the result; each one runs from inside <code>calculus-15.7.54/solution</code>.</p>
+<ul>
+<li><code>part1_step1.py</code> confirms the projection disk, tabulates the cap height \(1 - r^{2}\), and estimates the average value by Monte Carlo sampling of four million points. The estimate is \(0.08341\) with standard error \(0.00005\), that is \(1.5\) standard errors from \(1/12\).</li>
+<li><code>part1_step2.py</code> repeats the whole computation with SymPy and returns \(V(E) = \pi/2\), \(\iiint_{E} f \, dV = \pi/24\), and \(f_{\mathrm{ave}} = 1/12\).</li>
+<li><code>part1_step3.py</code> evaluates the integral with mpmath in polar order and in Cartesian order. Both values agree with \(\pi/24\) to fifteen digits, and the quotient with the volume reproduces \(0.0833333333333\).</li>
+</ul>
+</section>

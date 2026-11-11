@@ -1,0 +1,144 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 40</p>
+<h1>Mass and Center of Mass of a Solid with a Parabolic Roof Line</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Find the mass and the center of mass of the solid \(E\) with density \(\rho(x,y,z) = 4\).
+The solid \(E\) is bounded by the parabolic cylinder \(z = 1 - y^{2}\) and by the planes
+\(x + z = 1\), \(x = 0\), and \(z = 0\).</p>
+<div class="equation">\[ m = \iiint_{E} 4 \, dV. \]</div>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>The plane \(x + z = 1\) gives \(x = 1 - z\). The plane \(x = 0\) closes the solid on the back.
+Together they say that the \(x\)-coordinate is trapped between two surfaces:</p>
+<div class="equation">\[ 0 \le x \le 1 - z. \]</div>
+<p>The inequality \(x \ge 0\) is already true, so the upper limit \(1 - z\) must be nonnegative.
+That condition gives \(z \le 1\). The parabolic cylinder adds the second ceiling:</p>
+<div class="equation">\[ 0 \le z \le 1 - y^{2}. \]</div>
+<p>The number \(1 - y^{2}\) is nonnegative only when \(|y| \le 1\). The projection of \(E\) onto
+the \(yz\)-plane is therefore the parabolic segment
+\(D = \{(y,z) : -1 \le y \le 1, \; 0 \le z \le 1 - y^{2}\}\), and the solid is the set</p>
+<div class="equation">\[ E = \{(x,y,z) : -1 \le y \le 1, \; 0 \le z \le 1 - y^{2}, \; 0 \le x \le 1 - z\}. \]</div>
+<p>A second reading is shorter. Hold \(y\) fixed. The section of \(E\) in the plane of constant \(y\)
+is the right triangle with vertices \((0, y, 0)\), \((1, y, 0)\), and \((0, y, 1 - y^{2})\). Its
+horizontal leg has length \(1\), its vertical leg has length \(1 - y^{2}\), and its hypotenuse lies on
+the plane \(x + z = 1\). The triangle shrinks to a point as \(y\) approaches \(\pm 1\).</p>
+<figure>
+<img data-figure="part1_figure1.png" alt="Panel (a): the solid between the parabolic back face, the roof plane x + z = 1, and the floor. Panel (b): the right-triangle cross-section at fixed y.">
+<figcaption>Panel (a) shows the solid \(E\). The light blue back face is the part of the plane
+\(x = 0\) inside the parabolic cylinder \(z = 1 - y^{2}\); the tan roof is the plane
+\(x + z = 1\); the floor is \(z = 0\). The dark curve is the ridge where the roof meets the
+cylinder, \(x = y^{2}\) with \(z = 1 - y^{2}\). The red triangle is the cross-section at
+\(y = -0.55\), and the red segment is one fibre \(0 \le x \le 1 - z\) at \(z = 0.3\).
+Panel (b) shows that cross-section alone: the region is \(0 \le x \le 1 - z\) and
+\(0 \le z \le 1 - y^{2}\), a right triangle whose area is \((1 - y^{2})/2\).</figcaption>
+</figure>
+<p>No coordinate change is needed. The bounds are flat in \(x\), and the volume element is
+\(dV = dx \, dz \, dy\). The density is the constant \(4\), so the mass is</p>
+<div class="equation">\[ m = \int_{-1}^{1} \int_{0}^{1-y^{2}} \int_{0}^{1-z} 4 \, dx \, dz \, dy. \]</div>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Integrate with respect to \(x\)</h3>
+<p>The density is constant, so the innermost integral is the length of the fibre in the
+\(x\)-direction:</p>
+<div class="equation">\[ \int_{0}^{1-z} 4 \, dx = 4(1 - z). \]</div>
+
+<h3>Step 2 &mdash; Integrate with respect to \(z\)</h3>
+<p>Put \(a = 1 - y^{2}\) for the height of the triangle. The \(z\)-integral runs from \(0\) to \(a\):</p>
+<div class="equation">\[ \int_{0}^{a} 4(1 - z) \, dz
+= 4\left[ z - \frac{z^{2}}{2} \right]_{0}^{a}
+= 4\left( a - \frac{a^{2}}{2} \right). \]</div>
+<p>Now \(a - a^{2}/2 = (1 - y^{2}) - (1 - 2y^{2} + y^{4})/2 = (1 - y^{4})/2\), hence</p>
+<div class="equation">\[ \int_{0}^{1-y^{2}} 4(1 - z) \, dz = 2\left(1 - y^{4}\right). \]</div>
+
+<h3>Step 3 &mdash; Integrate with respect to \(y\)</h3>
+<p>The integrand is even in \(y\), so the integral over \(-1 \le y \le 1\) is twice the integral
+over \(0 \le y \le 1\):</p>
+<div class="equation">\[ m = \int_{-1}^{1} 2\left(1 - y^{4}\right) dy
+= 2\left[ y - \frac{y^{5}}{5} \right]_{-1}^{1}
+= 2 \cdot 2 \cdot \left(1 - \frac{1}{5}\right)
+= \frac{16}{5}. \]</div>
+<p>The mass is \(16/5 = 3.2\).</p>
+
+<h3>Step 4 &mdash; Moment about the \(yz\)-plane</h3>
+<p>The first moment about the \(yz\)-plane weights each point by its distance \(x\) from that plane:</p>
+<div class="equation">\[ M_{yz} = \iiint_{E} 4x \, dV
+= \int_{-1}^{1} \int_{0}^{1-y^{2}} \int_{0}^{1-z} 4x \, dx \, dz \, dy. \]</div>
+<p>The inner integral is \(2(1 - z)^{2}\). With \(a = 1 - y^{2}\),</p>
+<div class="equation">\[ \int_{0}^{a} 2(1 - z)^{2} dz
+= 2\left[ a - a^{2} + \frac{a^{3}}{3} \right]
+= 2 \cdot \frac{1 - y^{6}}{3}, \]</div>
+<p>because \(a - a^{2} + a^{3}/3 = (1 - y^{6})/3\) after the substitution \(u = y^{2}\). Then</p>
+<div class="equation">\[ M_{yz} = \frac{2}{3}\int_{-1}^{1} \left(1 - y^{6}\right) dy
+= \frac{2}{3} \cdot 2 \cdot \left(1 - \frac{1}{7}\right)
+= \frac{8}{7}. \]</div>
+
+<h3>Step 5 &mdash; Moment about the \(xz\)-plane</h3>
+<p>The solid and the density are unchanged when \(y\) is replaced by \(-y\): the cylinder
+\(z = 1 - y^{2}\) and the three planes do not distinguish the sign of \(y\). The integrand \(4y\) is
+odd in \(y\), and the \(y\)-limits are symmetric, so</p>
+<div class="equation">\[ M_{xz} = \iiint_{E} 4y \, dV = 0. \]</div>
+
+<h3>Step 6 &mdash; Moment about the \(xy\)-plane</h3>
+<p>For the moment about the floor, the inner integral is \(\int_{0}^{1-z} 4z \, dx = 4z(1 - z)\):</p>
+<div class="equation">\[ \int_{0}^{a} 4z(1 - z) \, dz
+= 4\left[ \frac{z^{2}}{2} - \frac{z^{3}}{3} \right]_{0}^{a}
+= 4\left( \frac{a^{2}}{2} - \frac{a^{3}}{3} \right). \]</div>
+<p>Substitute \(a = 1 - y^{2}\) and expand in powers of \(y\):</p>
+<div class="equation">\[ \frac{a^{2}}{2} - \frac{a^{3}}{3} = \frac{1}{6} - \frac{y^{4}}{2} + \frac{y^{6}}{3}, \]</div>
+<div class="equation">\[ M_{xy} = 4\int_{-1}^{1} \left( \frac{1}{6} - \frac{y^{4}}{2} + \frac{y^{6}}{3} \right) dy
+= 8\left( \frac{1}{6} - \frac{1}{10} + \frac{1}{21} \right)
+= 8 \cdot \frac{4}{35}
+= \frac{32}{35}. \]</div>
+
+<h3>Step 7 &mdash; Divide each moment by the mass</h3>
+<p>The coordinates of the center of mass are the moments divided by \(m = 16/5\):</p>
+<div class="equation">\[ \bar{x} = \frac{M_{yz}}{m} = \frac{8/7}{16/5} = \frac{5}{14},
+\qquad \bar{y} = \frac{M_{xz}}{m} = 0,
+\qquad \bar{z} = \frac{M_{xy}}{m} = \frac{32/35}{16/5} = \frac{2}{7}. \]</div>
+<p>The value \(\bar{x} = 5/14 \approx 0.357\) is less than \(1/2\). That is reasonable: the
+solid is thickest at \(z = 0\), where the fibre runs the full length \(1\), and it narrows to zero
+thickness at \(z = 1\). The value \(\bar{z} = 2/7 \approx 0.286\) is less than \(1/2\) for the same
+reason, because the solid carries most of its volume low down.</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<div class="equation">\[ m = \frac{16}{5} = 3.2, \qquad
+(\bar{x}, \bar{y}, \bar{z}) = \left( \frac{5}{14}, 0, \frac{2}{7} \right)
+\approx (0.357, 0, 0.286). \]</div>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(\iiint_{E} f \, dV\)</td><td>The triple integral of \(f\) over the solid \(E\); it is the limit of sums of \(f\) times small volumes.</td></tr>
+<tr><td>\(E\)</td><td>The solid region of integration, that is, the set of points that satisfy the stated inequalities.</td></tr>
+<tr><td>\(dV\)</td><td>The volume element. Here \(dV = dx \, dz \, dy\), because the three coordinates are integrated in that order.</td></tr>
+<tr><td>\(\rho(x,y,z)\)</td><td>The density, here the constant \(4\). In this exercise the units are mass per unit volume.</td></tr>
+<tr><td>\(z = 1 - y^{2}\)</td><td>A parabolic cylinder: the parabola \(z = 1 - y^{2}\) in the \(yz\)-plane, translated along the \(x\)-axis.</td></tr>
+<tr><td>\(x + z = 1\)</td><td>A plane that cuts the solid on the front and forms the hypotenuse of every triangular section.</td></tr>
+<tr><td>\(M_{yz}, M_{xz}, M_{xy}\)</td><td>The first moments of mass about the coordinate planes. \(M_{yz} = \iiint x \rho \, dV\) measures the pull toward the \(yz\)-plane.</td></tr>
+<tr><td>\(\bar{x}, \bar{y}, \bar{z}\)</td><td>The coordinates of the center of mass, \(M_{yz}/m\), \(M_{xz}/m\), \(M_{xy}/m\).</td></tr>
+<tr><td>\(a\)</td><td>Shorthand for the height \(1 - y^{2}\) of the triangular section at a fixed \(y\).</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Four scripts confirm the result.</p>
+<ul>
+<li><code>part1_step1.py</code> checks the inequalities and estimates the mass by Monte Carlo sampling of the box \(0 \le x \le 1\), \(-1 \le y \le 1\), \(0 \le z \le 1\). It reports \(3.20015\) against \(16/5 = 3.2\), a deviation of \(0.08\) standard errors.</li>
+<li><code>part1_step2.py</code> repeats the mass integral in SymPy and obtains \(16/5\). It also prints the intermediate results \(4 - 4z\) and \(2 - 2y^{4}\).</li>
+<li><code>part1_step3.py</code> evaluates the three moments in SymPy and obtains \(8/7\), \(0\), and \(32/35\), hence the center of mass \((5/14, 0, 2/7)\).</li>
+<li><code>part1_step4.py</code> integrates in the reverse order, with \(x\) outermost and \(y\) innermost, using mpmath. It confirms \(m = 3.2\), \(M_{yz} = 1.14285714285714\), \(M_{xz} = 0\), and \(M_{xy} = 0.914285714285714\).</li>
+</ul>
+</section>

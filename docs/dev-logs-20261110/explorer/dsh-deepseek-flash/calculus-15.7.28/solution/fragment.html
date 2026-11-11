@@ -1,0 +1,100 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 28</p>
+<h1>The Solid of an Iterated Integral: Bounding Surfaces and Volume</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Sketch the solid whose volume is given by the iterated integral, name its bounding surfaces, and compute the volume.</p>
+<div class="equation">\[ \int_{0}^{2}\int_{0}^{2-y}\int_{0}^{4-y^{2}} dx\,dz\,dy. \]</div>
+<p>The exercise shows only the integral, so the first task is to read the solid out of the three sets of limits.</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>The differentials name the variables from the inside out. The innermost integral is over \(x\), the middle integral is over \(z\), and the outer integral is over \(y\). Attach each pair of limits to its variable:</p>
+<div class="equation">\[ 0 \le x \le 4 - y^{2}, \qquad 0 \le z \le 2 - y, \qquad 0 \le y \le 2. \]</div>
+<p>Each limit is a surface. The upper limit of \(x\) gives the parabolic cylinder \(x = 4 - y^{2}\). That equation does not contain \(z\), so the surface is a sheet of copies of the parabola \(x = 4 - y^{2}\), translated along the \(z\)-direction. The upper limit of \(z\) gives the tilted plane \(z = 2 - y\), which is also independent of \(x\). The three remaining limits give the coordinate planes \(x = 0\), \(z = 0\), and \(y = 0\).</p>
+<p>The limits of \(z\) and \(y\) do not mention \(x\). They alone describe the shadow that the solid casts on the \(yz\)-plane:</p>
+<div class="equation">\[ D = \{(y,z) : 0 \le y \le 2,\; 0 \le z \le 2 - y\}. \]</div>
+<p>The set \(D\) is the triangle with vertices \((0,0)\), \((0,2)\), and \((2,0)\). The limit \(x = 4 - y^{2}\) depends on \(y\) only, so the \(x\)-fibre above a point of \(D\) has the same length on every horizontal cut at that height.</p>
+<figure>
+<img data-figure="part1_figure1.png" alt="The parabolic cylinder x = 4 - y^2, the plane z = 2 - y, the coordinate planes, and one fibre along x">
+<figcaption>The solid \(E\). The blue curved sheet is the parabolic cylinder \(x = 4 - y^{2}\). The tan sheet is the plane \(z = 2 - y\), the light gray sheet is the floor \(z = 0\), and the green triangle is the back face \(x = 0\). The dark red dashed segment is one fibre in the \(x\)-direction at \(y = 1.4\), \(z = 0.3\); it runs from the plane \(x = 0\) to the curved sheet. Every face shrinks as \(y\) grows, and the solid closes to the single point \((0,2,0)\).</figcaption>
+</figure>
+<figure>
+<img data-figure="part1_figure2.png" alt="The triangular projection of the solid on the yz-plane with one horizontal cut">
+<figcaption>The projection \(D\) on the \(yz\)-plane is the triangle below the line \(z = 2 - y\). The dark red cut holds \(y\) fixed and shows the \(z\)-limits \(0 \le z \le 2 - y\). The same cut carries the \(x\)-limits \(0 \le x \le 4 - y^{2}\), so the fibre length is read on the horizontal axis of the solid, not here.</figcaption>
+</figure>
+<p>At \(y = 2\) both the \(x\)-limit and the \(z\)-limit are zero, so the solid collapses to the point \((0,2,0)\). At \(y = 0\) the cross-section is the full rectangle \(0 \le x \le 4\), \(0 \le z \le 2\), and the volume of that rectangle is \(8\). The volume of the solid is therefore smaller than \(8\), which the final value confirms.</p>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Write the volume as a triple integral</h3>
+<p>The volume of a solid is the triple integral of the constant \(1\) over the solid. Insert the six limits:</p>
+<div class="equation">\[ V = \iiint_{E} 1 \, dV = \int_{0}^{2}\int_{0}^{2-y}\int_{0}^{4-y^{2}} dx\,dz\,dy. \]</div>
+
+<h3>Step 2 &mdash; Integrate with respect to \(x\)</h3>
+<p>The variables \(y\) and \(z\) are constant on the inner integral, so the inner integral is the length of the \(x\)-fibre:</p>
+<div class="equation">\[ \int_{0}^{4-y^{2}} dx = \left[ x \right]_{0}^{4-y^{2}} = 4 - y^{2}. \]</div>
+
+<h3>Step 3 &mdash; Integrate with respect to \(z\)</h3>
+<p>The result depends on \(y\) only, so it leaves the middle integral as a constant factor:</p>
+<div class="equation">\[ \int_{0}^{2-y} \left(4 - y^{2}\right) dz = \left(4 - y^{2}\right)\left[ z \right]_{0}^{2-y} = \left(2 - y\right)\left(4 - y^{2}\right). \]</div>
+<p>Expand the product before the last integration:</p>
+<div class="equation">\[ \left(2 - y\right)\left(4 - y^{2}\right) = 8 - 4y - 2y^{2} + y^{3}. \]</div>
+
+<h3>Step 4 &mdash; Integrate with respect to \(y\)</h3>
+<p>Integrate the cubic term by term:</p>
+<div class="equation">\[ \int_{0}^{2} \left(8 - 4y - 2y^{2} + y^{3}\right) dy
+= \left[ 8y - 2y^{2} - \frac{2y^{3}}{3} + \frac{y^{4}}{4} \right]_{0}^{2}. \]</div>
+<p>Evaluate at the upper limit:</p>
+<div class="equation">\[ 16 - 8 - \frac{16}{3} + 4 = 12 - \frac{16}{3} = \frac{36 - 16}{3} = \frac{20}{3}. \]</div>
+<p>The lower limit gives zero, so the volume is \(20/3 \approx 6.667\).</p>
+
+<h3>Step 5 &mdash; Confirm the region with a second order of integration</h3>
+<p>A different order tests the reading of the solid. Solve \(x = 4 - y^{2}\) for \(y\) to get \(y = \sqrt{4 - x}\), and keep \(z\) between \(0\) and \(2 - y\):</p>
+<div class="equation">\[ V = \int_{0}^{4}\int_{0}^{\sqrt{4-x}}\int_{0}^{2-y} dz\,dy\,dx. \]</div>
+<p>The inner integral gives \(2 - y\), and the middle integral gives</p>
+<div class="equation">\[ \int_{0}^{\sqrt{4-x}} \left(2 - y\right) dy
+= 2\sqrt{4 - x} - \frac{4 - x}{2}. \]</div>
+<p>Integrate both terms from \(x = 0\) to \(x = 4\):</p>
+<div class="equation">\[ \int_{0}^{4} 2\sqrt{4 - x}\,dx = \frac{32}{3}, \qquad \int_{0}^{4} \frac{4 - x}{2}\,dx = 4, \qquad V = \frac{32}{3} - 4 = \frac{20}{3}. \]</div>
+<p>Both orders give the same volume, so the sketch and the limits describe one solid.</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<p>The solid is the set of points that satisfy</p>
+<div class="equation">\[ 0 \le x \le 4 - y^{2}, \qquad 0 \le z \le 2 - y, \qquad 0 \le y \le 2, \]</div>
+<p>and its volume is</p>
+<div class="equation">\[ V = \frac{20}{3} \approx 6.667. \]</div>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(\iiint_{E} f \, dV\)</td><td>The triple integral of the function \(f\) over the three-dimensional region \(E\); it is the limit of sums of \(f\) times small volumes.</td></tr>
+<tr><td>\(E\)</td><td>The solid region of integration, that is, the set of points that satisfy the three pairs of inequalities.</td></tr>
+<tr><td>\(dV\)</td><td>The volume element. In Cartesian coordinates \(dV = dx\,dz\,dy\), and the order of the three differentials fixes the order of the three integrations.</td></tr>
+<tr><td>\(D\)</td><td>The projection (shadow) of \(E\) on the \(yz\)-plane, here the triangle \(0 \le y \le 2\), \(0 \le z \le 2 - y\).</td></tr>
+<tr><td>inner, middle, outer</td><td>The order of the three integrals. The inner integral runs over \(x\), the middle integral over \(z\), and the outer integral over \(y\).</td></tr>
+<tr><td>\(x = 4 - y^{2}\)</td><td>A parabolic cylinder. The curve \(x = 4 - y^{2}\) in the \(xy\)-plane is copied along the \(z\)-direction, so the surface is curved in \(y\) and straight in \(z\).</td></tr>
+<tr><td>\(z = 2 - y\)</td><td>A plane that contains the \(x\)-direction. It is the top face of the solid and it descends as \(y\) grows.</td></tr>
+<tr><td>fibre</td><td>The segment of the solid above one point of \(D\). Its length is the value of the inner integral at that point.</td></tr>
+<tr><td>\(\le\)</td><td>Less than or equal to. The solid includes its boundary surfaces, which does not change the volume.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Three scripts support the page. All runs use the bundled Python interpreter.</p>
+<ul>
+<li><code>part1_step1.py</code> checks the limits at five heights and estimates the volume by Monte Carlo sampling of the box \( [0,4] \times [0,2] \times [0,2] \). It prints \(6.66653\) against \(20/3 = 6.66667\), a deviation of \(-0.04\) standard errors.</li>
+<li><code>part1_step2.py</code> repeats the three integrations with SymPy, prints the inner result \(4 - y^{2}\), the expanded middle result \(y^{3} - 2y^{2} - 4y + 8\), and the outer result \(20/3\). It also evaluates the order \(dz\,dy\,dx\) and obtains \(20/3\).</li>
+<li><code>part1_step3.py</code> evaluates both orders with 20-digit mpmath quadrature. Both values equal \(6.666666666666667\), and both differences from \(20/3\) print as \(0.0\).</li>
+</ul>
+</section>

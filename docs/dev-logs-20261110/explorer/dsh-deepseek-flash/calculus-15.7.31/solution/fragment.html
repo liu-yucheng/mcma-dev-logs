@@ -1,0 +1,128 @@
+<style>
+p .katex, figcaption .katex { white-space: nowrap; }
+</style>
+
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 31</p>
+<h1>Six Orders of Integration under a Slanted Plane and above a Parabolic Wall</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Express the triple integral</p>
+<div class="equation">\[ \iiint_{E} f(x,y,z)\,dV \]</div>
+<p>as an iterated integral in six different ways, where \(E\) is the solid bounded by the surfaces \(y=x^{2}\), \(z=0\), and \(y+2z=4\).</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>The three surfaces play three different roles. The floor is the plane \(z=0\). The roof is the plane \(y+2z=4\), which we can write as \(z=2-y/2\). The wall is the parabolic cylinder \(y=x^{2}\), whose rulings are parallel to the \(z\)-axis.</p>
+<p>The word &ldquo;bounded&rdquo; fixes the side of each surface. The solid lies above the floor, so \(z\ge 0\). It lies below the roof, so \(y+2z\le 4\). It lies on the side of the wall where \(y\) is larger than \(x^{2}\), so \(y\ge x^{2}\). A point is therefore in \(E\) exactly when</p>
+<div class="equation">\[ y\ge x^{2}, \qquad z\ge 0, \qquad y+2z\le 4. \]</div>
+<p>These three conditions have a useful consequence. The roof gives \(y\le 4-2z\le 4\), and the wall gives \(x^{2}\le y\), so \(x^{2}\le 4\), that is, \(-2\le x\le 2\). The solid is thus confined to a slab of width \(4\), and its two ends are the flat cross-sections at \(x=-2\) and \(x=2\).</p>
+<p>At a fixed value of \(x\), the cross-section is the part of the \(yz\)-plane with</p>
+<div class="equation">\[ x^{2}\le y\le 4, \qquad 0\le z\le 2-y/2. \]</div>
+<p>This region is a trapezoid. Its top edge is the line \(z=2-y/2\), its bottom edge is the segment \(z=0\) from \(y=x^{2}\) to \(y=4\), and its left edge is the segment \(y=x^{2}\) from \(z=0\) to \(z=2-x^{2}/2\). At \(x=0\) the left edge collapses and the trapezoid becomes the triangle \(0\le y\le 4\), \(0\le z\le 2-y/2\).</p>
+<figure>
+<img data-figure="part1_figure1.png" alt="The solid bounded by the parabolic wall y = x^2, the floor z = 0, and the plane y + 2z = 4">
+<figcaption>The solid \(E\). The viewpoint looks into the open end at \(x=-2\). The pale sheet at the bottom is the floor \(z=0\), the blue sheet is the parabolic wall \(y=x^{2}\), and the tan sheet is the roof \(y+2z=4\). The dashed segment is the sharp edge \(y=4\), \(z=0\), where the roof meets the floor. The roof is drawn partly transparent so that the wall and the floor stay visible. The flat ends at \(x=-2\) and \(x=2\) are not drawn.</figcaption>
+</figure>
+<p>The solid tapers toward positive \(y\). At \(y=4\) the roof height is \(2-4/2=0\), so the roof touches the floor along the segment \(y=4\), \(z=0\), \(-2\le x\le 2\). That segment is the sharp edge of the solid.</p>
+<p>For integration we also need the projection of \(E\) on the \(xy\)-plane. Drop \(z\). The conditions on \(x\) and \(y\) become \(x^{2}\le y\le 4\), which describes the region between the parabola and the line \(y=4\). Figure 2 shows this projection and one cross-section.</p>
+<figure>
+<img data-figure="part1_figure2.png" alt="The projection x^2 <= y <= 4 and the trapezoid cross-section at x = 1">
+<figcaption>Left: the projection of \(E\) on the \(xy\)-plane, which is the region \(x^{2}\le y\le 4\). The red segment sits at a fixed \(x\); along it \(y\) runs from \(x^{2}\) to \(4\). The green segment sits at a fixed \(y\); along it \(x\) runs from \(-\sqrt{y}\) to \(\sqrt{y}\). Right: the cross-section of \(E\) at \(x=1\), which is the trapezoid \(1\le y\le 4\), \(0\le z\le 2-y/2\). The red segment sits at a fixed \(y\); along it \(z\) runs from \(0\) to \(2-y/2\). The green segment sits at a fixed \(z\); along it \(y\) runs from \(x^{2}\) to \(4-2z\).</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Choose the innermost variable</h3>
+<p>An order of integration names the innermost variable first and the outermost variable last. The inner limits may depend on the two variables that are still free. Here the wall ties \(x\) to \(y\), and the roof ties \(z\) to \(y\). The choice of the innermost variable therefore controls the shape of the inner limits.</p>
+<p>If \(z\) is innermost, the floor and the roof supply the inner limits, \(0\le z\le 2-y/2\), and the remaining limits come from the wall. If \(y\) is innermost, the wall and the roof supply the inner limits, \(x^{2}\le y\le 4-2z\). If \(x\) is innermost, the wall supplies the inner limits, \(-\sqrt{y}\le x\le\sqrt{y}\).</p>
+<p>The six orders fall into three groups of two. Each group has the same inner variable. The middle and outer variables can be exchanged, but the middle limits must then be rewritten for the new outer variable.</p>
+
+<h3>Step 2 &mdash; Inner variable \(z\)</h3>
+<p><strong>Order \(dz\,dy\,dx\).</strong> Hold \(x\) and \(y\) fixed. The floor is below and the roof is above, so \(z\) runs from \(0\) to \(2-y/2\). Next, at the fixed \(x\), the variable \(y\) runs from the wall to the edge, \(x^{2}\le y\le 4\). Last, \(x\) runs over the width of the solid, \(-2\le x\le 2\).</p>
+<div class="equation">\[ \int_{-2}^{2}\int_{x^{2}}^{4}\int_{0}^{2-y/2} f(x,y,z)\,dz\,dy\,dx \]</div>
+<p><strong>Order \(dz\,dx\,dy\).</strong> The inner limits are the same, because they depend only on the fixed value of \(y\). The variable \(x\) now comes next. At the fixed \(y\), the wall gives \(-\sqrt{y}\le x\le\sqrt{y}\). The outer variable \(y\) runs from \(0\) to \(4\), because the extreme point of the solid has \(y=4\).</p>
+<div class="equation">\[ \int_{0}^{4}\int_{-\sqrt{y}}^{\sqrt{y}}\int_{0}^{2-y/2} f(x,y,z)\,dz\,dx\,dy \]</div>
+
+<h3>Step 3 &mdash; Inner variable \(y\)</h3>
+<p><strong>Order \(dy\,dz\,dx\).</strong> Hold \(x\) and \(z\) fixed. The point lies to the right of the wall and below the roof, so \(x^{2}\le y\le 4-2z\). Next, at the fixed \(x\), the variable \(z\) runs from the floor to the roof, \(0\le z\le 2-x^{2}/2\). Last, \(x\) runs from \(-2\) to \(2\).</p>
+<div class="equation">\[ \int_{-2}^{2}\int_{0}^{2-x^{2}/2}\int_{x^{2}}^{4-2z} f(x,y,z)\,dy\,dz\,dx \]</div>
+<p><strong>Order \(dy\,dx\,dz\).</strong> The inner limits still depend only on the fixed value of \(z\). The variable \(x\) now comes next. The wall gives \(x^{2}\le y\), and the inner limits already force \(y\le 4-2z\), so \(x^{2}\le 4-2z\) and \(-\sqrt{4-2z}\le x\le\sqrt{4-2z}\). The outer variable \(z\) runs from \(0\) to \(2\), the height of the roof at \(y=0\).</p>
+<div class="equation">\[ \int_{0}^{2}\int_{-\sqrt{4-2z}}^{\sqrt{4-2z}}\int_{x^{2}}^{4-2z} f(x,y,z)\,dy\,dx\,dz \]</div>
+
+<h3>Step 4 &mdash; Inner variable \(x\)</h3>
+<p><strong>Order \(dx\,dy\,dz\).</strong> Hold \(y\) and \(z\) fixed. The wall gives \(-\sqrt{y}\le x\le\sqrt{y}\). The middle variable is \(y\). At the fixed \(z\), the roof requires \(y\le 4-2z\), so \(0\le y\le 4-2z\). The outer variable \(z\) runs from \(0\) to \(2\).</p>
+<div class="equation">\[ \int_{0}^{2}\int_{0}^{4-2z}\int_{-\sqrt{y}}^{\sqrt{y}} f(x,y,z)\,dx\,dy\,dz \]</div>
+<p><strong>Order \(dx\,dz\,dy\).</strong> The inner limits are again \(-\sqrt{y}\le x\le\sqrt{y}\). The middle variable is now \(z\). At the fixed \(y\), the floor and the roof give \(0\le z\le 2-y/2\). The outer variable \(y\) runs from \(0\) to \(4\).</p>
+<div class="equation">\[ \int_{0}^{4}\int_{0}^{2-y/2}\int_{-\sqrt{y}}^{\sqrt{y}} f(x,y,z)\,dx\,dz\,dy \]</div>
+
+<h3>Step 5 &mdash; Check every order with a test integrand</h3>
+<p>Set \(f=1\). Each of the six integrals then gives the volume of \(E\). The order \(dz\,dy\,dx\) computes it in three stages. The inner integral is the height of the roof above the floor</p>
+<div class="equation">\[ \int_{0}^{2-y/2} 1\,dz = 2-\frac{y}{2}. \]</div>
+<p>The middle integral is the area of the trapezoid at the fixed \(x\)</p>
+<div class="equation">\[ \int_{x^{2}}^{4}\left(2-\frac{y}{2}\right)dy = \frac{x^{4}}{4}-2x^{2}+4. \]</div>
+<p>The outer integral adds these areas over the width of the solid</p>
+<div class="equation">\[ \int_{-2}^{2}\left(\frac{x^{4}}{4}-2x^{2}+4\right)dx = \frac{128}{15}\approx 8.533. \]</div>
+<p>SymPy evaluates the six iterated integrals of Step 2 through Step 4. Every order returns \(128/15\). A second test with \(f=y^{2}z^{2}\), which weights the region near the roof and far from the wall, returns \(65536/9009\approx 7.275\) for every order. Table 1 lists the six values.</p>
+<table class="notation">
+<tr><th>Order</th><th>Value for \(f=1\)</th><th>Value for \(f=y^{2}z^{2}\)</th></tr>
+<tr><td>\(dz\,dy\,dx\)</td><td>\(128/15\)</td><td>\(65536/9009\)</td></tr>
+<tr><td>\(dz\,dx\,dy\)</td><td>\(128/15\)</td><td>\(65536/9009\)</td></tr>
+<tr><td>\(dy\,dz\,dx\)</td><td>\(128/15\)</td><td>\(65536/9009\)</td></tr>
+<tr><td>\(dy\,dx\,dz\)</td><td>\(128/15\)</td><td>\(65536/9009\)</td></tr>
+<tr><td>\(dx\,dy\,dz\)</td><td>\(128/15\)</td><td>\(65536/9009\)</td></tr>
+<tr><td>\(dx\,dz\,dy\)</td><td>\(128/15\)</td><td>\(65536/9009\)</td></tr>
+</table>
+<p class="small">Table 1. Exact values returned by <code>part1_step2.py</code> for the six orders.</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<p>For \(E=\{(x,y,z): x^{2}\le y\le 4,\ 0\le z\le 2-y/2\}\), the integral \(\iiint_{E} f\,dV\) has the six forms below.</p>
+<p><strong>Inner variable \(z\):</strong></p>
+<div class="equation">\[ \int_{-2}^{2}\int_{x^{2}}^{4}\int_{0}^{2-y/2} f(x,y,z)\,dz\,dy\,dx \]</div>
+<div class="equation">\[ \int_{0}^{4}\int_{-\sqrt{y}}^{\sqrt{y}}\int_{0}^{2-y/2} f(x,y,z)\,dz\,dx\,dy \]</div>
+<p><strong>Inner variable \(y\):</strong></p>
+<div class="equation">\[ \int_{-2}^{2}\int_{0}^{2-x^{2}/2}\int_{x^{2}}^{4-2z} f(x,y,z)\,dy\,dz\,dx \]</div>
+<div class="equation">\[ \int_{0}^{2}\int_{-\sqrt{4-2z}}^{\sqrt{4-2z}}\int_{x^{2}}^{4-2z} f(x,y,z)\,dy\,dx\,dz \]</div>
+<p><strong>Inner variable \(x\):</strong></p>
+<div class="equation">\[ \int_{0}^{2}\int_{0}^{4-2z}\int_{-\sqrt{y}}^{\sqrt{y}} f(x,y,z)\,dx\,dy\,dz \]</div>
+<div class="equation">\[ \int_{0}^{4}\int_{0}^{2-y/2}\int_{-\sqrt{y}}^{\sqrt{y}} f(x,y,z)\,dx\,dz\,dy \]</div>
+<p>All six orders give the same value for every integrand. For \(f=1\), each order gives the volume \(128/15\approx 8.533\).</p>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(\iiint_{E} f\,dV\)</td><td>The triple integral of the function \(f\) over the three-dimensional solid \(E\). It is the limit of sums of values of \(f\) times small volumes.</td></tr>
+<tr><td>\(E\)</td><td>The solid region of integration, that is, the set of points \((x,y,z)\) that satisfy all three defining inequalities.</td></tr>
+<tr><td>\(f(x,y,z)\)</td><td>The integrand, an arbitrary function of the three coordinates.</td></tr>
+<tr><td>\(dV\)</td><td>The volume element. In Cartesian coordinates \(dV=dx\,dy\,dz\).</td></tr>
+<tr><td>\(dz\,dy\,dx\)</td><td>An order of integration. The innermost differential is written first and the outermost is written last.</td></tr>
+<tr><td>\(y=x^{2}\)</td><td>A parabolic cylinder that acts as the wall. It contains every line parallel to the \(z\)-axis through a point of the parabola \(y=x^{2}\) in the \(xy\)-plane.</td></tr>
+<tr><td>\(z=0\)</td><td>The floor, which is the \(xy\)-plane.</td></tr>
+<tr><td>\(y+2z=4\)</td><td>The roof. Solved for \(z\), it is \(z=2-y/2\), a plane that falls by \(1/2\) unit for each unit of \(y\).</td></tr>
+<tr><td>\(2-y/2\)</td><td>The height of the roof above the floor at a fixed \(y\).</td></tr>
+<tr><td>\(4-2z\)</td><td>The largest value of \(y\) inside the solid at a fixed \(z\). It is the value where the roof height equals \(z\).</td></tr>
+<tr><td>\(\sqrt{y}\)</td><td>The nonnegative square root. At a fixed \(y\), it is the half-width of the solid in the \(x\)-direction.</td></tr>
+<tr><td>\(x^{2}\le y\le 4\)</td><td>The projection of \(E\) on the \(xy\)-plane, which is the region between the parabola and the line \(y=4\).</td></tr>
+<tr><td>\(128/15\), \(65536/9009\)</td><td>The exact values of the six integrals for \(f=1\) and for \(f=y^{2}z^{2}\). Their decimals are \(8.533\) and \(7.275\).</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Four scripts support the result. Run each one from <code>calculus-15.7.31/solution</code>.</p>
+<ul>
+<li><code>part1_step1.py</code> checks eight sample points against the three inequalities and computes the volume from the order \(dz\,dy\,dx\). It obtains \(2-y/2\), then \(x^{4}/4-2x^{2}+4\) for the trapezoid area, then \(128/15\approx 8.533\) for the volume. It also checks the trapezoid area as the large triangle minus the removed part.</li>
+<li><code>part1_step2.py</code> evaluates all six orders with SymPy. Every order gives \(128/15\) for \(f=1\) and \(65536/9009\) for \(f=y^{2}z^{2}\).</li>
+<li><code>part1_step3.py</code> evaluates all six orders a second time with nested mpmath quadrature. The twelve numerical values agree with the exact values to all sixteen printed digits.</li>
+<li><code>part1_figure1.py</code> draws the three boundary surfaces. <code>part1_figure2.py</code> draws the projection on the \(xy\)-plane and the trapezoid cross-section.</li>
+</ul>
+</section>
