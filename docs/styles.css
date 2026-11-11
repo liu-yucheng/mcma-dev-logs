@@ -14,15 +14,17 @@ body {
   margin: 0;
   color: var(--ink);
   background: var(--bg);
-  font-family: Arial, sans-serif;
+  font-family: Cambria, Georgia, "Times New Roman", serif;
   line-height: 1.6;
   font-size: 17px;
 }
 .container { width: 95%; max-width: none; margin: 0 auto; padding: 0 20px; }
+button, input, select, textarea { font-family: Arial, Helvetica, sans-serif; }
 header.site {
   background: linear-gradient(135deg, #0b2954 0%, #123d7a 60%, #0f3263 100%);
   color: #fff;
   padding: 56px 0 48px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 header.site .kicker {
   letter-spacing: .14em;
@@ -40,6 +42,7 @@ header.site p.lede {
 nav {
   background: #0a1834;
   font-size: .92rem;
+  font-family: Arial, Helvetica, sans-serif;
 }
 nav .container { display: flex; flex-wrap: wrap; gap: 4px; padding: 10px 20px; }
 nav a {
@@ -152,6 +155,7 @@ footer.site {
   margin-top: 60px;
   padding: 30px 0;
   font-size: .9rem;
+  font-family: Arial, Helvetica, sans-serif;
 }
 footer.site a { color: #d5e0f7; }
 figure.flow {

@@ -1,0 +1,120 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 46</p>
+<h1>Moment of Inertia of a Solid Cone about Its Axis</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Assume that the solid has constant density \(k\). Find the moment of inertia about the
+\(z\)-axis of the solid cone \(\sqrt{x^{2} + y^{2}} \le z \le h\).</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>The lower surface is the cone \(z = \sqrt{x^{2} + y^{2}}\), which opens upward from the origin.
+The upper surface is the horizontal plane \(z = h\). The two surfaces meet where
+\(h = \sqrt{x^{2} + y^{2}}\), that is, on the circle of radius \(h\) in the plane \(z = h\).
+The solid is a cone of height \(h\) whose base radius also equals \(h\).</p>
+<p>Cylindrical coordinates fit the rotational symmetry. Put \(x = r\cos\theta\) and
+\(y = r\sin\theta\). Then \(x^{2} + y^{2} = r^{2}\), so the cone surface is simply \(z = r\) and the
+solid is described by</p>
+<div class="equation">\[ r \le z \le h, \qquad 0 \le r \le h, \qquad 0 \le \theta \le 2\pi. \]</div>
+<p>The volume element is \(dV = r \, dz \, dr \, d\theta\). The factor \(r\) is the circumference
+of the shell at radius \(r\).</p>
+<figure>
+<img data-figure="part1_figure1.png" alt="Panel (a): the cone with one cylindrical shell of radius r between z = r and z = h. Panel (b): the rz cross-section with the shell drawn as a strip of width dr.">
+<figcaption>Panel (a) shows the cone with \(h = 1\) cut open along two half-planes. The blue surface
+is \(z = r\); the tan surface is the base \(z = h\); the red wall is one shell of radius \(r = 0.55\).
+That shell starts where the cone surface meets it, at \(z = r\), and ends at the base, so its height
+is \(h - r\). Panel (b) shows the cross-section at a fixed angle. The solid region is the triangle
+\(0 \le r \le h\), \(r \le z \le h\); the red strip is the same shell seen edge-on, with width
+\(dr\) and height \(h - r\). The integral adds the contributions of all shells, and the factor
+\(r\) in \(dV\) counts how many points of the solid sit in each shell.</figcaption>
+</figure>
+<p>Every point of the solid at radius \(r\) has distance \(r\) from the \(z\)-axis, and the
+perpendicular distance enters the moment of inertia as its square. The moment density is therefore
+\(k r^{2}\):</p>
+<div class="equation">\[ I_{z} = \iiint_{E} (x^{2} + y^{2}) \rho \, dV
+= k \iiint_{E} r^{2} \, dV. \]</div>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Set up the iterated integral</h3>
+<p>Insert the bounds and the volume element:</p>
+<div class="equation">\[ I_{z} = k \int_{0}^{2\pi} \int_{0}^{h} \int_{r}^{h} r^{2} \cdot r \, dz \, dr \, d\theta
+= k \int_{0}^{2\pi} \int_{0}^{h} \int_{r}^{h} r^{3} \, dz \, dr \, d\theta. \]</div>
+<p>The two powers of \(r\) combine: one factor is the distance squared, and the other is the
+circumference factor of the shell.</p>
+
+<h3>Step 2 &mdash; Integrate with respect to \(z\)</h3>
+<p>The integrand does not depend on \(z\), so the inner integral gives the height of the shell:</p>
+<div class="equation">\[ \int_{r}^{h} r^{3} \, dz = r^{3}(h - r). \]</div>
+
+<h3>Step 3 &mdash; Integrate with respect to \(r\)</h3>
+<p>Expand the product and integrate term by term:</p>
+<div class="equation">\[ \int_{0}^{h} r^{3}(h - r) \, dr
+= \int_{0}^{h} \left( h r^{3} - r^{4} \right) dr
+= h \cdot \frac{h^{4}}{4} - \frac{h^{5}}{5}
+= h^{5}\left( \frac{1}{4} - \frac{1}{5} \right)
+= \frac{h^{5}}{20}. \]</div>
+
+<h3>Step 4 &mdash; Integrate with respect to \(\theta\)</h3>
+<p>The last integral runs over a full turn:</p>
+<div class="equation">\[ I_{z} = k \int_{0}^{2\pi} \frac{h^{5}}{20} \, d\theta
+= k \cdot 2\pi \cdot \frac{h^{5}}{20}
+= \frac{\pi k h^{5}}{10}. \]</div>
+
+<h3>Step 5 &mdash; Check the answer against the mass</h3>
+<p>The mass of the cone is one third of the mass of the enclosing cylinder:</p>
+<div class="equation">\[ m = \iiint_{E} k \, dV
+= k \int_{0}^{2\pi} \int_{0}^{h} \int_{r}^{h} r \, dz \, dr \, d\theta
+= 2\pi k \int_{0}^{h} r(h - r) \, dr
+= \frac{\pi k h^{3}}{3}. \]</div>
+<p>Divide the moment by the mass. The density and the height cancel in a way that shows how the
+moment scales:</p>
+<div class="equation">\[ \frac{I_{z}}{m} = \frac{\pi k h^{5}/10}{\pi k h^{3}/3} = \frac{3 h^{2}}{10},
+\qquad I_{z} = \frac{3}{10} m h^{2}. \]</div>
+<p>The factor \(3/10\) lies between the value \(1\) for a thin hoop of radius \(h\) and the
+value \(0\) for a point mass on the axis. That ordering is correct, because most of the mass of
+the cone sits close to the axis, where \(r\) is small.</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<div class="equation">\[ I_{z} = \frac{\pi k h^{5}}{10} = \frac{3}{10} m h^{2},
+\qquad m = \frac{\pi k h^{3}}{3}. \]</div>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(k\)</td><td>The constant density of the solid, in mass per unit volume.</td></tr>
+<tr><td>\(z = \sqrt{x^{2} + y^{2}}\)</td><td>The cone surface: its height above the \(xy\)-plane equals the distance from the \(z\)-axis.</td></tr>
+<tr><td>\(h\)</td><td>The height of the cone. The base radius also equals \(h\), because the surface reaches \(z = h\) at \(r = h\).</td></tr>
+<tr><td>\(r, \theta, z\)</td><td>Cylindrical coordinates: \(r\) is the distance from the \(z\)-axis, \(\theta\) the angle in the \(xy\)-plane, \(z\) the height.</td></tr>
+<tr><td>\(dV\)</td><td>The volume element \(r \, dz \, dr \, d\theta\). The extra factor \(r\) appears because a shell of radius \(r\) has circumference \(2\pi r\).</td></tr>
+<tr><td>\(I_{z}\)</td><td>The moment of inertia about the \(z\)-axis, \(\iiint (x^{2} + y^{2}) \rho \, dV\). It measures resistance to rotation about that axis.</td></tr>
+<tr><td>\(m\)</td><td>The mass of the solid, \(\iiint \rho \, dV\).</td></tr>
+<tr><td>shell</td><td>The thin cylindrical wall of radius \(r\), thickness \(dr\), and height \(h - r\) that the integral adds up.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Three scripts confirm the result.</p>
+<ul>
+<li><code>part1_step1.py</code> integrates the shell form \(2\pi k r^{3}(h - r)\) with mpmath at
+\(h = 1\), \(k = 1\) and obtains \(0.314159265358979\), which equals \(\pi/10\). It also samples
+four million points in the enclosing cylinder and reports \(0.314157\), a deviation of
+\(-0.01\) standard errors from \(\pi/10\).</li>
+<li><code>part1_step2.py</code> repeats the derivation in SymPy. It prints \(k r^{3}(h - r)\) after the
+\(z\)-integral, \(h^{5}k/20\) after the \(r\)-integral, and \(\pi h^{5} k/10\) after the
+\(\theta\)-integral. It also confirms \(m = \pi h^{3} k/3\) and \(I_{z}/m = 3h^{2}/10\).</li>
+<li><code>part1_step3.py</code> repeats the quadrature at \(h = 2\) and \(k = 3\). It obtains
+\(30.159289474462\) from both the quadrature and the closed form, and the same value from
+\(3mh^{2}/10\). The relative difference is below \(10^{-25}\).</li>
+</ul>
+</section>

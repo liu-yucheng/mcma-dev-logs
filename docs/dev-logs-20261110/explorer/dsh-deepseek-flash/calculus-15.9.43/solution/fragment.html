@@ -1,0 +1,89 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.9 &middot; Exercise 43</p>
+<h1>Drawing a Silo with a Hemispherical Roof</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Use a graphing device to draw a silo that consists of a cylinder with radius \(3\) and height
+\(10\), with a hemisphere on top.</p>
+</section>
+
+<section>
+<h2>Reading the shape</h2>
+<p>Place the base of the silo on the \(xy\)-plane and put its axis on the \(z\)-axis. Three pieces
+describe the surface.</p>
+<ul>
+<li>The flat base is the disk of radius \(3\) at height \(0\): \(x^{2} + y^{2} \le 9\), \(z = 0\).</li>
+<li>The wall is the cylinder of radius \(3\) from \(z = 0\) to \(z = 10\):
+\(x^{2} + y^{2} = 9\), \(0 \le z \le 10\).</li>
+<li>The roof is the upper half of the sphere of radius \(3\) whose center is \((0,0,10)\):
+\(x^{2} + y^{2} + (z - 10)^{2} = 9\), \(z \ge 10\).</li>
+</ul>
+<p>The roof meets the wall on the circle \(x^{2} + y^{2} = 9\) at height \(z = 10\), so the two
+pieces fit without a gap. The dome rises \(3\) units above the wall, and the top of the silo is at
+\(z = 10 + 3 = 13\).</p>
+</section>
+
+<section>
+<h2>Drawing the shape</h2>
+<p>A graphing device draws parameterized surfaces. Use \(r\) for the distance from the \(z\)-axis
+and \(\theta\) for the angle around it.</p>
+<div class="equation">\[ \text{wall: } (3\cos\theta,\ 3\sin\theta,\ z), \quad
+0 \le z \le 10, \qquad \text{roof: } (3\sin\phi\cos\theta,\ 3\sin\phi\sin\theta,\ 10 + 3\cos\phi), \quad
+0 \le \phi \le \frac{\pi}{2}. \]</div>
+<p>Here \(\phi\) is measured from the positive \(z\)-axis, so \(\phi = 0\) gives the top of the
+dome and \(\phi = \pi/2\) gives its rim.</p>
+<figure>
+<img data-figure="part1_figure1.png" alt="A silo drawn in space and its side elevation with dimensions 3, 10, and 3">
+<figcaption>Panel (a) shows the solid: a cylinder of radius \(3\) and height \(10\), closed on top by
+a hemisphere of the same radius. Panel (b) is the side elevation. The wall is \(10\) units tall,
+the dome adds \(3\) units, and the radius at every height of the wall is \(3\).</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Checking the drawing</h2>
+<p>Two measures confirm that the drawing has the right size. The capacity of the silo is the sum
+of the volume of the cylinder and the volume of the half sphere:</p>
+<div class="equation">\[ V = \pi r^{2} h + \frac{2}{3}\pi r^{3}
+= \pi \cdot 9 \cdot 10 + \frac{2}{3}\pi \cdot 27
+= 90\pi + 18\pi = 108\pi \approx 339.292. \]</div>
+<p>The exposed surface area is the lateral area of the wall plus the area of the dome:</p>
+<div class="equation">\[ A = 2\pi r h + 2\pi r^{2} = 2\pi \cdot 3 \cdot 10 + 2\pi \cdot 9
+= 60\pi + 18\pi = 78\pi \approx 245.044. \]</div>
+<p>A drawing with radius \(3\) has a footprint of diameter \(6\), and its highest point sits at
+\(z = 13\). Both are marked in panel (b).</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<p>The silo is the solid</p>
+<div class="equation">\[ x^{2} + y^{2} \le 9, \qquad 0 \le z \le 10 + \sqrt{9 - x^{2} - y^{2}}, \]</div>
+<p>built from a cylinder of radius \(3\) and height \(10\) with a hemisphere of radius \(3\) on
+top. The wall is drawn for \(0 \le z \le 10\), the dome for \(z \ge 10\) with center \((0,0,10)\),
+and the top of the silo is at height \(13\). The capacity is \(108\pi \approx 339.29\) cubic
+units.</p>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>cylinder</td><td>The surface \(x^{2} + y^{2} = r^{2}\) together with its flat end disks; here the wall of the silo.</td></tr>
+<tr><td>hemisphere</td><td>One half of a sphere. A hemisphere of radius \(r\) has area \(2\pi r^{2}\) and volume \(\frac{2}{3}\pi r^{3}\).</td></tr>
+<tr><td>\(r\)</td><td>The radius: the distance from the axis of the silo to its wall, here \(3\).</td></tr>
+<tr><td>\(\theta\)</td><td>The angle around the \(z\)-axis, \(0 \le \theta \le 2\pi\).</td></tr>
+<tr><td>\(\phi\)</td><td>The polar angle of spherical coordinates, measured from the positive \(z\)-axis. On the dome, \(\phi = 0\) is the top and \(\phi = \pi/2\) is the rim.</td></tr>
+<tr><td>parameterization</td><td>A formula that gives every point of a surface from two parameters. A graphing device plots a grid of these points and joins them.</td></tr>
+<tr><td>elevation</td><td>A drawing of the object as seen from the side, with the vertical dimension in the plane of the page.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<ul>
+<li><code>part1_step1.py</code> states the three surface pieces, checks that the roof meets the wall at \(z = 10\), and computes the height \(13\), the wall area \(60\pi \approx 188.496\), the dome area \(18\pi \approx 56.549\), and the capacity \(108\pi \approx 339.292\).</li>
+<li><code>part1_figure1.py</code> draws the solid with the parametric surfaces of the section above and adds the side elevation, so the three dimensions can be checked against the computed values.</li>
+</ul>
+</section>
