@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Results briefing for the 2026-11-10 recipe comparison: three of four recipes gave usable solutions. DeepSeek Flash with HTML took 71 minutes. Qwen3.8-27B with HTML took 466 minutes. Qwen3.6-27B with Typst failed.">
+<title>Recipes 2026-11-10 &mdash; Results Briefing</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../lightbox.css">
+<style>
+.chart-canvas { position: relative; height: 320px; }
+.chart-canvas.tall { height: 420px; }
+.chart-note { font-size: .84rem; color: var(--muted); margin: 8px 0 0; }
+.callout { background: #fff8e6; border: 1px solid #eddcae; border-radius: 10px; padding: 16px 20px; margin: 18px 0; }
+.callout h3 { margin-top: 0; }
+.callout.bad { background: #fdf1ee; border-color: #ecb7a6; }
+.gallery img { max-height: 300px; object-fit: contain; background: #fff; }
+.stat-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.stat-fail { background: #fdf1ee; border-color: #ecb7a6; }
+.stat-fail .num { color: #b23a1c; }
+td.num.good-num { color: #2f6f4f; font-weight: 600; }
+td.num.warn-num { color: #b23a1c; font-weight: 600; }
+th.num { text-align: right; }
+.fail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 860px) { .fail-grid { grid-template-columns: 1fr; } }
+.fail-grid figure { margin: 0; }
+.fail-grid img { width: 100%; border: 1px solid var(--line); border-radius: 8px; }
+</style>
+<script src="assets/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-11-10</div>
+    <h1>&#128202; Results Briefing</h1>
+    <p class="lede">&#9989; Three of four recipes gave usable solutions for all 24 problems. &#9889; The fastest recipe took 71 minutes. &#128034; The slowest usable recipe took 466 minutes. &#10060; The Typst recipe failed on output quality. &#128204; This chapter gives the times, the output counts, and the failure records.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Recipes</a>
+    <a href="briefing.html" aria-current="page">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="glance">
+  <h2>&#127937; Result at a glance</h2>
+  <div class="stat-grid">
+    <div class="stat"><div class="num">3 / 4</div><div class="lbl">&#9989; Recipes with usable output</div></div>
+    <div class="stat"><div class="num">24 / 24</div><div class="lbl">&#128196; Problems with a solution page</div></div>
+    <div class="stat"><div class="num">71 min</div><div class="lbl">&#9889; Fastest recipe</div></div>
+    <div class="stat"><div class="num">466 min</div><div class="lbl">&#128034; Slowest usable recipe</div></div>
+    <div class="stat"><div class="num">72</div><div class="lbl">&#128200; Figures in the two HTML runs</div></div>
+    <div class="stat stat-fail"><div class="num">1</div><div class="lbl">&#10060; Recipe that failed on output quality</div></div>
+  </div>
+  <p>&#128204; All four recipes run DeepSeek Harness on the PC with Python. The two usable HTML runs write <strong>48 solution pages</strong>, <strong>72 figures</strong>, <strong>97 step scripts</strong>, and <strong>72 figure scripts</strong>. The pages are self-contained HTML files. Each page holds its own fonts, math, and figures.</p>
+  <p>&#128203; The remark file gives the solve window for each recipe. It gives no token count and no cost. It records the token cost as reasonable for three recipes and does not give a number. This chapter uses the time and the output files as the measured values.</p>
+</section>
+
+<section id="records">
+  <h2>&#129534; Recipe records</h2>
+  <table>
+    <thead><tr><th>Recipe</th><th>Output</th><th class="num">Window</th><th>Status</th><th>Record</th></tr></thead>
+    <tbody>
+      <tr><td>&#129302; DeepSeek Flash (Internet) + LaTeX</td><td>PDF</td><td class="num">82 min</td><td>&#9989; Worked</td><td>1 crash from parallel LaTeX jobs. Manual resume.</td></tr>
+      <tr><td>&#128295; Qwen3.6-27B (HPC x****9) + Typst</td><td>Typst and PDF</td><td class="num warn-num">91 min</td><td>&#10060; Failed</td><td>Model claimed success. Files are garbage. Data deleted.</td></tr>
+      <tr><td>&#129302; DeepSeek Flash (Internet) + HTML</td><td>One HTML page</td><td class="num good-num">71 min</td><td>&#9989; Worked</td><td>No crash. Good visual quality.</td></tr>
+      <tr><td>&#129504; Qwen3.8-27B (HPC y*****8) + HTML</td><td>One HTML page</td><td class="num warn-num">466 min</td><td>&#9989; Worked</td><td>1 subagent output loop. Parent recovered.</td></tr>
+    </tbody>
+  </table>
+  <div class="chart-box">
+    <div class="chart-canvas"><canvas id="chartTime"></canvas></div>
+    <p class="chart-note">&#9201; Chart 1 &mdash; Solve window per recipe, in minutes. Red is the failed recipe. Amber is the slow recipe.</p>
+  </div>
+  <div class="callout">
+    <p>&#128204; <strong>Why two times exist for the LaTeX recipe.</strong> The earlier log records 76 minutes from the first subagent start to the last finish. The remark file records 82 minutes for the total session. This chapter uses 82 minutes for the recipe comparison and notes the 76-minute value in the chart label.</p>
+  </div>
+</section>
+
+<section id="output">
+  <h2>&#128230; Output per recipe</h2>
+  <p>&#128204; The table counts the final files in the two HTML recipe folders. The counts come from the raw data. The solution page is a single HTML file with the figures inside it.</p>
+  <table>
+    <thead><tr><th>Item</th><th class="num">DeepSeek Flash</th><th class="num">Qwen3.8-27B</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>&#128196; Solution pages</td><td class="num">24</td><td class="num">24</td><td>Self-contained HTML with KaTeX.</td></tr>
+      <tr><td>&#128200; Figures</td><td class="num">38</td><td class="num">34</td><td>1 or 2 figures per problem.</td></tr>
+      <tr><td>&#129518; Step scripts</td><td class="num">66</td><td class="num">31</td><td>The Python checks in the verification sections.</td></tr>
+      <tr><td>&#128200; Figure scripts</td><td class="num">38</td><td class="num">34</td><td>One script for each figure.</td></tr>
+      <tr><td>&#128230; Base64 files</td><td class="num">38</td><td class="num">34</td><td>One text copy for each figure.</td></tr>
+      <tr><td>&#129513; Fragments</td><td class="num">24</td><td class="num">0</td><td>The page body before the build step. Only the DeepSeek run writes it.</td></tr>
+      <tr><td>&#128203; Words per solution</td><td class="num">1,754</td><td class="num">1,809</td><td>Average over 24 problems.</td></tr>
+      <tr><td>&#128203; Words in total</td><td class="num">42,107</td><td class="num">43,417</td><td>Visible text, after the math and the code are removed.</td></tr>
+    </tbody>
+  </table>
+  <div class="chart-grid">
+    <div class="chart-box">
+      <div class="chart-canvas"><canvas id="chartOutput"></canvas></div>
+      <p class="chart-note">&#128230; Chart 2 &mdash; Output files per recipe.</p>
+    </div>
+    <div class="chart-box">
+      <div class="chart-canvas"><canvas id="chartFigMix"></canvas></div>
+      <p class="chart-note">&#128200; Chart 3 &mdash; Figure count mix. The DeepSeek run draws 2 figures for more problems.</p>
+    </div>
+  </div>
+  <p class="small">&#128204; The DeepSeek run writes one figure script and one Base64 file for each figure, and 66 step scripts. The Qwen3.8-27B run writes fewer step scripts: 19 of its 24 problems use 1 script only. Its page for problem 15.9.43 has no separate verification section. The script is still in the folder.</p>
+</section>
+
+<section id="detail">
+  <h2>&#128203; Solution detail</h2>
+  <p>&#128204; The two HTML recipes write solutions with the same section order in most problems. The DeepSeek page uses these sections: Problem, Reading the solid, Solution, Answer, Notation, Verification. The Qwen3.8-27B page uses a Notation section and a Part-based body.</p>
+  <table>
+    <thead><tr><th>Section</th><th class="num">DeepSeek Flash</th><th class="num">Qwen3.8-27B</th></tr></thead>
+    <tbody>
+      <tr><td>&#128218; Notation table</td><td class="num good-num">24 / 24</td><td class="num good-num">24 / 24</td></tr>
+      <tr><td>&#129518; Verification section</td><td class="num good-num">24 / 24</td><td class="num">23 / 24</td></tr>
+      <tr><td>&#9989; Separate answer box</td><td class="num">24 / 24</td><td class="num">0 / 24</td></tr>
+      <tr><td>&#128196; Part headings</td><td class="num">0 / 24</td><td class="num">24 / 24</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; A separate answer box is a style choice. The Qwen3.8-27B pages state the answer inside the part that computes it. The missing verification section in problem 15.9.43 is a real difference: that page has no section with the word <em>verification</em>. The step script is still present.</p>
+  <div class="chart-box">
+    <div class="chart-canvas tall"><canvas id="chartWords"></canvas></div>
+    <p class="chart-note">&#128203; Chart 4 &mdash; Visible words per solution. The two recipes follow the same shape. Problem size, not the model, sets the length.</p>
+  </div>
+  <div class="chart-box" style="margin-top:18px">
+    <div class="chart-canvas tall"><canvas id="chartFigs"></canvas></div>
+    <p class="chart-note">&#128200; Chart 5 &mdash; Figure count per problem. The DeepSeek run usually draws 2 figures. The Qwen3.8-27B run usually draws 1.</p>
+  </div>
+</section>
+
+<section id="speed">
+  <h2>&#9201; Speed</h2>
+  <p>&#128204; The fastest recipe is DeepSeek Flash with HTML. It sets the reference at 1.00. The LaTeX recipe is 1.15 times slower. The failed Typst recipe is 1.28 times slower. The Qwen3.8-27B recipe is 6.56 times slower.</p>
+  <div class="chart-box">
+    <div class="chart-canvas"><canvas id="chartSpeed"></canvas></div>
+    <p class="chart-note">&#9201; Chart 6 &mdash; Relative solve window against the fastest recipe.</p>
+  </div>
+  <p>&#128034; <strong>Cause of the slow run.</strong> The remark file records a very low speed for Qwen3.8-27B. It does not give a step count. The raw folders show the effect: the last problem folder has a modification time about 10 hours after the earliest problem folder. The count includes idle time on the shared HPC server.</p>
+  <p>&#128161; <strong>The renderer is not the cause.</strong> DeepSeek Flash and Qwen3.8-27B use the same harness, the same tools, and the same HTML form. Their times differ by a factor of 6.56. The model and its server set the speed.</p>
+</section>
+
+<section id="failure">
+  <h2>&#9888; The failed recipe</h2>
+  <div class="callout bad">
+    <h3>&#128295; Qwen3.6-27B + Typst: a success claim with no valid output</h3>
+    <p>&#128204; The model reported that it completed all 24 problems in 1 hour 31 minutes. The report lists one answer for each exercise in Section 15.7. The operator opened the Typst files and found that they are not valid documents. The operator deleted the raw data because it has no value.</p>
+    <p>&#129504; The remark file gives the cause: Qwen3.6-27B does not know how to write Typst. The model writes text with the shape of a Typst document. A compiler cannot render that text.</p>
+    <p>&#128034; The HPC server also refused connections many times. The same process ran grading tasks. A refused connection adds a retry, and a retry can hide a slow failure.</p>
+  </div>
+  <div class="fail-grid">
+    <figure>
+      <img src="assets/remarks/qwen3.6-no-typst-support.png" alt="Qwen3.6-27B claims that it completed all 24 problems in 1 hour 31 minutes.">
+      <figcaption class="small">&#128247; The Qwen3.6-27B session reports completion in 1 h 31 min 3 s. The Typst output is not usable.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/remarks/qwen3.8-output-loop.png" alt="Qwen3.8-27B subagent output loop with a long run of tab escape characters.">
+      <figcaption class="small">&#128247; The Qwen3.8-27B output loop: a failed tool call with a long run of <code>\t</code> escapes. The parent agent recovered.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="stability">
+  <h2>&#128737; Stability</h2>
+  <table>
+    <thead><tr><th>Event</th><th>Recipe</th><th>Effect</th><th>Recovery</th></tr></thead>
+    <tbody>
+      <tr><td>&#128165; Out-of-memory crash</td><td>DeepSeek Flash + LaTeX</td><td>The agent stopped. Too many LaTeX compilations ran in parallel.</td><td>&#9989; The operator resumed the run by hand.</td></tr>
+      <tr><td>&#128034; Output loop</td><td>Qwen3.8-27B + HTML</td><td>One subagent repeated a <code>\t\t\t...</code> sequence and failed a tool call.</td><td>&#9989; The parent agent recovered without help.</td></tr>
+      <tr><td>&#128268; Refused connection</td><td>Qwen3.6-27B + Typst</td><td>The VLLM server refused many requests. The same process ran grading tasks.</td><td>&#9888; A retry usually worked. The output still failed.</td></tr>
+    </tbody>
+  </table>
+  <p>&#128204; The two HTML recipes have no renderer crash. The HTML page needs no compile step. This is the main stability gain of the new output form.</p>
+</section>
+
+<section id="visual">
+  <h2>&#128200; Visual check</h2>
+  <p>&#128204; These four figures come from the two HTML runs. They show the requested geometry and the labels. Click a figure to zoom.</p>
+  <div class="gallery">
+    <figure>
+      <img class="zimg" src="assets/briefing/fig-15.7.17.png" alt="Parabolic bowl, cutting plane, and unit disk projection for problem 15.7.17.">
+      <figcaption>&#128200; 15.7.17 &mdash; Parabolic bowl, cutting plane, and disk projection.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/fig-15.7.55.png" alt="Region that maximizes a triple integral for problem 15.7.55.">
+      <figcaption>&#128200; 15.7.55 &mdash; The region that maximizes a triple integral.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/fig-15.8.14.png" alt="Two paraboloids and the enclosed lens for problem 15.8.14.">
+      <figcaption>&#128200; 15.8.14 &mdash; Two paraboloids and the enclosed lens.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/fig-15.9.45.png" alt="Bumpy sphere surface for problem 15.9.45 from the Qwen3.8-27B run.">
+      <figcaption>&#128200; 15.9.45 &mdash; The bumpy sphere, from the Qwen3.8-27B run.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="bottom-line">
+  <h2>&#128204; Bottom line</h2>
+  <ul>
+    <li>&#129514; <strong>Recipe choice.</strong> The HTML form with KaTeX is the best default. It removes the LaTeX crash and keeps good visual quality.</li>
+    <li>&#128295; <strong>Typst is not ready.</strong> Qwen3.6-27B cannot write Typst. A newer model with a known renderer works.</li>
+    <li>&#9201; <strong>Speed range.</strong> The usable recipes span 71 to 466 minutes. The output form does not set the speed.</li>
+    <li>&#128230; <strong>Output size.</strong> Each usable recipe gives 24 solution pages. The DeepSeek run adds 38 figures and 66 step scripts. The Qwen3.8-27B run adds 34 figures and 31 step scripts.</li>
+    <li>&#128218; <strong>Detail.</strong> Both HTML runs write about 1,800 words per solution and a notation table for each problem. The symbol explanation is a prompt rule, and both models follow it.</li>
+    <li>&#128737; <strong>Stability.</strong> The HTML pages need no compile step. The LaTeX recipe crashed once. The Qwen3.8-27B run had one output loop, and its parent agent recovered.</li>
+    <li>&#128269; <strong>Next check.</strong> A recipe claim needs a check of the output files. The Qwen3.6-27B run shows why a text claim is not sufficient. See <a href="plans.html">Future Plans</a>.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<script src="../lightbox.js"></script>
+<script>
+Chart.defaults.font.family = "Arial, sans-serif";
+Chart.defaults.color = "#1c2128";
+
+const BLUE = "#2f446f";
+const AMBER = "#e8a33d";
+const RED = "#b23a1c";
+const GREEN = "#2f6f4f";
+const GREY = "#5b6b7e";
+const LIGHT = "#9ec0f0";
+
+const PROBLEM_LABELS = [
+  "15.7.17", "15.7.18", "15.7.20", "15.7.21", "15.7.22", "15.7.23",
+  "15.7.27", "15.7.28", "15.7.29", "15.7.30", "15.7.31", "15.7.32",
+  "15.7.39", "15.7.40", "15.7.46", "15.7.47", "15.7.49", "15.7.50",
+  "15.7.54", "15.7.55", "15.8.14", "15.8.26", "15.9.43", "15.9.45"
+];
+
+const DS_FIGS = [1,2,2,2,1,1,2,2,2,2,2,1,2,1,1,1,1,1,2,2,2,2,1,2];
+const QW_FIGS = [2,2,2,2,2,1,2,2,1,1,2,1,1,1,1,1,1,1,1,1,1,2,2,1];
+const DS_WORDS = [861,1663,1767,1852,1110,1646,2029,1540,2948,2032,2608,1858,1887,1851,1247,1819,2109,2333,1470,2468,1012,1725,863,1409];
+const QW_WORDS = [1313,1810,1295,1372,1480,1622,1747,1987,2275,1640,2244,2078,2906,2259,1407,1958,2394,2218,1534,1923,1166,2213,990,1586];
+
+new Chart(document.getElementById("chartTime"), {
+  type: "bar",
+  data: {
+    labels: ["DeepSeek Flash (Internet) + LaTeX (76 to 82 min)", "Qwen3.6-27B (HPC) + Typst (failed)", "DeepSeek Flash (Internet) + HTML", "Qwen3.8-27B (HPC) + HTML"],
+    datasets: [{
+      label: "Minutes",
+      data: [82, 91, 71, 466],
+      backgroundColor: [BLUE, RED, GREEN, AMBER],
+      borderRadius: 5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Solve window per recipe (minutes)" },
+      legend: { display: false }
+    },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "Minutes" } } }
+  }
+});
+
+new Chart(document.getElementById("chartOutput"), {
+  type: "bar",
+  data: {
+    labels: ["Solution pages", "Figures", "Step scripts", "Figure scripts"],
+    datasets: [
+      { label: "DeepSeek Flash", data: [24, 38, 66, 38], backgroundColor: BLUE, borderRadius: 4 },
+      { label: "Qwen3.8-27B", data: [24, 34, 31, 34], backgroundColor: AMBER, borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Output files per recipe" },
+      legend: { position: "bottom" }
+    },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "Files" } } }
+  }
+});
+
+new Chart(document.getElementById("chartFigMix"), {
+  type: "bar",
+  data: {
+    labels: ["DeepSeek Flash", "Qwen3.8-27B"],
+    datasets: [
+      { label: "1 figure", data: [10, 14], backgroundColor: LIGHT, borderRadius: 4 },
+      { label: "2 figures", data: [14, 10], backgroundColor: BLUE, borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Problems by figure count" },
+      legend: { position: "bottom" }
+    },
+    scales: {
+      x: { stacked: true },
+      y: { stacked: true, beginAtZero: true, title: { display: true, text: "Problems" } }
+    }
+  }
+});
+
+new Chart(document.getElementById("chartWords"), {
+  type: "line",
+  data: {
+    labels: PROBLEM_LABELS,
+    datasets: [
+      {
+        label: "DeepSeek Flash",
+        data: DS_WORDS,
+        borderColor: BLUE,
+        backgroundColor: "rgba(47, 68, 111, .14)",
+        tension: .3,
+        pointRadius: 3
+      },
+      {
+        label: "Qwen3.8-27B",
+        data: QW_WORDS,
+        borderColor: AMBER,
+        backgroundColor: "rgba(232, 163, 61, .14)",
+        tension: .3,
+        pointRadius: 3
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: "index", intersect: false },
+    plugins: {
+      title: { display: true, text: "Visible words per solution" },
+      legend: { position: "bottom" }
+    },
+    scales: {
+      y: { beginAtZero: true, title: { display: true, text: "Words" } },
+      x: { ticks: { maxRotation: 60, minRotation: 45, autoSkip: false, font: { size: 10 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById("chartFigs"), {
+  type: "bar",
+  data: {
+    labels: PROBLEM_LABELS,
+    datasets: [
+      { label: "DeepSeek Flash", data: DS_FIGS, backgroundColor: BLUE, borderRadius: 3 },
+      { label: "Qwen3.8-27B", data: QW_FIGS, backgroundColor: AMBER, borderRadius: 3 }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Figures per problem" },
+      legend: { position: "bottom" }
+    },
+    scales: {
+      y: { beginAtZero: true, max: 3, ticks: { stepSize: 1 }, title: { display: true, text: "Figures" } },
+      x: { ticks: { maxRotation: 60, minRotation: 45, autoSkip: false, font: { size: 10 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById("chartSpeed"), {
+  type: "bar",
+  data: {
+    labels: ["DeepSeek Flash (Internet) + HTML", "DeepSeek Flash (Internet) + LaTeX", "Qwen3.6-27B (HPC) + Typst (failed)", "Qwen3.8-27B (HPC) + HTML"],
+    datasets: [{
+      label: "Relative time",
+      data: [1.00, 1.15, 1.28, 6.56],
+      backgroundColor: [GREEN, BLUE, RED, AMBER],
+      borderRadius: 5
+    }]
+  },
+  options: {
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Relative solve window (fastest = 1.00)" },
+      legend: { display: false },
+      tooltip: { callbacks: { label: function (c) { return c.raw.toFixed(2) + " times the fastest"; } } }
+    },
+    scales: { x: { beginAtZero: true, title: { display: true, text: "Factor" } } }
+  }
+});
+</script>
+
+</body>
+</html>

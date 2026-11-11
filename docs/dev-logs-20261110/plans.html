@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Plans after the 2026-11-10 meeting: revise the math-tutor prompts for plot quality with human-involved RSI, move DeepSeek Harness to the HPC, and raise inference speed on the 8 x A800 node. Longer term: multi-instance DSH, the tutor and grader website, and commercialization.">
+<title>Recipes 2026-11-10 &mdash; Future Plans</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.callout { background: #fff8e6; border: 1px solid #eddcae; border-radius: 10px; padding: 16px 20px; margin: 18px 0; }
+.callout h3 { margin-top: 0; }
+.callout.hard { background: #fdf1ee; border-color: #ecb7a6; }
+.plan-tag { display: inline-block; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; background: #e3f0fc; color: #0f52b0; margin-left: 8px; vertical-align: middle; }
+.plan-tag.week { background: #eee9fb; color: #4c3a7a; }
+.plan-tag.hard { background: #fbe4de; color: #b23a1c; }
+.plan-tag.long { background: #e8f4ea; color: #2f6f4f; }
+.recipe-line { font-family: Consolas, "Courier New", monospace; font-size: .84rem; background: #f6f8fa; border: 1px solid #e2e6ec; border-radius: 8px; padding: 10px 12px; display: block; margin: 10px 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+.cancelled { color: #5b6b7e; }
+.cancelled s { text-decoration-thickness: 1.5px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-11-10</div>
+    <h1>&#128220; Future Plans</h1>
+    <p class="lede">&#128204; Added after the 2026-11-10 meeting. &#127919; Three items for the next two weeks: (1) revise the math-tutor prompts for better plot quality through human-involved RSI, (2) move DeepSeek Harness to the HPC, and (3) raise inference speed on the 8 &times; A800 node. &#128301; Longer term: multiple DSH instances, the tutor and grader website, and the commercialization study. &#10060; The Qwen3.6-27B re-run is cancelled.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Recipes</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html" aria-current="page">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="window">
+  <h2>&#128197; The next two weeks</h2>
+  <p>&#128204; The three items share the same HTML + KaTeX recipe and the same model servers. Prompt work comes first, because plot quality blocks the tutor product. The harness move and the speed study then make the runs cheaper and faster.</p>
+  <table>
+    <thead><tr><th>Item</th><th>Work</th><th>Why now</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>&#127912; 1. Prompt revision</td>
+        <td>Revise the math-tutor prompts for better plot visual quality.</td>
+        <td>Current minimalist prompts give correct geometric objects, but the plots are unusable.</td>
+      </tr>
+      <tr>
+        <td>&#128421; 2. DSH on the HPC</td>
+        <td>Run 1 DeepSeek Harness instance on the HPC, next to the model.</td>
+        <td>Removes the PC-to-HPC hop from every model request.</td>
+      </tr>
+      <tr>
+        <td>&#9889; 3. A800 speed</td>
+        <td>Measure and tune the inference speed on the current 8 &times; A800 node.</td>
+        <td>The A800 has about 20 TFLOPS. The limit is real, so measure before planning.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="plan-prompts">
+  <h2>&#127912; Plan 1. Revise Math-Tutor Prompts for Plot Quality <span class="plan-tag week">Week 1&ndash;2</span></h2>
+  <p>&#128204; The current prompts are minimalist prompts. They produce plots of correct geometric objects. But their low visual quality (2D and 3D perspectives, projections, colors, transparencies) makes them unusable. They cannot help readers gain a more intuitive understanding of the problem. This plan targets the visual quality, not the math.</p>
+  <span class="recipe-line">&#129302; RSI: LLM (Internet) + DeepSeek Harness (PC, PTC mode) + Python (numpy, sympy, matplotlib) + HTML (KaTeX)</span>
+  <span class="recipe-line">&#128421; Deployment test: LLM (HPC) + DeepSeek Harness (HPC, PTC mode) + Python (numpy, sympy, matplotlib) + HTML (KaTeX)</span>
+  <div class="grid2">
+    <div class="card">
+      <h3>&#127919; Goal</h3>
+      <p>Revise the math-tutor agent prompts for better math plot visual quality. Use DeepSeek Flash (Internet) for human-involved recursive self-improvement (RSI). Use Qwen3.8-27B (HPC) for deployment testing.</p>
+    </div>
+    <div class="card">
+      <h3>&#128295; Actions</h3>
+      <p>&#129302; <strong>Run the RSI loop.</strong> Use DeepSeek Flash (Internet) with the PC harness in PTC mode. Keep a person in the loop for each prompt revision.</p>
+      <p>&#128421; <strong>Test on the deployment recipe.</strong> Use Qwen3.8-27B (HPC) with the HPC harness in PTC mode, so the prompt is checked on the target path.</p>
+      <p>&#127912; <strong>Target the visual gaps.</strong> Work on 2D and 3D perspective, projections, colors, and transparencies.</p>
+      <p>&#129514; <strong>Compare the plots.</strong> Run the revised prompt on the same problems. Put the old plot and the new plot side by side.</p>
+      <p>&#9989; <strong>Keep the geometry correct.</strong> Accept a prompt only if the geometric objects stay correct and the plots become clearer.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>&#9989; Outcome</h3>
+    <p>A revised prompt set that produces plots with clear perspective, projection, colors, and transparency. The RSI stays human-involved. The deployment test on Qwen3.8-27B shows whether the prompts hold on the HPC recipe.</p>
+  </div>
+  <div class="callout">
+    <p>&#9888; <strong>Do not trade correctness for looks.</strong> The current prompts already produce the correct geometric objects. A revised prompt must keep that correctness and raise only the visual quality.</p>
+    <p>&#128204; <strong>Why the plots matter.</strong> A correct plot that hides the perspective or the projection does not build intuition. The reader gains more from a clear figure than from a correct but flat one.</p>
+  </div>
+</section>
+
+<section id="plan-hpc">
+  <h2>&#128421; Plan 2. Move DeepSeek Harness to the HPC <span class="plan-tag week">Week 1&ndash;2</span></h2>
+  <p>&#128204; Today the harness runs on the PC, and the model runs on the HPC. Every model request crosses the network. This plan puts 1 DeepSeek Harness instance on the HPC, next to the model.</p>
+  <span class="recipe-line">&#129302; LLM (HPC) + DeepSeek Harness (HPC, PTC mode) + Python (numpy, sympy, matplotlib) + HTML (KaTeX)</span>
+  <div class="grid2">
+    <div class="card">
+      <h3>&#127919; Goal</h3>
+      <p>Try running 1 DeepSeek Harness instance on the HPC. Use the LLM (HPC) + DeepSeek Harness (HPC, PTC mode) + Python + HTML (KaTeX) recipe.</p>
+    </div>
+    <div class="card">
+      <h3>&#9989; Outcome</h3>
+      <p>One complete 24-problem run with DeepSeek Harness on the HPC. A launch script that the team can repeat.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>&#128295; Actions</h3>
+    <p>&#128230; <strong>Install the harness.</strong> Install DeepSeek Harness and its plugins in a user folder on the HPC. Use a Python environment that matches the PC.</p>
+    <p>&#128268; <strong>Point it at the local model.</strong> Use the VLLM endpoint on <code>localhost</code>, not the network address of the HPC. Remove the PC hop.</p>
+    <p>&#128193; <strong>Copy the inputs.</strong> Copy the 24 problem folders and <code>instructions.md</code>. Use the same file names, so the run is comparable.</p>
+    <p>&#129514; <strong>Run 1 instance.</strong> Run the full 24 problems for Qwen3.8-27B.</p>
+    <p>&#129518; <strong>Check the tools.</strong> Confirm that Python, <code>numpy</code>, <code>sympy</code>, <code>matplotlib</code>, and the figure output work on the HPC.</p>
+    <p>&#128221; <strong>Write a launch script.</strong> The script starts the server, sets the endpoint, starts the harness, and names the output folder.</p>
+    <p>&#128230; <strong>Record the resources.</strong> Record the CPU count, the memory, the GPU, and the wall time for the instance.</p>
+  </div>
+</section>
+
+<section id="plan-speed">
+  <h2>&#9889; Plan 3. Increase Inference Speed on the 8 &times; A800 Node <span class="plan-tag hard">Hard</span></h2>
+  <div class="callout hard">
+    <h3>&#128012; The limit is real</h3>
+    <p>&#128204; The A800 has only <strong>20 TFLOPS</strong> of processing power. That value is low for a 27-billion-parameter model at BF16 precision.</p>
+    <p>&#128200; Measured averages for Qwen3.8-27B (BF16): on 1 A800, the inference speed is <strong>27 tokens per second</strong>. On 2 A800, it is <strong>47 tokens per second</strong>.</p>
+    <p>&#9888; The gain from 1 GPU to 2 GPUs is real but modest. A large gain will be difficult. This plan measures small gains and removes waste. It does not promise a fast model.</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>&#127919; Goal</h3>
+      <p>Measure the current speed. Test the safe options. Find the best setting for a 24-problem run on this node.</p>
+    </div>
+    <div class="card">
+      <h3>&#9989; Outcome</h3>
+      <p>A measured speed table. A recommended setting for the next 24-problem run. A clear statement of the limit, so the team does not plan around a gain that the hardware cannot give.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>&#128295; Actions</h3>
+    <p>&#128200; <strong>Measure the baseline.</strong> Record the prefill speed, the decode speed, the time to the first token, and the tokens per second on 1 A800.</p>
+    <p>&#129518; <strong>Test the server settings.</strong> Test prefix caching, chunked prefill, the batch size, the number of concurrent sequences, and the GPU memory fraction. Change one setting at a time.</p>
+    <p>&#129309; <strong>Test 2 A800.</strong> Use tensor parallelism across 2 GPUs. Measure the tokens per second. The measured average is 47 tokens per second, against 27 on 1 GPU.</p>
+    <p>&#128230; <strong>Test a smaller number format.</strong> Test FP8 or INT8 quantization, or an AWQ/GPTQ build. Run 2 problems and compare the math and the figures with the BF16 output before you accept a loss.</p>
+    <p>&#128220; <strong>Reduce the context.</strong> Send a shorter prompt and keep the instructions stable, so the prefix cache can hit.</p>
+    <p>&#128260; <strong>Reduce the work.</strong> Fewer steps and shorter verification text can do more than a server flag.</p>
+    <p>&#128274; <strong>Isolate the server.</strong> Do not run grading tasks in the same process. A refused connection adds a retry and hides the real speed.</p>
+  </div>
+  <div class="card">
+    <h3>&#128203; Measured values</h3>
+    <table>
+      <thead><tr><th>Setting</th><th class="num">GPUs</th><th class="num">Tokens/s (average)</th></tr></thead>
+      <tbody>
+        <tr><td>BF16, 1 A800 (baseline)</td><td class="num">1</td><td class="num">27</td></tr>
+        <tr><td>BF16, 2 A800 (tensor parallel)</td><td class="num">2</td><td class="num">47</td></tr>
+        <tr><td>&#129518; Server flags</td><td class="num">1</td><td class="num">Measure</td></tr>
+        <tr><td>&#128230; Lower precision</td><td class="num">1</td><td class="num">Measure</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <p>&#128161; <strong>Where the time goes.</strong> At 27 tokens per second, 10,000 generated tokens take about 6 minutes. The run total comes from the token count, not only from the GPU. Plan 3 therefore measures both the token count and the speed.</p>
+  </div>
+</section>
+
+<section id="longer">
+  <h2>&#128301; Longer-term plans <span class="plan-tag long">Beyond two weeks</span></h2>
+  <p>&#128204; These items follow the two-week work. Item 1 was cancelled at the 2026-11-10 meeting.</p>
+  <table>
+    <thead><tr><th>Item</th><th>Status</th><th>Plan</th></tr></thead>
+    <tbody>
+      <tr class="cancelled">
+        <td>&#10060; 1. Qwen3.6-27B re-run</td>
+        <td>Cancelled</td>
+        <td><s>Rerun the &ldquo;solve 24 multi-variable calculus problems&rdquo; experiment on Qwen3.6-27B. Compare output quality with Qwen3.8-27B and DeepSeek Flash. Use the LLM (HPC) + DeepSeek Harness (PC) + Python (numpy, sympy, matplotlib) + HTML (KaTeX) recipe.</s></td>
+      </tr>
+      <tr>
+        <td>&#129525; 2. Multiple DSH instances</td>
+        <td>Longer term</td>
+        <td>Try running multiple DeepSeek Harness instances (maybe in Docker containers) on the HPC. Estimate how many instances we can run with 64 CPU cores and 2 TB of RAM. Run the &ldquo;solve 24 multi-variable calculus problems&rdquo; experiment for Qwen3.8-27B and Qwen3.6-27B.</td>
+      </tr>
+      <tr>
+        <td>&#127760; 3. Tutor and grader website</td>
+        <td>Longer term</td>
+        <td>Build the AI tutor and grader website components for multi-variable calculus.</td>
+      </tr>
+      <tr>
+        <td>&#128200; 4. Commercialization study</td>
+        <td>Longer term</td>
+        <td>Study the AI tutor and grader commercialization feasibility and the market.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="status">
+  <h2>&#128203; Plan status</h2>
+  <table>
+    <thead><tr><th>Plan</th><th>Owner</th><th>Due</th><th>First check</th></tr></thead>
+    <tbody>
+      <tr><td>&#127912; Prompt revision (RSI)</td><td>Experiment</td><td>2026-11-24</td><td>A revised prompt gives clearer plots on the same problems, with correct geometry.</td></tr>
+      <tr><td>&#128421; DSH on the HPC</td><td>Platform</td><td>2026-11-24</td><td>1 instance finishes 24 problems.</td></tr>
+      <tr><td>&#9889; A800 speed study</td><td>Platform</td><td>2026-11-24</td><td>A tokens-per-second table with one best setting.</td></tr>
+      <tr><td>&#129525; Multi-instance DSH</td><td>Platform</td><td>Longer term</td><td>2 instances finish disjoint problem groups.</td></tr>
+      <tr><td>&#127760; Tutor and grader website</td><td>Product</td><td>Longer term</td><td>Website components for multi-variable calculus.</td></tr>
+      <tr><td>&#128200; Commercialization study</td><td>Product</td><td>Longer term</td><td>Feasibility and market analysis.</td></tr>
+    </tbody>
+  </table>
+  <p>&#128204; These are plans, not results. This chapter will change when a plan has a measured result.</p>
+</section>
+
+<section id="risks">
+  <h2>&#9888; Risks and controls</h2>
+  <table>
+    <thead><tr><th>Risk</th><th>Effect</th><th>Control</th></tr></thead>
+    <tbody>
+      <tr><td>&#127912; Plot quality trades against correctness</td><td>A clear plot with a wrong geometric object.</td><td>Accept a prompt only if the geometry stays correct. Check against the canonical solution.</td></tr>
+      <tr><td>&#128012; A800 compute limit</td><td>A speed plan that the hardware cannot meet.</td><td>Measure the baseline first. Report the limit with the result.</td></tr>
+      <tr><td>&#129302; RSI drift</td><td>A prompt set that fits one problem and fails others.</td><td>Keep a person in the loop. Test each revision on the full problem set.</td></tr>
+      <tr><td>&#128230; Quality loss from quantization</td><td>A fast answer with a wrong result.</td><td>Check 2 problems against the BF16 output before you accept the setting.</td></tr>
+      <tr><td>&#128268; Server refusal</td><td>Lost steps and idle time.</td><td>Separate the serving and grading jobs. Use a short timeout and a bounded retry.</td></tr>
+      <tr><td>&#129525; Multi-instance resource drain</td><td>Slower runs or a failed instance.</td><td>Estimate from 64 CPU cores and 2 TB of RAM. Limit each container.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

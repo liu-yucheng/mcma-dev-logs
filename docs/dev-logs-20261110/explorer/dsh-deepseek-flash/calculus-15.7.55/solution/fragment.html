@@ -1,0 +1,198 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 55</p>
+<h1>The Region That Maximizes a Triple Integral</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Part (a) asks for the region \(E\) that makes a triple integral as large as possible.
+Part (b) asks for the exact value of that maximum. Write the integrand and the integral as</p>
+<div class="equation">\[ g(x,y,z) = 1 - x^{2} - 2y^{2} - 3z^{2}, \qquad I(E) = \iiint_{E} g(x,y,z) \, dV. \]</div>
+<p>The region \(E\) is not given. A larger region adds more volume, but the added volume
+can contribute a negative amount, so size alone does not decide the answer.</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>This exercise does not fix the solid. It asks which solid is best, so the shape of the
+integrand \(g\) decides the answer. The function \(g\) has a fixed sign pattern: it is
+positive near the origin, zero on one surface, and negative far from the origin. The zero
+surface is the level set \(g = 0\):</p>
+<div class="equation">\[ 1 - x^{2} - 2y^{2} - 3z^{2} = 0
+\quad\Longleftrightarrow\quad x^{2} + 2y^{2} + 3z^{2} = 1. \]</div>
+<p>Divide the constant term into the three squares:</p>
+<div class="equation">\[ \frac{x^{2}}{1^{2}} + \frac{y^{2}}{\left(1/\sqrt{2}\right)^{2}}
++ \frac{z^{2}}{\left(1/\sqrt{3}\right)^{2}} = 1. \]</div>
+<p>This is an ellipsoid centered at the origin. Its semi-axes are \(a = 1\) along the
+\(x\)-axis, \(b = 1/\sqrt{2} \approx 0.707\) along the \(y\)-axis, and
+\(c = 1/\sqrt{3} \approx 0.577\) along the \(z\)-axis. Let \(E_{0}\) denote the closed
+region inside this ellipsoid:</p>
+<div class="equation">\[ E_{0} = \{(x,y,z) : x^{2} + 2y^{2} + 3z^{2} \le 1\}. \]</div>
+<p>Every point of \(E_{0}\) satisfies \(x^{2} + 2y^{2} + 3z^{2} \le 1\), so \(g \ge 0\) on
+\(E_{0}\). Every point outside \(E_{0}\) satisfies \(x^{2} + 2y^{2} + 3z^{2} > 1\), so
+\(g < 0\) there. The sign test in Step 1 checks this statement, and Step 2 turns it into
+a proof.</p>
+<figure>
+<img data-figure="part1_figure1.png" alt="The ellipsoid x^2 + 2y^2 + 3z^2 = 1 with semi-axes 1, 0.707 and 0.577">
+<figcaption>The ellipsoid \(x^{2} + 2y^{2} + 3z^{2} = 1\). The dark curves are the principal
+ellipses in the three coordinate planes. The marked points are the intercepts with the
+coordinate axes, at \(a = 1.000\) on the \(x\)-axis, \(b = 0.707\) on the \(y\)-axis, and
+\(c = 0.577\) on the \(z\)-axis. The integrand is positive inside this surface and negative
+outside it.</figcaption>
+</figure>
+<p>The change of variables in Step 3 removes the coefficients \(2\) and \(3\). Set
+\(u = x\), \(v = \sqrt{2}\,y\), and \(w = \sqrt{3}\,z\). Then
+\(x^{2} + 2y^{2} + 3z^{2} = u^{2} + v^{2} + w^{2}\), so the ellipsoid \(E_{0}\) becomes the
+unit ball \(B\), and the integrand becomes \(1 - \left(u^{2} + v^{2} + w^{2}\right)\).</p>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Locate the sign change</h3>
+<p>Solve the inequality \(g > 0\):</p>
+<div class="equation">\[ 1 - x^{2} - 2y^{2} - 3z^{2} > 0
+\quad\Longleftrightarrow\quad x^{2} + 2y^{2} + 3z^{2} < 1. \]</div>
+<p>The solution set is the open ellipsoid \(E_{0}\). On the surface of \(E_{0}\) the
+integrand is zero, and outside \(E_{0}\) the integrand is negative. A random test
+confirms the sign pattern: of four million points in the cube
+\(-1 \le x,y,z \le 1\), no point had a positive integrand outside \(E_{0}\) and no point
+had a negative integrand inside \(E_{0}\), so the number of disagreements is \(0\).</p>
+<figure>
+<img data-figure="part1_figure2.png" alt="Level curves of the integrand in the plane z = 0 and profiles along the three coordinate axes">
+<figcaption>Panel (a): level curves of \(g(x,y,0) = 1 - x^{2} - 2y^{2}\) in the plane
+\(z = 0\). The blue region holds \(g > 0\) and the pink region holds \(g < 0\); the heavy
+curve is the zero level, the ellipse \(x^{2} + 2y^{2} = 1\) with intercepts \(x = 1\) and
+\(y = 0.707\). Panel (b): the integrand along the three coordinate axes, where the
+distance from the origin is \(t\). The curves are \(1 - t^{2}\), \(1 - 2t^{2}\), and
+\(1 - 3t^{2}\), and the red dots mark their zeros. The blue band shows where the integrand
+is non-negative.</figcaption>
+</figure>
+
+<h3>Step 2 &mdash; Prove that the ellipsoid gives the maximum</h3>
+<p>Let \(E\) be any bounded region. Split \(E\) into the part inside \(E_{0}\) and the part
+outside it:</p>
+<div class="equation">\[ \iiint_{E} g \, dV
+= \iiint_{E \cap E_{0}} g \, dV + \iiint_{E \setminus E_{0}} g \, dV. \]</div>
+<p>On \(E \setminus E_{0}\) the integrand is negative, so that term is at most zero. On
+\(E \cap E_{0}\) the integrand is non-negative and \(E \cap E_{0}\) is a subset of
+\(E_{0}\), so that term is at most the integral over the whole ellipsoid. Together:</p>
+<div class="equation">\[ \iiint_{E} g \, dV \le \iiint_{E \cap E_{0}} g \, dV \le \iiint_{E_{0}} g \, dV. \]</div>
+<p>Both inequalities become equalities for the choice \(E = E_{0}\). Any other region
+either adds points where \(g < 0\) or omits points of \(E_{0}\) where \(g > 0\), and both
+changes lower the value. A region that differs from \(E_{0}\) only on a surface, which has
+volume zero, gives the same maximum. Hence \(E_{0}\) is the maximizing region.</p>
+<p>A one-parameter check supports the argument. Scale the ellipsoid by the factor \(s\):</p>
+<div class="equation">\[ E_{s} = \{(x,y,z) : x^{2} + 2y^{2} + 3z^{2} \le s^{2}\},
+\qquad I(s) = \iiint_{E_{s}} g \, dV = \frac{2\sqrt{6}\,\pi}{45}\, s^{3}
+\left(5 - 3s^{2}\right). \]</div>
+<p>Differentiate with respect to \(s\):</p>
+<div class="equation">\[ I'(s) = \frac{2\sqrt{6}\,\pi}{3}\, s^{2}\left(1 - s^{2}\right). \]</div>
+<p>On \(0 < s < 1\) the derivative is positive, and on \(s > 1\) it is negative, so
+\(s = 1\) is the only critical point in the range \(s > 0\) and it is the global maximum.
+The second derivative at that point is \(I''(1) = -4\sqrt{6}\,\pi/3 < 0\), which confirms
+a maximum. The computed values of \(I(s)\) show the same picture:</p>
+<div class="equation">\[ \begin{array}{c|cccc}
+s & 0.4 & 0.6 & 0.8 & 1.0 \\ \hline
+I(s) & 0.098937604 & 0.289589491 & 0.539341275 & 0.684026576
+\end{array} \]</div>
+<div class="equation">\[ \begin{array}{c|cccc}
+s & 1.2 & 1.4 & 1.6 & 2.0 \\ \hline
+I(s) & 0.401879294 & -0.825866327 & -3.754375627 & -19.152744130
+\end{array} \]</div>
+<p>The largest tabulated value is at \(s = 1\). Past that point the extra shell lies
+entirely in the region where \(g < 0\), so the integral falls, and it soon becomes
+negative. A shift of the ellipsoid has the same effect: moving the center to
+\((0.1,0,0)\) lowers the value to \(0.66591 \pm 0.00039\), and the value keeps falling as
+the shift grows.</p>
+
+<h3>Step 3 &mdash; Change to scaled coordinates</h3>
+<p>Use the substitution</p>
+<div class="equation">\[ u = x, \qquad v = \sqrt{2}\,y, \qquad w = \sqrt{3}\,z. \]</div>
+<p>The inverse map is \(x = u\), \(y = v/\sqrt{2}\), \(z = w/\sqrt{3}\). Its Jacobian is the
+product of the three scale factors:</p>
+<div class="equation">\[ \frac{\partial(x,y,z)}{\partial(u,v,w)} = 1 \cdot \frac{1}{\sqrt{2}} \cdot \frac{1}{\sqrt{3}}
+= \frac{1}{\sqrt{6}} = \frac{\sqrt{6}}{6}. \]</div>
+<p>Therefore \(dV = du\,dv\,dw/\sqrt{6}\), the ellipsoid \(E_{0}\) becomes the unit ball
+\(B = \{(u,v,w) : u^{2} + v^{2} + w^{2} \le 1\}\), and the integrand becomes
+\(1 - \left(u^{2} + v^{2} + w^{2}\right)\). In spherical coordinates
+\(u = \rho\sin\phi\cos\theta\), \(v = \rho\sin\phi\sin\theta\), and
+\(w = \rho\cos\phi\), with \(dV = \rho^{2}\sin\phi \, d\rho\, d\phi\, d\theta\). The unit
+ball has the constant bounds</p>
+<div class="equation">\[ 0 \le \rho \le 1, \qquad 0 \le \phi \le \pi, \qquad 0 \le \theta \le 2\pi. \]</div>
+
+<h3>Step 4 &mdash; Compute the volume of the region</h3>
+<p>Integrate the volume element over the ball, then divide by \(\sqrt{6}\):</p>
+<div class="equation">\[ \int_{0}^{2\pi} \int_{0}^{\pi} \int_{0}^{1} \rho^{2}\sin\phi \, d\rho \, d\phi \, d\theta
+= 2\pi \cdot 2 \cdot \frac{1}{3} = \frac{4\pi}{3}. \]</div>
+<div class="equation">\[ V(E_{0}) = \frac{1}{\sqrt{6}} \cdot \frac{4\pi}{3}
+= \frac{4\pi}{3\sqrt{6}} = \frac{2\sqrt{6}\,\pi}{9} \approx 1.7101. \]</div>
+<p>The result agrees with the product of the three semi-axes times \(4\pi/3\): the
+coefficient \(1/\sqrt{6}\) is exactly \(abc = 1 \cdot \left(1/\sqrt{2}\right) \cdot
+\left(1/\sqrt{3}\right)\).</p>
+
+<h3>Step 5 &mdash; Compute the exact maximum</h3>
+<p>Integrate \(1 - \rho^{2}\) over the ball in the same order:</p>
+<div class="equation">\[ \int_{0}^{2\pi} \int_{0}^{\pi} \int_{0}^{1} \left(1 - \rho^{2}\right)\rho^{2}\sin\phi
+\, d\rho \, d\phi \, d\theta
+= 2\pi \cdot 2 \cdot \left[ \frac{\rho^{3}}{3} - \frac{\rho^{5}}{5} \right]_{0}^{1}
+= 4\pi \left( \frac{1}{3} - \frac{1}{5} \right) = \frac{8\pi}{15}. \]</div>
+<p>Divide by \(\sqrt{6}\) and rationalize the denominator:</p>
+<div class="equation">\[ \iiint_{E_{0}} g \, dV = \frac{1}{\sqrt{6}} \cdot \frac{8\pi}{15}
+= \frac{8\pi}{15\sqrt{6}} = \frac{8\sqrt{6}\,\pi}{90} = \frac{4\sqrt{6}\,\pi}{45}
+\approx 0.68403. \]</div>
+<p>The value is between \(0\) and the volume \(1.7101\), as it must be, because the
+integrand lies between \(0\) and \(1\) on \(E_{0}\). Its mean value on \(E_{0}\) is the
+quotient of the two results,</p>
+<div class="equation">\[ \frac{1}{V(E_{0})} \iiint_{E_{0}} g \, dV = \frac{2}{5} = 0.4. \]</div>
+<p>An independent quadrature of the same integral with mpmath reproduces
+\(0.68402657608632751762\), and the closed form gives the same digits.</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<div class="equation">\[ \text{(a)}\quad E = \{(x,y,z) : x^{2} + 2y^{2} + 3z^{2} \le 1\}. \]</div>
+<div class="equation">\[ \text{(b)}\quad \iiint_{E} \left(1 - x^{2} - 2y^{2} - 3z^{2}\right) dV
+= \frac{4\sqrt{6}\,\pi}{45} \approx 0.6840. \]</div>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(g(x,y,z)\)</td><td>The integrand \(1 - x^{2} - 2y^{2} - 3z^{2}\).</td></tr>
+<tr><td>\(I(E)\)</td><td>The value of the triple integral of \(g\) over the region \(E\).</td></tr>
+<tr><td>\(\iiint_{E} g \, dV\)</td><td>The triple integral of \(g\) over \(E\); it is the limit of sums of \(g\) times small volumes.</td></tr>
+<tr><td>\(dV\)</td><td>The volume element. In Cartesian coordinates \(dV = dx\,dy\,dz\); after the substitution it is \(du\,dv\,dw/\sqrt{6}\).</td></tr>
+<tr><td>\(E_{0}\)</td><td>The closed ellipsoid \(x^{2} + 2y^{2} + 3z^{2} \le 1\), the answer to part (a).</td></tr>
+<tr><td>\(a, b, c\)</td><td>The semi-axes of the ellipsoid: \(1\) along \(x\), \(1/\sqrt{2}\) along \(y\), and \(1/\sqrt{3}\) along \(z\).</td></tr>
+<tr><td>\(u, v, w\)</td><td>The scaled coordinates \(u = x\), \(v = \sqrt{2}\,y\), \(w = \sqrt{3}\,z\) that turn the ellipsoid into the unit ball.</td></tr>
+<tr><td>\(\dfrac{\partial(x,y,z)}{\partial(u,v,w)}\)</td><td>The Jacobian of the inverse substitution, here \(1/\sqrt{6}\). It converts the volume element of the ball into the volume element of the ellipsoid.</td></tr>
+<tr><td>\(B\)</td><td>The unit ball \(u^{2} + v^{2} + w^{2} \le 1\) in the scaled coordinates.</td></tr>
+<tr><td>\(\rho, \phi, \theta\)</td><td>Spherical coordinates in the \(uvw\)-space: \(\rho\) is the distance from the origin, \(\phi\) is the angle from the \(w\)-axis, and \(\theta\) is the angle in the \(uv\)-plane.</td></tr>
+<tr><td>\(V(E_{0})\)</td><td>The volume of the ellipsoid, \(2\sqrt{6}\,\pi/9 \approx 1.7101\).</td></tr>
+<tr><td>\(I(s)\)</td><td>The integral over the scaled ellipsoid \(E_{s}\) with \(x^{2} + 2y^{2} + 3z^{2} \le s^{2}\), used to test maximality.</td></tr>
+<tr><td>\(\pi\)</td><td>The ratio of a circle's circumference to its diameter, \(\pi \approx 3.14159\).</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Three scripts check the result; each one runs from inside <code>calculus-15.7.55/solution</code>.</p>
+<ul>
+<li><code>part1_step1.py</code> reports the three semi-axes \(1.000000\), \(0.707107\), and
+\(0.577350\), and tests the sign of the integrand on four million random points. The number
+of disagreements is \(0\). The Monte Carlo volume is \(1.70857\) with standard error
+\(0.00164\), and the Monte Carlo integral is \(0.68367\) with standard error \(0.00082\),
+which is \(0.44\) standard errors below \(4\sqrt{6}\,\pi/45\).</li>
+<li><code>part1_step2.py</code> repeats the computation with SymPy. It returns the unit ball
+volume \(4\pi/3\), the Jacobian \(\sqrt{6}/6\), the ellipsoid volume
+\(2\sqrt{6}\,\pi/9 = 1.7100664402\), the ball integrals \(4\pi/5\) and \(8\pi/15\), the
+maximum \(4\sqrt{6}\,\pi/45 = 0.6840265761\), and the mean value \(2/5\).</li>
+<li><code>part1_step3.py</code> checks maximality. It derives \(I(s)\), its derivative, and
+the critical point \(s = 1\), and it tabulates \(I(s)\) from \(s = 0.4\) to \(s = 2.0\). It
+also evaluates the maximum with mpmath quadrature
+(\(0.68402657608632751762\), difference \(0.0\) from the closed form) and shows by Monte
+Carlo sampling that a shifted copy of the ellipsoid gives a smaller integral.</li>
+</ul>
+</section>

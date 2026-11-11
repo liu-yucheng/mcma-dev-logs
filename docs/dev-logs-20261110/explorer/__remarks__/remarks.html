@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remarks &mdash; 2026-11-10</title>
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../../preview.css">
+<style>
+img { max-width: 100%; height: auto; display: block; }
+.prompt { white-space: pre-wrap; font-size: .82rem; background: #f6f8fa; border: 1px solid #e2e6ec; border-radius: 8px; padding: 12px 14px; }
+td.num { text-align: right; }
+</style>
+</head>
+<body class="leaf">
+<main class="container">
+<h1>&#128221; Remarks &mdash; 2026-11-10</h1>
+<p class="small">Operator summary of the four recipes. Reproduced from <code>__remarks__/remarks.md</code>.</p>
+
+<h2>&#128203; The four recipes</h2>
+<p class="small">We tried multiple math-agent recipes on 24 multi-variable calculus problems. &#128204; All four recipes use DeepSeek Harness on the PC in PTC mode. The model runs on the Internet or on the HPC. The renderer changes between recipes.</p>
+<ol>
+<li>
+<p>&#129302; <strong>[ DeepSeek Flash (Internet) + DeepSeek Harness (PC, PTC mode) + Python (numpy, matplotlib, sympy) + LaTeX (texlive 2026 CLI, latexmk) ]</strong></p>
+<ul>
+<li>&#9989; Recipe worked.</li>
+<li>&#9201; All problems solved in 1 hour 22 minutes. Reasonable speed. Reasonable token expense.</li>
+<li>&#128193; Raw data in <code>../../dev-logs-20261027/dsh-deepseek-flash/</code>.</li>
+<li>&#128165; Agent crashed once. Manually resumed.</li>
+<li>&#128736; Crash cause: multiple LaTeX compilations running in parallel drain memory.</li>
+</ul>
+</li>
+<li>
+<p>&#128295; <strong>[ Qwen3.6-27B (HPC/x****9) + DeepSeek Harness (PC, PTC mode) + Python (numpy, matplotlib, sympy) + Typst (typst CLI) ]</strong></p>
+<ul>
+<li>&#10060; Recipe failed.</li>
+<li>&#9201; All problems solved in 1 hour 31 minutes.</li>
+<li>&#128465; Raw data makes no sense. Deleted.</li>
+<li>&#9888; The LLM claimed work completed, but the Typst files produced are garbage. See <code>./qwen3.6-no-typst-support.png</code>.</li>
+<li>&#9989; HPC VLLM server worked. Workspace: <code>x****9</code>.</li>
+<li>&#128268; Server often refuses connection. Probably because the same process also worked grading tasks.</li>
+<li>&#129504; Qwen3.6-27B does not know how to write Typst.</li>
+</ul>
+</li>
+<li>
+<p>&#129302; <strong>[ DeepSeek Flash (Internet) + DeepSeek Harness (PC, PTC mode) + Python (numpy, matplotlib, sympy) + HTML (KaTeX) ]</strong></p>
+<ul>
+<li>&#9989; Recipe worked.</li>
+<li>&#9201; All problems solved in 1 hour 11 minutes. Reasonable speed. Reasonable token expense.</li>
+<li>&#128193; Raw data in <code>../dsh-deepseek-flash/</code>.</li>
+<li>&#128200; Solutions have good visual quality.</li>
+</ul>
+</li>
+<li>
+<p>&#129504; <strong>[ Qwen3.8-27B (HPC/y*****8) + DeepSeek Harness (PC, PTC mode) + Python (numpy, matplotlib, sympy) + HTML (KaTeX) ]</strong></p>
+<ul>
+<li>&#9989; Recipe worked.</li>
+<li>&#9201; All problems solved in 7 hours 46 minutes. Very low speed. Reasonable token expense.</li>
+<li>&#128193; Raw data in <code>../dsh-qwen3.8-27b-hpc/</code>.</li>
+<li>&#128034; 1 subagent crashed with a <code>\t\t\t...</code> output loop. Its parent agent automatically recovers. See <code>./qwen3.8-output-loop.png</code>.</li>
+<li>&#128736; HPC A800 GPU driver only supports CUDA 12.8 or later. But the current precompiled VLLM only supports CUDA 13 or later.</li>
+<li>&#9989; Compiled VLLM 0.24.0 with CUDA 12.8 on the HPC.</li>
+<li>&#128421; HPC VLLM server worked. Workspace: <code>y*****8</code>.</li>
+</ul>
+</li>
+</ol>
+
+<h3>&#128247; Screenshots</h3>
+<p><img src="qwen3.6-no-typst-support.png" alt="Qwen3.6 run claims completion after 1 hour 31 minutes"></p>
+<p class="small">&#9888; Qwen3.6-27B claims that it completed all 24 problems in 1 hour 31 minutes. The Typst output is not usable.</p>
+<p><img src="qwen3.8-output-loop.png" alt="Qwen3.8 output loop with repeated tab characters"></p>
+<p class="small">&#128034; Qwen3.8-27B subagent output loop: a tool call with an unterminated JSON string and a long run of tab escapes. The parent agent recovered.</p>
+</main>
+</body>
+</html>

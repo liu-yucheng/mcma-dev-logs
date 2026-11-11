@@ -1,0 +1,98 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 23</p>
+<h1>A Wedge Cut from a Cylinder by Two Planes</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>(a) Express the volume of the wedge in the first octant that is cut from the cylinder \(y^{2} + z^{2} = 1\) by the planes \(y = x\) and \(x = 1\) as a triple integral.</p>
+<p>(b) Use either the Table of Integrals or a computer algebra system to find the exact value of the integral in part (a).</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>The surface \(y^{2} + z^{2} = 1\) is a cylinder of radius 1. Its equation does not contain \(x\), so the axis of the cylinder is the \(x\)-axis. The solid lies in the first octant, so \(x \ge 0\), \(y \ge 0\), and \(z \ge 0\).</p>
+<p>Two vertical planes cut the cylinder. The plane \(y = x\) contains the line \(y = x\) of the \(xy\)-plane and runs parallel to the \(z\)-axis. The plane \(x = 1\) also runs parallel to the \(z\)-axis. Neither plane depends on \(z\). A slice of the solid at a fixed value of \(y\) therefore has the same \(x\)-range at every height.</p>
+<p>Fix \(y\) with \(0 \le y \le 1\). The cylinder fixes the vertical range \(0 \le z \le \sqrt{1 - y^{2}}\); at \(y = 1\) this range shrinks to the single point \(z = 0\). The two planes fix the horizontal range \(y \le x \le 1\). Each slice is thus a rectangle of width \(1 - y\) and height \(\sqrt{1 - y^{2}}\). The solid is the union of these rectangles:</p>
+<div class="equation">\[ E = \{(x,y,z) : 0 \le y \le 1,\ 0 \le z \le \sqrt{1 - y^{2}},\ y \le x \le 1\}. \]</div>
+<figure>
+<img data-figure="part1_figure1.png" alt="The wedge cut from the cylinder y squared plus z squared equals 1 by the planes y equals x and x equals 1">
+<figcaption>The solid \(E\). The green face is the cap \(x = 1\). The salmon face is the diagonal cut \(y = x\). The violet patch is the curved surface \(y^{2} + z^{2} = 1\). The tan triangle is the floor \(z = 0\). The face \(y = 0\) lies on the far side of the solid and the curved surface hides it in this view. The \(x\)-axis points to the left, so the plane \(x = 1\) appears on the left. The solid fills the unit square at \(y = 0\) and tapers to the single point \((1,1,0)\) at \(y = 1\).</figcaption>
+</figure>
+<p>The solid has five corner points: \((0,0,0)\), \((1,0,0)\), \((1,1,0)\), \((1,0,1)\), and \((0,0,1)\). Its projection onto the \(xy\)-plane is the triangle \(0 \le y \le x \le 1\), and the area of this triangle is \(1/2\).</p>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Justify the bounds</h3>
+<p>The bounds follow the shape of the solid. Fix \(y\). The cylinder then gives \(z\) directly, because \(z = \sqrt{1 - y^{2}}\) on the curved surface. After \(y\) and \(z\) are fixed, neither plane depends on \(z\), so the \(x\)-limits are the constants \(y\) and \(1\). The order \(dz\, dx\, dy\) therefore fits the solid.</p>
+<p>The lower limit \(x = y\) comes from the plane \(y = x\). Because \(y \ge 0\), the condition \(x \ge y\) already forces \(x \ge 0\). The upper limit \(x = 1\) comes from the second plane. The limit \(y \le 1\) comes from the cylinder, because \(\sqrt{1 - y^{2}}\) is not real for \(y > 1\).</p>
+
+<h3>Step 2 &mdash; Write the triple integral</h3>
+<p>The volume is the integral of 1 over \(E\). The inner integral runs over \(x\) first, then over \(z\), then over \(y\):</p>
+<div class="equation">\[ V = \int_{0}^{1} \int_{0}^{\sqrt{1 - y^{2}}} \int_{y}^{1} dx \, dz \, dy. \]</div>
+
+<h3>Step 3 &mdash; Integrate with respect to \(x\)</h3>
+<p>The inner integral measures the width of a slice at level \(y\) and height \(z\):</p>
+<div class="equation">\[ \int_{y}^{1} dx = 1 - y. \]</div>
+<p>The width does not depend on \(z\), so the integral becomes</p>
+<div class="equation">\[ V = \int_{0}^{1} \int_{0}^{\sqrt{1 - y^{2}}} (1 - y) \, dz \, dy. \]</div>
+
+<h3>Step 4 &mdash; Integrate with respect to \(z\)</h3>
+<p>The integrand \(1 - y\) is constant in \(z\), so the inner integral is the width times the height of the slice:</p>
+<div class="equation">\[ \int_{0}^{\sqrt{1 - y^{2}}} (1 - y) \, dz = (1 - y)\sqrt{1 - y^{2}}. \]</div>
+<p>The remaining integral is</p>
+<div class="equation">\[ V = \int_{0}^{1} (1 - y)\sqrt{1 - y^{2}} \, dy. \]</div>
+<p>This integrand is the area of the slice at level \(y\).</p>
+
+<h3>Step 5 &mdash; Integrate with respect to \(y\)</h3>
+<p>This step answers part (b). Expand the product into two integrals:</p>
+<div class="equation">\[ V = \int_{0}^{1} \sqrt{1 - y^{2}} \, dy - \int_{0}^{1} y\sqrt{1 - y^{2}} \, dy. \]</div>
+<p>The Table of Integrals gives</p>
+<div class="equation">\[ \int \sqrt{a^{2} - u^{2}} \, du = \frac{u}{2}\sqrt{a^{2} - u^{2}} + \frac{a^{2}}{2}\arcsin\frac{u}{a} + C. \]</div>
+<p>Set \(a = 1\) and use the limits 0 and 1. The first integral is</p>
+<div class="equation">\[ \int_{0}^{1} \sqrt{1 - y^{2}} \, dy = \left[\frac{y}{2}\sqrt{1 - y^{2}} + \frac{1}{2}\arcsin y\right]_{0}^{1} = \frac{1}{2}\arcsin 1 = \frac{\pi}{4}. \]</div>
+<p>At \(y = 1\) the square root is zero, and at \(y = 0\) both terms vanish. The value \(\pi/4\) is the area of the quarter disk of radius 1.</p>
+<p>For the second integral, substitute \(u = 1 - y^{2}\) with \(du = -2y \, dy\):</p>
+<div class="equation">\[ \int_{0}^{1} y\sqrt{1 - y^{2}} \, dy = \left[-\frac{(1 - y^{2})^{3/2}}{3}\right]_{0}^{1} = \frac{1}{3}. \]</div>
+<p>Subtract the two values:</p>
+<div class="equation">\[ V = \frac{\pi}{4} - \frac{1}{3} \approx 0.452065. \]</div>
+
+<h3>Step 6 &mdash; Check the value</h3>
+<p>Three independent computations support the result. A Monte Carlo sample of the unit cube gives 0.451884 with an estimated standard error of 0.000249, a deviation of \(-0.73\) standard errors from the exact value. The mpmath script integrates the same iterated integral in the order \(dz\, dx\, dy\) and obtains 0.452064830064115; the difference from the SymPy value is \(4.24 \times 10^{-22}\). The numerical check of the two standard integrals gives 0.7853981633974483 and 0.3333333333333333, and their difference agrees with \(\pi/4 - 1/3\).</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<div class="equation">\[ V = \int_{0}^{1} \int_{0}^{\sqrt{1 - y^{2}}} \int_{y}^{1} dx \, dz \, dy = \frac{\pi}{4} - \frac{1}{3} \approx 0.452065. \]</div>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td>\(E\)</td><td>The wedge: the part of the cylinder \(y^{2} + z^{2} = 1\) that lies between the planes \(y = x\) and \(x = 1\) in the first octant.</td></tr>
+<tr><td>\(y^{2} + z^{2} = 1\)</td><td>The cylinder of radius 1 about the \(x\)-axis. It is the curved face of \(E\).</td></tr>
+<tr><td>\(y = x\)</td><td>The vertical plane that cuts the cylinder on the diagonal. It gives the lower limit \(x = y\).</td></tr>
+<tr><td>\(x = 1\)</td><td>The vertical plane that closes the solid. It gives the upper limit \(x = 1\).</td></tr>
+<tr><td>\(\sqrt{1 - y^{2}}\)</td><td>The height of the cylinder above the level \(y\). It is the upper limit for \(z\).</td></tr>
+<tr><td>\(T\)</td><td>The projection of \(E\) onto the \(xy\)-plane: the triangle \(0 \le y \le x \le 1\).</td></tr>
+<tr><td>\(dx \, dz \, dy\)</td><td>The order of integration. The volume element is \(dx \, dz \, dy\).</td></tr>
+<tr><td>\(\arcsin y\)</td><td>The inverse sine function. It supplies the quarter-disk area \(\pi/4\) in Step 5.</td></tr>
+<tr><td>\(\pi\)</td><td>The ratio of the circumference of a circle to its diameter; \(\pi \approx 3.14159\).</td></tr>
+</tbody>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Four scripts support the page. Each one prints the values quoted in the text.</p>
+<ul>
+<li>\(part1_step1.py\) checks the five corner points, the projection area 0.500, the slice ranges at \(y = 0, 0.5, 0.6, 1\), and a Monte Carlo estimate of the volume with the value 0.451884 and the standard error 0.000249.</li>
+<li>\(part1_step2.py\) repeats the whole computation with SymPy. The inner integral is \(1 - y\), the middle integral is \((1 - y)\sqrt{1 - y^{2}}\), the two standard integrals are \(\pi/4\) and \(1/3\), and the decimal value is 0.452064830064.</li>
+<li>\(part1_step3.py\) evaluates the volume with mpmath in the order \(dz\, dx\, dy\). The value is 0.452064830064115, and the difference from the exact value is \(4.24 \times 10^{-22}\).</li>
+<li>The figure script \(part1_figure1.py\) draws the five faces of \(E\) and writes \(part1_figure1.png\) with its Base64 copy.</li>
+</ul>
+</section>

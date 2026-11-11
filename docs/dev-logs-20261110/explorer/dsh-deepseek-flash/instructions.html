@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>instructions.md</title>
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../../preview.css">
+<style>
+img { max-width: 100%; height: auto; display: block; }
+.prompt { white-space: pre-wrap; font-size: .82rem; }
+td.num { text-align: right; }
+</style>
+</head>
+<body class="leaf">
+<main class="container">
+<h1>&#128220; instructions.md &mdash; DeepSeek Flash</h1><p class="small">The task prompt is the same file for both recipes. It is reproduced below without change.</p><pre class="prompt"># Task Instructions
+
+Solve all math problems in this directory.
+
+This directory consists of:
+
+- The problem subdirectories.
+- This `instructions.md`.
+
+Each problem subdirectory contains:
+
+- A `problem.png`.
+
+In each subdirectory `&lt;subdir&gt;/`, your task is:
+
+- Read and analyze `&lt;subdir&gt;/problem.png`.
+- Create a `&lt;subdir&gt;/solution/` directory.
+- Solve the math problem in `&lt;subdir&gt;/problem.png`.
+  - Put intermediate step files in the `&lt;subdir&gt;/solution/` directory.
+- Compose the final solution in `&lt;subdir&gt;/solution.html`.
+
+For each part (part `&lt;i&gt;`) of the math problem, you do the following:
+
+- Write a step-by-step solution in a standalone HTML file at `&lt;subdir&gt;/solution/solution.html`.
+  - In the HTML file, write all math equations in LaTeX, and render them in KaTeX.
+  - In the HTML file, use Cambria as natural language font and XITS as math font.
+- Verify all math deductions by writing and running Python script files at `&lt;subdir&gt;/solution/part&lt;i&gt;_step&lt;j&gt;.py`.
+  - Trust computational results over hand calculation results.
+- Draw all explicitly and implicitly required figures by writing and running python script files at `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.py`.
+  - Save all figures at `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.png`.
+  - Convert the figures to HTML-compatible Base64 text. Save them at `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.b64.txt`.
+  - Embed the Base64 figures into your solution HTML file.
+- Explain all math symbols and notations the reader might be unfamiliar with.
+- Ensure that the solution is logically correct and visually clear.
+- Copy `&lt;subdir&gt;/solution/solution.html` to `&lt;subdir&gt;/solution.html` when it is ready.
+- Use `python` to access python.
+  - Use `pip` to install necessary libraries like `numpy, sympy, matplotlib`.
+- If you need to write temporary files, put them in existing or new directories whose base-name starts with a dot `**/.*/`.
+  - Clear all temporary files before task completion.
+- Use the language and code styles below.
+
+## Natural Language Styles
+
+- English: ASD-STE100 non-strict mode with academic US English fallback.
+- Chinese: Simplified Technical Chinese non-strict mode.
+
+## Python Code Styles
+
+- Use Google Python Style as code style reference with the following exceptions.
+  - Enforce a line break at the end of each complete docstring sentence.
+  - Follow the custom line length rules.
+  - Follow the custom indentation rules.
+- Use ASD-STE-100 non-strict mode with academic US English fallback as natural language style reference.
+- Use a maximum line length limit of 119 characters.
+  - Use "smart" line breaks to improve sentence and code readability.
+  - Do not use "dumb" line breaks that affects sentence or code readability just to satisfy the rules.
+- Use 4-space indentation.
+  - Use horizontally aligned hanging indents.
+  - Do not use vertically aligned indents.
+- Use complete and meaningful words to name things instead of short and confusing mathematical notations.
+  - Long and clear names are better than single character names that makes no sense.
+  - Do not use overly abbreviated names.
+- Use `from ... import ...` and `from ... import ... as ...` wherever possible.
+- Organize imports.
+</pre>
+</main>
+</body>
+</html>
