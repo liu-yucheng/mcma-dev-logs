@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore the 2026-11-10 recipe comparison side by side: canonical solutions, the DeepSeek Flash HTML run, the Qwen3.8-27B HPC HTML run, and the operator remarks, laid out like a 2-pane file explorer.">
+<title>Recipes 2026-11-10 &mdash; Results Explorer</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-11-10</div>
+    <h1>&#128269; Results Explorer</h1>
+    <p class="lede">&#128421; Browse the full run record in a 2-pane file explorer. &#128218; Inspect two results at a time, side by side. &#128433; A single click opens every folder and file. &#8593; Navigation buttons and a path bar sit in the toolbar at the top.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Recipes</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html" aria-current="page">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="legend">
+  <h2>&#128218; Legends</h2>
+  <table>
+    <thead><tr><th>Leaf</th><th>Location</th><th>Contents</th></tr></thead>
+    <tbody>
+      <tr><td><span class="chip chip-cs">C</span> <code>canonical-solution.html</code></td><td><code>canonical-solutions/&lt;problem&gt;/</code></td><td>&#10067; The printed problem and the reference solution image.</td></tr>
+      <tr><td><span class="chip chip-so">S</span> <code>solution.html</code></td><td><code>&lt;recipe&gt;/&lt;problem&gt;/</code></td><td>&#128196; The final solution: a self-contained HTML page with KaTeX math, the notation table, and the verification notes.</td></tr>
+      <tr><td><span class="chip chip-h">H</span> <code>fragment.html</code></td><td><code>&lt;recipe&gt;/&lt;problem&gt;/solution/</code></td><td>&#129513; The solution body before the build step adds the fonts and the embedded figures.</td></tr>
+      <tr><td><span class="chip chip-img">I</span> <code>*.png</code></td><td>any problem folder</td><td>&#128200; The problem scan and the generated figures. Figure names are <code>part&lt;i&gt;_figure&lt;k&gt;.png</code>.</td></tr>
+      <tr><td><span class="chip chip-py">Y</span> <code>*.py</code></td><td><code>&lt;recipe&gt;/&lt;problem&gt;/solution/</code></td><td>&#129518; Python scripts. Step scripts verify a deduction. Figure scripts draw a figure.</td></tr>
+      <tr><td><span class="chip chip-txt">T</span> <code>*.b64.txt</code></td><td><code>&lt;recipe&gt;/&lt;problem&gt;/solution/</code></td><td>&#128230; A figure as Base64 text, ready to embed in the HTML page.</td></tr>
+      <tr><td><span class="chip chip-rm">N</span> <code>instructions.html</code></td><td><code>&lt;recipe&gt;/</code></td><td>&#128220; The task prompt, <code>instructions.md</code>, reproduced without change.</td></tr>
+      <tr><td><span class="chip chip-rm">R</span> <code>remarks.html</code></td><td><code>__remarks__/</code></td><td>&#128221; The operator summary of the four recipes, with the two screenshots.</td></tr>
+      <tr><td><span class="chip chip-d">D</span> <code>.</code> &amp; <code>..</code></td><td>any folder</td><td>&#128193; Virtual entries at the top of the list: <code>.</code> stays in (refreshes) the current folder, <code>..</code> moves up to the parent folder.</td></tr>
+      <tr><td><span class="chip chip-d">D</span> folder</td><td>any</td><td>&#128194; A directory node. A single click opens it.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; One copy is left out on purpose: the file <code>&lt;recipe&gt;/&lt;problem&gt;/solution/solution.html</code> is identical to the root <code>solution.html</code>. The explorer keeps one copy to save space.</p>
+</section>
+
+<section id="explorer">
+  <h2>&#128421; 2-pane explorer</h2>
+  <div class="explorer" id="explorer">
+    <div class="explorer-row">
+    <div class="panel" data-panel="left">
+      <div class="panel-head">
+        <div class="navbtns" role="group" aria-label="Navigation">
+          <button type="button" class="btn icon" data-act="back" title="Back" aria-label="Back" disabled>&#8249;</button>
+          <button type="button" class="btn icon" data-act="forward" title="Forward" aria-label="Forward" disabled>&#8250;</button>
+          <button type="button" class="btn icon" data-act="up" title="Up one level" aria-label="Up one level">&#8593;</button>
+          <button type="button" class="btn icon" data-act="home" title="Go to home" aria-label="Go to home">&#8962;</button>
+          <button type="button" class="btn icon" data-act="newtab" title="Open the selected file in a new tab" aria-label="Open in a new tab">&#128462;</button>
+          <button type="button" class="btn icon" data-act="copy-to-right" title="Open the selected file in the right pane" aria-label="Open in the right pane">&#128257;</button>
+        </div>
+        <div class="addrbar"><input class="path" type="text" spellcheck="false" autocomplete="off" aria-label="Current path" value="/" title="Type a path and press Enter to jump"></div>
+      </div>
+      <div class="panel-body">
+        <div class="files-col" role="listbox" aria-label="Files"></div>
+      </div>
+      <div class="h-splitter" role="separator" aria-orientation="horizontal" title="Drag to resize the file list / viewer; double-click to reset" tabindex="0"></div>
+      <div class="preview">
+        <iframe title="Left panel viewer"></iframe>
+      </div>
+      <div class="status">&mdash;</div>
+      <div class="panel-resizer" role="separator" aria-orientation="horizontal" title="Drag to resize the left pane height; double-click to reset" tabindex="0"></div>
+    </div>
+
+    <div class="splitter" role="separator" aria-orientation="vertical" title="Drag to resize; double-click to reset" tabindex="0"></div>
+
+    <div class="panel" data-panel="right">
+      <div class="panel-head">
+        <div class="navbtns" role="group" aria-label="Navigation">
+          <button type="button" class="btn icon" data-act="back" title="Back" aria-label="Back" disabled>&#8249;</button>
+          <button type="button" class="btn icon" data-act="forward" title="Forward" aria-label="Forward" disabled>&#8250;</button>
+          <button type="button" class="btn icon" data-act="up" title="Up one level" aria-label="Up one level">&#8593;</button>
+          <button type="button" class="btn icon" data-act="home" title="Go to home" aria-label="Go to home">&#8962;</button>
+          <button type="button" class="btn icon" data-act="newtab" title="Open the selected file in a new tab" aria-label="Open in a new tab">&#128462;</button>
+          <button type="button" class="btn icon" data-act="copy-to-left" title="Open the selected file in the left pane" aria-label="Open in the left pane">&#128257;</button>
+        </div>
+        <div class="addrbar"><input class="path" type="text" spellcheck="false" autocomplete="off" aria-label="Current path" value="/" title="Type a path and press Enter to jump"></div>
+      </div>
+      <div class="panel-body">
+        <div class="files-col" role="listbox" aria-label="Files"></div>
+      </div>
+      <div class="h-splitter" role="separator" aria-orientation="horizontal" title="Drag to resize the file list / viewer; double-click to reset" tabindex="0"></div>
+      <div class="preview">
+        <iframe title="Right panel viewer"></iframe>
+      </div>
+      <div class="status">&mdash;</div>
+      <div class="panel-resizer" role="separator" aria-orientation="horizontal" title="Drag to resize the right pane height; double-click to reset" tabindex="0"></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section id="use">
+  <h2>&#129517; How to use the explorer</h2>
+  <p>&#128204; Each of the two panels is styled like a file explorer window. The toolbar offers these buttons: back, forward, up, and home. &#128462; opens the selected file in a new tab. &#128257; opens the selected file in the other pane, so you can compare two solutions.</p>
+  <p>&#128193; The address bar shows the current location with <code>/</code> as the separator. The address bar is editable. Type a path such as <code>dsh-deepseek-flash/calculus-15.7.17</code> and press <code>Enter</code> to jump straight to it. &#128433; Click a folder to open it. Click a leaf to view it in the panel viewer.</p>
+  <p class="small">&#128736; The folders mirror the raw data. The paths are <code>canonical-solutions/&lt;problem&gt;/canonical-solution.html</code>, <code>&lt;recipe&gt;/&lt;problem&gt;/solution.html</code>, and <code>&lt;recipe&gt;/&lt;problem&gt;/solution/</code> for the scripts and figures. The two recipes are <code>dsh-deepseek-flash</code> and <code>dsh-qwen3.8-27b-hpc</code>.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<style>
+.explorer {
+  display: flex;
+  flex-direction: column;
+  font-weight: 300;
+}
+.explorer-row {
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 0%;
+  min-height: 0;
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 0 0 var(--left-w, 50%);
+  height: var(--panel-h, 1000px);
+  border: 1px solid #cfd5dd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(24, 32, 42, 0.08);
+}
+.panel[data-panel="right"] { flex: 1 1 0%; }
+.splitter {
+  flex: 0 0 7px;
+  align-self: stretch;
+  border-left: 1px solid #d0d5dd;
+  border-right: 1px solid #d0d5dd;
+  background: #e2e6ec;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+}
+.splitter:hover { background: #c8d0da; }
+.h-splitter {
+  flex: 0 0 7px;
+  border-top: 1px solid #d0d5dd;
+  border-bottom: 1px solid #d0d5dd;
+  background: #e2e6ec;
+  cursor: row-resize;
+  touch-action: none;
+}
+.h-splitter:hover { background: #c8d0da; }
+.panel-resizer {
+  flex: 0 0 10px;
+  border-top: 1px solid #d0d5dd;
+  background: #e6eaef;
+  cursor: row-resize;
+  touch-action: none;
+  user-select: none;
+}
+.panel-resizer:hover { background: #ccd4de; }
+body.resizing { cursor: col-resize; user-select: none; }
+body.resizing-v { cursor: row-resize; user-select: none; }
+@media (max-width: 1120px) {
+  .explorer { display: block; height: auto; }
+  .explorer-row { display: block; }
+  .splitter {
+    display: block;
+    width: auto;
+    height: 7px;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #d0d5dd;
+    border-bottom: 1px solid #d0d5dd;
+    cursor: row-resize;
+  }
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #dfe4ea;
+  background: #f5f6f8;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+}
+.navbtns {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-right: 8px;
+  border-right: 1px solid #dfe4ea;
+}
+.addrbar {
+  flex: 1 1 220px;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+.addrbar .path {
+  flex: 1;
+  min-width: 0;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: .8rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #d4d9e0;
+  border-radius: 6px;
+  padding: 4px 10px;
+  box-shadow: inset 0 1px 2px rgba(24, 32, 42, 0.05);
+}
+.addrbar .path:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(15, 98, 176, 0.18);
+}
+.btn {
+  font-size: .78rem;
+  padding: 5px 9px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+}
+.btn:hover { background: #e9edf2; border-color: #d5dbe3; }
+.btn:active { background: #dfe4eb; border-color: #c6cdd6; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.btn:disabled { opacity: .45; cursor: default; background: transparent; border-color: transparent; }
+.btn.icon { font-size: .95rem; padding: 5px 8px; min-width: 30px; text-align: center; }
+
+.panel-body { flex: 0 0 var(--body-h, calc(100% - 600px)); min-height: 120px; display: flex; }
+.files-col { flex: 1 1 auto; min-width: 0; overflow: auto; padding: 6px 4px; background: #fff; }
+
+.preview {
+  border-top: 1px solid #dfe4ea;
+  flex: 1 1 0%;
+  min-height: 120px;
+  background: #fff;
+}
+.preview iframe { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
+.status {
+  border-top: 1px solid #dfe4ea;
+  padding: 4px 10px;
+  font-size: .78rem;
+  color: var(--muted);
+  font-family: Consolas, "Courier New", monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: #f5f6f8;
+  flex: 0 0 auto;
+}
+
+.files-title {
+  font-size: .74rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 3px 4px;
+  border-bottom: 1px solid #e6eaef;
+  margin-bottom: 6px;
+}
+
+.f-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 6px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.f-row:hover { background: #f0f3f7; }
+.f-row.selected { background: #e3f0fc; border-color: #b9d8f1; }
+.f-row.dir { font-weight: 500; }
+.f-row.virtual .f-name { color: var(--muted); }
+.f-name { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  font-size: .66rem;
+  font-weight: 600;
+  color: #fff;
+  flex: 0 0 auto;
+}
+.chip-d { background: #5b6b7e; }
+.chip-cs { background: #2f446f; }
+.chip-so { background: #0f52b0; }
+.chip-h { background: #e08a24; }
+.chip-img { background: #2f6f4f; }
+.chip-py { background: #8e44ad; }
+.chip-txt { background: #7a6a52; }
+.chip-rm { background: #b23a1c; }
+.empty-hint { color: var(--muted); font-size: .84rem; padding: 10px 6px; }
+</style>
+
+<script>
+(function () {
+  "use strict";
+
+  var RESULTS_TREE = [{"n":"canonical-solutions","p":"canonical-solutions","c":[{"n":"calculus-15.7.17","p":"canonical-solutions/calculus-15.7.17","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.17/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.17/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.17/canonical-solution.html"}]},{"n":"calculus-15.7.18","p":"canonical-solutions/calculus-15.7.18","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.18/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.18/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.18/canonical-solution.html"}]},{"n":"calculus-15.7.20","p":"canonical-solutions/calculus-15.7.20","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.20/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.20/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.20/canonical-solution.html"}]},{"n":"calculus-15.7.21","p":"canonical-solutions/calculus-15.7.21","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.21/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.21/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.21/canonical-solution.html"}]},{"n":"calculus-15.7.22","p":"canonical-solutions/calculus-15.7.22","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.22/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.22/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.22/canonical-solution.html"}]},{"n":"calculus-15.7.23","p":"canonical-solutions/calculus-15.7.23","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.23/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.23/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.23/canonical-solution.html"}]},{"n":"calculus-15.7.27","p":"canonical-solutions/calculus-15.7.27","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.27/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.27/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.27/canonical-solution.html"}]},{"n":"calculus-15.7.28","p":"canonical-solutions/calculus-15.7.28","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.28/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.28/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.28/canonical-solution.html"}]},{"n":"calculus-15.7.29","p":"canonical-solutions/calculus-15.7.29","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.29/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.29/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.29/canonical-solution.html"}]},{"n":"calculus-15.7.30","p":"canonical-solutions/calculus-15.7.30","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.30/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.30/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.30/canonical-solution.html"}]},{"n":"calculus-15.7.31","p":"canonical-solutions/calculus-15.7.31","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.31/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.31/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.31/canonical-solution.html"}]},{"n":"calculus-15.7.32","p":"canonical-solutions/calculus-15.7.32","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.32/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.32/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.32/canonical-solution.html"}]},{"n":"calculus-15.7.39","p":"canonical-solutions/calculus-15.7.39","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.39/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.39/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.39/canonical-solution.html"}]},{"n":"calculus-15.7.40","p":"canonical-solutions/calculus-15.7.40","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.40/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.40/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.40/canonical-solution.html"}]},{"n":"calculus-15.7.46","p":"canonical-solutions/calculus-15.7.46","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.46/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.46/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.46/canonical-solution.html"}]},{"n":"calculus-15.7.47","p":"canonical-solutions/calculus-15.7.47","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.47/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.47/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.47/canonical-solution.html"}]},{"n":"calculus-15.7.49","p":"canonical-solutions/calculus-15.7.49","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.49/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.49/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.49/canonical-solution.html"}]},{"n":"calculus-15.7.50","p":"canonical-solutions/calculus-15.7.50","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.50/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.50/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.50/canonical-solution.html"}]},{"n":"calculus-15.7.54","p":"canonical-solutions/calculus-15.7.54","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.54/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.54/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.54/canonical-solution.html"}]},{"n":"calculus-15.7.55","p":"canonical-solutions/calculus-15.7.55","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.7.55/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.7.55/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.7.55/canonical-solution.html"}]},{"n":"calculus-15.8.14","p":"canonical-solutions/calculus-15.8.14","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.8.14/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.8.14/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.8.14/canonical-solution.html"}]},{"n":"calculus-15.8.26","p":"canonical-solutions/calculus-15.8.26","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.8.26/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.8.26/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.8.26/canonical-solution.html"}]},{"n":"calculus-15.9.43","p":"canonical-solutions/calculus-15.9.43","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.9.43/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.9.43/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.9.43/canonical-solution.html"}]},{"n":"calculus-15.9.45","p":"canonical-solutions/calculus-15.9.45","c":[{"n":"problem.png","p":"canonical-solutions/calculus-15.9.45/problem.png"},{"n":"solution.png","p":"canonical-solutions/calculus-15.9.45/solution.png"},{"n":"canonical-solution.html","p":"canonical-solutions/calculus-15.9.45/canonical-solution.html"}]}]},{"n":"dsh-deepseek-flash","p":"dsh-deepseek-flash","c":[{"n":"instructions.html","p":"dsh-deepseek-flash/instructions.html"},{"n":"calculus-15.7.17","p":"dsh-deepseek-flash/calculus-15.7.17","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.17/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.17/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.17/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.17/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.17/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.17/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.17/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.17/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.17/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.17/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.18","p":"dsh-deepseek-flash/calculus-15.7.18","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.18/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.18/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.18/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.18/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.18/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.18/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.18/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.18/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.18/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.18/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.18/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.18/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.18/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.20","p":"dsh-deepseek-flash/calculus-15.7.20","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.20/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.20/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.20/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.20/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.20/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.20/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.20/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.20/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.20/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.20/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.20/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.20/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.20/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.21","p":"dsh-deepseek-flash/calculus-15.7.21","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.21/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.21/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.21/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.21/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.21/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.21/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.21/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.21/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.21/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.21/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.21/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.21/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.21/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.22","p":"dsh-deepseek-flash/calculus-15.7.22","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.22/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.22/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.22/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.22/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.22/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.22/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.22/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.22/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.22/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.22/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.23","p":"dsh-deepseek-flash/calculus-15.7.23","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.23/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.23/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.23/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.23/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.23/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.23/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.23/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.23/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.23/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.23/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.27","p":"dsh-deepseek-flash/calculus-15.7.27","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.27/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.27/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.27/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.27/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.27/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.27/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.27/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.27/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.27/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.27/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.27/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.27/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.27/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.28","p":"dsh-deepseek-flash/calculus-15.7.28","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.28/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.28/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.28/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.28/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.28/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.28/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.28/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.28/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.28/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.28/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.28/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.28/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.28/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.29","p":"dsh-deepseek-flash/calculus-15.7.29","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.29/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.29/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.29/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.29/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.29/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.29/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.29/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.29/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.29/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.29/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.29/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.29/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.29/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.30","p":"dsh-deepseek-flash/calculus-15.7.30","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.30/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.30/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.30/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.30/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.30/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.30/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.30/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.30/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.30/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.30/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.30/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.30/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.30/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.31","p":"dsh-deepseek-flash/calculus-15.7.31","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.31/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.31/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.31/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.31/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.31/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.31/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.31/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.31/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.31/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.31/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.31/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.31/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.31/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.32","p":"dsh-deepseek-flash/calculus-15.7.32","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.32/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.32/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.32/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.32/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.32/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.32/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.32/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.32/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.32/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.32/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.39","p":"dsh-deepseek-flash/calculus-15.7.39","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.39/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.39/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.39/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.39/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.39/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.39/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.39/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.39/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.39/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.39/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.39/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.39/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.39/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.40","p":"dsh-deepseek-flash/calculus-15.7.40","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.40/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.40/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.40/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.40/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.40/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.40/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.40/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.40/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.40/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.40/solution/part1_step3.py"},{"n":"part1_step4.py","p":"dsh-deepseek-flash/calculus-15.7.40/solution/part1_step4.py"}]}]},{"n":"calculus-15.7.46","p":"dsh-deepseek-flash/calculus-15.7.46","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.46/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.46/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.46/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.46/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.46/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.46/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.46/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.46/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.46/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.46/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.47","p":"dsh-deepseek-flash/calculus-15.7.47","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.47/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.47/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.47/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.47/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.47/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.47/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.47/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.47/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.47/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.47/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.49","p":"dsh-deepseek-flash/calculus-15.7.49","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.49/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.49/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.49/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.49/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.49/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.49/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.49/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.49/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.49/solution/part1_step2.py"}]}]},{"n":"calculus-15.7.50","p":"dsh-deepseek-flash/calculus-15.7.50","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.50/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.50/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.50/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.50/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.50/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.50/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.50/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.50/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.50/solution/part1_step2.py"}]}]},{"n":"calculus-15.7.54","p":"dsh-deepseek-flash/calculus-15.7.54","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.54/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.54/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.54/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.54/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.54/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.54/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.54/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.54/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.54/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.54/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.54/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.54/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.54/solution/part1_step3.py"}]}]},{"n":"calculus-15.7.55","p":"dsh-deepseek-flash/calculus-15.7.55","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.7.55/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.7.55/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.7.55/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.7.55/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.55/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.7.55/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.7.55/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.7.55/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.7.55/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.7.55/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.7.55/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.7.55/solution/part1_step2.py"},{"n":"part1_step3.py","p":"dsh-deepseek-flash/calculus-15.7.55/solution/part1_step3.py"}]}]},{"n":"calculus-15.8.14","p":"dsh-deepseek-flash/calculus-15.8.14","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.8.14/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.8.14/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.8.14/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.8.14/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.8.14/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.8.14/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.8.14/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.8.14/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.8.14/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.8.14/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.8.14/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.8.14/solution/part1_step2.py"}]}]},{"n":"calculus-15.8.26","p":"dsh-deepseek-flash/calculus-15.8.26","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.8.26/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.8.26/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.8.26/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.8.26/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.8.26/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.8.26/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.8.26/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.8.26/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.8.26/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.8.26/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.8.26/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.8.26/solution/part1_step2.py"}]}]},{"n":"calculus-15.9.43","p":"dsh-deepseek-flash/calculus-15.9.43","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.9.43/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.9.43/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.9.43/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.9.43/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.9.43/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.9.43/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.9.43/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.9.43/solution/part1_step1.py"}]}]},{"n":"calculus-15.9.45","p":"dsh-deepseek-flash/calculus-15.9.45","c":[{"n":"problem.png","p":"dsh-deepseek-flash/calculus-15.9.45/problem.png"},{"n":"solution.html","p":"dsh-deepseek-flash/calculus-15.9.45/solution.html"},{"n":"solution","p":"dsh-deepseek-flash/calculus-15.9.45/solution","c":[{"n":"fragment.html","p":"dsh-deepseek-flash/calculus-15.9.45/solution/fragment.html"},{"n":"part1_figure1.b64.txt","p":"dsh-deepseek-flash/calculus-15.9.45/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-deepseek-flash/calculus-15.9.45/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-deepseek-flash/calculus-15.9.45/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-deepseek-flash/calculus-15.9.45/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-deepseek-flash/calculus-15.9.45/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-deepseek-flash/calculus-15.9.45/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-deepseek-flash/calculus-15.9.45/solution/part1_step1.py"},{"n":"part1_step2.py","p":"dsh-deepseek-flash/calculus-15.9.45/solution/part1_step2.py"}]}]}]},{"n":"dsh-qwen3.8-27b-hpc","p":"dsh-qwen3.8-27b-hpc","c":[{"n":"instructions.html","p":"dsh-qwen3.8-27b-hpc/instructions.html"},{"n":"calculus-15.7.17","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.17/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.18","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.18/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.20","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.20/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.21","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.21/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.22","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.22/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.23","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.23","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.23/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.23/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.23/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.23/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.23/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.23/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.23/solution/part1_step1.py"},{"n":"part2_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.23/solution/part2_step1.py"}]}]},{"n":"calculus-15.7.27","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.27/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.28","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.28/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.29","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.29","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.29/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.29/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.29/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.29/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.29/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.29/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.29/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.30","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.30","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.30/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.30/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.30/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.30/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.30/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.30/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.30/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.31","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.31/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.32","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.32","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.32/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.32/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.32/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.32/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.32/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.32/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.32/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.39","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.39","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.39/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.39/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.39/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.39/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.39/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.39/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.39/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.40","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.40","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.40/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.40/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.40/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.40/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.40/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.40/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.40/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.46","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.46","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.46/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.46/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.46/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.46/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.46/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.46/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.46/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.47","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.47","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.47/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.47/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.47/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.47/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.47/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.47/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.47/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.49","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49/solution/part1_step1.py"},{"n":"part2_step2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49/solution/part2_step2.py"},{"n":"part3_step3.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.49/solution/part3_step3.py"}]}]},{"n":"calculus-15.7.50","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50/solution/part1_step1.py"},{"n":"part2_step2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50/solution/part2_step2.py"},{"n":"part3_step3.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.50/solution/part3_step3.py"}]}]},{"n":"calculus-15.7.54","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.54","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.54/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.54/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.54/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.54/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.54/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.54/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.54/solution/part1_step1.py"}]}]},{"n":"calculus-15.7.55","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.55","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.55/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.55/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.55/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.55/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.55/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.55/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.55/solution/part1_step1.py"},{"n":"part2_step2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.7.55/solution/part2_step2.py"}]}]},{"n":"calculus-15.8.14","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.14","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.14/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.14/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.14/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.14/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.14/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.14/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.14/solution/part1_step1.py"}]}]},{"n":"calculus-15.8.26","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution/part1_step1.py"},{"n":"part2_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution/part2_figure1.b64.txt"},{"n":"part2_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution/part2_figure1.png"},{"n":"part2_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution/part2_figure1.py"},{"n":"part2_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.8.26/solution/part2_step1.py"}]}]},{"n":"calculus-15.9.43","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/solution/part1_figure1.py"},{"n":"part1_figure2.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/solution/part1_figure2.b64.txt"},{"n":"part1_figure2.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/solution/part1_figure2.png"},{"n":"part1_figure2.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/solution/part1_figure2.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.43/solution/part1_step1.py"}]}]},{"n":"calculus-15.9.45","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.45","c":[{"n":"problem.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.45/problem.png"},{"n":"solution.html","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.45/solution.html"},{"n":"solution","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.45/solution","c":[{"n":"part1_figure1.b64.txt","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.45/solution/part1_figure1.b64.txt"},{"n":"part1_figure1.png","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.45/solution/part1_figure1.png"},{"n":"part1_figure1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.45/solution/part1_figure1.py"},{"n":"part1_step1.py","p":"dsh-qwen3.8-27b-hpc/calculus-15.9.45/solution/part1_step1.py"}]}]}]},{"n":"__remarks__","p":"__remarks__","c":[{"n":"qwen3.6-no-typst-support.png","p":"__remarks__/qwen3.6-no-typst-support.png"},{"n":"qwen3.8-output-loop.png","p":"__remarks__/qwen3.8-output-loop.png"},{"n":"remarks.html","p":"__remarks__/remarks.html"}]}];
+
+  var ROOT = RESULTS_TREE || [];
+
+  function findDir(dir) {
+    for (var i = 0; i < ROOT.length; i++) {
+      var n = ROOT[i];
+      if (n.c && n.n === dir) return n;
+    }
+    return null;
+  }
+
+  function getDirNode(path) {
+    if (!path.length) return { n: "", c: ROOT };
+    var node = findDir(path[0]);
+    if (!node) return null;
+    for (var i = 1; i < path.length; i++) {
+      var child = null;
+      (node.c || []).forEach(function (ch) {
+        if (ch.c && ch.n === path[i]) child = ch;
+      });
+      if (!child) return null;
+      node = child;
+    }
+    return node;
+  }
+
+  function dirsOf(node) {
+    return (node.c || []).filter(function (ch) { return !!ch.c; });
+  }
+  function filesOf(node) {
+    return (node.c || []).filter(function (ch) { return !ch.c; });
+  }
+
+  /* Windows-style natural sort: digit runs compare numerically so that
+     "calculus-15.7.5" sorts before "calculus-15.7.17"; folders and files
+     are ranked separately by the caller. Comparisons are case-insensitive. */
+  function _numRun(s, pos) {
+    var value = 0, len = 0, k = pos;
+    while (k < s.length && s.charAt(k) >= "0" && s.charAt(k) <= "9") {
+      value = value * 10 + (s.charCodeAt(k) - 48);
+      len++; k++;
+    }
+    return { value: value, len: len, end: k };
+  }
+  function natCompare(a, b) {
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+    var i = 0, j = 0;
+    while (i < a.length && j < b.length) {
+      var ca = a.charAt(i), cb = b.charAt(j);
+      var ad = ca >= "0" && ca <= "9", bd = cb >= "0" && cb <= "9";
+      if (ad && bd) {
+        var ra = _numRun(a, i), rb = _numRun(b, j);
+        if (ra.value !== rb.value) return ra.value - rb.value;
+        if (ra.len !== rb.len) return ra.len - rb.len;
+        i = ra.end; j = rb.end;
+      } else {
+        if (ca !== cb) return ca < cb ? -1 : 1;
+        i++; j++;
+      }
+    }
+    if (i < a.length) return 1;
+    if (j < b.length) return -1;
+    return 0;
+  }
+
+  var panels = {
+    left: { path: [], sel: null, back: [], fwd: [] },
+    right: { path: [], sel: null, back: [], fwd: [] }
+  };
+
+  function panelEl(name) {
+    return document.querySelector('.panel[data-panel="' + name + '"]');
+  }
+  function filesEl(p) { return panelEl(p).querySelector(".files-col"); }
+  function pathEl(p) { return panelEl(p).querySelector(".path"); }
+  function statusEl(p) { return panelEl(p).querySelector(".status"); }
+  function iframeEl(p) { return panelEl(p).querySelector(".preview iframe"); }
+
+  function relOf(node) {
+    return "explorer/" + node.p;
+  }
+
+  function chipOf(name) {
+    if (name === "canonical-solution.html") return ["C", "chip-cs"];
+    if (name === "solution.html") return ["S", "chip-so"];
+    if (name === "fragment.html") return ["H", "chip-h"];
+    if (name === "remarks.html" || name === "instructions.html") return ["R", "chip-rm"];
+    if (/\.png$/i.test(name)) return ["I", "chip-img"];
+    if (/\.py$/i.test(name)) return ["Y", "chip-py"];
+    if (/\.b64\.txt$/i.test(name)) return ["T", "chip-txt"];
+    return ["F", "chip-d"];
+  }
+
+  function view(p, node) {
+    if (!node || node.c) return;
+    panels[p].sel = node;
+    iframeEl(p).src = relOf(node);
+    statusEl(p).textContent = node.p;
+    highlightSel(p);
+  }
+
+  function setPath(p, path) {
+    panels[p].path = path.slice();
+    renderFiles(p);
+    pathEl(p).value = path.join("/") || "/";
+  }
+
+  function updateNav(p) {
+    var st = panels[p];
+    panelEl(p).querySelector('[data-act="back"]').disabled = !st.back.length;
+    panelEl(p).querySelector('[data-act="forward"]').disabled = !st.fwd.length;
+  }
+
+  /* User-initiated navigation: remember the current location so the
+     toolbar's Back / Forward buttons can retrace it. */
+  function navigate(p, path) {
+    var st = panels[p];
+    var same = st.path.join("/") === path.slice().join("/");
+    st.fwd = [];
+    if (!same) st.back.push(st.path.slice());
+    setPath(p, path);
+    updateNav(p);
+  }
+
+  function goBack(p) {
+    var st = panels[p];
+    if (!st.back.length) return;
+    st.fwd.push(st.path.slice());
+    setPath(p, st.back.pop());
+    updateNav(p);
+  }
+
+  function goForward(p) {
+    var st = panels[p];
+    if (!st.fwd.length) return;
+    st.back.push(st.path.slice());
+    setPath(p, st.fwd.pop());
+    updateNav(p);
+  }
+
+  function renderFiles(p) {
+    var node = getDirNode(panels[p].path);
+    var host = filesEl(p);
+    host.textContent = "";
+    if (!node) {
+      var h = document.createElement("div");
+      h.className = "empty-hint";
+      h.textContent = "(empty)";
+      host.appendChild(h);
+      return;
+    }
+    var title = document.createElement("div");
+    title.className = "files-title";
+    title.textContent = "Files — " + (panels[p].path.join("/") || "roots");
+    host.appendChild(title);
+
+    function virtualRow(label, isDot) {
+      var r = document.createElement("div");
+      r.className = "f-row dir virtual";
+      if (isDot) r.classList.add("dot");
+      else r.classList.add("up");
+      var chip = document.createElement("span");
+      chip.className = "chip chip-d";
+      chip.textContent = "D";
+      var name = document.createElement("span");
+      name.className = "f-name";
+      name.innerHTML = "<strong>" + label + "</strong>";
+      r.appendChild(chip);
+      r.appendChild(name);
+      r.title = isDot ? "Current folder — click to refresh" : "Parent folder — click to go up";
+      r.addEventListener("click", function () {
+        panels[p].sel = null;
+        highlightSel(p);
+        if (isDot) {
+          setPath(p, panels[p].path);
+        } else if (panels[p].path.length) {
+          navigate(p, panels[p].path.slice(0, -1));
+        }
+      });
+      return r;
+    }
+
+    function row(item, isDir) {
+      var r = document.createElement("div");
+      r.className = "f-row" + (isDir ? " dir" : "");
+      var chip = document.createElement("span");
+      var name = document.createElement("span");
+      name.className = "f-name";
+      if (isDir) {
+        chip.className = "chip chip-d";
+        chip.textContent = "D";
+        name.innerHTML = "<strong>&#128194; " + item.n + "</strong>";
+      } else {
+        var meta = chipOf(item.n);
+        chip.className = "chip " + meta[1];
+        chip.textContent = meta[0];
+        name.textContent = item.n;
+      }
+      r.appendChild(chip);
+      r.appendChild(name);
+      r.title = isDir ? panels[p].path.concat([item.n]).join("/") : item.p;
+      r.addEventListener("click", function () {
+        if (isDir) {
+          panels[p].sel = null;
+          highlightSel(p);
+          navigate(p, panels[p].path.concat([item.n]));
+        } else {
+          panels[p].sel = item;
+          view(p, item);
+        }
+      });
+      if (!isDir) {
+        r.addEventListener("dblclick", function (ev) {
+          ev.preventDefault();
+          window.open(relOf(item), "_blank");
+        });
+      }
+      return r;
+    }
+
+    if (panels[p].path.length) host.appendChild(virtualRow(".. | parent directory", false));
+    host.appendChild(virtualRow(". | current directory", true));
+
+    var dirs = dirsOf(node).slice().sort(function (a, b) { return natCompare(a.n, b.n); });
+    var files = filesOf(node).slice().sort(function (a, b) { return natCompare(a.n, b.n); });
+    dirs.forEach(function (d) { host.appendChild(row(d, true)); });
+    files.forEach(function (f) { host.appendChild(row(f, false)); });
+  }
+
+  function highlightSel(p) {
+    var sel = panels[p].sel;
+    [].forEach.call(filesEl(p).querySelectorAll(".f-row"), function (r) {
+      var focused = sel && r.querySelector(".f-name").textContent === sel.n;
+      r.classList.toggle("selected", focused);
+    });
+  }
+
+  function doAct(p, act) {
+    if (act === "back") {
+      goBack(p);
+    } else if (act === "forward") {
+      goForward(p);
+    } else if (act === "up") {
+      if (panels[p].path.length) navigate(p, panels[p].path.slice(0, -1));
+    } else if (act === "home") {
+      navigate(p, []);
+    } else if (act === "newtab") {
+      if (panels[p].sel) window.open(relOf(panels[p].sel), "_blank");
+    } else if (act === "copy-to-right") {
+      if (panels[p].sel) view("right", panels[p].sel);
+    } else if (act === "copy-to-left") {
+      if (panels[p].sel) view("left", panels[p].sel);
+    }
+  }
+
+  function initSplit() {
+    var exp = document.getElementById("explorer");
+    var split = exp.querySelector(".splitter");
+    if (!split) return;
+
+    var savedW = null;
+    try { savedW = parseFloat(localStorage.getItem("mcma-explorer-split")); } catch (e) {}
+    if (savedW > 10 && savedW < 90) exp.style.setProperty("--left-w", savedW + "%");
+
+    function isStacked() {
+      try { return window.matchMedia("(max-width: 1120px)").matches; } catch (e) { return false; }
+    }
+    function leftPan() { return exp.querySelector('.panel[data-panel="left"]'); }
+    function rightPan() { return exp.querySelector('.panel[data-panel="right"]'); }
+    function stackedSize() {
+      return leftPan().offsetHeight + split.offsetHeight + rightPan().offsetHeight;
+    }
+    function setStacked(lh, rh) {
+      leftPan().style.setProperty("--panel-h", lh + "px");
+      rightPan().style.setProperty("--panel-h", rh + "px");
+      try {
+        localStorage.setItem("mcma-explorer-panel-h-left", String(lh));
+        localStorage.setItem("mcma-explorer-panel-h-right", String(rh));
+      } catch (e) {}
+    }
+    function nudgeStacked(delta) {
+      var l = leftPan();
+      var total = stackedSize();
+      var cur = parseFloat(l.style.getPropertyValue("--panel-h"));
+      if (!(cur > 0)) cur = l.getBoundingClientRect().height;
+      var max = total - split.offsetHeight - PANEL_H_MIN;
+      var lh = Math.max(PANEL_H_MIN, Math.min(max, cur + delta));
+      setStacked(lh, total - split.offsetHeight - lh);
+    }
+    function resetStacked() {
+      leftPan().style.removeProperty("--panel-h");
+      rightPan().style.removeProperty("--panel-h");
+      try {
+        localStorage.removeItem("mcma-explorer-panel-h-left");
+        localStorage.removeItem("mcma-explorer-panel-h-right");
+      } catch (e) {}
+    }
+
+    var dragging = false;
+    function startDragging(ev) {
+      ev.preventDefault();
+      dragging = true;
+      document.body.classList.add(isStacked() ? "resizing-v" : "resizing");
+      try { split.setPointerCapture(ev.pointerId); } catch (e) {}
+      document.addEventListener("pointermove", onMove);
+      document.addEventListener("pointerup", onUp);
+    }
+    function stopDragging() {
+      if (!dragging) return;
+      dragging = false;
+      document.body.classList.remove("resizing", "resizing-v");
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+      if (!isStacked()) {
+        try { localStorage.setItem("mcma-explorer-split", exp.style.getPropertyValue("--left-w")); } catch (e) {}
+      }
+    }
+    split.addEventListener("pointerdown", startDragging);
+    split.addEventListener("pointercancel", stopDragging);
+    split.addEventListener("dblclick", function () {
+      if (isStacked()) {
+        resetStacked();
+      } else {
+        exp.style.setProperty("--left-w", "50%");
+        try { localStorage.setItem("mcma-explorer-split", "50"); } catch (e) {}
+      }
+    });
+    split.addEventListener("keydown", function (ev) {
+      var k = ev.key;
+      if (isStacked()) {
+        var delta = k === "ArrowUp" ? -40 : k === "ArrowDown" ? 40 : 0;
+        if (!delta) return;
+        ev.preventDefault();
+        nudgeStacked(delta);
+      } else {
+        var deltaW = k === "ArrowLeft" ? -5 : k === "ArrowRight" ? 5 : 0;
+        if (!deltaW) return;
+        ev.preventDefault();
+        var cur = parseFloat(exp.style.getPropertyValue("--left-w")) || 50;
+        var pct = Math.max(15, Math.min(85, cur + deltaW));
+        exp.style.setProperty("--left-w", pct + "%");
+        try { localStorage.setItem("mcma-explorer-split", String(pct)); } catch (e) {}
+      }
+    });
+
+    function onMove(ev) {
+      if (!dragging) return;
+      if (isStacked()) {
+        var l = leftPan();
+        var total = stackedSize();
+        var max = total - split.offsetHeight - PANEL_H_MIN;
+        var lh = Math.max(PANEL_H_MIN, Math.min(max, ev.clientY - l.getBoundingClientRect().top));
+        setStacked(lh, total - split.offsetHeight - lh);
+      } else {
+        var rect = exp.getBoundingClientRect();
+        var pct = ((ev.clientX - rect.left) / rect.width) * 100;
+        pct = Math.max(15, Math.min(85, pct));
+        exp.style.setProperty("--left-w", pct + "%");
+      }
+    }
+    function onUp() { stopDragging(); }
+  }
+
+  var PANEL_H_MIN = 380, PANEL_H_MAX = 1800;
+
+  function initPanelHeightResizers() {
+    [].forEach.call(document.querySelectorAll(".panel"), function (pl) {
+      var handle = pl.querySelector(".panel-resizer");
+      if (!handle) return;
+      var pname = pl.getAttribute("data-panel");
+
+      var saved = null;
+      try { saved = parseFloat(localStorage.getItem("mcma-explorer-panel-h-" + pname)); } catch (e) {}
+      if (saved >= PANEL_H_MIN) pl.style.setProperty("--panel-h", saved + "px");
+
+      var dragging = false;
+      var onMove, onUp;
+
+      function setH(px) {
+        px = Math.max(PANEL_H_MIN, Math.min(PANEL_H_MAX, px));
+        pl.style.setProperty("--panel-h", px + "px");
+      }
+
+      handle.addEventListener("pointerdown", function (ev) {
+        ev.preventDefault();
+        dragging = true;
+        document.body.classList.add("resizing-v");
+        try { handle.setPointerCapture(ev.pointerId); } catch (e) {}
+        document.addEventListener("pointermove", onMove);
+        document.addEventListener("pointerup", onUp);
+      });
+      handle.addEventListener("pointercancel", function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+      });
+      handle.addEventListener("dblclick", function () {
+        pl.style.removeProperty("--panel-h");
+        try { localStorage.removeItem("mcma-explorer-panel-h-" + pname); } catch (e) {}
+      });
+      handle.addEventListener("keydown", function (ev) {
+        var delta = ev.key === "ArrowUp" ? -40 : ev.key === "ArrowDown" ? 40 : 0;
+        if (!delta) return;
+        ev.preventDefault();
+        var cur = parseFloat(pl.style.getPropertyValue("--panel-h"));
+        if (!(cur > 0)) cur = pl.getBoundingClientRect().height;
+        setH(cur + delta);
+      });
+      onMove = function (ev) {
+        if (!dragging) return;
+        setH(ev.clientY - pl.getBoundingClientRect().top);
+      };
+      onUp = function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+        try {
+          var h = pl.style.getPropertyValue("--panel-h").replace("px", "");
+          if (h) localStorage.setItem("mcma-explorer-panel-h-" + pname, h);
+        } catch (e) {}
+      };
+    });
+  }
+
+  function initPanelResizers() {
+    var exp = document.getElementById("explorer");
+    [].forEach.call(exp.querySelectorAll(".panel"), function (pl) {
+      var split = pl.querySelector(".h-splitter");
+      if (!split) return;
+      var body = pl.querySelector(".panel-body");
+      var head = pl.querySelector(".panel-head");
+      var status = pl.querySelector(".status");
+      var preview = pl.querySelector(".preview");
+      var resizer = pl.querySelector(".panel-resizer");
+      var pname = pl.getAttribute("data-panel");
+
+      try {
+        var saved = localStorage.getItem("mcma-explorer-body-" + pname);
+        if (saved) pl.style.setProperty("--body-h", saved);
+      } catch (e) {}
+
+      var dragging = false;
+      var onMove, onUp;
+
+      function applyPx(px) {
+        var previewMin = parseFloat(window.getComputedStyle(preview).minHeight) || 120;
+        var reserved = head.getBoundingClientRect().height + split.offsetHeight +
+                       previewMin + status.getBoundingClientRect().height +
+                       (resizer ? resizer.offsetHeight : 0);
+        px = Math.max(120, Math.min(pl.clientHeight - reserved, px));
+        pl.style.setProperty("--body-h", px + "px");
+      }
+
+      split.addEventListener("pointerdown", function (ev) {
+        ev.preventDefault();
+        dragging = true;
+        document.body.classList.add("resizing-v");
+        try { split.setPointerCapture(ev.pointerId); } catch (e) {}
+        document.addEventListener("pointermove", onMove);
+        document.addEventListener("pointerup", onUp);
+      });
+      split.addEventListener("pointercancel", function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+      });
+      split.addEventListener("dblclick", function () {
+        pl.style.removeProperty("--body-h");
+        try { localStorage.removeItem("mcma-explorer-body-" + pname); } catch (e) {}
+      });
+      split.addEventListener("keydown", function (ev) {
+        var delta = ev.key === "ArrowUp" ? -40 : ev.key === "ArrowDown" ? 40 : 0;
+        if (!delta) return;
+        ev.preventDefault();
+        var cur = parseInt(pl.style.getPropertyValue("--body-h"), 10);
+        if (!(cur > 0)) cur = Math.round(body.getBoundingClientRect().height);
+        applyPx(cur + delta);
+      });
+      onMove = function (ev) {
+        if (!dragging) return;
+        var top = head.getBoundingClientRect().bottom;
+        applyPx(ev.clientY - top);
+      };
+      onUp = function () {
+        if (!dragging) return;
+        dragging = false;
+        document.body.classList.remove("resizing-v");
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+        try { localStorage.setItem("mcma-explorer-body-" + pname, pl.style.getPropertyValue("--body-h")); } catch (e) {}
+      };
+    });
+  }
+
+  function init() {
+    initSplit();
+    initPanelHeightResizers();
+    initPanelResizers();
+
+    [].forEach.call(document.querySelectorAll(".panel"), function (pl) {
+      var name = pl.getAttribute("data-panel");
+      [].forEach.call(pl.querySelectorAll(".btn"), function (b) {
+        b.addEventListener("click", function () { doAct(name, b.getAttribute("data-act")); });
+      });
+      var input = pl.querySelector(".path");
+      if (input) {
+        input.addEventListener("keydown", function (ev) {
+          if (ev.key === "Enter") {
+            ev.preventDefault();
+            var parts = input.value.split("/").filter(function (s) { return !!s.trim(); });
+            if (getDirNode(parts)) navigate(name, parts);
+            else input.value = panels[name].path.join("/") || "/";
+          }
+        });
+        input.addEventListener("focus", function () { input.select(); });
+        input.addEventListener("blur", function () {
+          input.value = panels[name].path.join("/") || "/";
+        });
+      }
+    });
+
+    setPath("left", []);
+    setPath("right", []);
+
+    updateNav("left");
+    updateNav("right");
+
+    document.addEventListener("keydown", function (ev) {
+      if (ev.target && ev.target.tagName === "INPUT") return;
+      if (ev.key === "F5") { ev.preventDefault(); doAct("left", "copy-to-right"); }
+    });
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>

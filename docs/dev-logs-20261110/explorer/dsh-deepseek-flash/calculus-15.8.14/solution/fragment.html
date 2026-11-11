@@ -1,0 +1,102 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.8 &middot; Exercise 14</p>
+<h1>Drawing the Solid Enclosed by Two Paraboloids</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Use a graphing device to draw the solid enclosed by the paraboloids
+\(z = x^{2} + y^{2}\) and \(z = 5 - x^{2} - y^{2}\).</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>Both surfaces are paraboloids of revolution about the \(z\)-axis. The first opens upward with
+its vertex at the origin. The second opens downward with its vertex at \((0,0,5)\). Write
+\(r^{2} = x^{2} + y^{2}\). Then the two surfaces have the equations \(z = r^{2}\) and
+\(z = 5 - r^{2}\).</p>
+<p>They meet where the two heights are equal:</p>
+<div class="equation">\[ r^{2} = 5 - r^{2} \quad\Longrightarrow\quad 2r^{2} = 5
+\quad\Longrightarrow\quad r = \sqrt{\frac{5}{2}} \approx 1.5811. \]</div>
+<p>At that radius both surfaces have the height \(z = 5/2\). The solid is therefore the closed
+region</p>
+<div class="equation">\[ E = \left\{ (x,y,z) : x^{2} + y^{2} \le \frac{5}{2},
+\ x^{2} + y^{2} \le z \le 5 - x^{2} - y^{2} \right\}. \]</div>
+<p>It is a lens with a pointed rim: a lower bowl from \(z = 0\) up to \(z = 5/2\), capped by an
+upper bowl back down to the rim. The solid is symmetric about the plane \(z = 5/2\), so the two
+bowls enclose equal volumes.</p>
+</section>
+
+<section>
+<h2>Drawing the solid</h2>
+<p>A graphing device needs parametric surfaces, not inequalities. Use polar coordinates in the
+\(xy\)-plane, with \(0 \le r \le \sqrt{5/2}\) and \(0 \le \theta \le 2\pi\):</p>
+<div class="equation">\[ \text{lower bowl: } (r\cos\theta,\ r\sin\theta,\ r^{2}), \qquad
+\text{upper bowl: } (r\cos\theta,\ r\sin\theta,\ 5 - r^{2}). \]</div>
+<p>Draw both surfaces for the same range of \(r\). Their common boundary is the circle of radius
+\(\sqrt{5/2}\) at height \(5/2\). The figure shows the two bowls, the dashed rim circle, and the
+vertex of each bowl.</p>
+<figure>
+<img data-figure="part1_figure1.png" alt="The lens-shaped solid between two paraboloids, with the rim circle where they meet">
+<figcaption>The solid \(E\) between \(z = x^{2} + y^{2}\) (blue, opening upward) and
+\(z = 5 - x^{2} - y^{2}\) (orange, opening downward). The dashed circle is the rim at
+\(z = 2.5\) and \(r = \sqrt{5/2}\). The upper vertex is at \((0,0,5)\), the lower vertex at the
+origin.</figcaption>
+</figure>
+<p>A vertical cross-section through the \(z\)-axis shows why the solid looks like a lens. It is
+the plane region between the two parabolas \(z = r^{2}\) and \(z = 5 - r^{2}\), rotated about
+the \(z\)-axis.</p>
+<figure>
+<img data-figure="part1_figure2.png" alt="Vertical cross-section of the solid between the two parabolic curves">
+<figcaption>The cross-section at fixed \(\theta\). The shaded region between the two curves is
+rotated about the \(z\)-axis to produce the solid. The rim sits at \(r = \sqrt{5/2}\) and
+\(z = 2.5\).</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Checking the drawing</h2>
+<p>Three numbers fix the shape, and each one is easy to read from the figures. The rim radius is
+\(\sqrt{5/2} \approx 1.5811\). The solid reaches \(z = 5\) on the axis and \(z = 0\) on the
+axis. The widest horizontal circle is the rim.</p>
+<p>The volume gives a further check that the two bowls are drawn at the correct scale. Integrate
+the vertical thickness over the disk of radius \(\sqrt{5/2}\):</p>
+<div class="equation">\[ V = \int_{0}^{2\pi}\int_{0}^{\sqrt{5/2}} \left(5 - 2r^{2}\right) r \, dr \, d\theta
+= 2\pi\left[\frac{5r^{2}}{2} - \frac{r^{4}}{2}\right]_{0}^{\sqrt{5/2}}
+= \frac{25\pi}{4} \approx 19.635. \]</div>
+<p>Each bowl therefore holds half of that volume, \(25\pi/8\). A solid of revolution drawn with
+an incorrect rim radius would not reproduce this value.</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<p>The solid is the lens-shaped region between the two bowls,</p>
+<div class="equation">\[ x^{2} + y^{2} \le \frac{5}{2}, \qquad
+x^{2} + y^{2} \le z \le 5 - x^{2} - y^{2}, \]</div>
+<p>bounded below by \(z = x^{2} + y^{2}\) and above by \(z = 5 - x^{2} - y^{2}\). The two
+surfaces meet on the circle \(x^{2} + y^{2} = 5/2\) at height \(z = 5/2\). The drawing is
+produced by plotting the two parametric surfaces for
+\(0 \le r \le \sqrt{5/2}\) and \(0 \le \theta \le 2\pi\).</p>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(z = x^{2} + y^{2}\)</td><td>A paraboloid of revolution: rotate the parabola \(z = r^{2}\) about the \(z\)-axis. Its vertex is at the origin.</td></tr>
+<tr><td>\(z = 5 - x^{2} - y^{2}\)</td><td>The same bowl turned upside down and lifted: vertex at \((0,0,5)\), opening downward.</td></tr>
+<tr><td>\(r\)</td><td>The distance from the \(z\)-axis, \(r = \sqrt{x^{2} + y^{2}}\). Each surface is a function of \(r\) alone.</td></tr>
+<tr><td>\(\theta\)</td><td>The polar angle in the \(xy\)-plane, measured from the positive \(x\)-axis.</td></tr>
+<tr><td>parameterization</td><td>A formula that gives a point of a surface as a function of two parameters, here \(r\) and \(\theta\). A graphing device plots a parameterized surface as a grid of points.</td></tr>
+<tr><td>rim</td><td>The circle where the two surfaces meet, \(x^{2} + y^{2} = 5/2\) at \(z = 5/2\).</td></tr>
+<tr><td>solid of revolution</td><td>A solid obtained by rotating a plane region about an axis. Here the region is the lens in the \((r,z)\)-plane and the axis is the \(z\)-axis.</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<ul>
+<li><code>part1_step1.py</code> solves \(r^{2} = 5 - r^{2}\) symbolically and reports the rim radius \(\sqrt{10}/2 \approx 1.581139\), the rim height \(5/2\), and both surface heights on the rim.</li>
+<li><code>part1_step2.py</code> computes the volume symbolically as \(25\pi/4 \approx 19.634954\), confirms it with mpmath quadrature, and reproduces it by Monte Carlo sampling.</li>
+</ul>
+</section>

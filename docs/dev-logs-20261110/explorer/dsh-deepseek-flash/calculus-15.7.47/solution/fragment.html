@@ -1,0 +1,96 @@
+<header class="title-block">
+  <p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 47</p>
+  <h1>Setting Up Integrals for Mass, Center of Mass, and Moment of Inertia</h1>
+</header>
+
+<h2>Problem</h2>
+<p>Set up, but do not evaluate, integral expressions for (a) the mass, (b) the center of mass, and (c) the moment of inertia about the \(z\)-axis. The solid \(E\) is enclosed by the cylinder \(y = x^{2}\) and the planes \(z = 0\) and \(y + z = 1\). Its density is \(\rho(x,y,z) = \sqrt{x^{2} + y^{2}}\).</p>
+
+<h2>Reading the solid</h2>
+<p>Three surfaces bound \(E\). The cylinder \(y = x^{2}\) is the parabola \(y = x^{2}\) in the \(xy\)-plane, moved parallel to the \(z\)-axis. The plane \(z = 0\) is the floor. The plane \(y + z = 1\), that is \(z = 1 - y\), is the roof.</p>
+
+<p>A point of the solid stands on a base point in the \(xy\)-plane and rises from the floor to the roof. The bounds on \(z\) are therefore</p>
+\[ 0 \le z \le 1 - y . \]
+<p>The roof stays above the floor only where \(1 - y \ge 0\), so \(y \le 1\). Inside the parabolic cylinder the second bound is \(y \ge x^{2}\). Together,</p>
+\[ x^{2} \le y \le 1 . \]
+<p>The wall meets the roof where \(y = x^{2}\) and the roof height \(1 - x^{2}\) falls to zero. That happens at \(x = \pm 1\), so</p>
+\[ -1 \le x \le 1 . \]
+
+<p>The base region is \(D = \{(x,y) : -1 \le x \le 1,\ x^{2} \le y \le 1\}\). Its area is \(4/3\). A vertical fibre over a point of \(D\) has the length \(1 - y\), so the volume of \(E\) is</p>
+\[ V = \int_{-1}^{1} \int_{x^{2}}^{1} (1 - y)\, dy\, dx = \frac{8}{15}. \]
+<p>Two scripts confirm the geometry. <code>part1_step3.py</code> returns the base area \(4/3\) and the volume \(8/15\). <code>part1_step2.py</code> samples the base and reports the volume 0.532701, next to the exact value \(8/15 = 0.533333\).</p>
+
+<p>The density \(\rho = \sqrt{x^{2}+y^{2}}\) is the distance from the point to the \(z\)-axis. The density grows outward from that axis.</p>
+
+<p>Figure 1 shows the solid and its base region.</p>
+
+<figure>
+<img data-figure="part1_figure1.png" alt="Panel (a): the solid cut at x = 0.55, with the wall y = x^2, the roof y + z = 1, the floor z = 0, and the red triangular cross-section. Panel (b): the base region x^2 &lt;= y &lt;= 1 with a strip of width dx.">
+</figure>
+
+<p class="small">Figure 1. Panel (a) shows the solid cut at \(x = 0.55\). The blue sheet is the wall \(y = x^{2}\), the tan sheet is the roof \(y + z = 1\), and the light sheet at the front is the floor \(z = 0\). The red triangle is the cross-section that the cut exposes: its base runs from \(y = x^{2}\) to \(y = 1\), and its height falls from \(1 - x^{2}\) to \(0\). Panel (b) shows the base region in the \(xy\)-plane. A strip of width \(dx\) at \(x = -0.45\) runs from the parabola up to the line \(y = 1\), which gives the limits \(x^{2} \le y \le 1\).</p>
+
+<h2>The setup</h2>
+<p>All three quantities use the same limits. Write one template integral and change only the integrand:</p>
+\[ J[f] = \int_{-1}^{1} \int_{x^{2}}^{1} \int_{0}^{1-y} f(x,y,z)\, dz\, dy\, dx . \]
+<p>The order is \(z\) first, then \(y\), then \(x\). The inner integral runs along one vertical fibre. The middle and outer integrals collect the fibres over the base region \(D\).</p>
+
+<h3>Step 1 &mdash; The mass</h3>
+<p>The mass is the integral of the density over the solid:</p>
+\[ m = \iiint_{E} \rho\, dV = J\left[\sqrt{x^{2}+y^{2}}\right] = \int_{-1}^{1} \int_{x^{2}}^{1} \int_{0}^{1-y} \sqrt{x^{2}+y^{2}}\, dz\, dy\, dx . \]
+
+<h3>Step 2 &mdash; The center of mass</h3>
+<p>Each first moment weights a point by one coordinate and by its mass \(\rho\, dV\). The same limits serve all three moments:</p>
+\[ M_{yz} = J\left[x\sqrt{x^{2}+y^{2}}\right], \qquad M_{xz} = J\left[y\sqrt{x^{2}+y^{2}}\right], \qquad M_{xy} = J\left[z\sqrt{x^{2}+y^{2}}\right]. \]
+<p>The coordinates of the center of mass are the quotients</p>
+\[ \bar{x} = \frac{M_{yz}}{m}, \qquad \bar{y} = \frac{M_{xz}}{m}, \qquad \bar{z} = \frac{M_{xy}}{m}. \]
+
+<p>One moment is zero before any integration. The base region \(D\) and the density are unchanged when \(x\) becomes \(-x\), but the integrand \(x\sqrt{x^{2}+y^{2}}\) changes sign. The integral over the symmetric region is zero, so</p>
+\[ M_{yz} = 0, \qquad \bar{x} = 0 . \]
+
+<h3>Step 3 &mdash; The moment of inertia about the \(z\)-axis</h3>
+<p>The moment of inertia weights each point by the square of its distance from the \(z\)-axis. That distance is \(\sqrt{x^{2}+y^{2}}\), so its square is \(x^{2}+y^{2}\):</p>
+\[ I_{z} = \iiint_{E} (x^{2}+y^{2})\rho\, dV = J\left[(x^{2}+y^{2})^{3/2}\right] = \int_{-1}^{1} \int_{x^{2}}^{1} \int_{0}^{1-y} (x^{2}+y^{2})^{3/2}\, dz\, dy\, dx . \]
+<p>Because \(\rho = (x^{2}+y^{2})^{1/2}\), the integrand of \(I_{z}\) is simply \(\rho^{3}\).</p>
+
+<h3>Step 4 &mdash; No evaluation</h3>
+<p>The problem asks for the setup only. The integrals above are the answer, and the problem does not ask for their values. The section Verification checks the limits and the integrands with independent scripts. Those numbers are a check of the setup, not part of the answer.</p>
+
+<div class="answer">
+<h2>Answer</h2>
+<p>With \(\rho = \sqrt{x^{2}+y^{2}}\) and the template integral</p>
+\[ J[f] = \int_{-1}^{1} \int_{x^{2}}^{1} \int_{0}^{1-y} f(x,y,z)\, dz\, dy\, dx , \]
+<p>the setup is</p>
+\[ m = J[\rho], \qquad I_{z} = J\left[(x^{2}+y^{2})^{3/2}\right], \]
+\[ M_{yz} = J[x\rho] = 0, \qquad M_{xz} = J[y\rho], \qquad M_{xy} = J[z\rho], \]
+\[ (\bar{x},\bar{y},\bar{z}) = \frac{1}{m}\left(M_{yz}, M_{xz}, M_{xy}\right) = \left(0, \frac{J[y\rho]}{m}, \frac{J[z\rho]}{m}\right). \]
+<p>No evaluation is required.</p>
+</div>
+
+<h2>Notation</h2>
+<table class="notation">
+  <thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td>\(E\)</td><td>The solid region of integration, the set of points inside the wall, above the floor, and below the roof.</td></tr>
+    <tr><td>\(D\)</td><td>The base region in the \(xy\)-plane, \(D = \{(x,y) : -1 \le x \le 1,\ x^{2} \le y \le 1\}\).</td></tr>
+    <tr><td>\(dV\)</td><td>The volume element. Here \(dV = dz\, dy\, dx\), because \(z\) is integrated first.</td></tr>
+    <tr><td>\(\rho(x,y,z)\)</td><td>The density, \(\sqrt{x^{2}+y^{2}}\), the distance from the point to the \(z\)-axis.</td></tr>
+    <tr><td>\(y = x^{2}\)</td><td>A parabolic cylinder: the parabola \(y = x^{2}\) in the \(xy\)-plane, moved along the \(z\)-axis.</td></tr>
+    <tr><td>\(y + z = 1\)</td><td>The roof plane, the same as \(z = 1 - y\). Its height falls as \(y\) grows.</td></tr>
+    <tr><td>\(m\)</td><td>The mass, \(m = \iiint_{E} \rho\, dV\).</td></tr>
+    <tr><td>\(M_{yz}, M_{xz}, M_{xy}\)</td><td>The first moments of mass about the coordinate planes. \(M_{yz} = \iiint_{E} x\rho\, dV\) measures the pull toward the \(yz\)-plane.</td></tr>
+    <tr><td>\(\bar{x},\bar{y},\bar{z}\)</td><td>The center of mass, \(M_{yz}/m\), \(M_{xz}/m\), \(M_{xy}/m\).</td></tr>
+    <tr><td>\(I_{z}\)</td><td>The moment of inertia about the \(z\)-axis, \(I_{z} = \iiint_{E} (x^{2}+y^{2})\rho\, dV\). It measures resistance to rotation about that axis.</td></tr>
+    <tr><td>\(J[f]\)</td><td>The template integral: the three fixed limits with the integrand \(f\) inserted.</td></tr>
+    <tr><td>\(f\)</td><td>The integrand that the template integral accepts, such as \(\rho\) or \((x^{2}+y^{2})^{3/2}\).</td></tr>
+    <tr><td>fibre</td><td>The vertical segment over one base point, from \(z = 0\) to \(z = 1 - y\), of length \(1 - y\).</td></tr>
+  </tbody>
+</table>
+
+<h2>Verification</h2>
+<p>Three scripts check the setup. The problem requires no evaluation, so the numbers below are checks, not answers.</p>
+<ul>
+  <li><code>part1_step1.py</code> integrates the template numerically with mpmath, taking the inner \(z\)-integral by hand and integrating \(y\) from \(x^{2}\) to \(1\). It returns \(m = 0.295835221777\), \(M_{yz} = 0.000\mathrm{e}{+}00\), \(M_{xz} = 0.157830870199\), \(M_{xy} = 0.069002175789\), \(I_{z} = 0.158648240288\), and the center of mass \((0, 0.533509395030, 0.233245302485)\).</li>
+  <li><code>part1_step2.py</code> samples the box \(-1 \le x \le 1\), \(0 \le y \le 1\), \(0 \le z \le 1\) with 4,000,000 points and keeps the points with \(y \ge x^{2}\) and \(z \le 1 - y\). It returns \(m = 0.295496\), \(M_{xz} = 0.157604\), \(M_{xy} = 0.068923\), \(I_{z} = 0.158471\), and the center of mass \((0, 0.533354, 0.233245)\). The sampled volume is 0.532701 against the exact \(8/15 = 0.533333\).</li>
+  <li><code>part1_step3.py</code> repeats the inner integrals in SymPy and checks the identities. It prints \(1 - y\) for the integral of \(1\) over \(z\), \((y-1)^{2}/2\) for the integral of \(z\), and \(0\) for \((x^{2}+y^{2})\rho - (x^{2}+y^{2})^{3/2}\), so the moment-of-inertia integrand is correct. It also returns the base area \(4/3\) and the volume \(8/15\), and ends with <code>assertions passed</code>.</li>
+</ul>

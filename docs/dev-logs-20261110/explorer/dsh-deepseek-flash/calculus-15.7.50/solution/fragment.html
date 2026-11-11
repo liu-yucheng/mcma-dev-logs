@@ -1,0 +1,145 @@
+<style>
+  table.grid { width: 100%; border-collapse: collapse; margin: 1rem 0 1.2rem; font-size: 0.97rem; }
+  table.grid th, table.grid td { padding: 0.34rem 0.65rem; text-align: left; border-bottom: 1px solid #e4dfd2; }
+  table.grid th { font-weight: 700; color: #3a3a3a; }
+  table.grid td.num { font-variant-numeric: tabular-nums; }
+</style>
+
+<header class="title-block">
+  <p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 50</p>
+  <h1>Mass, Center of Mass, and Moment of Inertia of a Quarter-Cylinder Wedge</h1>
+  <p class="lead">A tall quarter cylinder is cut by the plane \(y = 3x\). The density depends on \(x\) and \(y\) only, so the height of the solid enters through one integral in \(z\).</p>
+</header>
+
+<section>
+  <h2>Problem</h2>
+  <p>Let \(E\) be the solid bounded by the cylinder \(y^{2} + z^{2} = 9\) and the planes \(x = 0\), \(y = 3x\), and \(z = 0\) in the first octant. The density function is</p>
+  <div class="equation">\[ \rho(x, y, z) = x^{2} + y^{2} . \]</div>
+  <p>Find (a) the mass of \(E\), (b) the center of mass of \(E\), and (c) the moment of inertia of \(E\) about the \(z\)-axis, correct to three decimal places. An exact form is also given for each value.</p>
+</section>
+
+<section>
+  <h2>Reading the solid</h2>
+  <p>The cylinder \(y^{2} + z^{2} = 9\) has its axis on the \(x\)-axis and radius \(3\). The plane \(x = 0\) caps the solid at the back, the plane \(z = 0\) holds it on the floor, and the plane \(y = 3x\) cuts it at the front.</p>
+  <p>On the floor \(z = 0\) the cylinder gives \(y \leq 3\). The plane \(y = 3x\) gives \(x \leq y / 3\), so the floor is the triangle with corners \((0, 0)\), \((0, 3)\), and \((1, 3)\). Above a point \((x, y)\) of that triangle the solid runs from \(z = 0\) up to the cylinder surface \(z = \sqrt{9 - y^{2}}\). The height therefore depends on \(y\) alone. This gives the three sets of bounds</p>
+  <div class="equation">\[ 0 \leq y \leq 3, \qquad 0 \leq x \leq \frac{y}{3}, \qquad 0 \leq z \leq \sqrt{9 - y^{2}} . \]</div>
+  <p>The order \(z\), then \(x\), then \(y\) matches this shape: the inner integral covers one vertical segment, the middle integral covers one horizontal strip of the triangle from \(x = 0\) to the plane \(y = 3x\), and the outer integral sweeps the triangle from the \(x\)-axis to the far corner \((1, 3)\).</p>
+
+  <figure>
+    <img data-figure="part1_figure1.png" alt="The quarter-cylinder wedge of Exercise 15.7.50 with its triangular base, flat back, and slanted face.">
+    <figcaption>The solid \(E\). The green surface is the base \(z = 0\) over the triangle \(0 \leq x \leq y / 3\), \(0 \leq y \leq 3\). The pale blue arcs lie on the flat back \(x = 0\), which is a quarter disk of radius \(3\) in the \(yz\)-plane. The orange ribs stand on the slanted plane \(y = 3x\). The dark curve is the rim of the back face, and the brown curve is the rim where the plane \(y = 3x\) meets the cylinder. The red segment shows the range \(0 \leq z \leq \sqrt{9 - y^{2}}\) above one fixed point \((x, y)\).</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>Solution</h2>
+
+  <h3>Step 1. Write the mass integral</h3>
+  <p>The mass is the integral of the density over the solid. With the bounds above,</p>
+  <div class="equation">\[ M = \int_{0}^{3} \int_{0}^{y/3} \int_{0}^{\sqrt{9 - y^{2}}} \left( x^{2} + y^{2} \right) dz \, dx \, dy . \]</div>
+
+  <h3>Step 2. Integrate in \(z\)</h3>
+  <p>The density does not depend on \(z\). The inner integral therefore gives only the height of the solid at the fixed point \((x, y)\):</p>
+  <div class="equation">\[ \int_{0}^{\sqrt{9 - y^{2}}} \left( x^{2} + y^{2} \right) dz = \left( x^{2} + y^{2} \right) \sqrt{9 - y^{2}} . \]</div>
+  <p>The mass becomes a double integral over the triangular base:</p>
+  <div class="equation">\[ M = \int_{0}^{3} \int_{0}^{y/3} \left( x^{2} + y^{2} \right) \sqrt{9 - y^{2}} \, dx \, dy . \]</div>
+
+  <h3>Step 3. Integrate in \(x\)</h3>
+  <p>At fixed \(y\) the inner factor \(x^{2} + y^{2}\) is a polynomial in \(x\), so</p>
+  <div class="equation">\[ \int_{0}^{y/3} \left( x^{2} + y^{2} \right) dx = \frac{1}{3} \left( \frac{y}{3} \right)^{3} + y^{2} \left( \frac{y}{3} \right) = \frac{y^{3}}{81} + \frac{y^{3}}{3} = \frac{28 y^{3}}{81} . \]</div>
+  <p>The cube term contributes \(y^{3} / 81\) and the constant term contributes \(y^{3} / 3\). The mass is then a single integral over \(y\):</p>
+  <div class="equation">\[ M = \frac{28}{81} \int_{0}^{3} y^{3} \sqrt{9 - y^{2}} \, dy . \]</div>
+
+  <h3>Step 4. Substitute \(y = 3 \sin t\)</h3>
+  <p>Set \(y = 3 \sin t\). Then \(dy = 3 \cos t \, dt\) and \(\sqrt{9 - y^{2}} = 3 \cos t\) on \(0 \leq t \leq \pi / 2\), so the square root disappears and two extra factors of \(3\) enter:</p>
+  <div class="equation">\[ \int_{0}^{3} y^{3} \sqrt{9 - y^{2}} \, dy = \int_{0}^{\pi/2} \left( 27 \sin^{3} t \right) \left( 3 \cos t \right) \left( 3 \cos t \, dt \right) = 243 \int_{0}^{\pi/2} \sin^{3} t \, \cos^{2} t \, dt . \]</div>
+  <p>The factor \(3 \cos t\) from \(dy\) belongs to the substitution. Together with \(\sqrt{9 - y^{2}} = 3 \cos t\) it gives the two cosine factors of \(243 \sin^{3} t \, \cos^{2} t\). The trigonometric integral evaluates to \(2 / 15\), so</p>
+  <div class="equation">\[ \int_{0}^{3} y^{3} \sqrt{9 - y^{2}} \, dy = 243 \cdot \frac{2}{15} = \frac{486}{15} = \frac{162}{5} . \]</div>
+
+  <h3>Step 5. Collect the radial and trigonometric integrals</h3>
+  <p>Every remaining integral follows the same substitution \(y = 3 \sin t\), with \(dy = 3 \cos t \, dt\). Here \(s\) is shorthand for the height \(\sqrt{9 - y^{2}}\).</p>
+  <table class="grid">
+    <tr><th>Integral</th><th>Value</th><th>Integral</th><th>Value</th></tr>
+    <tr><td>\(\displaystyle \int_{0}^{3} y^{3} s \, dy\)</td><td class="num">\(162/5\)</td><td>\(\displaystyle \int_{0}^{\pi/2} \sin^{3} t \, \cos^{2} t \, dt\)</td><td class="num">\(2/15\)</td></tr>
+    <tr><td>\(\displaystyle \int_{0}^{3} y^{4} s \, dy\)</td><td class="num">\(729\pi/32\)</td><td>\(\displaystyle \int_{0}^{\pi/2} \sin^{4} t \, \cos^{2} t \, dt\)</td><td class="num">\(\pi/32\)</td></tr>
+    <tr><td>\(\displaystyle \int_{0}^{3} y^{5} s \, dy\)</td><td class="num">\(5832/35\)</td><td>\(\displaystyle \int_{0}^{\pi/2} \sin^{5} t \, \cos^{2} t \, dt\)</td><td class="num">\(8/105\)</td></tr>
+    <tr><td>\(\displaystyle \int_{0}^{3} y^{3} \, dy\)</td><td class="num">\(81/4\)</td><td>\(\displaystyle \int_{0}^{3} y^{3} \left( 9 - y^{2} \right) dy\)</td><td class="num">\(243/4\)</td></tr>
+  </table>
+  <p>The trigonometric values come from the substitution \(u = \cos t\) for the odd powers of \(\sin t\) and from the half-angle formulas for \(\sin^{4} t \cos^{2} t\). The last row is elementary. These eight integrals cover every step below.</p>
+
+  <h3>Step 6. The mass</h3>
+  <p>Insert the first value of the table:</p>
+  <div class="equation">\[ M = \frac{28}{81} \cdot \frac{162}{5} = \frac{28 \cdot 2}{5} = \frac{56}{5} = 11.2 . \]</div>
+  <p>To three decimal places the mass is \(11.200\).</p>
+
+  <h3>Step 7. The moment about the \(yz\)-plane</h3>
+  <p>The first moment of mass about the plane \(x = 0\) weights each point by its distance \(x\) from that plane:</p>
+  <div class="equation">\[ M_{yz} = \int_{0}^{3} \int_{0}^{y/3} \int_{0}^{\sqrt{9 - y^{2}}} x \left( x^{2} + y^{2} \right) dz \, dx \, dy . \]</div>
+  <p>The inner integral again gives the height \(s = \sqrt{9 - y^{2}}\), and the integral in \(x\) is elementary:</p>
+  <div class="equation">\[ \int_{0}^{y/3} \left( x^{3} + x y^{2} \right) dx = \frac{1}{4} \left( \frac{y}{3} \right)^{4} + \frac{y^{2}}{2} \left( \frac{y}{3} \right)^{2} = \frac{y^{4}}{324} + \frac{y^{4}}{18} = \frac{19 y^{4}}{324} . \]</div>
+  <p>Insert the second value of the table:</p>
+  <div class="equation">\[ M_{yz} = \frac{19}{324} \cdot \frac{729 \pi}{32} = \frac{171 \pi}{128} \approx 4.196971 . \]</div>
+
+  <h3>Step 8. The moment about the \(xz\)-plane</h3>
+  <p>Repeat with the weight \(y\). The density factor is the same, so the integral in \(x\) gains one factor \(y\):</p>
+  <div class="equation">\[ \int_{0}^{y/3} y \left( x^{2} + y^{2} \right) dx = y \left( \frac{y^{3}}{81} + \frac{y^{3}}{3} \right) = \frac{28 y^{4}}{81} . \]</div>
+  <div class="equation">\[ M_{xz} = \frac{28}{81} \cdot \frac{729 \pi}{32} = \frac{63 \pi}{8} \approx 24.740042 . \]</div>
+
+  <h3>Step 9. The moment about the \(xy\)-plane</h3>
+  <p>The weight is \(z\), so the inner integral is elementary in \(z\) and the height enters as its square:</p>
+  <div class="equation">\[ \int_{0}^{\sqrt{9 - y^{2}}} z \, dz = \frac{9 - y^{2}}{2} . \]</div>
+  <p>Multiply by the integral in \(x\) from Step 3 and use the last value of the table:</p>
+  <div class="equation">\[ M_{xy} = \frac{28}{81} \cdot \frac{1}{2} \int_{0}^{3} y^{3} \left( 9 - y^{2} \right) dy = \frac{14}{81} \cdot \frac{243}{4} = \frac{21}{2} = 10.5 . \]</div>
+
+  <h3>Step 10. The center of mass</h3>
+  <p>Divide each first moment by the mass:</p>
+  <div class="equation">\[ \bar{x} = \frac{M_{yz}}{M} = \frac{171 \pi / 128}{56 / 5} = \frac{855 \pi}{7168} \approx 0.374730 , \]</div>
+  <div class="equation">\[ \bar{y} = \frac{M_{xz}}{M} = \frac{63 \pi / 8}{56 / 5} = \frac{315 \pi}{448} = \frac{45 \pi}{64} \approx 2.208932 , \]</div>
+  <div class="equation">\[ \bar{z} = \frac{M_{xy}}{M} = \frac{21 / 2}{56 / 5} = \frac{105}{112} = \frac{15}{16} = 0.9375 . \]</div>
+  <p>The center of mass lies inside the solid: \(0 < \bar{x} < 1\), \(0 < \bar{y} < 3\), and \(0 < \bar{z} < 3\). The value \(\bar{y} \approx 2.209\) lies close to the radius \(3\) because the density \(x^{2} + y^{2}\) grows with \(y\). The value \(\bar{z} \approx 0.938\) stays small because the height of the solid falls to zero as \(y\) grows.</p>
+
+  <h3>Step 11. The moment of inertia about the \(z\)-axis</h3>
+  <p>The squared distance from a point to the \(z\)-axis is \(x^{2} + y^{2}\), so the integrand is \(\rho \left( x^{2} + y^{2} \right) = \left( x^{2} + y^{2} \right)^{2}\):</p>
+  <div class="equation">\[ I_{z} = \iiint_{E} \left( x^{2} + y^{2} \right)^{2} dV = \iiint_{E} \left( x^{4} + 2 x^{2} y^{2} + y^{4} \right) dV . \]</div>
+  <p>The integral in \(z\) gives the height \(s\). The integral in \(x\) then gives</p>
+  <div class="equation">\[ \int_{0}^{y/3} \left( x^{4} + 2 x^{2} y^{2} + y^{4} \right) dx = \frac{y^{5}}{1215} + \frac{2 y^{5}}{81} + \frac{y^{5}}{3} = \frac{436 y^{5}}{1215} . \]</div>
+  <p>Insert the third value of the table:</p>
+  <div class="equation">\[ I_{z} = \frac{436}{1215} \cdot \frac{5832}{35} = \frac{436 \cdot 24}{5 \cdot 35} = \frac{10464}{175} \approx 59.794286 . \]</div>
+</section>
+
+<div class="answer">
+  <h2>Answer</h2>
+  <p>(a) The mass is</p>
+  <div class="equation">\[ M = \frac{56}{5} = 11.200 . \]</div>
+  <p>(b) The center of mass is</p>
+  <div class="equation">\[ \left( \bar{x}, \bar{y}, \bar{z} \right) = \left( \frac{855 \pi}{7168}, \frac{45 \pi}{64}, \frac{15}{16} \right) \approx \left( 0.375, 2.209, 0.938 \right) . \]</div>
+  <p>(c) The moment of inertia about the \(z\)-axis is</p>
+  <div class="equation">\[ I_{z} = \frac{10464}{175} \approx 59.794 . \]</div>
+</div>
+
+<section>
+  <h2>Notation</h2>
+  <table class="grid">
+    <tr><th>Symbol</th><th>Meaning</th></tr>
+    <tr><td>\(E\)</td><td>The solid inside the cylinder, above the floor, between the two planes.</td></tr>
+    <tr><td>\(\rho(x, y, z)\)</td><td>Mass density at the point \((x, y, z)\), in mass per unit volume.</td></tr>
+    <tr><td>\(dV\)</td><td>Volume element, equal to \(dz \, dx \, dy\) in the order used here.</td></tr>
+    <tr><td>First octant</td><td>The region where \(x \geq 0\), \(y \geq 0\), and \(z \geq 0\).</td></tr>
+    <tr><td>\(s\)</td><td>Shorthand for \(\sqrt{9 - y^{2}}\), the height of the solid at the level \(y\).</td></tr>
+    <tr><td>\(M\)</td><td>Mass of the solid, the integral of \(\rho\) over \(E\).</td></tr>
+    <tr><td>\(M_{yz}, M_{xz}, M_{xy}\)</td><td>First moments of mass about the planes \(x = 0\), \(y = 0\), and \(z = 0\).</td></tr>
+    <tr><td>\(\bar{x}, \bar{y}, \bar{z}\)</td><td>Coordinates of the center of mass, for example \(\bar{x} = M_{yz} / M\).</td></tr>
+    <tr><td>\(I_{z}\)</td><td>Moment of inertia about the \(z\)-axis, the integral of \(\rho\) times the squared distance \(x^{2} + y^{2}\).</td></tr>
+    <tr><td>\(y = 3 \sin t\)</td><td>Substitution for the radial integrals, with \(dy = 3 \cos t \, dt\) and \(0 \leq t \leq \pi / 2\).</td></tr>
+    <tr><td>\(dy = 3 \cos t \, dt\)</td><td>Jacobian of that substitution. It supplies one factor \(3 \cos t\) in every transformed integral.</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Verification</h2>
+  <ul>
+    <li><code>part1_step1.py</code> integrates in the order \(z\), \(x\), \(y\) with SymPy. It prints the inner integrals, the eight integrals of the table, the four first moments, the three coordinates of the center of mass, and \(I_{z}\).</li>
+    <li><code>part1_step2.py</code> recomputes the mass, the three first moments, and \(I_{z}\) by nested mpmath quadrature and by Monte Carlo sampling of 4,000,000 points in the box \(0 \leq x \leq 1\), \(0 \leq y \leq 3\), \(0 \leq z \leq 3\). Both checks agree with the exact values to the printed digits.</li>
+    <li><code>part1_figure1.py</code> draws the solid, the triangular base, the flat back \(x = 0\), and the slanted plane \(y = 3x\).</li>
+  </ul>
+</section>

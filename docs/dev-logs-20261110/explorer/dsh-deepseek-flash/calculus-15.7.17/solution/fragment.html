@@ -1,0 +1,91 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 17</p>
+<h1>A Triple Integral over the Solid between a Paraboloid and a Plane</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Evaluate the triple integral</p>
+<div class="equation">\[ \iiint_{E} x \, dV, \]</div>
+<p>where the solid \(E\) is bounded by the paraboloid \(x = 4y^{2} + 4z^{2}\) and the plane \(x = 4\).</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>The two surfaces meet on the curve where both equations hold, that is, where
+\(4y^{2} + 4z^{2} = 4\). Divide by 4 to obtain the circle \(y^{2} + z^{2} = 1\).
+The solid therefore projects onto the unit disk
+\(D = \{(y,z) : y^{2} + z^{2} \le 1\}\) in the \(yz\)-plane.</p>
+<p>At a fixed point \((y,z)\) of \(D\), the \(x\)-coordinate runs from the paraboloid to the plane:</p>
+<div class="equation">\[ 4y^{2} + 4z^{2} \le x \le 4. \]</div>
+<figure>
+<img data-figure="part1_figure1.png" alt="The parabolic bowl x = 4y^2 + 4z^2, the cutting plane x = 4, and the unit disk projection">
+<figcaption>The solid \(E\) lies between the parabolic bowl \(x = 4y^{2} + 4z^{2}\) (blue surface) and the plane \(x = 4\) (tan disk). Its projection onto the \(yz\)-plane is the unit disk \(y^{2} + z^{2} \le 1\) (dashed rim). The thickness \(4 - 4r^{2}\) shrinks to zero on the rim of the disk.</figcaption>
+</figure>
+<p>Use polar coordinates in the \(yz\)-plane, \(y = r\cos\theta\) and \(z = r\sin\theta\), so that
+\(y^{2} + z^{2} = r^{2}\). The area element of the disk is \(dA = r \, dr \, d\theta\), hence</p>
+<div class="equation">\[ dV = dx \, dA = r \, dx \, dr \, d\theta. \]</div>
+<p>In these coordinates the solid is described by the simple inequalities</p>
+<div class="equation">\[ 4r^{2} \le x \le 4, \qquad 0 \le r \le 1, \qquad 0 \le \theta \le 2\pi. \]</div>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Set up the iterated integral</h3>
+<p>Insert the description of \(E\) and the volume element into the triple integral:</p>
+<div class="equation">\[ \iiint_{E} x \, dV
+= \int_{0}^{2\pi} \int_{0}^{1} \int_{4r^{2}}^{4} x \cdot r \, dx \, dr \, d\theta. \]</div>
+
+<h3>Step 2 &mdash; Integrate with respect to \(x\)</h3>
+<p>The variable \(r\) is constant during the innermost integration, so</p>
+<div class="equation">\[ \int_{4r^{2}}^{4} x r \, dx
+= r \left[ \frac{x^{2}}{2} \right]_{4r^{2}}^{4}
+= \frac{r}{2}\left(16 - 16r^{4}\right)
+= 8r\left(1 - r^{4}\right). \]</div>
+
+<h3>Step 3 &mdash; Integrate over the disk</h3>
+<p>The inner result depends only on \(r\). Integrate it over \(0 \le r \le 1\):</p>
+<div class="equation">\[ \int_{0}^{1} 8r\left(1 - r^{4}\right) dr
+= 8 \int_{0}^{1} \left(r - r^{5}\right) dr
+= 8 \left[ \frac{r^{2}}{2} - \frac{r^{6}}{6} \right]_{0}^{1}
+= 8\left(\frac{1}{2} - \frac{1}{6}\right)
+= 8 \cdot \frac{1}{3}
+= \frac{8}{3}. \]</div>
+
+<h3>Step 4 &mdash; Integrate with respect to \(\theta\)</h3>
+<p>The integrand no longer depends on \(\theta\), so the outer integral only multiplies the result by \(2\pi\):</p>
+<div class="equation">\[ \iiint_{E} x \, dV = \int_{0}^{2\pi} \frac{8}{3} \, d\theta
+= \frac{8}{3} \cdot 2\pi
+= \frac{16\pi}{3}. \]</div>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<div class="equation">\[ \iiint_{E} x \, dV = \frac{16\pi}{3} \approx 16.755. \]</div>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(\iiint_{E} f \, dV\)</td><td>The triple integral of the function \(f\) over the three-dimensional region \(E\); it is the limit of sums of \(f\) times small volumes.</td></tr>
+<tr><td>\(E\)</td><td>The solid region of integration, that is, the set of points that satisfy the stated inequalities.</td></tr>
+<tr><td>\(dV\)</td><td>The volume element. In Cartesian coordinates \(dV = dx\,dy\,dz\); in the polar coordinates used here \(dV = r\,dx\,dr\,d\theta\).</td></tr>
+<tr><td>\(x = 4y^{2} + 4z^{2}\)</td><td>A parabolic bowl (an elliptic paraboloid) that opens along the positive \(x\)-axis.</td></tr>
+<tr><td>\(r, \theta\)</td><td>Polar coordinates in the \(yz\)-plane: \(r\) is the distance from the \(x\)-axis and \(\theta\) is the angle around it.</td></tr>
+<tr><td>the factor \(r\)</td><td>The Jacobian factor of polar coordinates. A small polar rectangle has area \(r\,dr\,d\theta\), not \(dr\,d\theta\).</td></tr>
+<tr><td>\(D\)</td><td>The projection of \(E\) onto the \(yz\)-plane, here the unit disk.</td></tr>
+<tr><td>\(\pi\)</td><td>The ratio of a circle's circumference to its diameter, \(\pi \approx 3.14159\).</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Three independent computations support the result.</p>
+<ul>
+<li><code>part1_step1.py</code> checks the region description and estimates the integral by Monte Carlo sampling; the estimate is \(16.746\), within one standard error of \(16\pi/3 = 16.755\).</li>
+<li><code>part1_step2.py</code> repeats the symbolic evaluation with SymPy and obtains \(16\pi/3\).</li>
+<li><code>part1_step3.py</code> evaluates the integral numerically with mpmath in two different orders of integration, and both values agree with \(16\pi/3\) to twelve digits.</li>
+</ul>
+</section>

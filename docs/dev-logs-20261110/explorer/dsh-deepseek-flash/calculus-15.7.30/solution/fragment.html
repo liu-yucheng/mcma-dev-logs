@@ -1,0 +1,122 @@
+<style>
+p .katex, figcaption .katex { white-space: nowrap; }
+</style>
+
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.7 &middot; Exercise 30</p>
+<h1>Six Orders of Integration over a Cylinder Cut by Two Planes</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Express the triple integral</p>
+<div class="equation">\[ \iiint_{E} f(x,y,z)\,dV \]</div>
+<p>as an iterated integral in six different ways, where \(E\) is the solid bounded by the circular cylinder \(y^{2}+z^{2}=9\) and the planes \(x=-2\) and \(x=2\).</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>The equation \(y^{2}+z^{2}=9\) contains no \(x\). At every fixed value of \(x\) it describes the circle of radius \(3\) about the point \((x,0,0)\). The surface is therefore a circular cylinder whose axis is the \(x\)-axis. The planes \(x=-2\) and \(x=2\) cut a piece of length \(4\) from this cylinder.</p>
+<figure>
+<img data-figure="part1_figure1.png" alt="The circular cylinder y^2 + z^2 = 9 between the planes x = -2 and x = 2">
+<figcaption>The solid \(E\) is the part of the circular cylinder \(y^{2}+z^{2}=9\) (blue surface) between the planes \(x=-2\) and \(x=2\) (tan disks). The dashed line is the \(x\)-axis, which is the axis of the cylinder. The radius is \(3\) and the length is \(4\).</figcaption>
+</figure>
+<p>A point \((x,y,z)\) lies in \(E\) exactly when it satisfies both conditions</p>
+<div class="equation">\[ y^{2}+z^{2}\le 9 \qquad\text{and}\qquad -2\le x\le 2. \]</div>
+<p>These two conditions are independent. The disk condition involves only \(y\) and \(z\). The interval condition involves only \(x\). This independence is the reason why every one of the six orders needs a single iterated integral, with no split into two or more pieces.</p>
+<p>The projection of \(E\) onto the \(yz\)-plane is the closed disk</p>
+<div class="equation">\[ D=\{(y,z): y^{2}+z^{2}\le 9\}. \]</div>
+<p>At each point of \(D\), the \(x\)-limits are the constants \(-2\) and \(2\). The projection onto the \(xy\)-plane is the rectangle \(-2\le x\le 2\), \(-3\le y\le 3\). The projection onto the \(xz\)-plane is the rectangle \(-2\le x\le 2\), \(-3\le z\le 3\).</p>
+<p>The disk \(D\) has two one-dimensional descriptions. Hold \(y\) fixed with \(-3\le y\le 3\). The condition \(y^{2}+z^{2}\le 9\) then gives</p>
+<div class="equation">\[ -\sqrt{9-y^{2}} \le z \le \sqrt{9-y^{2}}. \]</div>
+<p>Hold \(z\) fixed with \(-3\le z\le 3\). The same condition gives</p>
+<div class="equation">\[ -\sqrt{9-z^{2}} \le y \le \sqrt{9-z^{2}}. \]</div>
+<figure>
+<img data-figure="part1_figure2.png" alt="The disk y^2 + z^2 <= 9 with a vertical slice and a horizontal slice">
+<figcaption>The disk \(D\) is the projection of \(E\) onto the \(yz\)-plane. The red vertical slice at a fixed \(y\) gives the inner limits \(-\sqrt{9-y^{2}}\le z\le\sqrt{9-y^{2}}\). The green horizontal slice at a fixed \(z\) gives the inner limits \(-\sqrt{9-z^{2}}\le y\le\sqrt{9-z^{2}}\).</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Solution</h2>
+
+<h3>Step 1 &mdash; Choose the innermost variable</h3>
+<p>An order of integration names the innermost variable first and the outermost variable last. The inner limits may depend on the variables that are still free at that stage. For this solid the choice is simple, because the two defining conditions separate. If \(z\) or \(y\) is innermost, the disk supplies the inner limits and \(x\) supplies a constant pair. If \(x\) is innermost, its limits are constant and the disk supplies the two outer pairs.</p>
+<p>The six orders fall into three groups of two. Each group has the same inner variable.</p>
+
+<h3>Step 2 &mdash; Inner variable \(z\)</h3>
+<p><strong>Order \(dz\,dy\,dx\).</strong> Hold \(x\) and \(y\) fixed. The point lies in \(E\) when \(z\) runs across the disk from the lower arc to the upper arc, so \(-\sqrt{9-y^{2}}\le z\le\sqrt{9-y^{2}}\). Next, \(y\) runs over the full width \(-3\le y\le 3\). Last, \(x\) runs from \(-2\) to \(2\).</p>
+<div class="equation">\[ \int_{-2}^{2}\int_{-3}^{3}\int_{-\sqrt{9-y^{2}}}^{\sqrt{9-y^{2}}} f(x,y,z)\,dz\,dy\,dx \]</div>
+<p><strong>Order \(dz\,dx\,dy\).</strong> The inner limits are the same, because they depend only on the fixed value of \(y\). The variable \(x\) now comes next, and its limits are the constants \(-2\) and \(2\). The outer variable \(y\) runs over \(-3\le y\le 3\).</p>
+<div class="equation">\[ \int_{-3}^{3}\int_{-2}^{2}\int_{-\sqrt{9-y^{2}}}^{\sqrt{9-y^{2}}} f(x,y,z)\,dz\,dx\,dy \]</div>
+
+<h3>Step 3 &mdash; Inner variable \(y\)</h3>
+<p><strong>Order \(dy\,dz\,dx\).</strong> Hold \(x\) and \(z\) fixed. The disk gives \(-\sqrt{9-z^{2}}\le y\le\sqrt{9-z^{2}}\). Then \(z\) runs over \(-3\le z\le 3\), and last \(x\) runs over \(-2\le x\le 2\).</p>
+<div class="equation">\[ \int_{-2}^{2}\int_{-3}^{3}\int_{-\sqrt{9-z^{2}}}^{\sqrt{9-z^{2}}} f(x,y,z)\,dy\,dz\,dx \]</div>
+<p><strong>Order \(dy\,dx\,dz\).</strong> The inner limits still depend only on the fixed value of \(z\). The middle variable is now \(x\), with constant limits. The outer variable is \(z\).</p>
+<div class="equation">\[ \int_{-3}^{3}\int_{-2}^{2}\int_{-\sqrt{9-z^{2}}}^{\sqrt{9-z^{2}}} f(x,y,z)\,dy\,dx\,dz \]</div>
+
+<h3>Step 4 &mdash; Inner variable \(x\)</h3>
+<p><strong>Order \(dx\,dy\,dz\).</strong> Hold \(y\) and \(z\) fixed. The \(x\)-limits are the constants \(-2\) and \(2\), because the cylinder does not bend along its axis. Next, \(y\) runs across the disk at the fixed value of \(z\). Last, \(z\) runs over \(-3\le z\le 3\).</p>
+<div class="equation">\[ \int_{-3}^{3}\int_{-\sqrt{9-z^{2}}}^{\sqrt{9-z^{2}}}\int_{-2}^{2} f(x,y,z)\,dx\,dy\,dz \]</div>
+<p><strong>Order \(dx\,dz\,dy\).</strong> The inner limits are again the constants \(-2\) and \(2\). The middle variable is \(z\), with limits that depend on the fixed value of \(y\). The outer variable is \(y\).</p>
+<div class="equation">\[ \int_{-3}^{3}\int_{-\sqrt{9-y^{2}}}^{\sqrt{9-y^{2}}}\int_{-2}^{2} f(x,y,z)\,dx\,dz\,dy \]</div>
+
+<h3>Step 5 &mdash; Check every order with a test integrand</h3>
+<p>Set \(f=1\). Each of the six integrals then gives the volume of \(E\). The volume from the geometry is the area of the base disk times the length:</p>
+<div class="equation">\[ V=\pi\cdot 3^{2}\cdot 4=36\pi\approx 113.097. \]</div>
+<p>SymPy evaluates the six iterated integrals of Step 2 through Step 4. Every order returns \(36\pi\). A second test with \(f=y^{2}z^{2}\), which is not symmetric in the two disk directions, returns \(243\pi/2\approx 381.704\) for every order. Table 1 lists the six values.</p>
+<table class="notation">
+<tr><th>Order</th><th>Value for \(f=1\)</th><th>Value for \(f=y^{2}z^{2}\)</th></tr>
+<tr><td>\(dz\,dy\,dx\)</td><td>\(36\pi\)</td><td>\(243\pi/2\)</td></tr>
+<tr><td>\(dz\,dx\,dy\)</td><td>\(36\pi\)</td><td>\(243\pi/2\)</td></tr>
+<tr><td>\(dy\,dz\,dx\)</td><td>\(36\pi\)</td><td>\(243\pi/2\)</td></tr>
+<tr><td>\(dy\,dx\,dz\)</td><td>\(36\pi\)</td><td>\(243\pi/2\)</td></tr>
+<tr><td>\(dx\,dy\,dz\)</td><td>\(36\pi\)</td><td>\(243\pi/2\)</td></tr>
+<tr><td>\(dx\,dz\,dy\)</td><td>\(36\pi\)</td><td>\(243\pi/2\)</td></tr>
+</table>
+<p class="small">Table 1. Exact values returned by <code>part1_step2.py</code> for the six orders.</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<p>With \(D=\{(y,z): y^{2}+z^{2}\le 9\}\), the integral \(\iiint_{E} f\,dV\) has the six forms below.</p>
+<p><strong>Inner variable \(z\):</strong></p>
+<div class="equation">\[ \int_{-2}^{2}\int_{-3}^{3}\int_{-\sqrt{9-y^{2}}}^{\sqrt{9-y^{2}}} f(x,y,z)\,dz\,dy\,dx \]</div>
+<div class="equation">\[ \int_{-3}^{3}\int_{-2}^{2}\int_{-\sqrt{9-y^{2}}}^{\sqrt{9-y^{2}}} f(x,y,z)\,dz\,dx\,dy \]</div>
+<p><strong>Inner variable \(y\):</strong></p>
+<div class="equation">\[ \int_{-2}^{2}\int_{-3}^{3}\int_{-\sqrt{9-z^{2}}}^{\sqrt{9-z^{2}}} f(x,y,z)\,dy\,dz\,dx \]</div>
+<div class="equation">\[ \int_{-3}^{3}\int_{-2}^{2}\int_{-\sqrt{9-z^{2}}}^{\sqrt{9-z^{2}}} f(x,y,z)\,dy\,dx\,dz \]</div>
+<p><strong>Inner variable \(x\):</strong></p>
+<div class="equation">\[ \int_{-3}^{3}\int_{-\sqrt{9-z^{2}}}^{\sqrt{9-z^{2}}}\int_{-2}^{2} f(x,y,z)\,dx\,dy\,dz \]</div>
+<div class="equation">\[ \int_{-3}^{3}\int_{-\sqrt{9-y^{2}}}^{\sqrt{9-y^{2}}}\int_{-2}^{2} f(x,y,z)\,dx\,dz\,dy \]</div>
+<p>All six orders give the same value for every integrand. For \(f=1\), each order gives the volume \(36\pi\).</p>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>\(\iiint_{E} f\,dV\)</td><td>The triple integral of the function \(f\) over the three-dimensional solid \(E\). It is the limit of sums of values of \(f\) times small volumes.</td></tr>
+<tr><td>\(E\)</td><td>The solid region of integration, that is, the set of points \((x,y,z)\) that satisfy both defining inequalities.</td></tr>
+<tr><td>\(f(x,y,z)\)</td><td>The integrand, an arbitrary function of the three coordinates.</td></tr>
+<tr><td>\(dV\)</td><td>The volume element. In Cartesian coordinates \(dV=dx\,dy\,dz\).</td></tr>
+<tr><td>\(dz\,dy\,dx\)</td><td>An order of integration. The innermost differential is written first and the outermost is written last.</td></tr>
+<tr><td>\(y^{2}+z^{2}=9\)</td><td>A circular cylinder of radius \(3\) whose axis is the \(x\)-axis. It is the set of points at distance \(3\) from that axis.</td></tr>
+<tr><td>\(x=-2\), \(x=2\)</td><td>Two planes parallel to the \(yz\)-plane. They cut the cylinder at a distance of \(4\).</td></tr>
+<tr><td>\(\sqrt{9-y^{2}}\)</td><td>The nonnegative square root. At a fixed \(y\), it is the half-height of the disk chord.</td></tr>
+<tr><td>\(D\)</td><td>The projection of \(E\) onto the \(yz\)-plane, here the closed disk of radius \(3\).</td></tr>
+<tr><td>\(\pi\)</td><td>The ratio of a circle&rsquo;s circumference to its diameter, \(\pi\approx 3.14159\).</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<p>Four scripts support the result. Run each one from <code>calculus-15.7.30/solution</code>.</p>
+<ul>
+<li><code>part1_step1.py</code> checks six sample points against the two inequalities and computes the volume from the order \(dz\,dy\,dx\). It obtains \(2\sqrt{9-y^{2}}\), then \(9\pi\) for the disk area, then \(36\pi\) for the volume. The geometric value \(\pi r^{2}L=36\pi\) agrees.</li>
+<li><code>part1_step2.py</code> evaluates all six orders with SymPy. Every order gives \(36\pi\) for \(f=1\) and \(243\pi/2\) for \(f=y^{2}z^{2}\).</li>
+<li><code>part1_step3.py</code> evaluates all six orders a second time with nested mpmath quadrature. The twelve numerical values agree with the exact values to all fifteen printed digits.</li>
+<li><code>part1_figure1.py</code> draws the cylinder and the two cutting planes. <code>part1_figure2.py</code> draws the projection disk and both families of slices.</li>
+</ul>
+</section>

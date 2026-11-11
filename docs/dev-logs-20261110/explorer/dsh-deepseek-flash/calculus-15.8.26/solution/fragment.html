@@ -1,0 +1,140 @@
+<header class="title-block">
+<p class="eyebrow">Stewart, Calculus: Early Transcendentals &middot; Section 15.8 &middot; Exercise 26</p>
+<h1>Volume Cut from a Sphere by an Off-Centre Cylinder</h1>
+</header>
+
+<section>
+<h2>Problem</h2>
+<p>Use cylindrical coordinates.</p>
+<p>(a) Find the volume of the solid that the cylinder \(r = a\cos\theta\) cuts out of the sphere
+of radius \(a\) centred at the origin.</p>
+<p>(b) Illustrate the solid of part (a) by graphing the sphere and the cylinder on the same
+screen.</p>
+</section>
+
+<section>
+<h2>Reading the solid</h2>
+<p>The sphere has the equation \(x^{2} + y^{2} + z^{2} = a^{2}\). The cylinder has the polar
+equation \(r = a\cos\theta\). Multiply by \(r\) to see what this circle is:</p>
+<div class="equation">\[ r = a\cos\theta \quad\Longleftrightarrow\quad r^{2} = ar
+\quad\Longleftrightarrow\quad x^{2} + y^{2} = ax
+\quad\Longleftrightarrow\quad \left(x - \frac{a}{2}\right)^{2} + y^{2} = \left(\frac{a}{2}\right)^{2}. \]</div>
+<p>So the cylinder has radius \(a/2\) and its axis is the vertical line through
+\((a/2, 0, 0)\). The axis is off centre: it lies inside the sphere, so the solid is the part of
+the sphere that also lies inside the cylinder.</p>
+<p>The solid is therefore</p>
+<div class="equation">\[ E = \left\{ (r,\theta,z) : -\frac{\pi}{2} \le \theta \le \frac{\pi}{2},
+\ 0 \le r \le a\cos\theta, \ -\sqrt{a^{2} - r^{2}} \le z \le \sqrt{a^{2} - r^{2}} \right\}. \]</div>
+<p>The range \(-\pi/2 \le \theta \le \pi/2\) is part of the description, not an extra
+assumption. The radius \(r\) is a distance, so \(r \ge 0\), and \(r \le a\cos\theta\) can hold
+only where \(\cos\theta \ge 0\). The angle \(\theta\) must stay in that half of the plane.</p>
+<p>The two surfaces meet on a closed curve, the intersection of the sphere and the cylinder. On
+that curve \(x^{2} + y^{2} = ax\), so the sphere gives \(ax + z^{2} = a^{2}\), that is
+\(z = \pm\sqrt{a(a - x)}\). The curve has two branches, one above and one below the
+\(xy\)-plane.</p>
+<figure>
+<img data-figure="part1_figure1.png" alt="A translucent sphere with the off-centre cylinder drawn inside it, and the two closed curves where they meet">
+<figcaption>The unit sphere \(x^{2} + y^{2} + z^{2} = a^{2}\) (blue) and the cylinder
+\(x^{2} + y^{2} = ax\) (green). The two dark red curves are the two branches of the curve where the surfaces meet. At polar
+angle \(\theta\) the branch sits at height \(z = \pm a\sin\theta\).</figcaption>
+</figure>
+<p>Look at the solid from above. Its shadow in the \(xy\)-plane is the disk that the cylinder
+cuts there, and that disk is the region \(r \le a\cos\theta\).</p>
+<figure>
+<img data-figure="part1_figure2.png" alt="The base region: a disk of radius a over two centred at the point a over two on the x axis">
+<figcaption>The base of the solid. The circle \(r = a\cos\theta\) passes through the origin, so
+the region \(r \le a\cos\theta\) is a disk of radius \(a/2\) centred at \((a/2, 0)\).</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>Setting up the integral</h2>
+<p>In cylindrical coordinates the volume element is \(dV = r\,dz\,dr\,d\theta\). The height of
+the solid above the point \((r,\theta)\) is the distance between the lower and upper sheets of the
+sphere:</p>
+<div class="equation">\[ 2\sqrt{a^{2} - r^{2}}. \]</div>
+<p>Insert this height and the limits of \(E\):</p>
+<div class="equation">\[ V = \int_{-\pi/2}^{\pi/2}\int_{0}^{a\cos\theta}
+\int_{-\sqrt{a^{2}-r^{2}}}^{\sqrt{a^{2}-r^{2}}} r\,dz\,dr\,d\theta
+= \int_{-\pi/2}^{\pi/2}\int_{0}^{a\cos\theta} 2r\sqrt{a^{2} - r^{2}}\,dr\,d\theta. \]</div>
+</section>
+
+<section>
+<h2>Evaluating the integral</h2>
+<p><strong>Step 1. Integrate with respect to \(r\).</strong> Put \(u = a^{2} - r^{2}\), so
+\(du = -2r\,dr\). Then</p>
+<div class="equation">\[ \int 2r\sqrt{a^{2} - r^{2}}\,dr = -\int u^{1/2}\,du
+= -\frac{2}{3}u^{3/2} = -\frac{2}{3}\left(a^{2} - r^{2}\right)^{3/2}. \]</div>
+<p>At the upper limit \(r = a\cos\theta\),</p>
+<div class="equation">\[ a^{2} - r^{2} = a^{2} - a^{2}\cos^{2}\theta = a^{2}\sin^{2}\theta,
+\qquad \left(a^{2}\sin^{2}\theta\right)^{3/2} = a^{3}\left|\sin\theta\right|^{3}. \]</div>
+<p>The absolute value is needed because the square root is a distance. So the integral over
+\(r\) gives the slice volume</p>
+<div class="equation">\[ \int_{0}^{a\cos\theta} 2r\sqrt{a^{2} - r^{2}}\,dr
+= \frac{2}{3}a^{3}\left(1 - \left|\sin\theta\right|^{3}\right). \]</div>
+<p><strong>Step 2. Integrate with respect to \(\theta\).</strong> The slice depends on
+\(\left|\sin\theta\right|\), and the two halves of the interval give equal values. Double the
+integral over \(0 \le \theta \le \pi/2\), where \(\sin\theta \ge 0\) and the absolute value can be
+dropped:</p>
+<div class="equation">\[ V = 2\int_{0}^{\pi/2} \frac{2}{3}a^{3}\left(1 - \sin^{3}\theta\right)d\theta
+= \frac{4}{3}a^{3}\int_{0}^{\pi/2}\left(1 - \sin^{3}\theta\right)d\theta. \]</div>
+<p>Reduce \(\sin^{3}\theta\) with \(\sin^{2}\theta = 1 - \cos^{2}\theta\) and the substitution
+\(u = \cos\theta\):</p>
+<div class="equation">\[ \int_{0}^{\pi/2}\sin^{3}\theta\,d\theta
+= \int_{0}^{\pi/2}\left(1 - \cos^{2}\theta\right)\sin\theta\,d\theta
+= \left[-\cos\theta + \frac{\cos^{3}\theta}{3}\right]_{0}^{\pi/2} = 1 - \frac{1}{3} = \frac{2}{3}. \]</div>
+<p>Hence</p>
+<div class="equation">\[ V = \frac{4}{3}a^{3}\left(\frac{\pi}{2} - \frac{2}{3}\right)
+= \frac{2}{3}a^{3}\left(\pi - \frac{4}{3}\right) = \frac{2a^{3}(3\pi - 4)}{9}. \]</div>
+</section>
+
+<section>
+<h2>Checking the value</h2>
+<p>The answer must lie between two known volumes. The sphere holds \(4\pi a^{3}/3\), and the
+cylinder holds \(\pi (a/2)^{2}(2a) = \pi a^{3}/2\). The solid is the overlap of the two, so its
+volume must not exceed the smaller value:</p>
+<div class="equation">\[ \frac{2a^{3}(3\pi - 4)}{9} \approx 1.2055\,a^{3}
+\quad<\quad \frac{\pi a^{3}}{2} \approx 1.5708\,a^{3}
+\quad<\quad \frac{4\pi a^{3}}{3} \approx 4.1888\,a^{3}. \]</div>
+<p>The overlap is about three quarters of the cylinder, namely \(1.2055/1.5708 = 0.767\) of it, as
+it should be, because the cylinder lies well inside the sphere. As a fraction of the sphere the volume is</p>
+<div class="equation">\[ \frac{V}{4\pi a^{3}/3} = \frac{\pi - 4/3}{2\pi} = \frac{1}{2} - \frac{2}{3\pi}
+\approx 0.2878. \]</div>
+<p>Three independent computations give the same number for \(a = 1\), namely \(1.205506\). They
+are the closed form, a double quadrature, and a Monte Carlo count of points that lie in both
+solids.</p>
+</section>
+
+<div class="answer">
+<h2>Answer</h2>
+<p>(a) The volume is</p>
+<div class="equation">\[ V = \int_{-\pi/2}^{\pi/2}\int_{0}^{a\cos\theta}
+\int_{-\sqrt{a^{2}-r^{2}}}^{\sqrt{a^{2}-r^{2}}} r\,dz\,dr\,d\theta
+= \frac{2a^{3}(3\pi - 4)}{9} = \frac{2}{3}a^{3}\left(\pi - \frac{4}{3}\right)
+\approx 1.2055\,a^{3}. \]</div>
+<p>(b) The solid is drawn by plotting the sphere and the cylinder on the same axes. The sphere is
+\(x^{2} + y^{2} + z^{2} = a^{2}\) and the cylinder is \((x - a/2)^{2} + y^{2} = (a/2)^{2}\). The
+part of the sphere inside the cylinder is the solid of part (a).</p>
+</div>
+
+<section>
+<h2>Notation</h2>
+<table class="notation">
+<tr><th>Symbol</th><th>Meaning</th></tr>
+<tr><td>cylindrical coordinates</td><td>The triple \((r,\theta,z)\), where \(r\) is the distance from the \(z\)-axis, \(\theta\) is the angle from the positive \(x\)-axis, and \(z\) is the usual height. The volume element is \(dV = r\,dz\,dr\,d\theta\).</td></tr>
+<tr><td>\(r = a\cos\theta\)</td><td>A circle through the origin with centre \((a/2, 0)\) and radius \(a/2\). In Cartesian form it is \(x^{2} + y^{2} = ax\).</td></tr>
+<tr><td>\(-\pi/2 \le \theta \le \pi/2\)</td><td>The set of angles where \(\cos\theta \ge 0\). Outside this range the bound \(r \le a\cos\theta\) would give a negative radius, which is impossible.</td></tr>
+<tr><td>\(\left|\sin\theta\right|\)</td><td>The height factor at the wall of the cylinder. It is positive on the right half of the base and negative on the left half, and the slice volume uses its absolute value.</td></tr>
+<tr><td>intersection curve</td><td>The set of points on both surfaces, \(z = \pm\sqrt{a(a - x)}\). It is also called a Viviani curve. The two branches are the upper and lower rims of the solid.</td></tr>
+<tr><td>overlap</td><td>The solid is the intersection of the ball \(x^{2} + y^{2} + z^{2} \le a^{2}\) and the solid cylinder \((x - a/2)^{2} + y^{2} \le (a/2)^{2}\).</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Verification</h2>
+<ul>
+<li><code>part1_step1.py</code> derives the volume symbolically and prints each stage: the vertical extent \(2a\left|\sin\theta\right|\), the antiderivative, the slice volume, the wall value \(\int_{0}^{\pi/2}\sin^{3}\theta\,d\theta = 2/3\), and the result. It also confirms that the result equals \(\frac{2}{3}a^{3}\left(\pi - \frac{4}{3}\right)\) and evaluates it for \(a = 1\) and \(a = 2\).</li>
+<li><code>part1_step2.py</code> fixes \(a = 1\) and compares three values: the closed form \(1.205506\), double quadrature \(1.20550621\), and a Monte Carlo count \(1.204771\) with six million samples.</li>
+<li><code>part1_figure1.py</code> draws the sphere, the cylinder, and the two branches of the intersection curve. <code>part1_figure2.py</code> draws the base region.</li>
+</ul>
+</section>
