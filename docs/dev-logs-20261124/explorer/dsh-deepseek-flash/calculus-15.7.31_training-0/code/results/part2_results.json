@@ -1,0 +1,86 @@
+[
+  {
+    "label": "Area at fixed $x = 0$: shoelace against the bound integral",
+    "computed": 4.0,
+    "expected": 4.0,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area at fixed $x = 1$: shoelace against the bound integral",
+    "computed": 2.25,
+    "expected": 2.25,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area at fixed $x = 1.9$: shoelace against the bound integral",
+    "computed": 0.03802500000000003,
+    "expected": 0.038025000000000066,
+    "difference": 3.469446951953614e-17,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area at fixed $y = 0.5$: shoelace against the bound integral",
+    "computed": 2.4748737341529163,
+    "expected": 2.4748737341529163,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area at fixed $y = 2$: shoelace against the bound integral",
+    "computed": 2.8284271247461903,
+    "expected": 2.8284271247461903,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area at fixed $y = 3.5$: shoelace against the bound integral",
+    "computed": 0.9354143466934853,
+    "expected": 0.9354143466934853,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area at fixed $z = 0$: bound integral against $\\frac{4}{3}a^3$",
+    "computed": 10.666666666666668,
+    "expected": 10.666666666666666,
+    "difference": 1.7763568394002505e-15,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area at fixed $z = 1$: bound integral against $\\frac{4}{3}a^3$",
+    "computed": 3.7712361663282543,
+    "expected": 3.7712361663282543,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area at fixed $z = 1.5$: bound integral against $\\frac{4}{3}a^3$",
+    "computed": 1.3333333333333335,
+    "expected": 1.3333333333333333,
+    "difference": 2.220446049250313e-16,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Slab integral over x of the section area against $128/15$",
+    "computed": 8.533333333333335,
+    "expected": 8.533333333333333,
+    "difference": 1.7763568394002505e-15,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Slab integral over y of the section area against $128/15$",
+    "computed": 8.533333333333333,
+    "expected": 8.533333333333333,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Slab integral over z of the section area against $128/15$",
+    "computed": 8.533333333333333,
+    "expected": 8.533333333333333,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  }
+]

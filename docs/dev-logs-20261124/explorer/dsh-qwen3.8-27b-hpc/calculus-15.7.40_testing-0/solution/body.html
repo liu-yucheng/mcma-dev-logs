@@ -1,0 +1,47 @@
+<h1>Mass and center of mass in the parabolic-cylinder solid</h1>
+<blockquote class="statement">Find the mass and center of mass of the solid $E$ with the density function $\rho$. The solid $E$ is bounded by the parabolic cylinder $z = 1 - y^2$ and the planes $x + z = 1$, $x = 0$, and $z = 0$; take $\rho(x, y, z) = 4$.</blockquote>
+<table>
+<tr><th>Given</th><th>Find</th></tr>
+<tr><td>Solid $E$: $0 \leq z \leq 1 - y^2$, $0 \leq x \leq 1 - z$; density $\rho = 4$</td><td>Mass $M$ and center of mass $(\bar{x}, \bar{y}, \bar{z})$</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$E$</td><td>The bounded solid</td><td>volume</td></tr>
+<tr><td>$\rho$</td><td>Constant density $4$</td><td>mass per volume</td></tr>
+<tr><td>$M$</td><td>Total mass</td><td>mass</td></tr>
+<tr><td>$M_{yz}, M_{xz}, M_{xy}$</td><td>Moments about the $yz$, $xz$, $xy$ planes</td><td>mass length</td></tr>
+</table>
+<section><h2>Part 1: mass and center of mass</h2>
+<section><h3>Step 1.1: the bounds and the volume</h3>
+<p class="reason">At height $z$ the slice keeps the $x$ and $y$ coordinates. The parabola $z = 1 - y^2$ gives $|y| \leq \sqrt{1 - z}$, and the plane $x + z = 1$ gives $x \leq 1 - z$. The height runs $0 \leq z \leq 1$.</p>
+<div class="computation">$$ V = \int_0^1 \int_{-\sqrt{1 - z}}^{\sqrt{1 - z}} \int_0^{1 - z} dx \, dy \, dz = \frac{4}{5} $$</div>
+<p class="result">The volume is $4/5 = 0.800000$ and the grid volume is $0.805292$, printed by <code>part1_step1.py</code>.</p>
+<p class="verification"><code>part1_step1.py</code> compares the exact volume with a $120^3$ midpoint grid and prints the section corners at $z = 0$, $0.25$, and $0.75$.</p>
+<p class="mistake">A reader may bound $y$ by $1$ and integrate a box, but the parabola keeps $|y| \leq \sqrt{1 - z}$.</p>
+</section>
+<section><h3>Step 1.2: the mass and the moments</h3>
+<p class="reason">The density is the constant $4$, so the mass is $4V$ and each moment keeps the coordinate the named plane holds fixed.</p>
+<div class="computation">$$ M = \frac{16}{5}, \quad M_{yz} = \frac{8}{7}, \quad M_{xz} = 0, \quad M_{xy} = \frac{32}{35} $$</div>
+<p class="result">The grid moments are $1.155776$, $0$, and $0.921864$, printed by <code>part1_step2.py</code>.</p>
+<p class="verification"><code>part1_step2.py</code> compares each exact moment with the midpoint grid.</p>
+<p class="mistake">A reader may miss the symmetry and expect a nonzero $M_{xz}$, but $y$ is symmetric about $0$.</p>
+</section>
+<section><h3>Step 1.3: the center of mass</h3>
+<p class="reason">Each coordinate of the center of mass is its moment divided by the mass.</p>
+<div class="computation">$$ (\bar{x}, \bar{y}, \bar{z}) = \left(\frac{5}{14}, 0, \frac{2}{7}\right) = (0.357143, 0.000000, 0.285714) $$</div>
+<p class="result">The Monte Carlo estimate is $(0.357663, 0.000530, 0.285067)$ with $120158$ kept points, printed by <code>part1_step3.py</code>.</p>
+<p class="verification"><code>part1_step3.py</code> compares the exact center with a rejection Monte Carlo estimator on $300000$ samples.</p>
+<p class="mistake">A reader may center $y$ at the parabola axis $1$ and lose the symmetry about $y = 0$.</p>
+</section>
+<figure><img src="FIG:part1_figure1.png" alt="Solid E bounded by the parabolic cylinder z = 1 - y^2 and three planes"><figcaption>Figure 1. The solid $E$ under $z = 1 - y^2$ cut by $x + z = 1$, $x = 0$, and $z = 0$.</figcaption></figure>
+</section>
+<section class="answer"><h2>Answer</h2>
+<p>The mass is $M = 16/5 = 3.200000$. The center of mass is $(5/14, 0, 2/7) = (0.357143, 0.000000, 0.285714)$.</p>
+</section>
+<section class="notes"><h2>Notes</h2>
+<ul>
+<li>The slice at height $z$ is a rectangle in the $xy$-plane with width $2\sqrt{1 - z}$.</li>
+<li>The solid is symmetric in $y$, so the center keeps $y = 0$.</li>
+<li>The plane $x + z = 1$ tilts the front face, so the center keeps $x = 0$.</li>
+</ul>
+</section>

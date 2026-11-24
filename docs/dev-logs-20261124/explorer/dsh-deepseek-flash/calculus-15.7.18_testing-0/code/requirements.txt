@@ -1,0 +1,8 @@
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2
+pillow==13.0.0
+packaging==26.3
+pyparsing==3.3.3
+python-dateutil==2.4.0
+tzdata==2026.6

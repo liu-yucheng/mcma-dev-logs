@@ -1,0 +1,54 @@
+{
+  "check_count": 6,
+  "passed_count": 6,
+  "checks": [
+    {
+      "name": "polar quadrature of the projection against one third",
+      "computed": 0.3333340430701727,
+      "expected": 0.3333333333333333,
+      "difference": 7.097368394104464e-07,
+      "tolerance": 1e-06,
+      "passed": true
+    },
+    {
+      "name": "midpoint rule of the cube against one third",
+      "computed": 0.33497996238425926,
+      "expected": 0.3333333333333333,
+      "difference": 0.0016466290509259407,
+      "tolerance": 0.005,
+      "passed": true
+    },
+    {
+      "name": "midpoint rule against the polar quadrature",
+      "computed": 0.33497996238425926,
+      "expected": 0.3333340430701727,
+      "difference": 0.0016459193140865302,
+      "tolerance": 0.005,
+      "passed": true
+    },
+    {
+      "name": "quarter disk area by the polar rule against pi / 4",
+      "computed": 0.7853981633974483,
+      "expected": 0.7853981633974483,
+      "difference": 0.0,
+      "tolerance": 1e-06,
+      "passed": true
+    },
+    {
+      "name": "inner length at the corner (0, 0) against one",
+      "computed": 1.0,
+      "expected": 1.0,
+      "difference": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "inner length at the corner (1, 0) against zero",
+      "computed": 0.0,
+      "expected": 0.0,
+      "difference": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "part_number": 3,
+  "part_title": "Compute the first moments and the center of mass",
+  "checks": [
+    {
+      "name": "M_yz from two orders",
+      "computed": "8/7",
+      "expected": "8/7",
+      "tolerance": "0",
+      "first_method": "triple integral in the order dy dx dz",
+      "second_method": "triple integral in the order dx dz dy",
+      "passed": true
+    },
+    {
+      "name": "M_xz from two orders",
+      "computed": "0",
+      "expected": "0",
+      "tolerance": "0",
+      "first_method": "triple integral in the order dy dx dz",
+      "second_method": "triple integral in the order dx dz dy",
+      "passed": true
+    },
+    {
+      "name": "M_xy from two orders",
+      "computed": "32/35",
+      "expected": "32/35",
+      "tolerance": "0",
+      "first_method": "triple integral in the order dy dx dz",
+      "second_method": "triple integral in the order dx dz dy",
+      "passed": true
+    },
+    {
+      "name": "mass from the quadrature of the y sections",
+      "computed": "3.2",
+      "expected": "3.2",
+      "tolerance": "1.0e-10",
+      "first_method": "adaptive quadrature of the trapezoid area",
+      "second_method": "exact mass of part 2",
+      "passed": true
+    },
+    {
+      "name": "membership of the mirrored points",
+      "computed": "identical",
+      "expected": "identical",
+      "tolerance": "0",
+      "first_method": "membership of the sampled points",
+      "second_method": "membership of the mirrored points",
+      "passed": true
+    },
+    {
+      "name": "M_yz from the section integral",
+      "computed": "1.14285714285",
+      "expected": "1.14285714286",
+      "tolerance": "1.0e-10",
+      "first_method": "quadrature of the inner moment of x at each height",
+      "second_method": "exact triple integral",
+      "passed": true
+    },
+    {
+      "name": "M_xy from the section integral",
+      "computed": "0.914285714282",
+      "expected": "0.914285714286",
+      "tolerance": "1.0e-10",
+      "first_method": "quadrature of 4 z times the section area",
+      "second_method": "exact triple integral",
+      "passed": true
+    },
+    {
+      "name": "M_xz from an odd integrand over symmetric bounds",
+      "computed": "0",
+      "expected": "0",
+      "tolerance": "1.0e-11",
+      "first_method": "quadrature of an odd integrand over symmetric bounds",
+      "second_method": "exact triple integral",
+      "passed": true
+    },
+    {
+      "name": "center coordinate x from sampling",
+      "computed": "0.35735059496",
+      "expected": "0.357142857143",
+      "tolerance": "1.0e-02",
+      "first_method": "ratio of two sampled moments",
+      "second_method": "ratio of two exact moments",
+      "passed": true
+    },
+    {
+      "name": "center coordinate y from sampling",
+      "computed": "0.000584340560961",
+      "expected": "0",
+      "tolerance": "1.0e-02",
+      "first_method": "ratio of two sampled moments",
+      "second_method": "ratio of two exact moments",
+      "passed": true
+    },
+    {
+      "name": "center coordinate z from sampling",
+      "computed": "0.285439724313",
+      "expected": "0.285714285714",
+      "tolerance": "1.0e-02",
+      "first_method": "ratio of two sampled moments",
+      "second_method": "ratio of two exact moments",
+      "passed": true
+    },
+    {
+      "name": "the center of mass lies inside the solid",
+      "computed": "inside",
+      "expected": "inside",
+      "tolerance": "0",
+      "first_method": "membership test at the exact center",
+      "second_method": "statement of the problem",
+      "passed": true
+    },
+    {
+      "name": "the moment divided by the volume lies outside the solid",
+      "computed": "outside",
+      "expected": "outside",
+      "tolerance": "0",
+      "first_method": "membership test at the wrong ratio",
+      "second_method": "statement of the problem",
+      "passed": true
+    }
+  ],
+  "values": {
+    "p3_m_yz": "$\\frac{8}{7}$",
+    "p3_m_yz_decimal": "$1.142857$",
+    "p3_m_xz": "$0$",
+    "p3_m_xy": "$\\frac{32}{35}$",
+    "p3_m_xy_decimal": "$0.914286$",
+    "p3_xbar": "$\\frac{5}{14}$",
+    "p3_zbar": "$\\frac{2}{7}$",
+    "p3_xbar_decimal": "$0.357143$",
+    "p3_zbar_decimal": "$0.285714$",
+    "p3_naive_ratio": "$1.428571$",
+    "p3_sampled_x": "$1.1434$",
+    "p3_sampled_y": "$0.0019$",
+    "p3_sampled_z": "$0.9133$",
+    "p3_sampled_center": "$(0.3574,\\ 0.0006,\\ 0.2854)$"
+  },
+  "pass_count": 13,
+  "fail_count": 0
+}

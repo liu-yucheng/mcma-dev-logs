@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A silo: cylinder and hemisphere, drawn and measured</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<style>
+
+:root {
+  --ink: #1a1a1a;
+  --muted: #55524d;
+  --rule: #d9d4cc;
+  --accent: #1d4f7a;
+  --paper: #fdfcf9;
+}
+html { font-size: 17px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Cambria, "Cambria Math", Georgia, serif;
+  line-height: 1.55;
+}
+main { max-width: 62rem; margin: 0 auto; padding: 2.6rem 1.6rem 4rem; }
+h1 { font-size: 1.95rem; line-height: 1.25; margin: 0 0 0.6rem; }
+h2 { font-size: 1.36rem; margin: 2.6rem 0 0.7rem; padding-bottom: 0.28rem;
+     border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.1rem; margin: 1.9rem 0 0.5rem; color: var(--accent); }
+h4 { font-size: 0.98rem; margin: 1.15rem 0 0.35rem; letter-spacing: 0.02em;
+     text-transform: uppercase; color: var(--muted); }
+p { margin: 0.55rem 0; }
+p.lead { font-size: 1.06rem; color: var(--muted); }
+blockquote { margin: 0.9rem 0; padding: 0.7rem 1.1rem; background: #f4f1ea;
+             border-left: 3px solid var(--accent); }
+blockquote p { margin: 0.2rem 0; }
+blockquote footer { color: var(--muted); font-size: 0.86rem; }
+.step { margin-bottom: 0.4rem; }
+.display-math { margin: 0.75rem 0 0.85rem; text-align: center; overflow-x: auto; }
+.katex { font-family: "XITS", "STIX Two Math", "Cambria Math", serif; }
+code { font-family: "Cascadia Mono", "Consolas", monospace; font-size: 0.86em;
+       background: #efece5; padding: 0.06rem 0.3rem; border-radius: 3px; }
+table { border-collapse: collapse; width: 100%; margin: 0.8rem 0 0.4rem; font-size: 0.9rem; }
+th, td { border: 1px solid var(--rule); padding: 0.34rem 0.5rem; text-align: left;
+         vertical-align: top; }
+th { background: #f2efe8; font-weight: 600; }
+table.answers td:first-child { width: 3.2rem; text-align: center; }
+figure.drawing { margin: 1.3rem 0 1.5rem; }
+figure.drawing img { width: 100%; height: auto; border: 1px solid var(--rule);
+                     border-radius: 4px; background: #ffffff; }
+figcaption { font-size: 0.9rem; color: var(--muted); margin-top: 0.45rem; }
+.verification { margin-top: 1.5rem; }
+.verification table.checks { font-size: 0.84rem; }
+
+</style>
+</head>
+<body>
+<main>
+<h1>A silo: a cylinder of radius 3 and height 10 with a hemispherical cap</h1>
+<p class="lead">This page draws one silo and measures it. Every number of the page comes from a checked computation, and each part names the script that checks it.</p>
+<section id="statement">
+<h2>The statement</h2>
+<blockquote><p>Use a graphing device to draw a silo consisting of a cylinder with radius 3 and height 10 surmounted by a hemisphere.</p><footer>Calculus, Early Transcendentals, Section 15.9, Exercise 43.</footer></blockquote>
+<p>The exercise asks for a drawing, but a drawing that a reader can trust needs the shape itself, the volume that the shape encloses, the area that the drawing shows, and the recipe that the device follows. This page supplies all four.</p>
+</section>
+<section id="answers">
+<h2>The answer of each part</h2>
+<table class="answers"><thead><tr><th>Part</th><th>Answer</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>$0\le r\le 3$, $0\le z\le 10+\sqrt{9-r^{2}}$; three faces: the lower disk, the lateral face, and the cap.</td></tr>
+<tr><td>2</td><td>$A(z)=9\pi$ for $0\le z\le 10$ and $A(z)=\pi\bigl(9-(z-10)^{2}\bigr)$ for $10\le z\le 13$; $V=108\pi=339.292006588$.</td></tr>
+<tr><td>3</td><td>$V=2\pi\int_{0}^{3}r\bigl(10+\sqrt{9-r^{2}}\bigr)dr=108\pi$; the cap gives $9\cdot 1\cdot 2\pi=18\pi$.</td></tr>
+<tr><td>4</td><td>$A=60\pi+18\pi+9\pi=87\pi=273.318560862$.</td></tr>
+<tr><td>5</td><td>$\bar z=\frac{2601\pi/4}{108\pi}=\frac{289}{48}=6.02083333333$.</td></tr>
+<tr><td>6</td><td>The projection is the rectangle $|x|\le 3$, $0\le z\le 10$ plus the half disk $x^{2}+(z-10)^{2}\le 9$; the outline is $26+3\pi=35.4247779608$.</td></tr>
+</tbody></table>
+</section>
+<section class="part" id="part1">
+<h2>Part 1. The frame, the body, and its three faces</h2>
+<article class="step" id="part1_step1">
+<h3>Part 1, Step 1: Put a frame on the silo</h3>
+<h4>Reason</h4>
+<p>A drawing needs a frame, and every later integral needs coordinates. The statement gives one radius and one height, so the frame should hide no symmetry: put the flat face in a horizontal plane and the axis of the cylinder on the vertical axis. Then the circular symmetry of the body becomes a symmetry in one variable only.</p>
+<h4>Computation</h4>
+<p>Place the origin at the center of the lower face. Let the $z$ axis run up the axis of the cylinder, and let the $x$ axis and the $y$ axis lie in the plane of the lower face. Write $r=\sqrt{x^{2}+y^{2}}$ for the distance from the vertical axis.</p>
+<p>The cylinder of radius $3$ and height $10$ is the set of points with</p>
+<div class="display-math">$$x^{2}+y^{2}\le 9,\qquad 0\le z\le 10 .$$</div>
+<p>The hemisphere sits on the top face of the cylinder, so its center is $(0,0,10)$ and its radius is $3$. The silo is the union of that cylinder and that hemisphere:</p>
+<div class="display-math">$$x^{2}+y^{2}\le 9,\quad 0\le z\le 10 ;\qquad x^{2}+y^{2}+(z-10)^{2}\le 9,\quad z\ge 10 .$$</div>
+<h4>Result</h4>
+<p>The body is the union of the two sets above. Its highest point is the top of the cap, $(0,0,13)$, and the rim where the cap meets the cylinder is the circle $r=3$ in the plane $z=10$. See Figure 1 for the frame and the two pieces.</p>
+<h4>Common mistake</h4>
+<p>A reader may take the cap to be a full sphere, but the inequality $z\ge 10$ keeps only the upper half; a full sphere would add the volume $18\pi$ a second time.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part1_verify.py</code> check C1 compares the ceiling that the union gives with a direct membership test on 11163 points and prints the number of disagreements as 0. Check C12 compares the highest point of the union $10+3$ with the largest sampled height of the cap and prints 13 against 13. Check C5 compares a point of the cap at $\varphi=\pi/2$ with a point of the cylinder at $z=10$ and prints 0 for their distance, so the two pieces meet.</p>
+</article>
+<article class="step" id="part1_step2">
+<h3>Part 1, Step 2: The ceiling and the three faces of the body</h3>
+<h4>Reason</h4>
+<p>Every point of the body lies below one surface, and that surface decides the upper limit of every integral that follows. The drawing also needs the exact list of faces, because a surface that a reader sees in a picture is not always a face of the solid: the plane $z=10$ looks like a face in a sketch, but the body continues through it.</p>
+<h4>Computation</h4>
+<p>Take a point above the lower face, at distance $r$ from the vertical axis, with $r\le 3$. The cylinder allows every height up to $10$. The cap allows every height above $10$ that satisfies $(z-10)^{2}\le 9-r^{2}$, that is $z\le 10+\sqrt{9-r^{2}}$. The two bounds fit together at $z=10$, so the ceiling of the body at that radius is</p>
+<div class="display-math">$$Z(r)=10+\sqrt{9-r^{2}},\qquad 0\le r\le 3 .$$</div>
+<p>Now take a point of the disk $r<3$ in the plane $z=10$. Its distance from the cap center is $r<3$, so a small ball about that point lies inside the cap, and the same ball lies inside the cylinder. That point is an interior point, not a point of the boundary.</p>
+<h4>Result</h4>
+<p>The body is the set</p>
+<div class="display-math">$$0\le r\le 3,\qquad 0\le z\le 10+\sqrt{9-r^{2}} .$$</div>
+<p>The boundary has exactly three faces: the lower disk $z=0$ with $r\le 3$; the lateral faces $r=3$ with $0\le z\le 10$; and the cap, the part of the sphere of radius $3$ about $(0,0,10)$ with $z\ge 10$. The disk at $z=10$ is interior. The rim circle $r=3$, $z=10$ is the common edge of the lateral face and the cap. Figure 1 marks the three faces, and each mark sits on the surface that it names.</p>
+<h4>Common mistake</h4>
+<p>A reader may take the plane $z=10$ as a fourth face, but the membership test puts every point of that disk with $r<3$ inside the solid; the boundary keeps three faces.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part1_verify.py</code> check C9 samples 400 points at distance 0.4 about the point $(1.6\cos 145^{\circ},1.6\sin 145^{\circ},10)$ and prints 0 points outside the body. Check C11 steps 72 times outward from each face and 72 times inward and prints 0 failures. Checks C2 and C3 put a parametric point of the lateral face and of the cap against its own equation and print residuals $3.553\times 10^{-15}$ and $8.882\times 10^{-15}$. Check C10 measures the lower disk with the shoelace rule of 720 rim points and prints 28.2739750147 against $\pi R^{2}=28.2743338823$; the polygon is inscribed, so a difference of $3.589\times 10^{-4}$ is expected and the check allows it.</p>
+</article>
+<figure class="drawing"><img alt="Figure 1" src="[IMG]"><figcaption>Figure 1. The silo in its frame and its projection on the plane $y=0$. The three labelled anchors lie on the surfaces that they name: the lateral face at $x^{2}+y^{2}=9$, the lower disk at $z=0$, and the cap at $x^{2}+y^{2}+(z-10)^{2}=9$. The section at $z=8$ is red. The right panel shows the rectangle and the half disk of Step 6.1, and the dashed line marks the common edge at $z=10$.</figcaption></figure>
+<div class="verification">
+<h3>Verified values of Part 1</h3><p>Each row prints the value that one method computes against the value that a second method computes. The script is <code>code/part1_verify.py</code>.</p>
+<table class="checks">
+<thead><tr><th>Check</th><th>Computed value</th><th>Reference value</th><th>Difference</th><th>Status</th></tr></thead><tbody>
+<tr><td>C1 ceiling description against the union of the two solids, 11163 sampled points</td><td>0</td><td>0</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C2 lateral face: parametric point against the equation $x^{2}+y^{2}=9$</td><td>3.5527136788e-15</td><td>0</td><td>3.553e-15</td><td>pass</td></tr>
+<tr><td>C3 cap: parametric point against $x^{2}+y^{2}+(z-10)^{2}=9$</td><td>8.881784197e-15</td><td>0</td><td>8.882e-15</td><td>pass</td></tr>
+<tr><td>C4 apex: parametric point at $\varphi=0$ against $10+3$</td><td>0</td><td>0</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C5 rim: cap point at $\varphi=\pi/2$ against cylinder point at $z=10$</td><td>0</td><td>0</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C6 label anchors against the equation of their own surface</td><td>3.5527136788e-15</td><td>0</td><td>3.553e-15</td><td>pass</td></tr>
+<tr><td>C7 rim anchor: distance from the z axis against the radius 3</td><td>3</td><td>3</td><td>4.441e-16</td><td>pass</td></tr>
+<tr><td>C8 cap anchor: height above $z=10$ against $3\cos(44^{\circ})$</td><td>2.15801940102</td><td>2.15801940102</td><td>4.441e-16</td><td>pass</td></tr>
+<tr><td>C9 inner disk at $z=10$: 400 points at distance 0.4 against full membership</td><td>0</td><td>0</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C10 lower disk: shoelace area of 720 rim points against $\pi R^{2}$</td><td>28.2739750147</td><td>28.2743338823</td><td>3.589e-04</td><td>pass</td></tr>
+<tr><td>C11 three faces: 72 outward steps outside against 0, 72 inward steps inside</td><td>0</td><td>0</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C12 highest point: $10+3$ against the largest sampled cap height</td><td>13</td><td>13</td><td>0.000e+00</td><td>pass</td></tr>
+</tbody></table>
+</div>
+</section>
+<section class="part" id="part2">
+<h2>Part 2. Horizontal sections and the volume</h2>
+<article class="step" id="part2_step1">
+<h3>Part 2, Step 1: The horizontal section at a height, and its radius</h3>
+<h4>Reason</h4>
+<p>The volume of any solid follows from the areas of its horizontal sections, because a thin slab of thickness $\Delta z$ has volume close to $A(z)\,\Delta z$. The area of a section is $\pi$ times the square of its radius, so the work is to find that radius at each height from the inequalities and not from the picture.</p>
+<h4>Computation</h4>
+<p>Fix a height $z$ with $0\le z\le 10$. The cylinder allows every point with $x^{2}+y^{2}\le 9$ at that height, and the cap allows nothing, since the cap starts at $z=10$. The section is the disk of radius $3$.</p>
+<p>Fix a height $z$ with $10<z\le 13$. The cylinder allows nothing at that height. The cap allows the points that satisfy $x^{2}+y^{2}\le 9-(z-10)^{2}$. The section is again a disk, and its radius is</p>
+<div class="display-math">$$s(z)=\sqrt{9-(z-10)^{2}},\qquad 10\le z\le 13 .$$</div>
+<h4>Result</h4>
+<p>The section at the height $z$ is a disk, and its radius is</p>
+<div class="display-math">$$s(z)=\begin{cases}3, & 0\le z\le 10,\\ \sqrt{9-(z-10)^{2}}, & 10\le z\le 13 .\end{cases}$$</div>
+<p>A section is never an annulus, because the body has no inner void: the axis $r=0$ belongs to every section. The area of the section is $A(z)=\pi s(z)^{2}$.</p>
+<h4>Common mistake</h4>
+<p>A reader may take every section of the cap as a disk of radius $3$, but the inequality gives a shrinking radius; Figure 2 shows the area falling to zero at $z=13$.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part2_verify.py</code> check C1 compares the formula above with a bisection search on the membership test at the nine heights $0,2,6,10,10.2,11,11.5,12.5,12.95$ and prints a maximum difference of $5.662\times 10^{-15}$. That search uses no formula: it moves the end points of an interval until the interval is shorter than $10^{-12}$.</p>
+</article>
+<article class="step" id="part2_step2">
+<h3>Part 2, Step 2: The area of the section as a function of the height</h3>
+<h4>Reason</h4>
+<p>The area function collects the whole shape into one curve. Once the curve is known, the volume is an integral of one variable, and the drawing of the silo follows the same curve, because the silhouette of the body is the outline of the widest section at each height.</p>
+<h4>Computation</h4>
+<p>Square the radius of Step 2.1 and multiply by $\pi$. On the lower branch the area does not depend on $z$:</p>
+<div class="display-math">$$A(z)=\pi\cdot 9=9\pi,\qquad 0\le z\le 10 .$$</div>
+<p>On the upper branch, write $u=z-10$ and square the second radius:</p>
+<div class="display-math">$$A(z)=\pi\bigl(9-(z-10)^{2}\bigr),\qquad 10\le z\le 13 .$$</div>
+<p>At $z=10$ both branches give $9\pi$, so the curve is continuous. At $z=13$ the second branch gives $0$, so the curve reaches the top of the cap.</p>
+<h4>Result</h4>
+<div class="display-math">$$A(z)=\begin{cases}9\pi, & 0\le z\le 10,\\ \pi\bigl(9-(z-10)^{2}\bigr), & 10\le z\le 13 .\end{cases}$$</div>
+<p>The largest area is $9\pi=28.2743338823$ on the whole lower branch, and the area at the height $11.5$ is $21.205750412$. The curve of Figure 2, drawn by <code>code/part2_figure1.py</code>, has these two branches and marks the heights $3$, $10$, and $11.5$.</p>
+<h4>Common mistake</h4>
+<p>A reader may take the area to fall from the lowest height, but the lower branch is constant; the two marked heights $3$ and $10$ give the same area $28.274333882$, as the print of <code>code/part2_figure1.py</code> shows.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part2_verify.py</code> check C2 compares the formula with the shoelace area of a 720-vertex polygon whose vertices are the bisected radii, at the heights $3$, $10$, and $11.5$, and prints a largest difference of $3.589\times 10^{-4}$; the polygon is inscribed, so the small underestimate is expected. Check C3 compares the area just below $z=10$ with the area just above and prints $28.2743338823$ against $28.2743338823$, so the two branches meet. Figure 2 is drawn by <code>code/part2_figure1.py</code>, which asserts that each legend and each annotation stays inside its axes box before it writes the file.</p>
+</article>
+<figure class="drawing"><img alt="Figure 2" src="[IMG]"><figcaption>Figure 2. The area $A(z)$ of the horizontal section. The curve is flat at $9\pi=28.2743338823$ up to the rim $z=10$, then follows $\pi\bigl(9-(z-10)^{2}\bigr)$ and reaches $0$ at the top $z=13$. The marks are the heights $3$, $10$, and $11.5$ of the checks.</figcaption></figure>
+<article class="step" id="part2_step3">
+<h3>Part 2, Step 3: The volume by slicing</h3>
+<h4>Reason</h4>
+<p>A solid of known section area has volume equal to the integral of that area, because the sum of the slab volumes tends to the integral as the thickness tends to zero. The two branches of the area give two integrals, and each integral is a polynomial, so both are exact.</p>
+<h4>Computation</h4>
+<p>Integrate the first branch over its own range, from $z=0$ to $z=10$:</p>
+<div class="display-math">$$\int_{0}^{10}9\pi\,dz=9\pi\cdot 10=90\pi .$$</div>
+<p>Integrate the second branch over its own range, from $z=10$ to $z=13$. The substitution $u=z-10$ carries the interval to $0\le u\le 3$ and the differential to $du=dz$:</p>
+<div class="display-math">$$\int_{10}^{13}\pi\bigl(9-(z-10)^{2}\bigr)dz=\pi\int_{0}^{3}(9-u^{2})\,du =\pi\Bigl[9u-\frac{u^{3}}{3}\Bigr]_{0}^{3}=\pi(27-9)=18\pi .$$</div>
+<p>Add the two parts. The ranges $0\le z\le 10$ and $10\le z\le 13$ share only the single plane $z=10$, and a plane has zero volume, so the sum is the whole volume:</p>
+<div class="display-math">$$V=90\pi+18\pi=108\pi .$$</div>
+<h4>Result</h4>
+<div class="display-math">$$V=108\pi=339.292006588 .$$</div>
+<p>The cap contributes $18\pi=56.5486677646$ and the cylinder contributes $90\pi=282.743338823$.</p>
+<h4>Common mistake</h4>
+<p>A reader may carry the second integrand from $z=0$ to $z=13$, but each branch keeps its own range; the second branch over $10\le z\le 13$ gives $18\pi$, and the check prints that value.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part2_verify.py</code> check C4 compares a Simpson integral of the section area over the cylinder with $\pi R^{2}H$ and prints $282.743338822$ against $282.743338823$. Check C5 compares the same integral over the cap with $\frac{2}{3}\pi R^{3}$ and prints $56.5486677646$ against $56.5486677646$. Check C6 prints the whole volume as $339.292006587$ against $339.292006588$. Check C7 estimates the same volume by random sampling and prints $339.265602$ with a standard error of $0.147775$, against the exact value; the difference $2.640\times 10^{-2}$ is far inside three standard errors. Check C8 adds the two exact solids and prints $339.292006588$. The three methods share no integrand: one integrates the section area, one multiplies closed forms, and one samples the body.</p>
+</article>
+<div class="verification">
+<h3>Verified values of Part 2</h3><p>Each row prints the value that one method computes against the value that a second method computes. The script is <code>code/part2_verify.py</code>.</p>
+<table class="checks">
+<thead><tr><th>Check</th><th>Computed value</th><th>Reference value</th><th>Difference</th><th>Status</th></tr></thead><tbody>
+<tr><td>C1 section radius: ceiling formula against bisection on membership, 9 heights</td><td>5.66213742559e-15</td><td>0</td><td>5.662e-15</td><td>pass</td></tr>
+<tr><td>C2 section area at three heights: formula against the 720-vertex shoelace polygon of bisected rays</td><td>0.000358867576587</td><td>0</td><td>3.589e-04</td><td>pass</td></tr>
+<tr><td>C3 junction: area just below $z=10$ against area just above</td><td>28.2743338823</td><td>28.2743338823</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C4 cylinder volume: Simpson integral of the section area against $\pi R^{2}H$</td><td>282.743338822</td><td>282.743338823</td><td>8.153e-10</td><td>pass</td></tr>
+<tr><td>C5 cap volume: Simpson integral of the section area against $\frac{2}{3}\pi R^{3}$</td><td>56.5486677646</td><td>56.5486677646</td><td>1.044e-12</td><td>pass</td></tr>
+<tr><td>C6 whole volume: sum of the two integrals against $90\pi+18\pi$</td><td>339.292006587</td><td>339.292006588</td><td>8.142e-10</td><td>pass</td></tr>
+<tr><td>C7 whole volume: Monte Carlo estimate against the exact value</td><td>339.265602</td><td>339.292006588</td><td>2.640e-02</td><td>pass</td></tr>
+<tr><td>C8 whole volume: two exact solids against the numerical whole</td><td>339.292006588</td><td>339.292006587</td><td>8.142e-10</td><td>pass</td></tr>
+</tbody></table>
+</div>
+</section>
+<section class="part" id="part3">
+<h2>Part 3. The volume in cylindrical and in spherical coordinates</h2>
+<article class="step" id="part3_step1">
+<h3>Part 3, Step 1: The volume in cylindrical coordinates</h3>
+<h4>Reason</h4>
+<p>The body is round about the vertical axis, so cylindrical coordinates match its shape: one coordinate runs along the axis and one runs around it. In those coordinates the triple integral collapses to a single integral of one variable, because the two other integrations have constant limits.</p>
+<h4>Computation</h4>
+<p>Write $x=r\cos\theta$, $y=r\sin\theta$, $z=z$. The Jacobian of this map is $r$, so $dV=r\,dz\,dr\,d\theta$. The body is $0\le r\le 3$, $0\le z\le 10+\sqrt{9-r^{2}}$, and $0\le\theta\le 2\pi$; the ceiling of Step 1.2 is the upper limit of $z$ for every pair $(r,\theta)$.</p>
+<p>Integrate over $z$ first. The ceiling depends on $r$ and not on $\theta$, so the inner integral is the ceiling itself:</p>
+<div class="display-math">$$V=\int_{0}^{2\pi}\int_{0}^{3}\int_{0}^{10+\sqrt{9-r^{2}}}r\,dz\,dr\,d\theta =2\pi\int_{0}^{3}r\bigl(10+\sqrt{9-r^{2}}\bigr)dr .$$</div>
+<p>Split the radial integral into its two terms. The first term is $10\int_{0}^{3}r\,dr=10\cdot\frac{9}{2}=45$. The second term is $\int_{0}^{3}r\sqrt{9-r^{2}}\,dr=\Bigl[-\frac{1}{3}(9-r^{2})^{3/2}\Bigr]_{0}^{3}=9$. The sum is $54$, and the volume is $2\pi\cdot 54$.</p>
+<h4>Result</h4>
+<div class="display-math">$$V=2\pi\cdot 54=108\pi=339.292006588 .$$</div>
+<p>The integral $\int_{0}^{3}r(10+\sqrt{9-r^{2}})\,dr$ has the value $54$, and the angle $0\le\theta\le 2\pi$ contributes the factor $2\pi$.</p>
+<h4>Common mistake</h4>
+<p>A reader may drop the Jacobian factor $r$, but the limits give a different value without it; the radial integral with the factor $r$ is $54$, and the check prints that number.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part3_verify.py</code> check C1 compares a Simpson integral of $r(10+\sqrt{9-r^{2}})$ with the closed value $45+9$ and prints $53.9999999653$ against $54$, a difference of $3.466\times 10^{-8}$; the integrand has an infinite second derivative at $r=3$, so a small difference is expected and the check allows $10^{-6}$. Check C2 multiplies the radial integral by $2\pi$ and prints $339.292006588$ against $108\pi$. Check C7 samples 40 points of the lower branch $z=10-\sqrt{9-r^{2}}$ and prints 40 of 40 inside the body, so no volume is missed below the plane $z=10$.</p>
+</article>
+<article class="step" id="part3_step2">
+<h3>Part 3, Step 2: The cap in spherical coordinates, and the wrong single ball</h3>
+<h4>Reason</h4>
+<p>The cap is half of a sphere, and a sphere is the shape that spherical coordinates describe with constant limits. The silo as a whole is not a sphere, so the coordinates must be centered on the cap and must cover the cap only. A reader who centers one ball on the origin and uses the largest distance of the body as its radius obtains a ball that is far larger than the silo, and this step measures how far.</p>
+<h4>Computation</h4>
+<p>Center spherical coordinates on the cap center $(0,0,10)$: a point is $(x,y,z)=(0,0,10)+(\rho\sin\varphi\cos\theta,\rho\sin\varphi\sin\theta,\rho\cos\varphi)$. The Jacobian is $\rho^{2}\sin\varphi$, so $dV=\rho^{2}\sin\varphi\,d\rho\,d\varphi\,d\theta$. The cap is the half ball $0\le\rho\le 3$, $0\le\varphi\le\frac{\pi}{2}$, $0\le\theta\le 2\pi$.</p>
+<p>Integrate each factor over its own limit:</p>
+<div class="display-math">$$\int_{0}^{3}\rho^{2}d\rho=9,\qquad \int_{0}^{\pi/2}\sin\varphi\,d\varphi=1,\qquad \int_{0}^{2\pi}d\theta=2\pi .$$</div>
+<p>The three factors multiply, because each limit is constant:</p>
+<div class="display-math">$$V_{\text{cap}}=9\cdot 1\cdot 2\pi=18\pi .$$</div>
+<h4>Result</h4>
+<div class="display-math">$$V_{\text{cap}}=18\pi=56.5486677646,\qquad V=90\pi+18\pi=108\pi .$$</div>
+<p>The factors are $9$ for $\rho$, $1$ for $\varphi$, and $2\pi$ for $\theta$. A single ball of radius $13$ about the origin has the volume $4601.38603996$, which is $13.561728$ times the volume of the silo; the silo is not that ball.</p>
+<h4>Common mistake</h4>
+<p>A reader may replace the silo by one ball of radius $13$ about the origin, but the ball is not the body: check C4 of <code>code/part3_verify.py</code> prints $4601.38603996$ for the ball against $339.292006588$ for the silo, and the two values differ by more than a factor of thirteen.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part3_verify.py</code> check C3 computes the three Jacobian factors as separate numerical integrals, prints them as $6.283185307$, $1.000000000$, and $9.000000000$, and prints their product $56.5486677646$ against $18\pi$. Check C5 estimates the cap volume by random sampling and prints $56.578392$ against $56.5486677646$ with a standard error of $0.053938$, so three standard errors cover the difference. Check C6 maps 3000 points of the cap through the parametrization above and prints 0 points outside the body. Check C4 prints the volume of the single ball of radius $13$ as $4601.38603996$ against $339.292006588$.</p>
+</article>
+<div class="verification">
+<h3>Verified values of Part 3</h3><p>Each row prints the value that one method computes against the value that a second method computes. The script is <code>code/part3_verify.py</code>.</p>
+<table class="checks">
+<thead><tr><th>Check</th><th>Computed value</th><th>Reference value</th><th>Difference</th><th>Status</th></tr></thead><tbody>
+<tr><td>C1 radial integral: Simpson of $r(10+\sqrt{9-r^{2}})$ against $45+9$</td><td>53.9999999653</td><td>54</td><td>3.466e-08</td><td>pass</td></tr>
+<tr><td>C2 cylindrical volume: $2\pi$ times the radial integral against $108\pi$</td><td>339.292006588</td><td>339.292006588</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C3 spherical volume: product of three numerical Jacobian factors against $18\pi$</td><td>56.5486677646</td><td>56.5486677646</td><td>1.421e-13</td><td>pass</td></tr>
+<tr><td>C4 one ball of radius 13 about the origin against the true volume, the two values must differ</td><td>4601.38603996</td><td>339.292006588</td><td>4.262e+03</td><td>pass</td></tr>
+<tr><td>C5 cap volume: Monte Carlo estimate against $18\pi$</td><td>56.578392</td><td>56.5486677646</td><td>2.972e-02</td><td>pass</td></tr>
+<tr><td>C6 spherical map: 3000 cap points against the membership test</td><td>0</td><td>0</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C7 lower branch $z=10-\sqrt{9-r^{2}}$: 40 points against the membership test</td><td>40</td><td>40</td><td>0.000e+00</td><td>pass</td></tr>
+</tbody></table>
+</div>
+</section>
+<section class="part" id="part4">
+<h2>Part 4. The area of the drawn surfaces</h2>
+<article class="step" id="part4_step1">
+<h3>Part 4, Step 1: The area of each face</h3>
+<h4>Reason</h4>
+<p>A drawing shows surfaces, not only the outline, so the areas of the three faces belong to the solution. Each area is a surface integral, and a surface integral needs a parametrization and the length of the cross product of its two tangent vectors. That length turns the integral into a product of factors when the limits are constant.</p>
+<h4>Computation</h4>
+<p>The lateral face has the parametrization $\mathbf{r}(\theta,z)=(3\cos\theta,3\sin\theta,z)$ with $0\le\theta\le 2\pi$ and $0\le z\le 10$. Its tangent vectors are $(-3\sin\theta,3\cos\theta,0)$ and $(0,0,1)$, and the length of their cross product is $3$. Then</p>
+<div class="display-math">$$A_{\text{lateral}}=\int_{0}^{2\pi}\int_{0}^{10}3\,dz\,d\theta=3\cdot 10\cdot 2\pi=60\pi .$$</div>
+<p>The cap has the parametrization of Step 3.2 with $\rho=3$ fixed: $\mathbf{r}(\varphi,\theta)=3\sin\varphi\cos\theta,3\sin\varphi\sin\theta,10+3\cos\varphi$. The length of the cross product is $9\sin\varphi$. Then</p>
+<div class="display-math">$$A_{\text{cap}}=\int_{0}^{2\pi}\int_{0}^{\pi/2}9\sin\varphi\,d\varphi\,d\theta =9\cdot 1\cdot 2\pi=18\pi .$$</div>
+<p>The lower disk has the polar parametrization $(r\cos\theta,r\sin\theta,0)$ with $0\le r\le 3$, and the length of the cross product is $r$. Then</p>
+<div class="display-math">$$A_{\text{base}}=\int_{0}^{2\pi}\int_{0}^{3}r\,dr\,d\theta =\frac{9}{2}\cdot 2\pi=9\pi .$$</div>
+<h4>Result</h4>
+<div class="display-math">$$A_{\text{lateral}}=60\pi=188.495559215,\quad A_{\text{cap}}=18\pi=56.5486677646,\quad A_{\text{base}}=9\pi=28.2743338823 .$$</div>
+<p>The drawn area, the sum of the three faces, is $87\pi=273.318560862$.</p>
+<h4>Common mistake</h4>
+<p>A reader may add the disk at $z=10$ as a fourth surface, but that disk is interior; the three faces give $87\pi$, and the check prints that sum.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part4_verify.py</code> check C1 multiplies the three factors of the lateral integral and prints $188.495559215$ against $2\pi RH$. Check C2 integrates $9\sin\varphi$ numerically over the two angle limits and prints $56.5486677646$ against $2\pi R^{2}$. Check C3 integrates $r$ and prints $28.2743338823$ against $\pi R^{2}$. Check C4 adds the three numerical integrals and prints $273.318560862$ against $87\pi$. Each reference value is a closed form that the script builds from the radius and the height, so no check compares a printed number with itself.</p>
+</article>
+<article class="step" id="part4_step2">
+<h3>Part 4, Step 2: A mesh that approaches the drawn surface</h3>
+<h4>Reason</h4>
+<p>A graphing device draws triangles, not curved surfaces. If the triangles are to stand for the three faces, their total area must approach each closed form as the triangles become small. This step measures that approach, so the surface of the picture is the surface of the computation and not a different shape.</p>
+<h4>Computation</h4>
+<p>Divide each face into cells and split each cell into two triangles. Record the mesh area at the resolutions $16$, $32$, $64$, and $128$ cells along one direction. A mesh of a curved surface is inscribed in the surface, so its area is smaller than the closed form, and the gap must shrink as the cells shrink.</p>
+<p>At the resolution $128$ the mesh gives $188.476635056$ for the lateral face, $56.5330568541$ for the cap, and $28.2629804126$ for the base. The closed forms of Step 4.1 are $188.495559215$, $56.5486677646$, and $28.2743338823$.</p>
+<h4>Result</h4>
+<p>Every mesh under-estimates its face, and every curve of Figure 3 falls to the closed form. At the resolution $128$ the three relative errors are $1.004\times 10^{-4}$, $2.761\times 10^{-4}$, and $4.016\times 10^{-4}$, all below the tolerance $5\times 10^{-4}$ that the figure draws as a dashed line. The mesh total at that resolution is $273.272672323$ against the closed form $273.318560862$, so a drawing at that resolution shows the surface with an error of about one part in ten thousand.</p>
+<h4>Common mistake</h4>
+<p>A reader may take the area of a coarse mesh as the area of the surface, but an inscribed mesh under-estimates: at the resolution $128$ the total is $273.272672323$ against the closed form $273.318560862$, as the print of <code>code/part4_figure1.py</code> shows.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part4_verify.py</code> check C5 computes the mesh area at the four resolutions, prints the finest values above, and requires each sequence to rise toward its closed form. Figure 3 is drawn by <code>code/part4_figure1.py</code>, which prints the total at every resolution, asserts that the finest relative error of each face is below $5\times 10^{-4}$, and asserts that each legend stays inside its axes box before it writes the file. Check C4 of the same script gives the total area of the three faces for the comparison.</p>
+</article>
+<figure class="drawing"><img alt="Figure 3" src="[IMG]"><figcaption>Figure 3. The area of each face computed from a triangle mesh, and the relative error of that area against the closed form. Every mesh under-estimates, because a mesh is inscribed in the surface. The dashed line is the tolerance $5\times 10^{-4}$.</figcaption></figure>
+<div class="verification">
+<h3>Verified values of Part 4</h3><p>Each row prints the value that one method computes against the value that a second method computes. The script is <code>code/part4_verify.py</code>.</p>
+<table class="checks">
+<thead><tr><th>Check</th><th>Computed value</th><th>Reference value</th><th>Difference</th><th>Status</th></tr></thead><tbody>
+<tr><td>C1 lateral area: $\int\int 3\,dz\,d\theta$ by factors against $2\pi RH$</td><td>188.495559215</td><td>188.495559215</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C2 cap area: $\int\int 9\sin\varphi\,d\varphi\,d\theta$ against $2\pi R^{2}$</td><td>56.5486677646</td><td>56.5486677646</td><td>8.527e-14</td><td>pass</td></tr>
+<tr><td>C3 base area: $\int\int r\,dr\,d\theta$ against $\pi R^{2}$</td><td>28.2743338823</td><td>28.2743338823</td><td>7.105e-15</td><td>pass</td></tr>
+<tr><td>C4 total drawn area: three numerical integrals against $87\pi$</td><td>273.318560862</td><td>273.318560862</td><td>1.137e-13</td><td>pass</td></tr>
+<tr><td>C5 lateral face: mesh area at 16, 32, 64, 128 cells against the closed form</td><td>188.476635056</td><td>188.495559215</td><td>1.892e-02</td><td>pass</td></tr>
+<tr><td>C5 cap: mesh area at 16, 32, 64, 128 cells against the closed form</td><td>56.5330568541</td><td>56.5486677646</td><td>1.561e-02</td><td>pass</td></tr>
+<tr><td>C5 base disk: mesh area at 16, 32, 64, 128 cells against the closed form</td><td>28.2629804126</td><td>28.2743338823</td><td>1.135e-02</td><td>pass</td></tr>
+</tbody></table>
+</div>
+</section>
+<section class="part" id="part5">
+<h2>Part 5. The height of the centroid</h2>
+<article class="step" id="part5_step1">
+<h3>Part 5, Step 1: The height of the centroid</h3>
+<h4>Reason</h4>
+<p>The centroid is the point where the body balances, and its height is the first moment of volume divided by the volume. The same sections that gave the volume give the moment, because a slab at the height $z$ carries the moment $z\,A(z)\,dz$. A reader who averages the heights of the two pieces ignores the volume of each piece, and the two volumes are very different.</p>
+<h4>Computation</h4>
+<p>The volume is $V=108\pi$ from Step 2.3. The first moment about the plane $z=0$ is $M=\int z\,A(z)\,dz$, taken over the two branches. On the lower branch $A(z)=9\pi$ and the limits are $0\le z\le 10$:</p>
+<div class="display-math">$$\int_{0}^{10}9\pi z\,dz=9\pi\cdot\frac{100}{2}=450\pi .$$</div>
+<p>On the upper branch, substitute $u=z-10$, so that $z=u+10$, $dz=du$, and $0\le u\le 3$:</p>
+<div class="display-math">$$\int_{0}^{3}\pi(u+10)(9-u^{2})\,du =\pi\int_{0}^{3}\bigl(90+9u-10u^{2}-u^{3}\bigr)du .$$</div>
+<p>The four terms integrate to $\frac{81}{2}$, $270$, $-\frac{81}{4}$, and $-90$ at the upper limit. The sum is $\frac{162+1080-81-360}{4}=\frac{801}{4}$, so the cap contributes $\frac{801\pi}{4}=180\pi+\frac{81\pi}{4}$.</p>
+<h4>Result</h4>
+<div class="display-math">$$M=450\pi+\frac{801\pi}{4}=\frac{2601\pi}{4}=2042.820623 .$$</div>
+<p>The lower branch gives $450\pi=1413.71669412$ and the upper branch gives $180\pi+\frac{81\pi}{4}=629.103928881$. The centroid height is</p>
+<div class="display-math">$$\bar z=\frac{M}{V}=\frac{2601\pi/4}{108\pi}=\frac{2601}{432}=\frac{289}{48}=6.02083333333 .$$</div>
+<p>The centroid lies inside the cylinder, above its own half height $5$, because the cap adds mass at the top; it lies below the rim $z=10$.</p>
+<h4>Common mistake</h4>
+<p>A reader may average the heights $5$ and $11.5$ of the two pieces, but the moment weights each piece by its volume; the volume-weighted height is $\frac{289}{48}$, as the check prints.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part5_verify.py</code> check C1 integrates $z\cdot 9\pi$ over the lower branch and prints $1413.71669412$ against $450\pi$. Check C2 integrates $z\,A(z)$ over $10\le z\le 13$ and prints $629.103928881$ against $180\pi+\frac{81\pi}{4}$. Check C3 adds the two moments and prints $2042.820623$ against $\frac{2601\pi}{4}$. Check C4 divides the moment by the volume and prints $6.02083333333$ against $\frac{289}{48}$. Check C5 estimates the centroid height by random sampling of the body and prints $6.02435581433$ with a standard error of $0.002054$, so the difference $3.522\times 10^{-3}$ is inside two standard errors. Checks C6 and C7 print the mean $x$ and the mean $y$ of the same sample as $-0.00137086207496$ and $0.000843094044807$, each inside three standard errors of $0$, as the symmetry requires.</p>
+</article>
+<div class="verification">
+<h3>Verified values of Part 5</h3><p>Each row prints the value that one method computes against the value that a second method computes. The script is <code>code/part5_verify.py</code>.</p>
+<table class="checks">
+<thead><tr><th>Check</th><th>Computed value</th><th>Reference value</th><th>Difference</th><th>Status</th></tr></thead><tbody>
+<tr><td>C1 cylinder moment: Simpson of $z\cdot 9\pi$ against $450\pi$</td><td>1413.71669412</td><td>1413.71669412</td><td>2.274e-12</td><td>pass</td></tr>
+<tr><td>C2 cap moment: Simpson of $z\,A(z)$ over $10\le z\le 13$ against $180\pi+\frac{81\pi}{4}$</td><td>629.103928881</td><td>629.103928881</td><td>8.072e-12</td><td>pass</td></tr>
+<tr><td>C3 whole moment: two integrals against $\frac{2601\pi}{4}$</td><td>2042.820623</td><td>2042.820623</td><td>5.684e-12</td><td>pass</td></tr>
+<tr><td>C4 centroid height: moment over volume against $\frac{289}{48}$</td><td>6.02083333333</td><td>6.02083333333</td><td>1.688e-14</td><td>pass</td></tr>
+<tr><td>C5 centroid height: Monte Carlo estimate against the exact value</td><td>6.02435581433</td><td>6.02083333333</td><td>3.522e-03</td><td>pass</td></tr>
+<tr><td>C6 mean x: Monte Carlo mean against 0</td><td>-0.00137086207496</td><td>0</td><td>1.371e-03</td><td>pass</td></tr>
+<tr><td>C7 mean y: Monte Carlo mean against 0</td><td>0.000843094044807</td><td>0</td><td>8.431e-04</td><td>pass</td></tr>
+</tbody></table>
+</div>
+</section>
+<section class="part" id="part6">
+<h2>Part 6. The projection and the drawing recipe</h2>
+<article class="step" id="part6_step1">
+<h3>Part 6, Step 1: The projection of the silo on the plane $y=0$</h3>
+<h4>Reason</h4>
+<p>A drawing device draws curves, and the silhouette of a round body is the outline of its projection. To obtain that outline, drop one coordinate and keep the two that the drawing paper carries. The plane of the paper is $y=0$, so the projection keeps $x$ and $z$ and drops $y$.</p>
+<h4>Computation</h4>
+<p>A pair $(x,z)$ belongs to the projection when some height $y$ completes it to a point of the body. The body allows every $y$ with $x^{2}+y^{2}\le 9$ at the height $z$ below the ceiling, and such a $y$ exists exactly when $x^{2}\le 9$. The ceiling of Step 1.2 then applies with $r^{2}=x^{2}$, because the widest section at the height $z$ has $y=0$:</p>
+<div class="display-math">$$|x|\le 3,\qquad 0\le z\le 10+\sqrt{9-x^{2}} .$$</div>
+<p>Split that region at the height $z=10$. Below the split the ceiling exceeds $10$, so the pairs with $|x|\le 3$ and $0\le z\le 10$ all belong: that is the rectangle $6$ wide and $10$ high. Above the split the condition $z\le 10+\sqrt{9-x^{2}}$ is the same as $x^{2}+(z-10)^{2}\le 9$: that is the half disk of radius $3$ about $(0,10)$.</p>
+<h4>Result</h4>
+<p>The projection on the plane $y=0$ is the union of the rectangle $|x|\le 3$, $0\le z\le 10$ and the half disk $x^{2}+(z-10)^{2}\le 9$, $z\ge 10$. The right panel of Figure 1 draws exactly those two regions, and the dashed line marks their common edge at $z=10$, which is interior to the projection and therefore not part of the outline. The outline is the base, the two vertical sides, and the semicircular arc.</p>
+<h4>Common mistake</h4>
+<p>A reader may call this region the projection on the plane $x=0$, but a projection that drops the coordinate $y$ lies on the plane $y=0$; the panel label of Figure 1 and the docstring of <code>code/part6_verify.py</code> both name the plane $y=0$.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part6_verify.py</code> check C1 tests the ceiling inequality against the union of the rectangle and the half disk on 216931 points of a grid and prints 0 mismatches. Check C2 scans the inequality along seven heights and prints a maximum distance of $5.662\times 10^{-15}$ between the scanned silhouette and the meridian formula $3\cos\varphi$ of the cap. Check C3 tests the nodes of all three meshes against their own equations and prints a residual of $7.105\times 10^{-15}$.</p>
+</article>
+<article class="step" id="part6_step2">
+<h3>Part 6, Step 2: The recipe for the graphing device, and the length of the outline</h3>
+<h4>Reason</h4>
+<p>The device needs explicit parametrizations and explicit ranges, and it needs a window that holds the whole drawing with room for the labels. The length of the outline is a final check: it can be computed in closed form and measured on the drawn polyline, so the drawing can be compared with the body that it stands for.</p>
+<h4>Computation</h4>
+<p>Give the device four objects. First, the lateral face in cylindrical coordinates: $x=3\cos\theta$, $y=3\sin\theta$, $z=z$ with $0\le\theta\le 2\pi$ and $0\le z\le 10$. Second, the cap in spherical coordinates about $(0,0,10)$: $x=3\sin\varphi\cos\theta$, $y=3\sin\varphi\sin\theta$, $z=10+3\cos\varphi$ with $0\le\varphi\le\frac{\pi}{2}$ and $0\le\theta\le 2\pi$. Third, the lower disk: $x=r\cos\theta$, $y=r\sin\theta$, $z=0$ with $0\le r\le 3$. Fourth, the outline on the plane $y=0$: the base segment from $(-3,0)$ to $(3,0)$, the two vertical sides up to $z=10$, and the arc $x=3\cos\alpha$, $z=10+3\sin\alpha$ with $0\le\alpha\le\pi$. Set the window to $|x|\le 4.4$, $|y|\le 4.4$, $-0.6\le z\le 15.2$, and mark the heights $3$, $10$, and $13$ on the vertical axis.</p>
+<p>The outline has the length</p>
+<div class="display-math">$$L=2\cdot 10+2\cdot 3+\pi\cdot 3=26+3\pi=35.4247779608 .$$</div>
+<h4>Result</h4>
+<p>The four parametrizations above draw the silo: the lateral face, the cap, the lower disk, and the outline of the projection. The outline closes at the length $35.4247779608$, and the window of the recipe holds every label: the nearest data point leaves a free band of $1.4$ units and the labels need only $0.55$ units of inset. Figure 1 shows the result, with the three faces labelled at points of their own surfaces.</p>
+<h4>Common mistake</h4>
+<p>A reader may take the outline as the two vertical sides and the arc only, but the base closes the region; the closed form $26+3\pi$ includes the base of length $6$.</p>
+<h4>Verification</h4>
+<p>Verification script: <code>code/part6_verify.py</code> check C6 measures the drawn polyline and prints $35.4247465109$ against $26+3\pi=35.4247779608$, a difference of $3.145\times 10^{-5}$ that the polygonal arc explains. Check C4 compares the free band of the window with the label inset and prints $1.4$ against $0.55$. Check C5 puts the three label anchors of <code>code/figure_anchors.py</code> against the window and prints 0 anchors outside. Check C7 compares a coarse mesh with a fine mesh and prints an error of $5.1710659939$ for the coarse mesh against $0.145003622417$ for the fine mesh, so a coarse drawing is visibly wrong and a fine drawing is not.</p>
+</article>
+<div class="verification">
+<h3>Verified values of Part 6</h3><p>Each row prints the value that one method computes against the value that a second method computes. The script is <code>code/part6_verify.py</code>.</p>
+<table class="checks">
+<thead><tr><th>Check</th><th>Computed value</th><th>Reference value</th><th>Difference</th><th>Status</th></tr></thead><tbody>
+<tr><td>C1 projection: ceiling inequality against the rectangle plus half disk on 216931 points</td><td>0</td><td>0</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C2 silhouette: scan of the inequality against the meridian formula, 7 heights</td><td>5.66213742559e-15</td><td>0</td><td>5.662e-15</td><td>pass</td></tr>
+<tr><td>C3 mesh nodes: lateral, cap, and base residuals against their own equations</td><td>7.1054273576e-15</td><td>0</td><td>7.105e-15</td><td>pass</td></tr>
+<tr><td>C4 drawing headroom: z headroom, x headroom, y headroom against the label inset</td><td>1.4</td><td>0.55</td><td>8.500e-01</td><td>pass</td></tr>
+<tr><td>C5 label anchors: distance from the axes box, three anchors against three limits</td><td>0</td><td>0</td><td>0.000e+00</td><td>pass</td></tr>
+<tr><td>C6 outline: polyline length against $2\cdot 10+2\cdot 3+3\pi$</td><td>35.4247465109</td><td>35.4247779608</td><td>3.145e-05</td><td>pass</td></tr>
+<tr><td>C7 mesh resolution: coarse error against fine error, the fine error must be smaller</td><td>5.1710659939</td><td>0.145003622417</td><td>5.026e+00</td><td>pass</td></tr>
+</tbody></table>
+</div>
+</section>
+<section id="checks">
+<h2>What the page checks</h2>
+<p>The six scripts run 48 checks and all of them pass. Four rules hold over the whole page. First, no check compares a value with itself: each row pairs two methods, such as an integral against a closed form, a formula against a bisection, or a mesh against a closed form. Second, every figure is drawn by a script that asserts the placement of its own labels before it writes the file. Third, every mathematical expression is LaTeX source inside a math span. Fourth, every step names the script that verifies it.</p>
+</section>
+</main>
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body, {
+    delimiters: [
+      {left: '$$', right: '$$', display: true},
+      {left: '$', right: '$', display: false}
+    ],
+    throwOnError: false
+  });"></script>
+
+</body>
+</html>

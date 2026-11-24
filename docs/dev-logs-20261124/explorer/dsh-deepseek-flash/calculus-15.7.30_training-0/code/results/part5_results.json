@@ -1,0 +1,90 @@
+[
+  {
+    "label": "order dz dy dx against 198*pi",
+    "computed": 622.0353454107789,
+    "expected": 622.035345410779,
+    "difference": 1.1368683772161603e-13,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "order dy dz dx against 198*pi",
+    "computed": 622.035345410779,
+    "expected": 622.035345410779,
+    "difference": 0.0,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "order dz dx dy against 198*pi",
+    "computed": 622.0353454107786,
+    "expected": 622.035345410779,
+    "difference": 3.410605131648481e-13,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "order dx dz dy against 198*pi",
+    "computed": 622.0353454107786,
+    "expected": 622.035345410779,
+    "difference": 3.410605131648481e-13,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "order dy dx dz against 198*pi",
+    "computed": 622.0353454107786,
+    "expected": 622.035345410779,
+    "difference": 3.410605131648481e-13,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "order dx dy dz against 198*pi",
+    "computed": 622.0353454107786,
+    "expected": 622.035345410779,
+    "difference": 3.410605131648481e-13,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "largest pairwise difference of the six orders",
+    "computed": 3.410605131648481e-13,
+    "expected": 0.0,
+    "difference": 3.410605131648481e-13,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "the two orders with outer x agree",
+    "computed": 622.0353454107789,
+    "expected": 622.035345410779,
+    "difference": 1.1368683772161603e-13,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "the two orders with outer y agree",
+    "computed": 622.0353454107786,
+    "expected": 622.0353454107786,
+    "difference": 0.0,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "the two orders with outer z agree",
+    "computed": 622.0353454107786,
+    "expected": 622.0353454107786,
+    "difference": 0.0,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "negative control: the box bound gives the box integral",
+    "computed": 1008.0,
+    "expected": 1008.0,
+    "difference": 0.0,
+    "tolerance": 1.008,
+    "passed": true
+  }
+]

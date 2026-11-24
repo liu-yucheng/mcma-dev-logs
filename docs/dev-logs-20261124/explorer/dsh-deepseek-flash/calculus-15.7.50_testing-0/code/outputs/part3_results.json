@@ -1,0 +1,168 @@
+{
+  "checks": {
+    "count": 16,
+    "part": "part3",
+    "rows": [
+      {
+        "computed": 11.2,
+        "difference": 0.0,
+        "expected": 11.2,
+        "name": "mass: Beta function against exact fractions",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.13333333333333333,
+        "difference": 0.0,
+        "expected": 0.13333333333333333,
+        "name": "the Beta weight 2 / 15 against scipy.special.beta",
+        "tolerance": 1e-15
+      },
+      {
+        "computed": 4.196971435655113,
+        "difference": 2.6645352591003757e-15,
+        "expected": 4.196971435655116,
+        "name": "numerator of x rho: closed form against dx dz dy",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 4.196971435655116,
+        "difference": 2.6645352591003757e-15,
+        "expected": 4.196971435655113,
+        "name": "numerator of x rho: two integration orders",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 24.74004214701962,
+        "difference": 0.0,
+        "expected": 24.74004214701962,
+        "name": "numerator of y rho: closed form against dx dz dy",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 24.74004214701962,
+        "difference": 1.0658141036401503e-14,
+        "expected": 24.74004214701963,
+        "name": "numerator of y rho: two integration orders",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 10.5,
+        "difference": 1.7763568394002505e-15,
+        "expected": 10.499999999999998,
+        "name": "numerator of z rho: closed form against dx dz dy",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 10.499999999999998,
+        "difference": 1.7763568394002505e-15,
+        "expected": 10.5,
+        "name": "numerator of z rho: two integration orders",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 10.5,
+        "difference": 1.7763568394002505e-15,
+        "expected": 10.499999999999998,
+        "name": "numerator of z rho: exact fractions against the floating closed form",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 10.5,
+        "difference": 1.7763568394002505e-15,
+        "expected": 10.499999999999998,
+        "name": "numerator of z rho: the spread of the four routes",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 0.3747295924692068,
+        "difference": 0.00027162825626442233,
+        "expected": 0.37445796421294236,
+        "name": "coordinate x: closed route against the sample route",
+        "tolerance": 0.0037632624008961
+      },
+      {
+        "computed": 2.2089323345553233,
+        "difference": 0.0013611212759077063,
+        "expected": 2.2075712132794156,
+        "name": "coordinate y: closed route against the sample route",
+        "tolerance": 0.019833960416275692
+      },
+      {
+        "computed": 0.9374999999999999,
+        "difference": 0.0004002637333612169,
+        "expected": 0.9379002637333611,
+        "name": "coordinate z: closed route against the sample route",
+        "tolerance": 0.008207635480128787
+      },
+      {
+        "computed": 1.398990478551705,
+        "difference": 1.0242608860824984,
+        "expected": 0.3747295924692068,
+        "name": "the shortcut that divides by the volume misses x bar",
+        "tolerance": 0.1
+      },
+      {
+        "computed": 1.2732395447351628,
+        "difference": 0.3357395447351629,
+        "expected": 0.9374999999999999,
+        "name": "the centroid of the projection misses z bar",
+        "tolerance": 0.1
+      },
+      {
+        "computed": 0.9375,
+        "difference": 1.1102230246251565e-16,
+        "expected": 0.9374999999999999,
+        "name": "coordinate z: exact fractions against the floating closed route",
+        "tolerance": 1e-12
+      }
+    ]
+  },
+  "coordinate_sigma_max": "0.289",
+  "mass": "11.200000",
+  "mass_exact": "56/5",
+  "numerator_rows": [
+    {
+      "alternate": "4.196971",
+      "closed_form": "4.196971",
+      "error": "0.008514",
+      "monte_carlo": "4.192872",
+      "name": "x rho",
+      "primary": "4.196971",
+      "sigma": "0.481"
+    },
+    {
+      "alternate": "24.740042",
+      "closed_form": "24.740042",
+      "error": "0.041751",
+      "monte_carlo": "24.718565",
+      "name": "y rho",
+      "primary": "24.740042",
+      "sigma": "0.514"
+    },
+    {
+      "alternate": "10.500000",
+      "closed_form": "10.500000",
+      "error": "0.016896",
+      "monte_carlo": "10.501835",
+      "name": "z rho",
+      "primary": "10.500000",
+      "sigma": "0.109"
+    }
+  ],
+  "numerator_x": "4.196971",
+  "numerator_y": "24.740042",
+  "numerator_z": "10.500000",
+  "numerator_z_max_difference": "1.78e-15",
+  "numerator_z_max_difference_latex": "1.78 \\times 10^{-15}",
+  "volume": "3.000000",
+  "wrong_x_with_volume": "1.398990",
+  "wrong_z_disc_centroid": "1.273240",
+  "x_bar": "0.374730",
+  "x_bar_3dp": "0.375",
+  "x_bar_uniform": "0.294524",
+  "y_bar": "2.208932",
+  "y_bar_3dp": "2.209",
+  "z_bar": "0.937500",
+  "z_bar_3dp": "0.938",
+  "z_bar_exact": "15/16"
+}

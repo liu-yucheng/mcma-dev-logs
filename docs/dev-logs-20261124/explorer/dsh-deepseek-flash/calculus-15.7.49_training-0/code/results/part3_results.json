@@ -1,0 +1,226 @@
+{
+  "part": 3,
+  "title": "The center of mass of E",
+  "checks": [
+    {
+      "label": "M_yz, sum of its four terms against the direct integral",
+      "computed": 0.2916666666666667,
+      "expected": 0.2916666666666667,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "M_xz, sum of its four terms against the direct integral",
+      "computed": 0.46301620751602873,
+      "expected": 0.46301620751602873,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "M_xy, sum of its four terms against the direct integral",
+      "computed": 0.2426192148691255,
+      "expected": 0.2426192148691255,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "M_yz, quadrature in the order dz dy dx against the exact value",
+      "computed": 0.29166666666666663,
+      "expected": 0.2916666666666667,
+      "difference": 5.551115123125783e-17,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "M_yz, quadrature in the order dx dz dy against the exact value",
+      "computed": 0.29166666666666663,
+      "expected": 0.2916666666666667,
+      "difference": 5.551115123125783e-17,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "M_xz, quadrature in the order dz dy dx against the exact value",
+      "computed": 0.46301620751602873,
+      "expected": 0.46301620751602873,
+      "difference": 0.0,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "M_xz, quadrature in the order dx dz dy against the exact value",
+      "computed": 0.4630162075160288,
+      "expected": 0.46301620751602873,
+      "difference": 5.551115123125783e-17,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "M_xy, quadrature in the order dz dy dx against the exact value",
+      "computed": 0.2426192148691255,
+      "expected": 0.2426192148691255,
+      "difference": 0.0,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "M_xy, quadrature in the order dx dz dy against the exact value",
+      "computed": 0.24261921486912555,
+      "expected": 0.2426192148691255,
+      "difference": 5.551115123125783e-17,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "x_bar against 28/(44+9pi)",
+      "computed": 0.3874127715323579,
+      "expected": 0.3874127715323579,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "y_bar against (30pi+128)/(220+45pi)",
+      "computed": 0.6150116304623523,
+      "expected": 0.6150116304623523,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "z_bar against (45pi+208)/(15(44+9pi))",
+      "computed": 0.3222643970038374,
+      "expected": 0.3222643970038374,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "x_bar, ratio of two quadratures against the exact value",
+      "computed": 0.38741277153235804,
+      "expected": 0.3874127715323579,
+      "difference": 1.1102230246251565e-16,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "x_bar, Monte Carlo ratio within four standard errors",
+      "computed": 0.3873504369827236,
+      "expected": 0.3874127715323579,
+      "difference": 6.233454963433527e-05,
+      "tolerance": 0.0008489901520177226
+    },
+    {
+      "label": "y_bar, Monte Carlo ratio within four standard errors",
+      "computed": 0.6150144786765807,
+      "expected": 0.6150116304623523,
+      "difference": 2.8482142283570155e-06,
+      "tolerance": 0.0007623560668426651
+    },
+    {
+      "label": "z_bar, Monte Carlo ratio within four standard errors",
+      "computed": 0.32267927825857123,
+      "expected": 0.3222643970038374,
+      "difference": 0.0004148812547338232,
+      "tolerance": 0.0008085991768397238
+    },
+    {
+      "label": "M_xz - M_xy against the integral of (y - z) rho",
+      "computed": 0.22039699264690327,
+      "expected": 0.22039699264690327,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "y_bar - z_bar against the quadrature of (y - z) rho divided by m",
+      "computed": 0.2927472334585149,
+      "expected": 0.292747233458515,
+      "difference": 1.1102230246251565e-16,
+      "tolerance": 1e-10
+    }
+  ],
+  "tables": [
+    {
+      "caption": "Each first moment, split into the four terms that the product of two factors gives",
+      "columns": [
+        "moment",
+        "four terms",
+        "direct value"
+      ],
+      "rows": [
+        [
+          "$M_yz$",
+          "\\frac{1}{8} $+$ \\frac{1}{15} $+$ \\frac{1}{15} $+$ \\frac{1}{30}",
+          "\\frac{7}{24}"
+        ],
+        [
+          "$M_xz$",
+          "\\frac{\\pi}{16} $+$ \\frac{1}{15} $+$ \\frac{2}{15} $+$ \\frac{1}{15}",
+          "\\frac{\\pi}{16} + \\frac{4}{15}"
+        ],
+        [
+          "$M_xy$",
+          "\\frac{\\pi}{32} $+$ \\frac{1}{30} $+$ \\frac{1}{15} $+$ \\frac{2}{45}",
+          "\\frac{\\pi}{32} + \\frac{13}{90}"
+        ]
+      ]
+    },
+    {
+      "caption": "The three first moments of E",
+      "columns": [
+        "moment",
+        "exact value",
+        "decimal"
+      ],
+      "rows": [
+        [
+          "$M_{yz}=\\int_E x\\rho\\,dV$",
+          "\\frac{7}{24}",
+          "0.291667"
+        ],
+        [
+          "$M_{xz}=\\int_E y\\rho\\,dV$",
+          "\\frac{\\pi}{16} + \\frac{4}{15}",
+          "0.463016"
+        ],
+        [
+          "$M_{xy}=\\int_E z\\rho\\,dV$",
+          "\\frac{\\pi}{32} + \\frac{13}{90}",
+          "0.242619"
+        ]
+      ]
+    },
+    {
+      "caption": "The center of mass of E",
+      "columns": [
+        "coordinate",
+        "exact value",
+        "decimal"
+      ],
+      "rows": [
+        [
+          "$\\bar{x}$",
+          "\\frac{28}{44+9\\pi}",
+          "0.387413"
+        ],
+        [
+          "$\\bar{y}$",
+          "\\frac{2(15\\pi+64)}{5(44+9\\pi)}",
+          "0.615012"
+        ],
+        [
+          "$\\bar{z}$",
+          "\\frac{45\\pi+208}{15(44+9\\pi)}",
+          "0.322264"
+        ]
+      ]
+    }
+  ],
+  "facts": {
+    "mass_exact": "\\frac{3 \\pi}{32} + \\frac{11}{24}",
+    "moment_yz_exact": "\\frac{7}{24}",
+    "moment_xz_exact": "\\frac{\\pi}{16} + \\frac{4}{15}",
+    "moment_xy_exact": "\\frac{\\pi}{32} + \\frac{13}{90}",
+    "moment_yz_decimal": "0.291667",
+    "moment_xz_decimal": "0.463016",
+    "moment_xy_decimal": "0.242619",
+    "x_bar_exact": "\\frac{28}{44+9\\pi}",
+    "y_bar_exact": "\\frac{2(15\\pi+64)}{5(44+9\\pi)}",
+    "z_bar_exact": "\\frac{45\\pi+208}{15(44+9\\pi)}",
+    "x_bar_decimal": "0.387413",
+    "y_bar_decimal": "0.615012",
+    "z_bar_decimal": "0.322264",
+    "largest_difference": 0.0004148812547338232,
+    "check_count": 18
+  }
+}

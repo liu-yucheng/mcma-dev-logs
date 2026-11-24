@@ -1,0 +1,16 @@
+{
+  "figure": "part1_figure1",
+  "text_count": 6,
+  "minimum_margin_pixels": 8.736111111111143,
+  "maximum_overlap_square_pixels": 0.0,
+  "minimum_leader_gap_pixels": 11.334755738237675,
+  "labels": [
+    "$\\rho = 6/5$",
+    "$\\rho = 4/5$",
+    "$6/5$",
+    "$4/5$",
+    "surface $\\rho = 1 + \\frac{1}{5}\\sin 6\\theta\\,\\sin 5\\varphi$",
+    "unit sphere $\\rho = 1$"
+  ],
+  "png_path": "D:\\Program-Files\\MCMA-Toolchain\\dev-logs\\.raw_data\\dev-logs-20261124\\dsh-workspace\\20261123_064007_tutoring_problem_19\\code\\figures\\part1_figure1.png"
+}

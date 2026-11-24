@@ -1,0 +1,149 @@
+{
+  "checks": {
+    "count": 10,
+    "part": "part5",
+    "rows": [
+      {
+        "computed": 11.200000000000001,
+        "difference": 1.7763568394002505e-15,
+        "expected": 11.2,
+        "name": "mass: the printed value against the second order",
+        "tolerance": 1e-06
+      },
+      {
+        "computed": 11.218375109448099,
+        "difference": 0.01837510944809928,
+        "expected": 11.2,
+        "name": "mass: the printed value against the sample",
+        "tolerance": 0.04066106446132041
+      },
+      {
+        "computed": 4.196971435655113,
+        "difference": 4.3565511376186805e-07,
+        "expected": 4.196971,
+        "name": "x rho: the printed value against the second order",
+        "tolerance": 1e-06
+      },
+      {
+        "computed": 4.202110898629365,
+        "difference": 0.005139898629365369,
+        "expected": 4.196971,
+        "name": "x rho: the printed value against the sample",
+        "tolerance": 0.02087265346161203
+      },
+      {
+        "computed": 24.74004214701963,
+        "difference": 1.4701963024776887e-07,
+        "expected": 24.740042,
+        "name": "y rho: the printed value against the second order",
+        "tolerance": 1e-06
+      },
+      {
+        "computed": 24.785173857601144,
+        "difference": 0.04513185760114524,
+        "expected": 24.740042,
+        "name": "y rho: the printed value against the sample",
+        "tolerance": 0.10239714467461919
+      },
+      {
+        "computed": 10.5,
+        "difference": 0.0,
+        "expected": 10.5,
+        "name": "z rho: the printed value against the second order",
+        "tolerance": 1e-06
+      },
+      {
+        "computed": 10.507912013703198,
+        "difference": 0.007912013703197829,
+        "expected": 10.5,
+        "name": "z rho: the printed value against the sample",
+        "tolerance": 0.04138569085179955
+      },
+      {
+        "computed": 59.79428571428571,
+        "difference": 2.857142931134149e-07,
+        "expected": 59.794286,
+        "name": "inertia: the printed value against the second order",
+        "tolerance": 1e-06
+      },
+      {
+        "computed": 59.909153060618095,
+        "difference": 0.1148670606180957,
+        "expected": 59.794286,
+        "name": "inertia: the printed value against the sample",
+        "tolerance": 0.2778808298241921
+      }
+    ]
+  },
+  "earlier_check_counts": [
+    "9",
+    "6",
+    "16",
+    "11"
+  ],
+  "earlier_check_total": "42",
+  "final_iz": "59.794",
+  "final_mass": "11.200",
+  "final_x": "0.375",
+  "final_y": "2.209",
+  "final_z": "0.938",
+  "relative_difference_limit": "1.0e-06",
+  "relative_difference_limit_denominator": "1000000",
+  "relative_difference_limit_latex": "10^{-6}",
+  "rows": [
+    {
+      "alternate": "11.200000",
+      "error": "0.010165",
+      "monte_carlo": "11.218375",
+      "name": "mass",
+      "printed": "11.200000",
+      "relative_difference": "1.59e-16",
+      "relative_difference_latex": "1.59 \\times 10^{-16}",
+      "sigma": "1.81"
+    },
+    {
+      "alternate": "4.196971",
+      "error": "0.005218",
+      "monte_carlo": "4.202111",
+      "name": "x rho",
+      "printed": "4.196971",
+      "relative_difference": "1.04e-07",
+      "relative_difference_latex": "1.04 \\times 10^{-7}",
+      "sigma": "0.99"
+    },
+    {
+      "alternate": "24.740042",
+      "error": "0.025599",
+      "monte_carlo": "24.785174",
+      "name": "y rho",
+      "printed": "24.740042",
+      "relative_difference": "5.94e-09",
+      "relative_difference_latex": "5.94 \\times 10^{-9}",
+      "sigma": "1.76"
+    },
+    {
+      "alternate": "10.500000",
+      "error": "0.010346",
+      "monte_carlo": "10.507912",
+      "name": "z rho",
+      "printed": "10.500000",
+      "relative_difference": "0.00e+00",
+      "relative_difference_latex": "0",
+      "sigma": "0.76"
+    },
+    {
+      "alternate": "59.794286",
+      "error": "0.069470",
+      "monte_carlo": "59.909153",
+      "name": "inertia",
+      "printed": "59.794286",
+      "relative_difference": "4.78e-09",
+      "relative_difference_latex": "4.78 \\times 10^{-9}",
+      "sigma": "1.65"
+    }
+  ],
+  "total_checks": "52",
+  "worst_relative_difference": "1.04e-07",
+  "worst_relative_difference_latex": "1.04 \\times 10^{-7}",
+  "worst_sigma": "1.81"
+}

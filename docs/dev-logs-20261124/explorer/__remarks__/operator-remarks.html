@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operator remarks &mdash; 2026-11-24</title>
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../../preview.css">
+<style>
+img { max-width: 100%; height: auto; display: block; }
+.prompt { white-space: pre-wrap; font-size: .82rem; background: #f6f8fa; border: 1px solid #e2e6ec; border-radius: 8px; padding: 12px 14px; }
+td.num { text-align: right; }
+</style>
+</head>
+<body class="leaf">
+<main class="container">
+<h1>&#128221; Operator remarks</h1>
+<p class="small">The operator record for this session. Reproduced from <code>notes.txt</code>.</p>
+<pre class="prompt">Agent plotting recursive self-improvement (RSI) experiment.
+
+Planned:
+
+- Write a RSI agent framework.
+- Use a high-throughput model to learn multivariable calculus plotting &quot;how-to&quot; from canonical solutions.
+- Transfer the &quot;how-to&quot; experience to a self-hosted, low-throughput model and test its plotting quality.
+- Based on numerous previous experiment results, we assume that both models can ensure solution correctness.
+
+Actual:
+
+- Completed writing the RSI agent framework - MCMA DeepSeek Harness plugin.
+  - Supported training an agent like training classical AI models.
+  - Forward, backward, feedback (reinforce), validate, test.
+- Used deepseek-flash @ 200 tokens/s. Learned 17 canonical solutions. Tested 7 problems.
+  - Example instructions-v0 vs instructions-v17.
+  - Example 15.7.32.
+    - Learned: Plotting labeled, clear visualizations of simple 3D geometry.
+    - Learned: Adding labeled 2D projections. 
+  - Example 15.7.18.
+    - Not learned: Handling complex 3D perspective relationships.
+    - Not learned: Adjusting plots to avoid perspective illusion.
+- Used learned experience. Used Qwen3.8-27B @ 40 tokens/s. Tested 24 problems.
+  - Example 15.7.32.
+    - Not transferred: Plotting labeled, clear visualizations of simple 3D geometry.
+    - Not transferred: Adding labeled 2D projections. 
+  - Example 15.7.18.
+    - Did terrible at: Handling complex 3D perspective relationships.
+    - Not even thought about: Adjusting plots to avoid perspective illusion.
+
+Found:
+
+- Our RSI agent framework actually learned, but not in explicit ways.
+  - The loss function does not reflect the learning process.
+  - The instructions contains some learned experience.
+- deepseek-flash @ 200 tokens/s can serve as math tutor with acceptable task performance.
+  - We need to find ways to locally deploy this model or its distilled versions.
+  - We need to refine our harness design before letting it provide tutoring service.
+  - When RSI is turned off, it takes less than 5 minutes to solve a problem on average.
+- Qwen3.8-27B @ 40 tokens/s is unacceptable for being a math tutor.
+  - This assertion holds regardless of how we improve our harness designs.
+  - We need to test its coding-enhanced or math-enhanced variations.
+    - See whether the true limitation is parameter size.
+  - When RSI is turned off, it takes over 15 minutes to solve a problem on average.
+
+Newly planned:
+
+- Add back some classic plotting prompts in system_message.md from the old DeepAgents-based MCMA.
+- Revise our RSI agent framework so that it learns in explicit ways.
+- Try to deploy deepseek-flash or its distilled versions on HPC.
+  - Full parameter version: Have to be GPU + CPU. Expect extremely low throughput.
+  - Distilled version: Can try GPU-only. Expect significant performance degradation.
+- Find and deploy Qwen3.8-27B coding-enhanced or math-enhanced variations on HPC.
+  - Locate a coding-enhanced variation first.
+  - If no coding-enhanced version is suitable, locate a math-enhanced version instead.
+</pre>
+</main>
+</body>
+</html>

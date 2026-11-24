@@ -1,0 +1,139 @@
+{
+  "part": "part3",
+  "check_count": 12,
+  "passed_count": 12,
+  "records": [
+    {
+      "part": "part3",
+      "name": "part3.inner_at_y_0.6",
+      "computed": 4.32,
+      "expected": 4.32,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-11,
+      "passed": true,
+      "note": "Quadrature of the z-section against the closed form of the inner integral."
+    },
+    {
+      "part": "part3",
+      "name": "part3.middle_at_y_0.6",
+      "computed": 0.8639999999999998,
+      "expected": 0.864,
+      "difference": 2.220446049250313e-16,
+      "relative_difference": 2.5699607051508254e-16,
+      "tolerance": 1e-09,
+      "passed": true,
+      "note": "Quadrature of the x-section against the closed form of the middle integral."
+    },
+    {
+      "part": "part3",
+      "name": "part3.inner_at_y_1.5",
+      "computed": 3.375,
+      "expected": 3.375,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-11,
+      "passed": true,
+      "note": "Quadrature of the z-section against the closed form of the inner integral."
+    },
+    {
+      "part": "part3",
+      "name": "part3.middle_at_y_1.5",
+      "computed": 1.6874999999999998,
+      "expected": 1.6875,
+      "difference": 2.220446049250313e-16,
+      "relative_difference": 1.3158198810372225e-16,
+      "tolerance": 1e-09,
+      "passed": true,
+      "note": "Quadrature of the x-section against the closed form of the middle integral."
+    },
+    {
+      "part": "part3",
+      "name": "part3.inner_at_y_2.7",
+      "computed": 0.8549999999999993,
+      "expected": 0.8549999999999995,
+      "difference": 2.220446049250313e-16,
+      "relative_difference": 2.5970129230997827e-16,
+      "tolerance": 1e-11,
+      "passed": true,
+      "note": "Quadrature of the z-section against the closed form of the inner integral."
+    },
+    {
+      "part": "part3",
+      "name": "part3.middle_at_y_2.7",
+      "computed": 0.7694999999999993,
+      "expected": 0.7694999999999996,
+      "difference": 3.3306690738754696e-16,
+      "relative_difference": 4.328354871832971e-16,
+      "tolerance": 1e-09,
+      "passed": true,
+      "note": "Quadrature of the x-section against the closed form of the middle integral."
+    },
+    {
+      "part": "part3",
+      "name": "part3.antiderivative_derivative",
+      "computed": 2.635610412946833e-10,
+      "expected": 0.0,
+      "difference": 2.635610412946833e-10,
+      "relative_difference": 2.635610412946833e-10,
+      "tolerance": 1e-06,
+      "passed": true,
+      "note": "Largest relative gap between the central difference of the antiderivative and the integrand."
+    },
+    {
+      "part": "part3",
+      "name": "part3.exact_value_denominator",
+      "computed": 8.0,
+      "expected": 8.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "note": "Denominator of the exact value against the denominator that the arithmetic produces."
+    },
+    {
+      "part": "part3",
+      "name": "part3.outer_quad_against_exact",
+      "computed": 3.375000000000001,
+      "expected": 3.375,
+      "difference": 8.881784197001252e-16,
+      "relative_difference": 2.6316397620744445e-16,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "Adaptive quadrature of the outer integral against the exact rational arithmetic."
+    },
+    {
+      "part": "part3",
+      "name": "part3.nested_quad_against_exact",
+      "computed": 3.375,
+      "expected": 3.375,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-11,
+      "passed": true,
+      "note": "Nested quadrature of the triple integral in the chosen order against the exact value."
+    },
+    {
+      "part": "part3",
+      "name": "part3.mean_height",
+      "computed": 1.125,
+      "expected": 1.125,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "Quotient of the integral by the volume against the exact mean height."
+    },
+    {
+      "part": "part3",
+      "name": "part3.common_mistake_mass",
+      "computed": 9.0,
+      "expected": 9.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "Quadrature of the integral with the full width in x against its exact rational value."
+    }
+  ]
+}

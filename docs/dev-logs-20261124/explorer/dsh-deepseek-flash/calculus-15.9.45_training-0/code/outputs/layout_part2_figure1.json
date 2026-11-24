@@ -1,0 +1,15 @@
+{
+  "figure": "part2_figure1",
+  "text_count": 5,
+  "minimum_margin_pixels": 3.052369190984564,
+  "maximum_overlap_square_pixels": 0.0,
+  "minimum_leader_gap_pixels": null,
+  "labels": [
+    "4.188790205",
+    "0.000000000",
+    "0.126933037",
+    "0.000000000",
+    "4.315723241"
+  ],
+  "png_path": "D:\\Program-Files\\MCMA-Toolchain\\dev-logs\\.raw_data\\dev-logs-20261124\\dsh-workspace\\20261123_064007_tutoring_problem_19\\code\\figures\\part2_figure1.png"
+}

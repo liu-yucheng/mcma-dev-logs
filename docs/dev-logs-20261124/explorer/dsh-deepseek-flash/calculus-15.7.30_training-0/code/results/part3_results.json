@@ -1,0 +1,122 @@
+[
+  {
+    "label": "section area at y = -3.0 against 8*sqrt(9 - y^2)",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.01,
+    "passed": true
+  },
+  {
+    "label": "section area at y = -2.0 against 8*sqrt(9 - y^2)",
+    "computed": 17.888,
+    "expected": 17.88854381999832,
+    "difference": 0.0005438199983167635,
+    "tolerance": 0.01,
+    "passed": true
+  },
+  {
+    "label": "section area at y = +0.0 against 8*sqrt(9 - y^2)",
+    "computed": 24.0,
+    "expected": 24.0,
+    "difference": 0.0,
+    "tolerance": 0.01,
+    "passed": true
+  },
+  {
+    "label": "section area at y = +1.5 against 8*sqrt(9 - y^2)",
+    "computed": 20.784,
+    "expected": 20.784609690826528,
+    "difference": 0.0006096908265291745,
+    "tolerance": 0.01,
+    "passed": true
+  },
+  {
+    "label": "section area at y = +3.0 against 8*sqrt(9 - y^2)",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.01,
+    "passed": true
+  },
+  {
+    "label": "membership of the section point (-2.0, 1.5, 2.5)",
+    "computed": 1.0,
+    "expected": 1.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "membership of the section point (0.0, 1.5, -2.5)",
+    "computed": 1.0,
+    "expected": 1.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "membership of the section point (2.0, 1.5, 0.0)",
+    "computed": 1.0,
+    "expected": 1.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "order dz dx dy against 36*pi for f = 1",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 1e-06,
+    "passed": true
+  },
+  {
+    "label": "order dx dz dy against 36*pi for f = 1",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 1e-06,
+    "passed": true
+  },
+  {
+    "label": "the two orders with y outer agree for f = 1",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923257,
+    "difference": 0.0,
+    "tolerance": 1e-08,
+    "passed": true
+  },
+  {
+    "label": "order dz dx dy against 117*pi for f = 1 + x + y^2",
+    "computed": 367.566340470006,
+    "expected": 367.5663404700055,
+    "difference": 5.115907697472721e-13,
+    "tolerance": 0.0003675663404700055,
+    "passed": true
+  },
+  {
+    "label": "order dx dz dy against 117*pi for f = 1 + x + y^2",
+    "computed": 367.56634047000614,
+    "expected": 367.5663404700055,
+    "difference": 6.252776074688882e-13,
+    "tolerance": 0.0003675663404700055,
+    "passed": true
+  },
+  {
+    "label": "the two orders with y outer agree for f = 1 + x + y^2",
+    "computed": 367.566340470006,
+    "expected": 367.56634047000614,
+    "difference": 1.1368683772161603e-13,
+    "tolerance": 0.0003675663404700055,
+    "passed": true
+  },
+  {
+    "label": "negative control: z from -3 to 3 is not the rectangle bound",
+    "computed": 144.0,
+    "expected": 144.0,
+    "difference": 0.0,
+    "tolerance": 1e-06,
+    "passed": true
+  }
+]

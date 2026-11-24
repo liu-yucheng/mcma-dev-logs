@@ -1,0 +1,76 @@
+<h1>15.8.26 Volume Cut Out by the Tilted Cylinder</h1>
+<blockquote class="statement">Use cylindrical coordinates to find the volume of the solid that the cylinder $r = a\cos\theta$ cuts out of the sphere of radius $a$ centered at the origin. Illustrate the solid by graphing the sphere and the cylinder on the same screen.</blockquote>
+<table>
+<tr><th>Item</th><th>Content</th></tr>
+<tr><td>Given</td><td>The sphere $r^2 + z^2 \leq a^2$ and the cylinder $r = a\cos\theta$, with $a &gt; 0$.</td></tr>
+<tr><td>Find</td><td>The volume $V$ of the solid cut out, and a graph of both surfaces.</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$a$</td><td>Radius of the sphere and scale of the cylinder</td><td>length</td></tr>
+<tr><td>$r, \theta, z$</td><td>Cylindrical coordinates of a point</td><td>length, angle</td></tr>
+<tr><td>$D$</td><td>The disk $r \leq a\cos\theta$ in the plane $z = 0$</td><td>area</td></tr>
+<tr><td>$V$</td><td>Volume of the solid cut out</td><td>volume</td></tr>
+</table>
+<section>
+<h2>Part 1: The volume in cylindrical coordinates</h2>
+<section>
+<h3>Step 1.1: Integrate the height over r</h3>
+<p class="reason">The sphere is $r^2 + z^2 \leq a^2$, so the height above $(r, \theta)$ is $2\sqrt{a^2 - r^2}$. The disk $D$ has $0 \leq r \leq a\cos\theta$ and $-\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2}$, and it lies inside the circle $r \leq a$.</p>
+<div class="computation">
+$$V = \int_{-\pi/2}^{\pi/2} \int_0^{a\cos\theta} 2r\sqrt{a^2 - r^2} \, dr \, d\theta = \int_{-\pi/2}^{\pi/2} \frac{2a^3}{3}\left(1 - |\sin\theta|^3\right) d\theta$$
+</div>
+<p class="result">The inner integral is $\frac{2a^3}{3}(1 - |\sin\theta|^3)$ at every $\theta$.</p>
+<p class="verification">The script <code>part1_step1.py</code> checks the exact inner integral against a trapezoid grid, tolerance $10^{-4}$.</p>
+<p class="mistake">A common slip forgets the Jacobian $r$ and integrates the height alone.</p>
+</section>
+<section>
+<h3>Step 1.2: Integrate over theta</h3>
+<p class="reason">The integrand $1 - |\sin\theta|^3$ is even. Halve the range, drop the absolute value, and close the integral.</p>
+<div class="computation">
+$$V = \frac{4a^3}{3} \int_0^{\pi/2} (1 - \sin^3\theta) \, d\theta = \frac{4a^3}{3}\left(\frac{\pi}{2} - \frac{2}{3}\right) = \frac{6\pi - 8}{9}\,a^3$$
+</div>
+<p class="result">The volume is $V = \frac{6\pi - 8}{9}a^3 \approx 1.2055\,a^3$.</p>
+<p class="verification">The script <code>part1_step2.py</code> asserts a Monte Carlo volume against the exact value, tolerance $0.02$.</p>
+<p class="mistake">A common slip keeps $\sin\theta$ signed over the full range and loses the $\frac{8}{9}a^3$ cut.</p>
+</section>
+</section>
+<section>
+<h2>Part 2: The picture</h2>
+<section>
+<h3>Step 2.1: The intersection curve</h3>
+<p class="reason">On the cylinder, $r = a\cos\theta$. On the sphere, $r^2 + z^2 = a^2$. Together they give $z^2 = a^2\sin^2\theta$, the Viviani curve.</p>
+<div class="computation">
+$$\gamma(\theta) = (a\cos^2\theta, \, a\cos\theta\sin\theta, \, a\sin\theta), \qquad -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2}$$
+</div>
+<p class="result">The upper and lower branches meet at $(a, 0, 0)$ and at the origin.</p>
+<p class="verification">The script <code>part2_step1.py</code> checks a grid of curve points against both surface equations, tolerance $10^{-12}$.</p>
+<p class="mistake">A common slip drops the factor $\cos\theta$ from $y$ and plots a circle instead of the figure-eight curve.</p>
+</section>
+<section>
+<h3>Step 2.2: The section boundary at three heights</h3>
+<p class="reason">At height $z$ the section keeps the points with $r \leq a\cos\theta$ and $r \leq \sqrt{a^2 - z^2}$. The boundary radius is the smaller of the two.</p>
+<div class="computation">
+$$r_{\max}(z, \theta) = \min\left(a\cos\theta, \sqrt{a^2 - z^2}\right), \qquad -\frac{\pi}{2} \leq \theta \leq \frac{\pi}{2}$$
+</div>
+<p class="result">The boundary at $z = 0$ and $z = \pm\frac{1}{2}$ prints with the corner list at each $\theta$ endpoint, for $a = 1$.</p>
+<p class="verification">The script <code>part2_step2.py</code> compares a Monte Carlo section area with a trapezoid of the exact boundary, tolerance $5 \times 10^{-3}$.</p>
+<p class="mistake">A common slip uses only the cylinder radius $a\cos\theta$ and ignores the sphere cap at the top heights.</p>
+</section>
+<figure>
+<img src="FIG:part1_figure1.png" alt="The sphere of radius 1 and the cylinder r = cos(theta)">
+<figcaption>Figure 1. The sphere $r = 1$ and the cylinder $r = \cos\theta$ with $a = 1$.</figcaption>
+</figure>
+</section>
+<section class="answer">
+<h2>Answer</h2>
+<p>The volume is $V = \frac{6\pi - 8}{9}\,a^3 = \left(\frac{2\pi}{3} - \frac{8}{9}\right)a^3 \approx 1.2055\,a^3$.</p>
+</section>
+<section class="notes">
+<h2>Notes</h2>
+<ul>
+<li>The cylinder disk lies inside the sphere footprint, since $r \leq a\cos\theta \leq a$.</li>
+<li>The curve in Figure 1 is the Viviani curve, one loop for the upper branch.</li>
+<li>Every number on this page is printed by a named script under <code>solution/</code>.</li>
+</ul>
+</section>

@@ -1,0 +1,71 @@
+<h1>Mass, Center of Mass, and Moment of Inertia of the Solid E</h1>
+
+<blockquote class="statement">
+Let $E$ be the solid in the first octant bounded by the cylinder $x^2 + y^2 = 1$ and the planes $y = z$, $x = 0$, and $z = 0$.
+The solid has density $\rho(x, y, z) = 1 + x + y + z$.
+</blockquote>
+
+<table>
+<tr><th>Given</th><th>Find</th></tr>
+<tr><td>Region $E$: $0 \leq r \leq 1$, $0 \leq \theta \leq \pi/2$, $0 \leq z \leq r \sin\theta$</td><td>Mass $M$, center of mass $(\bar{x}, \bar{y}, \bar{z})$, moment $I_z$</td></tr>
+<tr><td>Density $\rho = 1 + x + y + z$</td><td>All exact values</td></tr>
+</table>
+
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$E$</td><td>Solid region in the first octant</td><td>None</td></tr>
+<tr><td>$\rho(x, y, z)$</td><td>Density function</td><td>Mass per volume</td></tr>
+<tr><td>$r$, $\theta$</td><td>Polar coordinates in the $xy$-plane</td><td>Length, radians</td></tr>
+<tr><td>$M$</td><td>Total mass</td><td>Mass</td></tr>
+<tr><td>$\bar{x}$, $\bar{y}$, $\bar{z}$</td><td>Center of mass</td><td>Length</td></tr>
+<tr><td>$I_z$</td><td>Moment of inertia about the $z$-axis</td><td>Mass times length squared</td></tr>
+</table>
+
+<section>
+<h2>Part 1: The exact quantities for E</h2>
+
+<figure><img src="FIG:part1_figure1.png" alt="Solid E under the plane z = y inside the quarter cylinder">
+<figcaption>Figure 1. The solid $E$ under the plane $z = y$ inside the quarter cylinder $x^2 + y^2 = 1$.</figcaption></figure>
+
+<section><h3>Step 1.1: the volume and the mass</h3>
+<p class="reason">In polar form the plane $z = y$ gives $0 \leq z \leq r \sin\theta$, and the density reads $1 + r\cos\theta + r\sin\theta + z$.</p>
+<div class="computation">$$ V = \int_0^{\pi/2} \int_0^1 \int_0^{r \sin\theta} r \, dz \, dr \, d\theta = \frac{1}{3}, \qquad M = \iiint_E \rho \, dV = \frac{44 + 9\pi}{96} $$</div>
+<p class="result">The volume is $1/3$ and the mass is $(44 + 9\pi)/96 \approx 0.7529$, printed by <code>part1_step1.py</code>.</p>
+<p class="verification"><code>part1_step1.py</code> compares the closed forms with a 200000-point Monte Carlo sample in the unit box.</p>
+<p class="mistake">A reader may use $0 \leq z \leq r$ and miss the plane $z = y$.</p>
+</section>
+
+<section><h3>Step 1.2: the center of mass</h3>
+<p class="reason">Each coordinate divides its first moment by the mass $M$.</p>
+<div class="computation">$$ \bar{x} = \frac{28}{44 + 9\pi}, \qquad \bar{y} = \frac{2(64 + 15\pi)}{5(44 + 9\pi)}, \qquad \bar{z} = \frac{208 + 45\pi}{15(44 + 9\pi)} $$</div>
+<p class="result">The center is $(0.3874, 0.6150, 0.3223)$, printed by <code>part1_step2.py</code>.</p>
+<p class="verification"><code>part1_step2.py</code> compares the exact first moments with a Monte Carlo weighted average.</p>
+<p class="mistake">A reader may forget the weight $\rho$ inside the first moments.</p>
+</section>
+
+<section><h3>Step 1.3: the moment of inertia about the z-axis</h3>
+<p class="reason">The lever arm to the $z$-axis is $r$, so the integrand is $r^2 \rho$.</p>
+<div class="computation">$$ I_z = \int_0^{\pi/2} \int_0^1 \int_0^{r \sin\theta} r^3 (1 + r\cos\theta + r\sin\theta + z) \, dz \, dr \, d\theta = \frac{17}{60} + \frac{\pi}{16} $$</div>
+<p class="result">The moment is $17/60 + \pi/16 \approx 0.4797$, printed by <code>part1_step3.py</code>.</p>
+<p class="verification"><code>part1_step3.py</code> compares the closed form with a Monte Carlo sample of $r^2 \rho$.</p>
+<p class="mistake">A reader may use $x^2 + y^2 + z^2$ and mix in the moment about a point.</p>
+</section>
+</section>
+
+<section class="answer">
+<h2>Answer</h2>
+<ul>
+<li>Mass: $M = \frac{44 + 9\pi}{96} \approx 0.7529$.</li>
+<li>Center of mass: $\left( \frac{28}{44 + 9\pi}, \frac{2(64 + 15\pi)}{5(44 + 9\pi)}, \frac{208 + 45\pi}{15(44 + 9\pi)} \right) \approx (0.3874, 0.6150, 0.3223)$.</li>
+<li>Moment of inertia about the $z$-axis: $I_z = \frac{17}{60} + \frac{\pi}{16} \approx 0.4797$.</li>
+</ul>
+</section>
+
+<section class="notes">
+<h2>Notes</h2>
+<ul>
+<li>The plane $z = y$ caps the solid at the radial height $r \sin\theta$.</li>
+<li>The volume $V = 1/3$ is printed by <code>part1_step1.py</code>.</li>
+<li>Each value lists the exact form, then the decimal.</li>
+</ul>
+</section>

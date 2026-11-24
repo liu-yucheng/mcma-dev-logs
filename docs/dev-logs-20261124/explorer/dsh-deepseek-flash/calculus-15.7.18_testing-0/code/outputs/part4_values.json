@@ -1,0 +1,14 @@
+{
+  "p4_second_order_latex": "dx\\,dy\\,dz",
+  "p4_second_order_outer_latex": "\\dfrac{9z - z^{3}}{6}",
+  "p4_second_order_answer_latex": "\\dfrac{27}{8}",
+  "p4_second_order_decimal": "3.375000000",
+  "p4_polar_decimal": "3.375000000",
+  "p4_polar_volume_decimal": "3.000000000",
+  "p4_monte_carlo_decimal": "3.376856170",
+  "p4_monte_carlo_error": "0.003051007",
+  "p4_monte_carlo_standard_errors": "0.6084",
+  "p4_derivative_gap": "2.636e-10",
+  "p4_parameter_sample_count": "200000",
+  "p4_check_count": "7"
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "label": "Exact value of $f = 1$ from the parametrisation against $128/15$",
+    "computed": 8.533333333333333,
+    "expected": 8.533333333333333,
+    "difference": 0.0,
+    "tolerance": 1e-12
+  },
+  {
+    "label": "Exact value of $f = x^2+y+z$ from the parametrisation against $512/21$",
+    "computed": 24.38095238095238,
+    "expected": 24.38095238095238,
+    "difference": 0.0,
+    "tolerance": 1e-12
+  },
+  {
+    "label": "Exact value of $f = 1+xyz$ from the parametrisation against $128/15$",
+    "computed": 8.533333333333333,
+    "expected": 8.533333333333333,
+    "difference": 0.0,
+    "tolerance": 1e-12
+  },
+  {
+    "label": "Largest deviation of the eighteen order values from the exact values",
+    "computed": 1.0658141036401503e-14,
+    "expected": 0.0,
+    "difference": 1.0658141036401503e-14,
+    "tolerance": 1e-06
+  },
+  {
+    "label": "Largest difference between two orders for $f = e^{-x^2}(1+z)$",
+    "computed": 8.881784197001252e-15,
+    "expected": 0.0,
+    "difference": 8.881784197001252e-15,
+    "tolerance": 1e-06
+  },
+  {
+    "label": "Number of orders of integration against $3!$",
+    "computed": 6.0,
+    "expected": 6.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  },
+  {
+    "label": "Points that the limits of $dz\\,dy\\,dx$ and $E$ classify differently",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  },
+  {
+    "label": "Points that the limits of $dz\\,dx\\,dy$ and $E$ classify differently",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  },
+  {
+    "label": "Points that the limits of $dy\\,dz\\,dx$ and $E$ classify differently",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  },
+  {
+    "label": "Points that the limits of $dy\\,dx\\,dz$ and $E$ classify differently",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  },
+  {
+    "label": "Points that the limits of $dx\\,dz\\,dy$ and $E$ classify differently",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  },
+  {
+    "label": "Points that the limits of $dx\\,dy\\,dz$ and $E$ classify differently",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  }
+]

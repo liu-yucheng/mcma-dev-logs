@@ -1,0 +1,8 @@
+part5 checks
+check                                                computed         expected    tolerance result
+inertia_of_two_orders                             0.158648240      0.158648240     1.00e-09 pass
+inertia_by_sections                               0.158648240      0.158648240     1.00e-07 pass
+inertia_by_one_integral_in_x                      0.158648240      0.158648240     1.00e-06 pass
+inertia_monte_carlo_inside_three_errors           0.000096308      0.000971134     0.00e+00 pass
+inertia_against_density_times_radius              0.536272318      0.536272318     1.00e-06 pass
+5 checks, 5 pass

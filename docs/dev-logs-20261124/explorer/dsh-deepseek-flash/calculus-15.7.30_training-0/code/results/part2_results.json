@@ -1,0 +1,170 @@
+[
+  {
+    "label": "order dz dy dx against 36*pi for f = 1",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 1e-06,
+    "passed": true
+  },
+  {
+    "label": "order dy dz dx against 36*pi for f = 1",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 1e-06,
+    "passed": true
+  },
+  {
+    "label": "the two orders with x outer agree for f = 1",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923257,
+    "difference": 0.0,
+    "tolerance": 1e-08,
+    "passed": true
+  },
+  {
+    "label": "order dz dy dx against 117*pi for f = 1 + x + y^2",
+    "computed": 367.56634047000585,
+    "expected": 367.56634047000574,
+    "difference": 1.1368683772161603e-13,
+    "tolerance": 0.0003675663404700057,
+    "passed": true
+  },
+  {
+    "label": "order dy dz dx against 117*pi for f = 1 + x + y^2",
+    "computed": 367.5663404700058,
+    "expected": 367.56634047000574,
+    "difference": 5.684341886080802e-14,
+    "tolerance": 0.0003675663404700057,
+    "passed": true
+  },
+  {
+    "label": "the two orders with x outer agree for f = 1 + x + y^2",
+    "computed": 367.56634047000585,
+    "expected": 367.5663404700058,
+    "difference": 5.684341886080802e-14,
+    "tolerance": 0.0003675663404700057,
+    "passed": true
+  },
+  {
+    "label": "negative control: z from -3 to 3 is not the cylinder bound",
+    "computed": 144.0,
+    "expected": 144.0,
+    "difference": 0.0,
+    "tolerance": 1e-06,
+    "passed": true
+  },
+  {
+    "label": "lower end of the chord at y = -2.0",
+    "computed": -2.2359999999983664,
+    "expected": -2.23606797749979,
+    "difference": 6.797750142339964e-05,
+    "tolerance": 0.0002,
+    "passed": true
+  },
+  {
+    "label": "upper end of the chord at y = -2.0",
+    "computed": 2.236000000011071,
+    "expected": 2.23606797749979,
+    "difference": 6.797748871889553e-05,
+    "tolerance": 0.0002,
+    "passed": true
+  },
+  {
+    "label": "chord length at y = -2.0 against 2*sqrt(9 - y^2)",
+    "computed": 4.472000000009437,
+    "expected": 4.47213595499958,
+    "difference": 0.00013595499014229517,
+    "tolerance": 0.0004,
+    "passed": true
+  },
+  {
+    "label": "lower end of the chord at y = -0.5",
+    "computed": -2.95799999999989,
+    "expected": -2.958039891549808,
+    "difference": 3.9891549918014135e-05,
+    "tolerance": 0.0002,
+    "passed": true
+  },
+  {
+    "label": "upper end of the chord at y = -0.5",
+    "computed": 2.9580000000125946,
+    "expected": 2.958039891549808,
+    "difference": 3.989153721351002e-05,
+    "tolerance": 0.0002,
+    "passed": true
+  },
+  {
+    "label": "chord length at y = -0.5 against 2*sqrt(9 - y^2)",
+    "computed": 5.916000000012485,
+    "expected": 5.916079783099616,
+    "difference": 7.978308713152416e-05,
+    "tolerance": 0.0004,
+    "passed": true
+  },
+  {
+    "label": "lower end of the chord at y = +0.0",
+    "computed": -2.9999999999999787,
+    "expected": -3.0,
+    "difference": 2.1316282072803006e-14,
+    "tolerance": 0.0002,
+    "passed": true
+  },
+  {
+    "label": "upper end of the chord at y = +0.0",
+    "computed": 2.9999000000126834,
+    "expected": 3.0,
+    "difference": 9.999998731657911e-05,
+    "tolerance": 0.0002,
+    "passed": true
+  },
+  {
+    "label": "chord length at y = +0.0 against 2*sqrt(9 - y^2)",
+    "computed": 5.999900000012662,
+    "expected": 6.0,
+    "difference": 9.999998733789539e-05,
+    "tolerance": 0.0004,
+    "passed": true
+  },
+  {
+    "label": "lower end of the chord at y = +2.0",
+    "computed": -2.2359999999983664,
+    "expected": -2.23606797749979,
+    "difference": 6.797750142339964e-05,
+    "tolerance": 0.0002,
+    "passed": true
+  },
+  {
+    "label": "upper end of the chord at y = +2.0",
+    "computed": 2.236000000011071,
+    "expected": 2.23606797749979,
+    "difference": 6.797748871889553e-05,
+    "tolerance": 0.0002,
+    "passed": true
+  },
+  {
+    "label": "chord length at y = +2.0 against 2*sqrt(9 - y^2)",
+    "computed": 4.472000000009437,
+    "expected": 4.47213595499958,
+    "difference": 0.00013595499014229517,
+    "tolerance": 0.0004,
+    "passed": true
+  },
+  {
+    "label": "change of the inner disk integral from x = 0 to x = 1 against 9*pi",
+    "computed": 28.274333882308255,
+    "expected": 28.274333882308138,
+    "difference": 1.1723955140041653e-13,
+    "tolerance": 1e-06,
+    "passed": true
+  },
+  {
+    "label": "inner disk integral at x = 0 against the integral of 1 + y^2 over the disk",
+    "computed": 91.8915851175014,
+    "expected": 91.89158511750144,
+    "difference": 2.842170943040401e-14,
+    "tolerance": 1e-06,
+    "passed": true
+  }
+]

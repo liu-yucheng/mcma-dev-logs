@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Results briefing for 2026-11-24: 17 training losses, 7 test losses, 24 Qwen transfer pages, the plot recipes that transferred and those that did not, the wall-clock and token-speed comparison.">
+<title>RSI 2026-11-24 &mdash; Results Briefing</title>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../lightbox.css">
+<style>
+.chart-canvas { position: relative; height: 320px; }
+.chart-canvas.tall { height: 420px; }
+.chart-note { font-size: .84rem; color: var(--muted); margin: 8px 0 0; }
+.callout { background: #fff8e6; border: 1px solid #eddcae; border-radius: 10px; padding: 16px 20px; margin: 18px 0; }
+.callout h3 { margin-top: 0; }
+.callout.bad { background: #fdf1ee; border-color: #ecb7a6; }
+.gallery img { max-height: 300px; object-fit: contain; background: #fff; }
+.stat-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.stat-fail { background: #fdf1ee; border-color: #ecb7a6; }
+.stat-fail .num { color: #b23a1c; }
+td.num.good-num { color: #2f6f4f; font-weight: 600; }
+td.num.warn-num { color: #b23a1c; font-weight: 600; }
+th.num { text-align: right; }
+.fail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 860px) { .fail-grid { grid-template-columns: 1fr; } }
+.fail-grid figure { margin: 0; }
+.fail-grid img { width: 100%; border: 1px solid var(--line); border-radius: 8px; }
+</style>
+<script src="assets/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-11-24</div>
+    <h1>&#128202; Results Briefing</h1>
+    <p class="lede">&#129302; The training losses fall, with one late spike. &#9989; The test split solves 6 of 7 problems. &#128034; The Qwen transfer passes its gate 24 of 24 times. &#10060; The learned plot style transfers on none of the two examples. &#9201; DeepSeek Flash runs at 200 tokens/s. Qwen3.8-27B runs at 40.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Harness</a>
+    <a href="briefing.html" aria-current="page">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="glance">
+  <h2>&#127937; Result at a glance</h2>
+  <div class="stat-grid">
+    <div class="stat"><div class="num">17</div><div class="lbl">&#129302; Training passes (v0 &rarr; v17)</div></div>
+    <div class="stat"><div class="num">6 / 7</div><div class="lbl">&#9989; Test answers equal to canonical</div></div>
+    <div class="stat"><div class="num">24 / 24</div><div class="lbl">&#128737; Qwen gate PASS</div></div>
+    <div class="stat"><div class="num">0.1555</div><div class="lbl">&#128200; Mean training loss</div></div>
+    <div class="stat"><div class="num">0.2186</div><div class="lbl">&#128200; Mean test loss</div></div>
+    <div class="stat stat-fail"><div class="num">0 / 2</div><div class="lbl">&#10060; Plot recipes that transferred</div></div>
+  </div>
+  <p>&#128204; The DeepSeek run writes <strong>24 solution pages</strong>, <strong>79 figures</strong>, and <strong>117 verification scripts</strong>. The Qwen run writes <strong>24 solution pages</strong>, <strong>23 figures</strong>, <strong>75 step scripts</strong>, and <strong>7</strong> short <code>NOTES.md</code> files. All pages are self-contained HTML with KaTeX.</p>
+  <p>&#128203; The manual remarks do not give a token count or a cost. This chapter uses the transcript time, the file counts, and the five-dimension rubric as the measured values.</p>
+</section>
+
+<section id="training">
+  <h2>&#128200; Training losses</h2>
+  <p>&#128204; One problem gives one parameters step. The loss is the rubric distance from a perfect 5. The sequence is not monotone: it starts at 0.232, reaches 0.040 at v16, then rises to 0.316 at the last pass.</p>
+  <div class="chart-box">
+    <div class="chart-canvas tall"><canvas id="chartTrain"></canvas></div>
+    <p class="chart-note">&#128200; Chart 1 &mdash; Loss per training pass, in order. The last pass is the worst single loss of the run.</p>
+  </div>
+  <table>
+    <thead><tr><th>#</th><th>Problem</th><th class="num">Loss</th><th class="num">Corr.</th><th>Parameters</th><th>Evaluator finding</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>15.7.17</td><td class="num">0.2320</td><td class="num">3.0</td><td>v0 &rarr; v1</td><td>Answer 16&pi;/3 reproduced. The claim of &ldquo;less than one standard error&rdquo; fails at 1.11 SE.</td></tr>
+      <tr><td>2</td><td>15.7.20</td><td class="num">0.3100</td><td class="num">2.5</td><td>v1 &rarr; v2</td><td>A slice is called an annulus from the figure, not from the inequalities.</td></tr>
+      <tr><td>3</td><td>15.7.21</td><td class="num">0.2220</td><td class="num">3.5</td><td>v2 &rarr; v3</td><td>Value 8/15 true. One false sentence about a triangle and a segment.</td></tr>
+      <tr><td>4</td><td>15.7.22</td><td class="num">0.0780</td><td class="num">4.8</td><td>v3 &rarr; v4</td><td>V = 20&pi; matches exactly. One sentence false.</td></tr>
+      <tr><td>5</td><td>15.7.27</td><td class="num">0.2740</td><td class="num">2.5</td><td>v4 &rarr; v5</td><td>Region correct, one false sentence. Aborted, then resumed.</td></tr>
+      <tr><td>6</td><td>15.7.28</td><td class="num">0.1000</td><td class="num">3.5</td><td>v5 &rarr; v6</td><td>Every number reproduces. One false statement survives all checks.</td></tr>
+      <tr><td>7</td><td>15.7.29</td><td class="num">0.1660</td><td class="num">4.5</td><td>v6 &rarr; v7</td><td>Six limit sets and five exact values true. Presentation 3.2.</td></tr>
+      <tr><td>8</td><td>15.7.30</td><td class="num">0.0700</td><td class="num">5.0</td><td>v7 &rarr; v8</td><td>No false sentence found.</td></tr>
+      <tr><td>9</td><td>15.7.31</td><td class="num">0.1100</td><td class="num">4.5</td><td>v8 &rarr; v9</td><td>All six answers 128/15 agree within 7&times;10<sup>&minus;15</sup>.</td></tr>
+      <tr><td>10</td><td>15.7.39</td><td class="num">0.0900</td><td class="num">5.0</td><td>v9 &rarr; v10</td><td>Every statement true. 3,600 s tool timeout, resumed in 459 s.</td></tr>
+      <tr><td>11</td><td>15.7.46</td><td class="num">0.0700</td><td class="num">5.0</td><td>v10 &rarr; v11</td><td>Cone derivation and answer true. Five scripts pass.</td></tr>
+      <tr><td>12</td><td>15.7.49</td><td class="num">0.0840</td><td class="num">5.0</td><td>v11 &rarr; v12</td><td>All true. Presentation 2.8 from raw LaTeX in table cells.</td></tr>
+      <tr><td>13</td><td>15.7.54</td><td class="num">0.2640</td><td class="num">3.0</td><td>v12 &rarr; v13</td><td>Derivation true. Several sentences carry unsupported values.</td></tr>
+      <tr><td>14</td><td>15.8.14</td><td class="num">0.0500</td><td class="num">4.5</td><td>v13 &rarr; v14</td><td>Every printed number equals a script print.</td></tr>
+      <tr><td>15</td><td>15.8.26</td><td class="num">0.1680</td><td class="num">3.8</td><td>v14 &rarr; v15</td><td>No baseline image in the session. Defects named against geometry alone.</td></tr>
+      <tr><td>16</td><td>15.9.43</td><td class="num">0.0400</td><td class="num">5.0</td><td>v15 &rarr; v16</td><td>Every closed form recomputed by hand and by six scripts.</td></tr>
+      <tr><td>17</td><td>15.9.45</td><td class="num warn-num">0.3160</td><td class="num">2.5</td><td>v16 &rarr; v17</td><td>Exact answer 136&pi;/99 true. Four reasoning sentences false. Presentation 2.3.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <h3>&#128161; The loss does not show the learning</h3>
+    <p>&#128204; The prompt at v17 is much better at plotting than the prompt at v0. The loss at v17 is 0.316, the worst single value of the run. The reason is the rubric: one pass on one problem, and the final problem has four false sentences that cost more than the plot rules gain.</p>
+    <p>&#128295; The learned plot rules are visible in the artifacts, not in the curve. This is the main design problem that the next plan targets.</p>
+  </div>
+</section>
+
+<section id="test">
+  <h2>&#9989; Test split at v17</h2>
+  <p>&#128204; Seven unseen problems, one forward pass each, no feedback and no backward pass. Mean test loss is 0.2186 against a mean training loss of 0.1555.</p>
+  <div class="chart-box">
+    <div class="chart-canvas"><canvas id="chartTest"></canvas></div>
+    <p class="chart-note">&#128200; Chart 2 &mdash; Test loss per problem. Red is the one wrong answer; amber is the derived value.</p>
+  </div>
+  <table>
+    <thead><tr><th>#</th><th>Problem</th><th class="num">Loss</th><th>Canonical answer</th><th>Session answer</th><th>Math</th><th>Figures vs baseline</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>15.7.18</td><td class="num">0.314</td><td>27/8 = 3.375</td><td>27/8 = 3.375</td><td>&#9989; matches</td><td>Below. Labels on the wrong surfaces.</td></tr>
+      <tr><td>2</td><td>15.7.23</td><td class="num warn-num">0.490</td><td>&pi;/4 &minus; 1/3 = 0.452065</td><td>1/3 = 0.333333</td><td>&#10060; <strong>wrong</strong></td><td>Below. Readable solid, wrong region.</td></tr>
+      <tr><td>3</td><td>15.7.32</td><td class="num good-num">0.056</td><td>six orders, V = 2/3</td><td>six orders, V = 2/3, f = 79/30</td><td>&#9989; matches</td><td>Below. Good labels and projections; one broken log axis.</td></tr>
+      <tr><td>4</td><td>15.7.40</td><td class="num">0.120</td><td>m = 16/5, centre (5/14, 0, 2/7)</td><td>16/5, (5/14, 0, 2/7)</td><td>&#9989; matches</td><td>Below. Best section panel of the split.</td></tr>
+      <tr><td>5</td><td>15.7.47</td><td class="num">0.184</td><td>setup only</td><td>setup plus evaluated values</td><td>&#9989; matches, over-answered</td><td>Below. Grey labels on grey surfaces.</td></tr>
+      <tr><td>6</td><td>15.7.50</td><td class="num">0.120</td><td>11.2, (0.375, 2.209, 0.938), 59.794</td><td>identical to 3 dp</td><td>&#9989; matches</td><td>Below. Best-labelled solid.</td></tr>
+      <tr><td>7</td><td>15.7.55</td><td class="num">0.246 *</td><td>4&radic;6&pi;/45 = 0.684027</td><td>8&pi;/(15&radic;6) = 0.684027</td><td>&#9989; matches</td><td>Below. Arrowheads, no equation label.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; * No <code>loss.json</code> for this resumed test session. The value is derived from the recorded rubric with the plugin formula. The rubric weights are 0.30 correctness, 0.20 clarity, 0.20 pedagogy, 0.20 verification, 0.10 presentation.</p>
+  <div class="callout bad">
+    <h3>&#10060; The one real math failure: 15.7.23</h3>
+    <p>&#128204; The canonical answer is &pi;/4 &minus; 1/3, a wedge cut from a cylinder by the planes y = x and x = 1. The session gives 1/3, the mirror solid under y &ge; x. The session also passes 33 checks on that answer, because its verification layer tests the same wrong region.</p>
+    <p>&#128161; A test pass has no feedback, so nothing corrects the region. This failure is a property of the current protocol, not a random model error.</p>
+  </div>
+</section>
+
+<section id="transfer">
+  <h2>&#128034; Transfer to Qwen3.8-27B</h2>
+  <p>&#128204; Qwen3.8-27B ran the v17-derived instruction on all 24 problems. It published 24 pages, and every page passed <code>tools/check.py</code>. The gate checks structure, math delimiters, and embedded figures. It does not check whether the plot style is good.</p>
+  <table>
+    <thead><tr><th>Item</th><th class="num">DeepSeek Flash</th><th class="num">Qwen3.8-27B</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>&#128196; Solution pages</td><td class="num">24</td><td class="num">24</td><td>DeepSeek writes <code>report.html</code>; Qwen writes <code>solution.html</code>.</td></tr>
+      <tr><td>&#128200; Figures</td><td class="num">79</td><td class="num">23</td><td>DeepSeek draws 2&ndash;6 per problem; Qwen draws at most 1.</td></tr>
+      <tr><td>&#129518; Verification scripts</td><td class="num">117</td><td class="num">75</td><td>DeepSeek writes <code>part&lt;i&gt;_verify.py</code>; Qwen writes <code>part&lt;i&gt;_step&lt;j&gt;.py</code>.</td></tr>
+      <tr><td>&#128200; Figure scripts</td><td class="num">78</td><td class="num">23</td><td>One script for each figure. DeepSeek 15.7.40 draws four figures from three scripts.</td></tr>
+      <tr><td>&#128203; Step notes</td><td class="num">272</td><td class="num">7</td><td><code>steps/*.md</code> for DeepSeek; <code>NOTES.md</code> for Qwen.</td></tr>
+      <tr><td>&#9889; Decode speed</td><td class="num good-num">200 tokens/s</td><td class="num warn-num">40 tokens/s</td><td>From the manual remarks.</td></tr>
+      <tr><td>&#9201; Time per problem (RSI off)</td><td class="num good-num">&lt; 5 min</td><td class="num warn-num">&gt; 15 min</td><td>Average, from the manual remarks.</td></tr>
+    </tbody>
+  </table>
+  <h3>&#128200; The two transfer examples</h3>
+  <table>
+    <thead><tr><th>Problem</th><th>Learned element</th><th>DeepSeek at v17</th><th>Qwen3.8-27B</th></tr></thead>
+    <tbody>
+      <tr><td>15.7.32</td><td>Labelled simple 3D geometry</td><td>&#9989; Tetrahedron with vertex letters A&ndash;D and boxed plane labels.</td><td>&#10060; One 3D panel, clipped low-contrast labels, no vertices.</td></tr>
+      <tr><td>15.7.32</td><td>Labelled 2D projections</td><td>&#9989; Three projection panels with corners and base areas.</td><td>&#10060; No projection panel.</td></tr>
+      <tr><td>15.7.18</td><td>Complex 3D perspective</td><td>&#9888; One 3D panel. Two labels land on the wrong surface.</td><td>&#10060; One 3D panel. The plane and cylinder labels collide; no projection.</td></tr>
+      <tr><td>15.7.18</td><td>Perspective illusion</td><td>&#10060; Not adjusted.</td><td>&#10060; Not considered. Labels overlap.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The Qwen run also reported a 24/24 PASS result of its own. The independent re-run for the session summary reproduced it.</p>
+</section>
+
+<section id="time">
+  <h2>&#9201; Time and speed</h2>
+  <p>&#128204; The DeepSeek session ran for 16 h 57 m elapsed. It spent 14 h 07 m inside turns, a duty cycle of 83 %, and 2 h 50 m in operator pauses. The three longest steps are blocking plugin calls: 5,160 s, 5,702 s, and 8,142 s. They hold 37 % of the counted step time.</p>
+  <p>&#128034; The Qwen run took 5 h 44 m 31 s against a 4 h budget, an overrun of 43.5 %. Only 3 h 31 m of that was inside a turn; 2 h 13 m was idle between turns while the operator typed &ldquo;Continue&rdquo;.</p>
+  <div class="chart-grid">
+    <div class="chart-box">
+      <div class="chart-canvas"><canvas id="chartSpeed"></canvas></div>
+      <p class="chart-note">&#9889; Chart 3 &mdash; Decode speed from the manual remarks.</p>
+    </div>
+    <div class="chart-box">
+      <div class="chart-canvas"><canvas id="chartClock"></canvas></div>
+      <p class="chart-note">&#9201; Chart 4 &mdash; Wall clock and active time. The Qwen bar also shows the 4 h budget.</p>
+    </div>
+  </div>
+  <div class="chart-box">
+    <div class="chart-canvas tall"><canvas id="chartQwen"></canvas></div>
+    <p class="chart-note">&#128034; Chart 5 &mdash; Qwen per-problem seconds, for the 15 problems that reported a number. The line is the 600 s target. The median is 1,200 s, twice the target.</p>
+  </div>
+  <p class="small">&#128204; The Qwen value for 15.8.26 appears as 2,100 s and 4,639 s in two sources. The chart uses the higher figure that the lead carried. Problems that a worker finished without reporting a number are not in the chart.</p>
+</section>
+
+<section id="failures">
+  <h2>&#9888; Failure and recovery records</h2>
+  <table>
+    <thead><tr><th>Event</th><th>Run</th><th>Effect</th><th>Recovery</th></tr></thead>
+    <tbody>
+      <tr><td>&#10060; Wrong region</td><td>DeepSeek test 15.7.23</td><td>Answer 1/3 instead of &pi;/4 &minus; 1/3. 33 internal checks pass on the wrong region.</td><td>&#9888; No recovery. A test pass has no feedback.</td></tr>
+      <tr><td>&#9201; Tool timeout</td><td>DeepSeek training 15.7.39, 15.9.43</td><td>Two passes hit the 3,600 s tool ceiling.</td><td>&#9989; <code>mcma_resume</code> kept the finished stages.</td></tr>
+      <tr><td>&#128268; Provider stall</td><td>DeepSeek training</td><td>Two idle-stream retries and a 135-minute stall on one <code>list_agents</code> step.</td><td>&#9989; The stream retried and the pass continued.</td></tr>
+      <tr><td>&#128034; Worker death</td><td>Qwen transfer</td><td>13 &ldquo;ran out of room&rdquo; notices and 5 &ldquo;stopped before finished&rdquo; notices.</td><td>&#9989; The lead shrank the unit to one problem and re-dispatched.</td></tr>
+      <tr><td>&#128230; Context overflow</td><td>Qwen transfer</td><td>Turns 19 and 20 ended with <code>CONTEXT_WINDOW_EXCEEDED</code>.</td><td>&#9989; Restarted and finished the last three problems in one 37-minute turn.</td></tr>
+      <tr><td>&#128465; Cleanup debt</td><td>DeepSeek training</td><td>25 <code>code/.venv</code> trees (~5.35 GB), <code>.tmp/</code>, and <code>__pycache__</code> left in the workspace.</td><td>&#9989; Two operator prompts; final footprint 49 MB.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="visual">
+  <h2>&#128200; Visual check</h2>
+  <p>&#128204; These figures come from the raw folders. The first three show what the training learned and where it still fails. The last three show the same problems after transfer. Click a figure to zoom.</p>
+  <div class="gallery">
+    <figure>
+      <img class="zimg" src="assets/briefing/ds-15.7.32-solid.png" alt="DeepSeek Flash labelled tetrahedron for problem 15.7.32.">
+      <figcaption>&#9989; DeepSeek 15.7.32 &mdash; labelled tetrahedron with vertex letters and boxed plane labels.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/ds-15.7.32-projections.png" alt="DeepSeek Flash three labelled 2D projections for problem 15.7.32.">
+      <figcaption>&#9989; DeepSeek 15.7.32 &mdash; three labelled 2D projections with corners and areas. This is the learned recipe.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/ds-15.7.18-perspective.png" alt="DeepSeek Flash 3D panel for problem 15.7.18 with labels on the wrong surfaces.">
+      <figcaption>&#9888; DeepSeek 15.7.18 &mdash; the hard case. Two callouts land on the wrong surface.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/qwen-15.7.32-transfer.png" alt="Qwen3.8-27B 3D tetrahedron for problem 15.7.32 with clipped labels.">
+      <figcaption>&#10060; Qwen 15.7.32 &mdash; one 3D panel, clipped low-contrast labels, no projection.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/qwen-15.7.18-transfer.png" alt="Qwen3.8-27B 3D panel for problem 15.7.18 with overlapping surface labels.">
+      <figcaption>&#10060; Qwen 15.7.18 &mdash; one 3D panel. The plane and cylinder labels collide, and no projection is drawn.</figcaption>
+    </figure>
+    <figure>
+      <img class="zimg" src="assets/briefing/canonical-15.7.32.png" alt="Canonical solution page for problem 15.7.32 with a 3D view and three projections.">
+      <figcaption>&#128218; Canonical 15.7.32 &mdash; the baseline that the training tried to learn.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="bottom-line">
+  <h2>&#128204; Bottom line</h2>
+  <ul>
+    <li>&#129302; <strong>Framework.</strong> The MCMA plugin trains an agent with forward, feedback, backward, validate, and test passes. The training loop ran end to end on 17 problems.</li>
+    <li>&#128200; <strong>Learning.</strong> The instruction grew from 272 to 11,952 characters in the <code>prompt.extra</code> field. It learned a simple plot recipe and recorded it in the figure law.</li>
+    <li>&#128161; <strong>Loss.</strong> The rubric loss does not track the plot learning. The final pass is the worst single loss of the run.</li>
+    <li>&#9989; <strong>Math.</strong> DeepSeek solves 6 of 7 test problems. Qwen passes a structural gate on 24 of 24. Neither claim covers plot quality.</li>
+    <li>&#10060; <strong>Transfer.</strong> The learned plot style does not appear in the Qwen pages. Two of two examples fail.</li>
+    <li>&#9201; <strong>Tutor verdict.</strong> DeepSeek Flash at 200 tokens/s is acceptable, at under 5 minutes per problem with RSI off. Qwen3.8-27B at 40 tokens/s is not, at over 15 minutes per problem.</li>
+    <li>&#128269; <strong>Next check.</strong> Make the RSI learn the plot recipe in an explicit, measurable way. See <a href="plans.html">Future Plans</a>.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+<script src="../lightbox.js"></script>
+<script>
+Chart.defaults.font.family = "Arial, sans-serif";
+Chart.defaults.color = "#1c2128";
+
+const BLUE = "#2f446f";
+const AMBER = "#e8a33d";
+const RED = "#b23a1c";
+const GREEN = "#2f6f4f";
+const GREY = "#5b6b7e";
+const LIGHT = "#9ec0f0";
+
+const TRAIN_LABELS = ["15.7.17","15.7.20","15.7.21","15.7.22","15.7.27","15.7.28","15.7.29","15.7.30","15.7.31","15.7.39","15.7.46","15.7.49","15.7.54","15.8.14","15.8.26","15.9.43","15.9.45"];
+const TRAIN_LOSS = [0.232,0.310,0.222,0.078,0.274,0.100,0.166,0.070,0.110,0.090,0.070,0.084,0.264,0.050,0.168,0.040,0.316];
+
+new Chart(document.getElementById("chartTrain"), {
+  type: "line",
+  data: {
+    labels: TRAIN_LABELS,
+    datasets: [{
+      label: "Loss",
+      data: TRAIN_LOSS,
+      borderColor: BLUE,
+      backgroundColor: "rgba(47,68,111,.14)",
+      tension: .25,
+      pointRadius: 3,
+      pointBackgroundColor: TRAIN_LOSS.map(function (v) { return v === 0.316 ? RED : BLUE; })
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Loss per training pass (v0 to v17)" },
+      legend: { display: false }
+    },
+    scales: {
+      y: { beginAtZero: true, title: { display: true, text: "Loss" } },
+      x: { ticks: { maxRotation: 60, minRotation: 45, autoSkip: false, font: { size: 10 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById("chartTest"), {
+  type: "bar",
+  data: {
+    labels: ["15.7.18","15.7.23","15.7.32","15.7.40","15.7.47","15.7.50","15.7.55"],
+    datasets: [{
+      label: "Loss",
+      data: [0.314,0.490,0.056,0.120,0.184,0.120,0.246],
+      backgroundColor: [BLUE,RED,GREEN,BLUE,BLUE,BLUE,AMBER],
+      borderRadius: 5
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Test loss at v17 (7 unseen problems)" },
+      legend: { display: false }
+    },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "Loss" } } }
+  }
+});
+
+new Chart(document.getElementById("chartSpeed"), {
+  type: "bar",
+  data: {
+    labels: ["DeepSeek Flash (Internet)", "Qwen3.8-27B (HPC)"],
+    datasets: [{
+      label: "Tokens/s",
+      data: [200, 40],
+      backgroundColor: [GREEN, AMBER],
+      borderRadius: 5
+    }]
+  },
+  options: {
+    indexAxis: "y",
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Decode speed (tokens/s)" },
+      legend: { display: false }
+    },
+    scales: { x: { beginAtZero: true, title: { display: true, text: "Tokens/s" } } }
+  }
+});
+
+new Chart(document.getElementById("chartClock"), {
+  type: "bar",
+  data: {
+    labels: ["DeepSeek train + test", "Qwen transfer"],
+    datasets: [
+      { label: "Elapsed (h)", data: [16.95, 5.74], backgroundColor: LIGHT, borderRadius: 4 },
+      { label: "Inside turns (h)", data: [14.12, 3.53], backgroundColor: BLUE, borderRadius: 4 },
+      { label: "Budget (h)", data: [null, 4.0], backgroundColor: RED, borderRadius: 4 }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Wall clock and active time (hours)" },
+      legend: { position: "bottom" }
+    },
+    scales: { y: { beginAtZero: true, title: { display: true, text: "Hours" } } }
+  }
+});
+
+const QWEN_LABELS = ["15.7.31","15.7.40","15.7.28","15.7.39","15.7.22","15.9.45","15.7.18","15.7.20","15.8.14","15.7.27","15.8.26","15.7.21","15.9.43","15.7.29","15.7.17"];
+const QWEN_SECONDS = [379,300,345,360,513,700,1200,1200,1840,1860,4639,2100,2450,3461,4504];
+
+new Chart(document.getElementById("chartQwen"), {
+  type: "bar",
+  data: {
+    labels: QWEN_LABELS,
+    datasets: [
+      { label: "Seconds", data: QWEN_SECONDS, backgroundColor: QWEN_SECONDS.map(function (v) { return v > 600 ? AMBER : GREEN; }), borderRadius: 4 },
+      { label: "600 s target", data: QWEN_LABELS.map(function () { return 600; }), type: "line", borderColor: RED, borderDash: [6,4], pointRadius: 0, fill: false }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: { display: true, text: "Qwen per-problem seconds (15 reported values)" },
+      legend: { position: "bottom" }
+    },
+    scales: {
+      y: { beginAtZero: true, title: { display: true, text: "Seconds" } },
+      x: { ticks: { maxRotation: 60, minRotation: 45, autoSkip: false, font: { size: 10 } } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

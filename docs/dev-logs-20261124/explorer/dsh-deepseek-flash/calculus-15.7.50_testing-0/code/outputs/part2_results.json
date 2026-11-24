@@ -1,0 +1,90 @@
+{
+  "checks": {
+    "count": 6,
+    "part": "part2",
+    "rows": [
+      {
+        "computed": 0.07466666666666666,
+        "difference": 1.3877787807814457e-17,
+        "expected": 0.07466666666666665,
+        "name": "inner x integral at y = 0.6",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 1.1666666666666667,
+        "difference": 0.0,
+        "expected": 1.1666666666666667,
+        "name": "inner x integral at y = 1.5",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 4.778666666666666,
+        "difference": 8.881784197001252e-16,
+        "expected": 4.778666666666665,
+        "name": "inner x integral at y = 2.4",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 11.2,
+        "difference": 3.552713678800501e-15,
+        "expected": 11.199999999999996,
+        "name": "mass: Beta function against quadrature",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 11.199999999999996,
+        "difference": 5.329070518200751e-15,
+        "expected": 11.200000000000001,
+        "name": "mass: two integration orders",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 11.199999999999996,
+        "difference": 0.006596382071286655,
+        "expected": 11.193403617928709,
+        "name": "mass: quadrature against Monte Carlo",
+        "tolerance": 0.05745970309283725
+      }
+    ]
+  },
+  "inner_rows": [
+    {
+      "difference": "1.39e-17",
+      "direct": "0.074666667",
+      "formula": "0.074666667",
+      "gauss": "0.074666667",
+      "y": "0.6"
+    },
+    {
+      "difference": "0.00e+00",
+      "direct": "1.166666667",
+      "formula": "1.166666667",
+      "gauss": "1.166666667",
+      "y": "1.5"
+    },
+    {
+      "difference": "8.88e-16",
+      "direct": "4.778666667",
+      "formula": "4.778666667",
+      "gauss": "4.778666667",
+      "y": "2.4"
+    }
+  ],
+  "inner_x_at_0_6": "0.074666667",
+  "inner_x_at_1_5": "1.166666667",
+  "inner_x_at_2_4": "4.778666667",
+  "mass": "11.200000",
+  "mass_3dp": "11.200",
+  "mass_alternate": "11.200000000",
+  "mass_beta": "11.200000000",
+  "mass_monte_carlo": "11.193404",
+  "mass_monte_carlo_error": "0.014365",
+  "mass_quadrature": "11.200000000",
+  "mass_sigma_deviation": "0.459",
+  "mass_without_plane": "18.260507",
+  "mass_without_plane_3dp": "18.261",
+  "mass_without_z": "7.000000",
+  "mass_without_z_3dp": "7.000",
+  "mean_density": "3.733333",
+  "middle_integral_at_1_5": "3.031089"
+}
