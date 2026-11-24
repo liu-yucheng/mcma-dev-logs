@@ -1,0 +1,4 @@
+# Python 3.14.3, venv at code/.venv, installed with uv
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2

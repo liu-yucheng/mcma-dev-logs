@@ -1,0 +1,44 @@
+[
+  {
+    "label": "Points that the raw inequalities and the bound chain classify differently",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  },
+  {
+    "label": "Volume from the order $dz\\,dy\\,dx$ against the exact value $128/15$",
+    "computed": 8.533333333333333,
+    "expected": 8.533333333333333,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Volume from the order $dy\\,dx\\,dz$ against the exact value $128/15$",
+    "computed": 8.533333333333333,
+    "expected": 8.533333333333333,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area of the projection on the plane $z = 0$ against $32/3$",
+    "computed": 10.666666666666668,
+    "expected": 10.666666666666666,
+    "difference": 1.7763568394002505e-15,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area of the projection on the plane $x = 0$ against $4$",
+    "computed": 4.0,
+    "expected": 4.0,
+    "difference": 0.0,
+    "tolerance": 1e-09
+  },
+  {
+    "label": "Area of the projection on the plane $y = 0$ against $16/3$",
+    "computed": 5.333333333333335,
+    "expected": 5.333333333333333,
+    "difference": 1.7763568394002505e-15,
+    "tolerance": 1e-09
+  }
+]

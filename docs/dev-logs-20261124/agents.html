@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The MCMA RSI harness and the two recipes of 2026-11-24: the dsh-mcma plugin, the forward-feedback-backward protocol, the loss formula, the 17-pass training instruction, and the compiled Qwen3.8-27B transfer prompt.">
+<title>RSI 2026-11-24 &mdash; Harness and Recipes</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.recipe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin: 18px 0; }
+.recipe { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+.recipe.ok { border-left: 5px solid #2f6f4f; }
+.recipe.warn { border-left: 5px solid #e8a33d; }
+.recipe h3 { margin: 0 0 8px; font-size: 1rem; }
+.recipe table { margin: 8px 0 0; font-size: .86rem; }
+.recipe td, .recipe th { padding: 5px 6px; }
+.recipe th { width: 38%; background: #f6f8fa; }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; margin: 18px 0; }
+.step { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.step .step-n { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: .78rem; margin-right: 8px; }
+.prompt { max-height: 620px; overflow: auto; white-space: pre-wrap; }
+.callout { background: #fff8e6; border: 1px solid #eddcae; border-radius: 10px; padding: 16px 20px; margin: 18px 0; }
+.callout h3 { margin-top: 0; }
+.diff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0; }
+@media (max-width: 860px) { .diff-grid { grid-template-columns: 1fr; } }
+.diff-card { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+.diff-card.before { border-top: 4px solid #9ec0f0; }
+.diff-card.after { border-top: 4px solid #2f6f4f; }
+.diff-card h3 { margin-top: 0; }
+.diff-card ul { padding-left: 20px; }
+.threeway { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+.threeway figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; }
+.threeway a.shot { display: block; }
+.threeway img { width: 100%; height: 320px; object-fit: contain; background: #fff; }
+.threeway figcaption { font-size: .82rem; color: var(--muted); margin-top: 8px; }
+.threeway .who { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; margin-bottom: 6px; }
+.who-canon { background: #e8eef5; color: #2f446f; }
+.who-ds { background: #e6f0ea; color: #2f6f4f; }
+.who-qw { background: #f7ecd9; color: #a9711f; }
+.threeway figcaption a { color: var(--accent); }
+@media (max-width: 860px) { .threeway { grid-template-columns: 1fr; } .threeway img { height: auto; } }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-11-24</div>
+    <h1>&#129302; Harness and Recipes</h1>
+    <p class="lede">&#128295; This chapter shows the RSI harness, the two recipes, the loss formula, and the prompt that the training produced. &#128204; The core change is not a new renderer and not a new model. It is a training loop around the agent, plus an instruction that grows from the loop.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html" aria-current="page">&#129302; Harness</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="framework">
+  <h2>&#128295; The RSI framework</h2>
+  <p>&#128204; The framework is a DeepSeek Harness plugin, <code>dsh-mcma</code> 0.41.2, with four local source patches: the provider list, the flat activation spec, the pass budgets, and the status loss type. It adds these tools to the live session:</p>
+  <table>
+    <thead><tr><th>Tool</th><th>Role</th><th>What it changes</th></tr></thead>
+    <tbody>
+      <tr><td><code>mcma_forward</code></td><td>&#129302; Forward pass</td><td>Runs the tutor on one <code>problem.png</code>. The tutor plans, verifies, plots, and composes a page. The pass is scored against the rubric.</td></tr>
+      <tr><td><code>mcma_feedback</code></td><td>&#128172; Feedback</td><td>Gives the evaluator the canonical <code>solution.png</code> as the baseline. The evaluator names defects in the tutor output.</td></tr>
+      <tr><td><code>mcma_backward</code></td><td>&#11015; Backward pass</td><td>Writes the next parameters version. The tutor prompt gains text distilled from the evaluator findings.</td></tr>
+      <tr><td><code>mcma_resume</code></td><td>&#128260; Recovery</td><td>Continues one interrupted session from its last finished stage. It does not restart the pass.</td></tr>
+      <tr><td><code>mcma_test</code></td><td>&#9989; Test</td><td>Runs one forward pass at the fixed current version, with no feedback and no backward pass.</td></tr>
+      <tr><td><code>validate</code></td><td>&#128203; Validation</td><td>Optional held-out split. It was not run in this experiment, by instruction.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The plugin also exposes HTTP stage limits. The operator set intake 120 s, tutoring 900 s, grading 600 s, self-eval 300 s, and self-evolve 240 s, which gives a tutoring pass budget of 1,320 s. The limits were set through the documented endpoint, not by editing the read-only config.</p>
+</section>
+
+<section id="protocol">
+  <h2>&#128260; The training protocol</h2>
+  <p>&#128204; One problem gives one parameters step. The loop is serial: one forward pass at a time, for 17 passes.</p>
+  <div class="steps">
+    <div class="step"><span class="step-n">1</span>&#129302; <strong>Forward.</strong> Run the tutor on one training <code>problem.png</code> at the current version.</div>
+    <div class="step"><span class="step-n">2</span>&#128172; <strong>Feedback.</strong> Show the canonical <code>solution.png</code> to the evaluator. The evaluator names defects in the tutor page.</div>
+    <div class="step"><span class="step-n">3</span>&#11015; <strong>Backward.</strong> Append the distilled guidance to the tutor prompt. The version moves from vN to vN+1.</div>
+    <div class="step"><span class="step-n">4</span>&#128203; <strong>Score.</strong> Record the loss and the five rubric scores for the pass.</div>
+    <div class="step"><span class="step-n">5</span>&#128200; <strong>Test.</strong> After v17, run 7 unseen problems with one forward pass each. No learning.</div>
+  </div>
+  <div class="callout">
+    <h3>&#129518; The loss formula</h3>
+    <p><code>Loss = (5 &minus; weighted rubric score) / 5</code>, with weights 0.30 correctness, 0.20 clarity, 0.20 pedagogy, 0.20 verification, and 0.10 presentation.</p>
+    <p>&#128204; The rubric is a judge, not a gradient. The backward pass writes text. It does not tune weights. The prompt is the parameter that moves.</p>
+  </div>
+</section>
+
+<section id="recipes">
+  <h2>&#128203; The two recipes</h2>
+  <div class="recipe-grid">
+    <div class="recipe ok">
+      <h3>&#9989; 1. DeepSeek Flash (Internet) + MCMA RSI</h3>
+      <table>
+        <tbody>
+          <tr><th>&#128187; Harness</th><td>DeepSeek Harness on the PC, PTC mode</td></tr>
+          <tr><th>&#129504; Model</th><td><code>deepseek-flash</code>, Internet API</td></tr>
+          <tr><th>&#9889; Speed</th><td>200 tokens/s</td></tr>
+          <tr><th>&#128196; Output</th><td><code>report.html</code>; 13 of the 25 folders also hold an identical <code>tutorial.html</code></td></tr>
+          <tr><th>&#129302; Work</th><td>17 training passes, 7 test passes</td></tr>
+          <tr><th>&#9201; Time</th><td>16 h 57 m elapsed for train and test; 14 h 07 m active</td></tr>
+          <tr><th>&#128230; Status</th><td>Worked. Learned a visible plot recipe.</td></tr>
+          <tr><th>&#128193; Data</th><td><code>dsh-workspace-20261124-1</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="recipe warn">
+      <h3>&#9888; 2. Qwen3.8-27B (HPC) + v17 transfer</h3>
+      <table>
+        <tbody>
+          <tr><th>&#128187; Harness</th><td>DeepSeek Harness on the PC, code mode</td></tr>
+          <tr><th>&#129504; Model</th><td>Qwen3.8-27B, HPC VLLM server</td></tr>
+          <tr><th>&#9889; Speed</th><td>40 tokens/s</td></tr>
+          <tr><th>&#128196; Output</th><td><code>solution.html</code> from prebuilt <code>tools/render.py</code></td></tr>
+          <tr><th>&#129302; Work</th><td>24 problems, one forward pass each, no learning</td></tr>
+          <tr><th>&#9201; Time</th><td>5 h 44 m wall against a 4 h budget</td></tr>
+          <tr><th>&#128230; Status</th><td>Math and gate worked. Learned plot style did not transfer.</td></tr>
+          <tr><th>&#128193; Data</th><td><code>dsh-workspace-20261124-2</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="small">&#128204; The recipes share the harness and the Python tools. They differ in the model, the server, the prompt form, and the page builder. DeepSeek runs the learning loop. Qwen receives the compiled result.</p>
+</section>
+
+<section id="learned">
+  <h2>&#128220; The learned instruction</h2>
+  <p>&#128204; The instruction is the trained parameter. Version v0 is the 64-line prompt from the last log. Version v17 is a 424-line prompt. The tutor prompt grew from 1,432 to 21,584 characters; the <code>prompt.extra</code> field grew from 272 to 11,952 characters.</p>
+  <div class="diff-grid">
+    <div class="diff-card before">
+      <h3>&#128196; v0 &mdash; 64 lines</h3>
+      <ul>
+        <li>Read <code>problem.png</code>.</li>
+        <li>Write <code>solution/solution.html</code> with KaTeX.</li>
+        <li>Verify each deduction with a Python script.</li>
+        <li>Draw the figures and embed them as Base64.</li>
+        <li>Explain the symbols.</li>
+        <li>Use ASD-STE100 and Google Python Style.</li>
+      </ul>
+    </div>
+    <div class="diff-card after">
+      <h3>&#129514; v17 &mdash; 424 lines</h3>
+      <ul>
+        <li>&#128203; A five-dimension score model.</li>
+        <li>&#128193; A fixed file and artifact map, with <code>check_solution.py</code> and <code>gate.log</code>.</li>
+        <li>&#128260; A seven-phase work order: intake, plan, verify, figures, compose, gate, report.</li>
+        <li>&#129518; A verification law: no print, no sentence; two independent methods; a stated tolerance.</li>
+        <li>&#128196; A page law: required section order and content rules.</li>
+        <li>&#128200; A figure law: arrowheads, label placement, closure, dash patterns, clearance assertions.</li>
+        <li>&#9888; A compiled list of 17 anti-patterns from graded products.</li>
+        <li>&#128295; Operating limits and a definition of done.</li>
+      </ul>
+    </div>
+  </div>
+  <p>&#128161; <strong>Where the plotting recipe lives.</strong> The figure law and several anti-patterns hold the learned plot experience. The law asks for one label mechanism per axis with an arrowhead, a label at a point that its own equation satisfies, a closed body with high wall alpha, and a measured clearance before export. The anti-patterns name defects that earlier passes shipped: a label off its surface, decoration on the data, a legend clipped by the axes edge.</p>
+  <p class="small">&#128204; The full v0 and v17 prompts are in the explorer: <code>dsh-deepseek-flash/instructions-v0.html</code> and <code>dsh-deepseek-flash/instructions-v17.html</code>.</p>
+</section>
+
+<section id="transfer">
+  <h2>&#128034; The transfer instruction</h2>
+  <p>&#128204; The Qwen prompt is a compiled version of v17, cut for a 40 tokens/s decoder. It keeps the quality rules and adds cost rules: 24 problems, 4 hours, 600 s per problem, 8,000 output tokens per problem, and 6 turns per problem.</p>
+  <table>
+    <thead><tr><th>Transfer rule</th><th>Reason</th></tr></thead>
+    <tbody>
+      <tr><td>&#128295; The tools are built. Do not rebuild them.</td><td><code>render.py</code> and <code>check.py</code> are prebuilt. The model never spends output tokens on a page shell or a KaTeX bundle.</td></tr>
+      <tr><td>&#9889; One message may hold several tool calls.</td><td>At 40 tokens/s, serial turns cost more than parallel scripts.</td></tr>
+      <tr><td>&#128220; Never restate the problem or a plan.</td><td>Reasoning tokens are the scarce resource.</td></tr>
+      <tr><td>&#128196; Never open <code>solution.html</code>.</td><td>Each page is about 800 KB. A read wastes the window.</td></tr>
+      <tr><td>&#9201; If a problem passes 540 s, skip the figure and finish.</td><td>The 4 h budget cannot absorb a long figure loop.</td></tr>
+      <tr><td>&#9989; Do not report done without <code>PASS</code> and <code>ls</code>.</td><td>The release gate is the only proof of a valid page.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The full transfer prompt is in the explorer: <code>dsh-qwen3.8-27b-hpc/instructions.html</code>. The operator notes for the prebuilt tools are at <code>dsh-qwen3.8-27b-hpc/tools-notes.html</code>.</p>
+</section>
+
+<section id="experience">
+  <h2>&#127912; What the training learned, in one example</h2>
+  <p>&#128204; Problem 15.7.32 asks for the integral over a tetrahedron in six orders. The v17 DeepSeek page answers it and also draws two figures that the v0 prompt never asked for.</p>
+  <table>
+    <thead><tr><th>Figure</th><th>Learned element</th><th>Transfer to Qwen3.8-27B</th></tr></thead>
+    <tbody>
+      <tr><td>&#128200; 3D solid</td><td>A labelled tetrahedron with vertex letters A&ndash;D and four plane labels in boxes.</td><td>&#10060; One 3D panel, clipped low-contrast labels, no vertex letters.</td></tr>
+      <tr><td>&#128200; 2D projections</td><td>Three labelled projection panels with corner coordinates and the area of each base.</td><td>&#10060; No projection panel at all.</td></tr>
+    </tbody>
+  </table>
+  <p>&#128204; The same problem, three ways. Click a figure to open it full size. The caption links to the source page.</p>
+  <div class="threeway">
+    <figure>
+      <span class="who who-canon">&#128218; Canonical</span>
+      <a class="shot" href="assets/briefing/cmp-15.7.32-canonical.png" target="_blank" rel="noopener"><img src="assets/briefing/cmp-15.7.32-canonical.png" alt="Canonical solution for 15.7.32: a 3D tetrahedron and three labelled 2D projections."></a>
+      <figcaption>&#128218; 3D tetrahedron plus three labelled projections with the corner coordinates and the areas of D<sub>1</sub>, D<sub>2</sub>, and D<sub>3</sub>. <a href="explorer/canonical-solutions/calculus-15.7.32/canonical-solution.html">Open the canonical page</a>.</figcaption>
+    </figure>
+    <figure>
+      <span class="who who-ds">&#129302; DeepSeek Flash v17</span>
+      <a class="shot" href="assets/briefing/cmp-15.7.32-deepseek.png" target="_blank" rel="noopener"><img src="assets/briefing/cmp-15.7.32-deepseek.png" alt="DeepSeek Flash v17 for 15.7.32: a labelled tetrahedron with vertex letters and three labelled projections."></a>
+      <figcaption>&#129302; The same 3D view and the same projection set. Vertex letters A&ndash;D and boxed plane labels are the learned addition. <a href="explorer/dsh-deepseek-flash/calculus-15.7.32_testing-0/report.html">Open the DeepSeek report</a>.</figcaption>
+    </figure>
+    <figure>
+      <span class="who who-qw">&#128034; Qwen3.8-27B</span>
+      <a class="shot" href="assets/briefing/qwen-15.7.32-transfer.png" target="_blank" rel="noopener"><img src="assets/briefing/qwen-15.7.32-transfer.png" alt="Qwen3.8-27B transfer for 15.7.32: one 3D tetrahedron with clipped low-contrast labels."></a>
+      <figcaption>&#10060; One 3D panel. The labels are clipped and low contrast, there are no vertex letters, and no projection panel is drawn. <a href="explorer/dsh-qwen3.8-27b-hpc/calculus-15.7.32_testing-0/solution.html">Open the Qwen page</a>.</figcaption>
+    </figure>
+  </div>
+  <p>&#128204; Problem 15.7.18 asks for the integral over a quarter cylinder cut by two planes. The learned recipe did not cover the hard part.</p>
+  <table>
+    <thead><tr><th>Element</th><th>DeepSeek at v17</th><th>Qwen3.8-27B transfer</th></tr></thead>
+    <tbody>
+      <tr><td>&#128200; 3D perspective</td><td>One 3D panel with translucent surfaces. The callouts come from a fixed offset table, so two labels land on the wrong surface.</td><td>&#10060; One 3D panel. The plane and cylinder labels collide on the curved wall, and the viewpoint is not adjusted.</td></tr>
+      <tr><td>&#127912; Perspective illusion</td><td>Not adjusted. The panel does not separate the cylinder wall from the cut plane.</td><td>&#10060; Not considered. The labels overlap on the curved surface.</td></tr>
+    </tbody>
+  </table>
+  <p>&#128204; The same problem, three ways. The hard part is the viewpoint and the label placement, not the equation of the region.</p>
+  <div class="threeway">
+    <figure>
+      <span class="who who-canon">&#128218; Canonical</span>
+      <a class="shot" href="assets/briefing/cmp-15.7.18-canonical.png" target="_blank" rel="noopener"><img src="assets/briefing/cmp-15.7.18-canonical.png" alt="Canonical solution for 15.7.18: a 2D projection, a cut view, and a 3D solid."></a>
+      <figcaption>&#128218; Three panels: the projection with the line y = 3x and the corner (1, 3), a cut view that labels y = 3x and z = &radic;(9 &minus; y<sup>2</sup>) on their surfaces, and a 3D solid. <a href="explorer/canonical-solutions/calculus-15.7.18/canonical-solution.html">Open the canonical page</a>.</figcaption>
+    </figure>
+    <figure>
+      <span class="who who-ds">&#129302; DeepSeek Flash v17</span>
+      <a class="shot" href="assets/briefing/ds-15.7.18-perspective.png" target="_blank" rel="noopener"><img src="assets/briefing/ds-15.7.18-perspective.png" alt="DeepSeek Flash v17 for 15.7.18: one 3D panel with two labels on the wrong surfaces."></a>
+      <figcaption>&#9888; One 3D panel. The callouts come from a fixed offset table, so the cylinder label sits on the plane and the plane label sits on the cylinder wall. No projection panel. <a href="explorer/dsh-deepseek-flash/calculus-15.7.18_testing-0/report.html">Open the DeepSeek report</a>.</figcaption>
+    </figure>
+    <figure>
+      <span class="who who-qw">&#128034; Qwen3.8-27B</span>
+      <a class="shot" href="assets/briefing/qwen-15.7.18-transfer.png" target="_blank" rel="noopener"><img src="assets/briefing/qwen-15.7.18-transfer.png" alt="Qwen3.8-27B transfer for 15.7.18: one 3D panel with overlapping surface labels."></a>
+      <figcaption>&#10060; One 3D panel. The plane and cylinder labels collide on the curved wall, the viewpoint is not adjusted, and no projection panel is drawn. <a href="explorer/dsh-qwen3.8-27b-hpc/calculus-15.7.18_testing-0/solution.html">Open the Qwen page</a>.</figcaption>
+    </figure>
+  </div>
+  <div class="callout">
+    <h3>&#128161; The lesson</h3>
+    <p>&#128204; The training learned the simple recipe: label a solid, add a projection, put the labels on the objects. It did not learn the hard recipe: choose a viewpoint that separates two surfaces, and place a label where the eye reads it.</p>
+    <p>&#128295; The plan restores the classic plotting prompts from the old DeepAgents MCMA system message. Those prompts asked for both a pyplot plot and a PGFplots plot, and for a 2D and a 3D view of every 3D problem. See <a href="plans.html">Future Plans</a>.</p>
+  </div>
+</section>
+
+<section id="system">
+  <h2>&#129302; The old system message</h2>
+  <p>&#128204; The old DeepAgents-based MCMA used a long system message. It defined the math domains, the built-in tools, the <code>plot_pyplot</code> and <code>plot_pgfplots</code> tools, and the final output procedure. It required, for every 3D problem, one 3D pyplot, one 3D PGFplots, one 2D pyplot, and one 2D PGFplots plot.</p>
+  <p>&#9989; The new harness dropped that requirement. The v17 figure law is stronger on label discipline but weaker on the 2D/3D pair. The restoration of the classic rule is the first actions item in the plan.</p>
+  <p class="small">&#128204; The full old system message is in the explorer: <code>__remarks__/system-message.html</code>.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<h1>Six iterated forms of the volume of a cylinder segment</h1>
+<blockquote class="statement">Express the integral $\iiint_E f(x,y,z)\,dV$ as an iterated integral in six different ways. The solid $E$ is bounded by $y^2 + z^2 = 9$, $x = -2$, and $x = 2$.</blockquote>
+<table>
+<tr><th>Given</th><th>Value</th></tr>
+<tr><td>Cylinder</td><td>$y^2 + z^2 = 9$, radius $3$ along the $x$ axis</td></tr>
+<tr><td>Plane 1</td><td>$x = -2$, keeps $y$ and $z$</td></tr>
+<tr><td>Plane 2</td><td>$x = 2$, keeps $y$ and $z$</td></tr>
+<tr><td>Find</td><td>the six iterated forms and the volume</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$E$</td><td>the cylinder segment</td><td>$\mathrm{m^3}$</td></tr>
+<tr><td>$V$</td><td>the volume of $E$</td><td>$\mathrm{m^3}$</td></tr>
+<tr><td>$f(x,y,z)$</td><td>the integrand</td><td>$\mathrm{m^{-3}}$</td></tr>
+</table>
+<section><h2>Part 1: the solid, its volume, and the six orders</h2>
+<section><h3>Step 1.1: the slice at every x is a disk of radius 3</h3>
+<p class="reason">The two planes keep $y$ and $z$, so the slice at each $x$ is the full disk $y^2 + z^2 \leq 9$.</p>
+<div class="computation">$$ V = 4 \cdot 9\pi = 36\pi $$</div>
+<figure><img src="FIG:part1_figure1.png" alt="The cylinder segment between the planes x = -2 and x = 2"><figcaption>Figure 1. The solid $E$: the cylinder $y^2 + z^2 = 9$ cut by the planes $x = -2$ and $x = 2$.</figcaption></figure>
+<p class="result">The exact volume is $36\pi$, about 113.097; the Monte Carlo estimate is 112.9831, printed by <code>part1_step1.py</code>.</p>
+<p class="verification"><code>part1_step1.py</code> compares the closed form with a Monte Carlo count of 200,000 points in the box of side 6, tolerance 0.5.</p>
+<p class="mistake">A reader may take the slice for a semicircle, but the disk is full because the bound has no sign condition.</p>
+</section>
+<section><h3>Step 1.2: six orderings, checked symbolically</h3>
+<p class="reason">The constant $x$ range and the symmetric disk bounds allow six inner-to-outer orders.</p>
+<div class="computation">$$ \int_{-2}^{2}\int_{-3}^{3}\int_{-\sqrt{9-y^2}}^{\sqrt{9-y^2}} dz\,dy\,dx = 36\pi $$</div>
+<p class="result">All six nested integrals simplify to $36\pi$; a trapezoid pass gives 113.097293 against 113.097336, printed by <code>part1_step2.py</code>.</p>
+<p class="verification"><code>part1_step2.py</code> verifies each ordering by symbolic simplification and checks one ordering against a 20,000-step trapezoid, tolerance $10^{-3}$.</p>
+<p class="mistake">Swapping $y$ and $z$ changes no bound, because the disk is symmetric in them.</p>
+</section>
+<section><h3>Step 1.3: six orderings, checked numerically</h3>
+<p class="reason">Each ordering is a valid iterated integral of $1$ over $E$.</p>
+<div class="computation">$$ \left| V_k - 36\pi \right| < 10^{-3}, \qquad k = 1, \dots, 6 $$</div>
+<p class="result">All six numeric values land within $10^{-3}$ of $36\pi$, printed by <code>part1_step3.py</code>.</p>
+<p class="verification"><code>part1_step3.py</code> evaluates all six orderings with nested trapezoid rules and compares each with the exact value.</p>
+<p class="mistake">A coarse grid hides a wrong bound; the tolerance matches the 20,000-step grid.</p>
+</section>
+</section>
+<section class="answer"><h2>Answer</h2>
+<p>The volume is $V = 36\pi \approx 113.097$. The six iterated forms are:</p>
+<ul>
+<li>Ordering 1, inner to outer $dz$, $dy$, $dx$:
+$$ \int_{-2}^{2}\int_{-3}^{3}\int_{-\sqrt{9-y^2}}^{\sqrt{9-y^2}} dz\,dy\,dx $$
+The $x$ range is constant.</li>
+<li>Ordering 2, inner to outer $dy$, $dz$, $dx$:
+$$ \int_{-2}^{2}\int_{-3}^{3}\int_{-\sqrt{9-z^2}}^{\sqrt{9-z^2}} dy\,dz\,dx $$
+The $x$ range is constant.</li>
+<li>Ordering 3, inner to outer $dx$, $dy$, $dz$:
+$$ \int_{-3}^{3}\int_{-\sqrt{9-z^2}}^{\sqrt{9-z^2}}\int_{-2}^{2} dx\,dy\,dz $$
+The $x$ range is constant.</li>
+<li>Ordering 4, inner to outer $dx$, $dz$, $dy$:
+$$ \int_{-3}^{3}\int_{-\sqrt{9-y^2}}^{\sqrt{9-y^2}}\int_{-2}^{2} dx\,dz\,dy $$
+The $x$ range is constant.</li>
+<li>Ordering 5, inner to outer $dz$, $dx$, $dy$:
+$$ \int_{-3}^{3}\int_{-2}^{2}\int_{-\sqrt{9-y^2}}^{\sqrt{9-y^2}} dz\,dx\,dy $$
+The $y$ range is fixed by the disk.</li>
+<li>Ordering 6, inner to outer $dy$, $dx$, $dz$:
+$$ \int_{-3}^{3}\int_{-2}^{2}\int_{-\sqrt{9-z^2}}^{\sqrt{9-z^2}} dy\,dx\,dz $$
+The $z$ range is fixed by the disk.</li>
+</ul>
+</section>
+<section class="notes"><h2>Notes</h2>
+<p>The two planes keep $y$ and $z$; the cylinder keeps $x$ free.</p>
+<p>The disk symmetry in $y$ and $z$ explains the paired forms.</p>
+</section>

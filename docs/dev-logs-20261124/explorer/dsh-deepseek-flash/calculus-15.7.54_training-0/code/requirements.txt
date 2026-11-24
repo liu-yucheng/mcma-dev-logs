@@ -1,0 +1,5 @@
+# Exact versions of the environment of this session.
+# Python interpreter: 3.14.3 (created with uv venv code/.venv)
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2

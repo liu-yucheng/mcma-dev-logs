@@ -1,0 +1,162 @@
+{
+  "part_number": 5,
+  "part_title": "State the answer and check its meaning",
+  "checks": [
+    {
+      "name": "mass from the single integrals",
+      "computed": "3.19999999998",
+      "expected": "3.2",
+      "tolerance": "1.0e-09",
+      "first_method": "quadrature of three single integrals",
+      "second_method": "exact mass of part 2",
+      "passed": true
+    },
+    {
+      "name": "center coordinate x from the single integrals",
+      "computed": "0.357142857144",
+      "expected": "0.357142857143",
+      "tolerance": "1.0e-09",
+      "first_method": "ratio of two single integrals",
+      "second_method": "ratio of two symbolic moments of part 3",
+      "passed": true
+    },
+    {
+      "name": "center coordinate y from the single integrals",
+      "computed": "0",
+      "expected": "0",
+      "tolerance": "1.0e-09",
+      "first_method": "ratio of two single integrals",
+      "second_method": "ratio of two symbolic moments of part 3",
+      "passed": true
+    },
+    {
+      "name": "center coordinate z from the single integrals",
+      "computed": "0.285714285709",
+      "expected": "0.285714285714",
+      "tolerance": "1.0e-09",
+      "first_method": "ratio of two single integrals",
+      "second_method": "ratio of two symbolic moments of part 3",
+      "passed": true
+    },
+    {
+      "name": "mass recorded by part 2",
+      "computed": "$3.200000$",
+      "expected": "$3.200000$",
+      "tolerance": "0",
+      "first_method": "value stored by code/part2_verify.py",
+      "second_method": "mass from three single integrals",
+      "passed": true
+    },
+    {
+      "name": "moment of x recorded by part 3",
+      "computed": "$\\frac{8}{7}$",
+      "expected": "$\\frac{8}{7}$",
+      "tolerance": "0",
+      "first_method": "value stored by code/part3_verify.py",
+      "second_method": "moment from a single integral",
+      "passed": true
+    },
+    {
+      "name": "moment of z recorded by part 3",
+      "computed": "$\\frac{32}{35}$",
+      "expected": "$\\frac{32}{35}$",
+      "tolerance": "0",
+      "first_method": "value stored by code/part3_verify.py",
+      "second_method": "moment from a single integral",
+      "passed": true
+    },
+    {
+      "name": "coordinate x of the center recorded by part 3",
+      "computed": "$\\frac{5}{14}$",
+      "expected": "$\\frac{5}{14}$",
+      "tolerance": "0",
+      "first_method": "value stored by code/part3_verify.py",
+      "second_method": "ratio of two single integrals",
+      "passed": true
+    },
+    {
+      "name": "coordinate z of the center recorded by part 3",
+      "computed": "$\\frac{2}{7}$",
+      "expected": "$\\frac{2}{7}$",
+      "tolerance": "0",
+      "first_method": "value stored by code/part3_verify.py",
+      "second_method": "ratio of two single integrals",
+      "passed": true
+    },
+    {
+      "name": "mass recorded by part 4",
+      "computed": "$3.200000000$",
+      "expected": "$3.200000000$",
+      "tolerance": "0",
+      "first_method": "value stored by code/part4_verify.py",
+      "second_method": "mass from three single integrals",
+      "passed": true
+    },
+    {
+      "name": "coordinate x of the center lies in its range",
+      "computed": "inside",
+      "expected": "inside",
+      "tolerance": "0",
+      "first_method": "range of the coordinate that the region gives",
+      "second_method": "coordinate of the center from the single integrals",
+      "passed": true
+    },
+    {
+      "name": "coordinate y of the center lies in its range",
+      "computed": "inside",
+      "expected": "inside",
+      "tolerance": "0",
+      "first_method": "range of the coordinate that the region gives",
+      "second_method": "coordinate of the center from the single integrals",
+      "passed": true
+    },
+    {
+      "name": "coordinate z of the center lies in its range",
+      "computed": "inside",
+      "expected": "inside",
+      "tolerance": "0",
+      "first_method": "range of the coordinate that the region gives",
+      "second_method": "coordinate of the center from the single integrals",
+      "passed": true
+    },
+    {
+      "name": "the wrong mass of the prism differs from the answer",
+      "computed": "different",
+      "expected": "different",
+      "tolerance": "0",
+      "first_method": "prism over the projection",
+      "second_method": "mass from three single integrals",
+      "passed": true
+    },
+    {
+      "name": "the wrong mass with the width 1 - z differs from the answer",
+      "computed": "different",
+      "expected": "different",
+      "tolerance": "0",
+      "first_method": "width 1 - z instead of 2 sqrt(1 - z)",
+      "second_method": "mass from three single integrals",
+      "passed": true
+    },
+    {
+      "name": "the wrong coordinate x lies outside the solid",
+      "computed": "outside",
+      "expected": "outside",
+      "tolerance": "0",
+      "first_method": "membership test at the wrong coordinate",
+      "second_method": "range of the coordinate that the region gives",
+      "passed": true
+    }
+  ],
+  "values": {
+    "p5_mass": "$\\frac{16}{5}$",
+    "p5_mass_decimal": "$3.200000$",
+    "p5_volume": "$\\frac{4}{5}$",
+    "p5_center": "$\\left(\\frac{5}{14},\\ 0,\\ \\frac{2}{7}\\right)$",
+    "p5_center_decimal": "$(0.3571,\\ 0.0000,\\ 0.2857)$",
+    "p5_naive_prism_mass": "$2.000000$",
+    "p5_naive_narrow_mass": "$1.333333$",
+    "p5_naive_center_x": "$1.428571$"
+  },
+  "pass_count": 16,
+  "fail_count": 0
+}

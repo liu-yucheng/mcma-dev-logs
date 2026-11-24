@@ -1,0 +1,130 @@
+{
+  "angular_factor": 12.566370614359172,
+  "checks": {
+    "count": 14,
+    "part": "part3",
+    "rows": [
+      {
+        "computed": 0.408248290463863,
+        "difference": 5.551115123125783e-17,
+        "expected": 0.4082482904638631,
+        "name": "jacobian_determinant_against_closed_form",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 8.881784197001252e-16,
+        "difference": 8.881784197001252e-16,
+        "expected": 0.0,
+        "name": "pointwise_transformation_mismatch",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 7.771561172376096e-16,
+        "difference": 7.771561172376096e-16,
+        "expected": 0.0,
+        "name": "unit_sphere_maps_to_boundary_of_P",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 12.566370614359172,
+        "difference": 0.0,
+        "expected": 12.566370614359172,
+        "name": "angular_integral_against_four_pi",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 0.1333333333333333,
+        "difference": 4.163336342344337e-16,
+        "expected": 0.1333333333333329,
+        "name": "radial_integral_antiderivative_against_quadrature",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.6840265760863253,
+        "difference": 2.1094237467877974e-15,
+        "expected": 0.6840265760863274,
+        "name": "substitution_route_against_rationalized_route",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.6840265760863273,
+        "difference": 1.9984014443252818e-15,
+        "expected": 0.6840265760863253,
+        "name": "cartesian_quadrature_against_exact_value",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 0.6840265756333253,
+        "difference": 4.5300008189030905e-10,
+        "expected": 0.6840265760863253,
+        "name": "gauss_rule_against_exact_value",
+        "tolerance": 1e-06
+      },
+      {
+        "computed": 0.6846370848002655,
+        "difference": 0.0006105087139401943,
+        "expected": 0.6840265760863253,
+        "name": "sample_against_exact_value",
+        "tolerance": 0.003768804500053384
+      },
+      {
+        "computed": 0.3999999999999987,
+        "difference": 1.3322676295501878e-15,
+        "expected": 0.4,
+        "name": "mean_value_against_two_fifths",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.4000054293020629,
+        "difference": 5.429302064208219e-06,
+        "expected": 0.3999999999999987,
+        "name": "mean_sample_against_closed_mean",
+        "tolerance": 0.0016569717495369947
+      },
+      {
+        "computed": 0.1333333333333333,
+        "difference": 4.163336342344337e-16,
+        "expected": 0.1333333333333329,
+        "name": "cumulative_radial_at_one",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.035416666666666666,
+        "difference": 0.030403645833333333,
+        "expected": 0.005013020833333333,
+        "name": "cumulative_radial_increases",
+        "tolerance": 0.01
+      },
+      {
+        "computed": 0.0931640625,
+        "difference": 0.05774739583333334,
+        "expected": 0.035416666666666666,
+        "name": "cumulative_radial_increases_again",
+        "tolerance": 0.01
+      }
+    ]
+  },
+  "cumulative_radii": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "cumulative_values": [
+    0.005013020833333333,
+    0.035416666666666666,
+    0.0931640625,
+    0.1333333333333333
+  ],
+  "exact_value": 0.6840265760863253,
+  "exact_value_rationalized": 0.6840265760863274,
+  "jacobian": 0.408248290463863,
+  "mean_sample": 0.4000054293020629,
+  "mean_sample_error": 0.00041424293738424867,
+  "mean_value": 0.3999999999999987,
+  "radial_factor": 0.1333333333333329,
+  "value_cartesian": 0.6840265760863273,
+  "value_gauss": 0.6840265756333253,
+  "value_sample": 0.6846370848002655,
+  "value_sample_error": 0.000942201125013346
+}

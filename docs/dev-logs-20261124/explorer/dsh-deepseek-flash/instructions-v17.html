@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instructions v17 &mdash; MCMA</title>
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../../preview.css">
+<style>
+img { max-width: 100%; height: auto; display: block; }
+.prompt { white-space: pre-wrap; font-size: .82rem; background: #f6f8fa; border: 1px solid #e2e6ec; border-radius: 8px; padding: 12px 14px; }
+td.num { text-align: right; }
+</style>
+</head>
+<body class="leaf">
+<main class="container">
+<h1>&#128220; Task instructions &mdash; v17</h1>
+<p class="small">The compiled parameters after 17 training passes. 424 lines, 23,346 bytes.</p>
+<pre class="prompt">&lt;!-- Compiled from the MCMA v17 parameters (configs_rw/v17: tutor role, task, extra, memories)
+     into a standalone task instruction for a Qwen3.8-27B agent. The reference layout is the
+     dsh-qwen3.8-27b-hpc run of 2026-11-10. --&gt;
+
+# Task Instructions
+
+Solve all math problems in this directory.
+
+This directory consists of:
+
+- The problem subdirectories.
+- This `instructions.md`.
+
+Each problem subdirectory contains:
+
+- A `problem.png`.
+
+Finish one subdirectory before you start the next. Never change `problem.png`.
+
+## 0. Score model
+
+The product is graded on five dimensions.
+
+| Dimension | Weight | What earns the score |
+| --- | --- | --- |
+| Correctness | 0.30 | The final answer is right, and every sentence of reasoning that carries a number, a shape, or a limit is true. |
+| Clarity | 0.20 | A reader follows each step without a guess. One term means one thing. |
+| Pedagogy | 0.20 | Each step gives the reason before the computation, and names one mistake a reader may make. |
+| Verification | 0.20 | Each numeric or geometric claim is bound to a printed line of a script that can fail. |
+| Presentation | 0.10 | The page renders, the figures are legible, and the math is set, not printed as raw LaTeX. |
+
+One false sentence costs more than one missing sentence. When a check cannot support a sentence, delete the sentence or soften it to what the print shows.
+
+## 1. Files and named artifacts
+
+In each subdirectory `&lt;subdir&gt;/`, your task is:
+
+- Read and analyze `&lt;subdir&gt;/problem.png`.
+- Create a `&lt;subdir&gt;/solution/` directory.
+- Solve the math problem in `&lt;subdir&gt;/problem.png`.
+- Compose the final solution in `&lt;subdir&gt;/solution.html`.
+
+Use these paths and no other names.
+
+| Path | Content |
+| --- | --- |
+| `&lt;subdir&gt;/solution/part&lt;i&gt;_step&lt;j&gt;.py` | One step of part `&lt;i&gt;`. The docstring states the claim. The body prints the values and asserts the checks. |
+| `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.py` | The script that draws figure `&lt;k&gt;` of part `&lt;i&gt;`. |
+| `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.png` | The figure at 150 dpi or more. |
+| `&lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.b64.txt` | The exact Base64 text of that PNG, written with `base64 -w0`. |
+| `&lt;subdir&gt;/solution/logs/` | The saved output of each script, one log for one script. |
+| `&lt;subdir&gt;/solution/check_solution.py` | The release gate of Section 6. |
+| `&lt;subdir&gt;/solution/gate.log` | The saved output of the gate. |
+| `&lt;subdir&gt;/solution/NOTES.md` | Each decision that the image does not settle, and each failed approach. |
+| `&lt;subdir&gt;/solution/solution.html` | The composed page. |
+| `&lt;subdir&gt;/solution.html` | A copy of the composed page, made after the gate passes. |
+
+A part is one lettered or numbered question of the problem. A problem with one question has one part.
+
+## 2. Work order for one problem
+
+Run these phases in order. Do not skip a phase.
+
+### Phase A: intake
+
+1. Open `problem.png` with the image reader. Read the statement, the given data, and every question.
+2. Write `solution/NOTES.md` with the transcribed statement, the number of parts, and each symbol that the image does not settle.
+3. When a symbol is blurry, take the standard reading of the section, and write that choice in `NOTES.md`. Do not leave a symbol undefined.
+4. Run `python -c &quot;import numpy, sympy, matplotlib; print(&#x27;ok&#x27;)&quot;`. Install a missing library with `pip install`.
+
+### Phase B: plan
+
+1. Split each part into steps. Keep each step small enough to check by hand.
+2. Aim for at most 12 steps, 8 verification scripts, and 3 figures for one problem.
+3. Cut figures before you cut verification.
+4. Write the step plan into `solution/NOTES.md` as a list of one-line claims.
+
+### Phase C: verify each part
+
+For each part `&lt;i&gt;` and each step `&lt;j&gt;`:
+
+1. Write `part&lt;i&gt;_step&lt;j&gt;.py` from the template below.
+2. Run it from the workspace root: `python &lt;subdir&gt;/solution/part&lt;i&gt;_step&lt;j&gt;.py`.
+3. Save the output at `solution/logs/part&lt;i&gt;_step&lt;j&gt;.log`.
+4. Read the log. Copy the printed values into the page. Do not retype a value from memory.
+5. When a script fails, fix the derivation. Trust the computation over the hand calculation.
+
+Step script template:
+
+```python
+&quot;&quot;&quot;Step 2.1: the section at y = 2 is one disk of radius sqrt(2).
+
+Claim: the inequalities x**2 + z**2 &lt;= y and y &lt;= 8 - x**2 - z**2 confine the
+point (x, z) of the plane y = 2 to the disk x**2 + z**2 &lt;= 2.
+&quot;&quot;&quot;
+
+import numpy as np
+import sympy as sp
+
+print(&quot;STEP 2.1&quot;)
+
+# Method 1: the bound follows from the two defining inequalities.
+x, y, z = sp.symbols(&quot;x y z&quot;, real=True)
+radius = sp.sqrt(2)
+print(&quot;exact radius:&quot;, radius, &quot;exact area:&quot;, sp.pi * radius**2)
+
+# Method 2: a numeric area of the same disk, on a square grid.
+step = 0.01
+axis = np.arange(-1.5, 1.5 + step, step)
+inside = [(a, c) for a in axis for c in axis if a**2 + c**2 &lt;= 2.0]
+print(&quot;numeric area:&quot;, round(len(inside) * step**2, 4))
+print(&quot;numeric max |x|:&quot;, round(max(abs(a) for a, _ in inside), 4))
+
+# The tolerance is the discretization error of one cell boundary.
+assert abs(len(inside) * step**2 - float(sp.pi * 2)) &lt; 0.02
+print(&quot;PASS step 2.1&quot;)
+```
+
+### Phase D: figures
+
+1. Draw every figure that the problem needs explicitly or implicitly, at `part&lt;i&gt;_figure&lt;k&gt;.py`.
+2. Run the script and open the PNG with the image reader. Look at it before you write about it.
+3. Encode it: `base64 -w0 &lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.png &gt; &lt;subdir&gt;/solution/part&lt;i&gt;_figure&lt;k&gt;.b64.txt`.
+4. Assert in the script that the encoded text decodes to the byte length of the PNG.
+5. Apply the figure law of Section 5.
+
+### Phase E: compose the page
+
+1. Write a composition script, `solution/compose_solution.py`, that reads the step values, the figure files, and a page template, and writes `solution/solution.html`.
+2. Never type a Base64 payload by hand and never print one to the terminal.
+3. Put the page in the structure of Section 4.
+4. Run the path and existence checks of Section 6 while you compose, not after.
+
+### Phase F: release gate
+
+1. Run `python &lt;subdir&gt;/solution/check_solution.py &lt;subdir&gt;/solution/solution.html | tee &lt;subdir&gt;/solution/gate.log`.
+2. Fix each failure and rerun. The gate must print `PASS`.
+3. Only after `PASS`: copy `solution/solution.html` to `&lt;subdir&gt;/solution.html`.
+
+### Phase G: clean up and report
+
+1. Delete every temporary entry: dot directories, scratch scripts, and stray images.
+2. List the subdirectory: `ls -la &lt;subdir&gt;/solution/`. Confirm each named file of Section 1.
+3. Report one line per problem: subdirectory, part count, step count, script count, figure count, final answer, gate result.
+
+## 3. Verification law
+
+These rules carry the verification score. They also protect the correctness score.
+
+1. No print, no sentence. Every numeral, period count, row count, corner list, area, extremum, and shape name in the page comes from a printed line of a script. Name the script beside the value.
+2. A check must be able to fail. Every assertion compares a value that one method computes with a value that a different method computes.
+3. A banned assertion:
+   - A value compared with itself.
+   - A literal compared with a literal.
+   - A hard-coded answer under the label of exact arithmetic.
+   - A count compared with the same count.
+4. Two methods for one claim. Use an exact method (`sympy`, `fractions`) and a numeric method (a grid, a sample, a Monte Carlo estimate), then assert that they agree inside a stated tolerance.
+5. State the tolerance. `abs(a - b) &lt;= 1e-9 * max(1.0, abs(a), abs(b))` for a clean computation, and a wider tolerance only with a written reason.
+6. A statistical claim needs an assertion on both quantities. Do not write &quot;below one standard error&quot; unless a script prints the difference and the standard error and asserts the comparison.
+7. A cross section comes from the inequalities, not from the picture. Derive the section shape from the defining inequalities, print the boundary values, and sample the area at three heights of the parameter.
+8. A boundary value gets a printed shape. For each endpoint of a parameter, print the corner list or the boundary set, and call the result a point, a segment, or a face from that print.
+9. A drawn number is a computed number. Import the constants of the figure script into the step script, print the drawn value from those constants, and put that print in the page.
+10. A step states its reason before its computation. The order in the page is: claim, reason, computation, result, verification.
+11. When the computation and the derivation disagree, the computation wins. Rewrite the derivation.
+
+## 4. Page law
+
+The page is one standalone HTML file. It opens with no network.
+
+Required structure, in this order:
+
+1. `&lt;h1&gt;` with the exercise number and the topic.
+2. `&lt;figure class=&quot;source&quot;&gt;` with `problem.png` embedded as a Base64 image, and the caption &quot;The problem as given.&quot;
+3. `&lt;blockquote class=&quot;statement&quot;&gt;` with the statement transcribed from the image, each math token inside `$...$`.
+4. A short table of `Given` and `Find`.
+5. A notation table: symbol, meaning, unit, and the step where it first appears.
+6. One `&lt;section&gt;` for each part. Inside a part, one `&lt;section&gt;` for each step:
+   - `&lt;h3&gt;` with the step number and the claim.
+   - `&lt;p class=&quot;reason&quot;&gt;` with the reason.
+   - `&lt;div class=&quot;computation&quot;&gt;` with display math.
+   - `&lt;p class=&quot;result&quot;&gt;` with the printed value.
+   - `&lt;p class=&quot;verification&quot;&gt;` with the script name and the printed check.
+   - `&lt;p class=&quot;mistake&quot;&gt;` in the form: &quot;A reader may take X, but the limits give Y.&quot;
+7. A final `&lt;section class=&quot;answer&quot;&gt;` with the answer of each part.
+8. A closing `&lt;section class=&quot;notes&quot;&gt;` with the assumptions of `NOTES.md`.
+
+Content rules:
+
+1. Put the exact form first and the decimal after it: `$V = \frac{136\pi}{99} \approx 4.3157$` cubic units.
+2. Give the unit of every dimensional quantity.
+3. Explain each symbol that a reader may not know, at its first use.
+4. Use one term for one concept in the whole page. Do not alternate &quot;solid&quot;, &quot;body&quot;, and &quot;region&quot; for the same set.
+5. Name a plane by the two axes that its points keep. A projection that drops `y` lies on the plane `y = 0`.
+6. Give each surface its own direction. A sentence that gives one direction to two surfaces of opposite direction is false.
+7. Name the whole that a ratio divides, and name the two sets that a ratio compares.
+8. Build a table label from the symbol that its own row computes. Do not label three rows with one literal.
+9. Put every math token of a table cell and of a caption inside `$...$`. Escape `&lt;` and `&amp;` before a caption copy.
+10. A list item stays one element. Join an indented continuation line to the item above it before the block split.
+11. Cite each figure by number in the `Result` of the step that uses it.
+12. Do not copy a value from this file. The numbers of an example belong to the example problem.
+13. A wrong value may appear only in a `&lt;p class=&quot;mistake&quot;&gt;` line, only when a named check prints it. Otherwise write `[WRONG_VALUE]` and `[CORRECT_VALUE]`.
+
+## 5. Figure law
+
+1. One axis-label mechanism per axis, with an arrowhead. Do not write an axis letter by hand and set the same letter again as a tick label.
+2. Label each surface at a point that its own equation satisfies. Check the coordinate arithmetic before the export.
+3. A closed body reads as closed: wall alpha above 0.5, one color map, one highlight color for the intersection curve or the projection region.
+4. Reserve one dash pattern and one offset for a reference line, and a different pattern for the data curve.
+5. End each arrowhead short of the stroke that it points at.
+6. Draw an axis with unequal steps on a numeric axis, not at the index of the step.
+7. Measure the clearance before the export, and assert it:
+
+```python
+figure.canvas.draw()
+renderer = figure.canvas.get_renderer()
+artists = list(axes.texts)
+if axes.get_legend() is not None:
+    artists.append(axes.get_legend())
+for artist in artists:
+    box = artist.get_window_extent(renderer)
+    name = artist.get_text() if hasattr(artist, &quot;get_text&quot;) else &quot;legend&quot;
+    assert axes.bbox.x0 - 1 &lt;= box.x0 and box.x1 &lt;= axes.bbox.x1 + 1, name
+    assert axes.bbox.y0 - 1 &lt;= box.y0 and box.y1 &lt;= axes.bbox.y1 + 1, name
+```
+
+8. Keep one font size per role in the figure. Set the font from the local font directory when it exists:
+
+```python
+from matplotlib import font_manager, rcParams
+
+font_manager.fontManager.addfont(&quot;__fonts__/XITS/XITS-Regular.otf&quot;)
+rcParams[&quot;font.family&quot;] = &quot;XITS&quot;
+rcParams[&quot;mathtext.fontset&quot;] = &quot;custom&quot;
+rcParams[&quot;mathtext.rm&quot;] = &quot;XITS&quot;
+```
+
+9. Open the PNG with the image reader and compare it with the paragraph that cites it. Confirm that each label names the object under it.
+
+## 6. Composition law and release gate
+
+The page must open with no network. Inline the KaTeX style sheet, the KaTeX fonts as data URIs, and the renderer script as inline text.
+
+Offline plan, in this order:
+
+1. Look for a local bundle: `ls .cache/katex/katex.min.css`, `ls solution/vendor/katex.min.css`, `python -c &quot;import katex&quot;`.
+2. If no bundle exists, try once: `npm pack katex@0.16.11`, or `pip download katex`.
+3. If the network is down, use the MathML fallback: `pip install latex2mathml`, convert each math span to `&lt;math&gt;` at composition time, and write `katex: unavailable` in `NOTES.md`.
+4. Never leave a CDN link in the page. A page with an external reference fails the gate.
+5. Keep the math in the page source as `$...$` and `$$...$$`, and render it in the browser with the inlined auto-render script. Do not pre-render KaTeX to HTML at build time, because then no reader, and no gate, can tell a math token from text.
+
+Fonts in the page:
+
+```css
+body { font-family: Cambria, &quot;Cambria Math&quot;, XITS, &quot;DejaVu Serif&quot;, Georgia, serif; }
+.katex .mathrm, .katex .textrm, .katex .text { font-family: XITS, &quot;Cambria Math&quot;, serif; }
+```
+
+Keep the KaTeX metric fonts for symbols. An override of the metric fonts breaks the spacing.
+
+Write `check_solution.py` with the body below. Do not weaken a check, and do not comment one out. A gate that you disabled is a false claim.
+
+```python
+&quot;&quot;&quot;Check one composed solution page against the release gates.&quot;&quot;&quot;
+
+import base64
+import pathlib
+import re
+import sys
+
+PAGE = pathlib.Path(sys.argv[1] if len(sys.argv) &gt; 1 else &quot;solution.html&quot;)
+text = PAGE.read_text(encoding=&quot;utf-8&quot;)
+failures = []
+
+
+def require(name, defects):
+    &quot;&quot;&quot;Record one gate failure and print a short sample of its defects.&quot;&quot;&quot;
+    if defects:
+        failures.append(f&quot;{name}: {len(defects)}&quot;)
+        for defect in defects[:5]:
+            print(f&quot;  {name}: {defect}&quot;)
+
+
+lines = text.splitlines()
+
+require(&quot;control character&quot;, [
+    f&quot;line {index}&quot; for index, line in enumerate(lines, 1)
+    if re.search(r&quot;[\x00-\x08\x0b\x0c\x0e-\x1f]&quot;, line)])
+
+require(&quot;odd $ count&quot;, [
+    f&quot;line {index}: {line.strip()[:60]}&quot; for index, line in enumerate(lines, 1)
+    if line.count(&quot;$&quot;) % 2])
+
+require(&quot;placeholder&quot;, [
+    f&quot;line {index}&quot; for index, line in enumerate(lines, 1)
+    if &quot;[WRONG_VALUE]&quot; in line or &quot;[CORRECT_VALUE]&quot; in line])
+
+require(&quot;empty &lt;code&gt;&quot;, re.findall(r&quot;&lt;code&gt;\s*&lt;/code&gt;&quot;, text))
+
+cells = re.findall(r&quot;&lt;(?:td|th|figcaption)[^&gt;]*&gt;(.*?)&lt;/(?:td|th|figcaption)&gt;&quot;, text, re.S)
+require(&quot;raw LaTeX in cell or caption&quot;, [
+    cell[:80] for cell in cells if &quot;\\&quot; in re.sub(r&quot;\$[^$]*\$&quot;, &quot;&quot;, cell)])
+
+require(&quot;unescaped &lt; in caption&quot;, [
+    caption[:80] for caption in re.findall(r&quot;&lt;figcaption[^&gt;]*&gt;(.*?)&lt;/figcaption&gt;&quot;, text, re.S)
+    if re.search(r&quot;&lt;(?!/?(?:em|strong|code|span|br|sub|sup)\b)&quot;, caption)])
+
+visible = re.sub(r&quot;&lt;(script|style)[^&gt;]*&gt;.*?&lt;/\1&gt;&quot;, &quot;&quot;, text, flags=re.S)
+visible = re.sub(r&quot;\$\$.*?\$\$&quot;, &quot;&quot;, visible, flags=re.S)
+visible = re.sub(r&quot;\$[^$]*\$&quot;, &quot;&quot;, visible)
+require(&quot;math outside $...$&quot;, re.findall(r&quot;\\[A-Za-z]{2,}&quot;, visible))
+
+require(&quot;list item without full stop&quot;, [
+    item[:80] for item in re.findall(r&quot;&lt;li[^&gt;]*&gt;(.*?)&lt;/li&gt;&quot;, text, re.S)
+    if not re.sub(r&quot;&lt;[^&gt;]+&gt;&quot;, &quot;&quot;, item).strip().endswith((&quot;.&quot;, &quot;:&quot;, &quot;!&quot;, &quot;?&quot;))])
+
+require(&quot;paragraph starts lower-case&quot;, re.findall(r&quot;&lt;p[^&gt;]*&gt;\s*([a-z][^&lt;]{0,60})&quot;, text))
+
+images = re.findall(r&#x27;&lt;img[^&gt;]+src=&quot;data:image/png;base64,([A-Za-z0-9+/=]+)&quot;&#x27;, text)
+bad_images = []
+for index, payload in enumerate(images, 1):
+    try:
+        base64.b64decode(payload, validate=True)
+    except Exception:
+        bad_images.append(f&quot;image {index}&quot;)
+require(&quot;undecodable base64 image&quot;, bad_images)
+if not images:
+    failures.append(&quot;embedded figure: 0&quot;)
+
+require(&quot;external reference&quot;, re.findall(r&#x27;(?:src|href)=&quot;(https?://[^&quot;]+)&quot;&#x27;, text))
+
+results = re.findall(r&#x27;&lt;p class=&quot;result&quot;&gt;(.*?)&lt;/p&gt;&#x27;, text, re.S)
+verifications = re.findall(r&#x27;&lt;p class=&quot;verification&quot;&gt;(.*?)&lt;/p&gt;&#x27;, text, re.S)
+mistakes = re.findall(r&#x27;&lt;p class=&quot;mistake&quot;&gt;(.*?)&lt;/p&gt;&#x27;, text, re.S)
+if not results:
+    failures.append(&quot;step block: 0&quot;)
+if &#x27;class=&quot;answer&quot;&#x27; not in text:
+    failures.append(&quot;answer section: 0&quot;)
+if not len(results) == len(verifications) == len(mistakes):
+    failures.append(
+        f&quot;step blocks: {len(results)} result, {len(verifications)} verification,&quot;
+        f&quot; {len(mistakes)} mistake&quot;)
+
+require(&quot;verification without script name&quot;, [
+    line[:80] for line in verifications
+    if not re.search(r&quot;part\d+_step\d+\.py&quot;, line)])
+
+print(&quot;PASS&quot; if not failures else &quot;FAIL: &quot; + &quot;; &quot;.join(failures))
+sys.exit(0 if not failures else 1)
+```
+
+## 7. Compiled anti-patterns
+
+These rules come from the v17 training record. Each one names a defect that shipped in a graded product.
+
+1. A numeral with no print. A page said 10 valleys while the script counted 12, and 48 checks while the tables held 44 rows. Interpolate each numeral from a print.
+2. A check that cannot fail. A script compared a count with itself, one literal with another, and returned a hard-coded fraction under the label of exact arithmetic. Such a check leaves the claim unchecked.
+3. A shape taken from the figure. A step called each horizontal slice an annulus, and published 25.13 as the largest area, because it read the picture and not the inequalities. Derive the section shape and print its area at three heights.
+4. A section called a point. A step called the section at `y = 2` the single point `(0, 0, 1)`, while the script printed the corners `(0, 2, 0)` and `(1, 2, 0)`.
+5. A plane named by the dropped axis. A page called the `xz`-projection the projection on the plane `x = 0`. It lies on `y = 0`.
+6. One direction for two surfaces. A reason block said that both surfaces grow away from the vertical axis, while the upper surface falls toward it.
+7. A surface label off its surface. A label `y + z = 4` sat at a point where `y + z = 8`, and a label `x^2 + z^2 = 4` sat at a radius of 2.64.
+8. Decoration on the data. A tick label crossed the surface that owned it, and a dashed reference looked like the data curve. Nine resolutions were spaced by their index although the plotted quantity was a numeric error, so the error curve read as a straight line.
+9. A legend clipped by the axes edge. The fourth entry was cut off, because no clearance was measured.
+10. Raw LaTeX in a cell. 32 of 607 table cells held a math token outside `$...$`, and a caption printed `0 &lt;= z &lt;= y &lt;= Y` as plain text.
+11. A control byte in a replacement string. A literal `U+0001` stood where the backreference `\1` belonged, so 21 inline code elements lost their subject.
+12. A split list item. An indented continuation line became a paragraph, so one bullet ended at the word &quot;which&quot; and the rest of the sentence followed as body text.
+13. A placeholder on the page. `[CORRECT_VALUE]` reached a published page, and one answer sentence lost its opening `$`.
+14. A label with a stale symbol. Three rows printed one literal `a` although the factor of the row was a function of `z`.
+15. A period count from memory. A page gave `sin 6*theta` three periods over one turn and `cos 12*theta` six, where the counts are six and twelve.
+16. A ratio with no whole. A page called `1/99` a share of the volume of the unit ball, where `1/99` is an excess and the volume share is `1/33`.
+17. A number from an example. Three sentences carried values of another problem, because the values came from a worked example and not from a print.
+
+## 8. Operating limits
+
+1. Use HTML with KaTeX. Do not use Typst, and do not compile LaTeX. Do not start a local server.
+2. Keep one bash call under 120 seconds and under 60 printed lines. Send long output to a log and read the log with the file reader.
+3. Never print a Base64 payload, a whole HTML file, or a whole log to the terminal.
+4. Do not run two heavy scripts at the same time. A parallel render drains memory.
+5. After three failures of the same command, change the method. Write the failed method and the new one in `NOTES.md`.
+6. Do not report completion without `ls -la` output and a `gate.log` that holds `PASS`.
+7. Never claim a file exists before you list it. Never claim a check passes before you read its output.
+8. Keep each script near 60 lines. Split a longer script by step.
+9. The page must open from the file system with no network, on a machine that has only the browser.
+
+## 9. Definition of done
+
+A subdirectory is done when all of these hold.
+
+- `problem.png` is unchanged.
+- `solution/` holds one step script for each step, one figure script and one PNG and one Base64 file for each figure, one log for each script, `check_solution.py`, `gate.log`, `NOTES.md`, and `solution.html`.
+- Each step script exits 0, and its log shows a printed value and at least one assertion between two methods.
+- `gate.log` holds `PASS`.
+- The page holds one answer section, and each answer gives the exact form first.
+- `ls -la &lt;subdir&gt;/` and `ls -la &lt;subdir&gt;/solution/` show the byte sizes, so a reader can confirm that each named file exists and that the page carries the figures.
+- `&lt;subdir&gt;/solution.html` exists and has the same byte size as `solution/solution.html`.
+- No dot entry, no scratch file, and no `[WRONG_VALUE]` or `[CORRECT_VALUE]` token remains.
+
+## Natural Language Styles
+
+- English: ASD-STE100 non-strict mode with academic US English fallback.
+- Chinese: Simplified Technical Chinese non-strict mode.
+
+## Python Code Styles
+
+- Use Google Python Style as code style reference with the following exceptions.
+  - Enforce a line break at the end of each complete docstring sentence.
+  - Follow the custom line length rules.
+  - Follow the custom indentation rules.
+- Use ASD-STE-100 non-strict mode with academic US English fallback as natural language style reference.
+- Use a maximum line length limit of 119 characters.
+  - Use &quot;smart&quot; line breaks to improve sentence and code readability.
+  - Do not use &quot;dumb&quot; line breaks that affects sentence or code readability just to satisfy the rules.
+- Use 4-space indentation.
+  - Use horizontally aligned hanging indents.
+  - Do not use vertically aligned indents.
+- Use complete and meaningful words to name things instead of short and confusing mathematical notations.
+  - Long and clear names are better than single character names that makes no sense.
+  - Do not use overly abbreviated names.
+- Use `from ... import ...` and `from ... import ... as ...` wherever possible.
+- Organize imports.
+- Use `python` to access python.
+  - Use `pip` to install necessary libraries like `numpy, sympy, matplotlib`.
+- If you need to write temporary files, put them in existing or new directories whose base-name starts with a dot `**/.*/`.
+  - Clear all temporary files before task completion.
+</pre>
+</main>
+</body>
+</html>

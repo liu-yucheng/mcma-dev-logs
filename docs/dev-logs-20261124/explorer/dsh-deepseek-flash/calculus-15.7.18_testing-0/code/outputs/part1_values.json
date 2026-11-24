@@ -1,0 +1,65 @@
+{
+  "p1_yz_area_latex": "\\dfrac{9\\pi}{4}",
+  "p1_yz_area_decimal": "7.068583471",
+  "p1_xz_area_latex": "\\dfrac{3\\pi}{4}",
+  "p1_xz_area_decimal": "2.356194490",
+  "p1_xy_area_latex": "\\dfrac{3}{2}",
+  "p1_xy_area_decimal": "1.500000000",
+  "p1_volume_latex": "3",
+  "p1_volume_decimal": "3.000000000",
+  "p1_volume_monte_carlo": "3.003885000",
+  "p1_volume_standard_error": "0.002122006",
+  "p1_volume_standard_error_ratio": "1.830814",
+  "p1_volume_count": "3.000067708",
+  "p1_shape_rows": [
+    {
+      "parameter": "y",
+      "value": "0.000",
+      "kind": "segment",
+      "corners": "(0.000, 0.000, 0.000); (0.000, 0.000, 3.000)",
+      "corner_count": "2",
+      "area": "0.000000000"
+    },
+    {
+      "parameter": "y",
+      "value": "1.500",
+      "kind": "rectangle",
+      "corners": "(0.000, 1.500, 0.000); (0.500, 1.500, 0.000); (0.500, 1.500, 2.598); (0.000, 1.500, 2.598)",
+      "corner_count": "4",
+      "area": "1.299038106"
+    },
+    {
+      "parameter": "y",
+      "value": "3.000",
+      "kind": "segment",
+      "corners": "(0.000, 3.000, 0.000); (1.000, 3.000, 0.000)",
+      "corner_count": "2",
+      "area": "0.000000000"
+    },
+    {
+      "parameter": "z",
+      "value": "0.000",
+      "kind": "triangle",
+      "corners": "(0.000, 0.000, 0.000); (0.000, 3.000, 0.000); (1.000, 3.000, 0.000)",
+      "corner_count": "3",
+      "area": "1.500000000"
+    },
+    {
+      "parameter": "z",
+      "value": "1.500",
+      "kind": "triangle",
+      "corners": "(0.000, 0.000, 1.500); (0.000, 2.598, 1.500); (0.866, 2.598, 1.500)",
+      "corner_count": "3",
+      "area": "1.125000000"
+    },
+    {
+      "parameter": "z",
+      "value": "3.000",
+      "kind": "point",
+      "corners": "(0.000, 0.000, 3.000)",
+      "corner_count": "1",
+      "area": "0.000000000"
+    }
+  ],
+  "p1_check_count": "23"
+}

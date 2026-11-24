@@ -1,0 +1,11 @@
+# Exact package versions of the verification environment.
+# Python 3.14.3
+
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2
+pillow==13.0.0
+packaging==26.3
+pyparsing==3.3.3
+python-dateutil==4.0.0
+tzdata==2026.6

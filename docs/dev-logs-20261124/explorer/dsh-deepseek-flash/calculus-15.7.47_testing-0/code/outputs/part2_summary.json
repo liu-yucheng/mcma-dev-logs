@@ -1,0 +1,108 @@
+{
+ "part": "part2",
+ "check_count": 10,
+ "passed_count": 10,
+ "checks": [
+  {
+   "name": "rectangle_area_at_y_equal_0.25",
+   "computed": 0.75,
+   "expected": 0.75,
+   "difference": 0.0,
+   "tolerance": 1e-09,
+   "reason": "the closed-form area $2\\sqrt{y}(1 - y)$ against a quadrature over the same rectangle",
+   "passed": true
+  },
+  {
+   "name": "rectangle_area_at_y_equal_0.5",
+   "computed": 0.7071067811865476,
+   "expected": 0.7071067811865476,
+   "difference": 0.0,
+   "tolerance": 1e-09,
+   "reason": "the closed-form area $2\\sqrt{y}(1 - y)$ against a quadrature over the same rectangle",
+   "passed": true
+  },
+  {
+   "name": "rectangle_area_at_y_equal_1.0",
+   "computed": 0.0,
+   "expected": 0.0,
+   "difference": 0.0,
+   "tolerance": 1e-09,
+   "reason": "the closed-form area $2\\sqrt{y}(1 - y)$ against a quadrature over the same rectangle",
+   "passed": true
+  },
+  {
+   "name": "parabolic_area_at_z_equal_0.0",
+   "computed": 1.3333333333333333,
+   "expected": 1.3333333333333253,
+   "difference": 7.993605777301127e-15,
+   "tolerance": 1e-09,
+   "reason": "the closed-form area $\\frac{4}{3}(1 - z)^{3/2}$ against a quadrature over the same section",
+   "passed": true
+  },
+  {
+   "name": "parabolic_area_at_z_equal_0.5",
+   "computed": 0.4714045207910317,
+   "expected": 0.4714045207910288,
+   "difference": 2.886579864025407e-15,
+   "tolerance": 1e-09,
+   "reason": "the closed-form area $\\frac{4}{3}(1 - z)^{3/2}$ against a quadrature over the same section",
+   "passed": true
+  },
+  {
+   "name": "parabolic_area_at_z_equal_0.8",
+   "computed": 0.11925695879998874,
+   "expected": 0.11925695879998802,
+   "difference": 7.216449660063518e-16,
+   "tolerance": 1e-09,
+   "reason": "the closed-form area $\\frac{4}{3}(1 - z)^{3/2}$ against a quadrature over the same section",
+   "passed": true
+  },
+  {
+   "name": "stacked_section_area_against_volume",
+   "computed": 0.5333333333333333,
+   "expected": 0.5333333333333333,
+   "difference": 0.0,
+   "tolerance": 1e-08,
+   "reason": "the integral of the section area over $z$ against the volume of the order $dz\\,dy\\,dx$",
+   "passed": true
+  },
+  {
+   "name": "section_at_y_one_is_a_segment",
+   "computed": 2.0,
+   "expected": 2.0,
+   "difference": 0.0,
+   "tolerance": 1e-12,
+   "reason": "the corner list at $y = 1$ against the width $2\\sqrt{y}$ of the rectangle",
+   "passed": true
+  },
+  {
+   "name": "section_at_z_one_is_one_point",
+   "computed": 0.0,
+   "expected": 0.0,
+   "difference": 0.0,
+   "tolerance": 1e-12,
+   "reason": "the corner list at $z = 1$ against the single point of zero extent",
+   "passed": true
+  },
+  {
+   "name": "section_at_y_zero_is_a_segment",
+   "computed": 0.0,
+   "expected": 0.0,
+   "difference": 0.0,
+   "tolerance": 1e-12,
+   "reason": "the closed-form area at $y = 0$ against zero, which marks a segment and not a face",
+   "passed": true
+  }
+ ],
+ "display": {
+  "p2_z_slices": "0.0, 0.5, 0.8",
+  "p2_y_slices": "0.25, 0.50, 1.00",
+  "p2_area_z_list": "1.333333333, 0.471404521, 0.119256959",
+  "p2_area_y_list": "0.750000000, 0.707106781, 0.000000000",
+  "p2_stacked_area": "0.533333333",
+  "p2_shape_y_list": "y = 0.0: vertical segment of length 1.000000; y = 1.0: segment along x of length 2.000000",
+  "p2_shape_z_list": "z = 0.0: parabolic segment of width 2.000000 in x and height 1.000000 in y; z = 1.0: one point",
+  "p2_corner_y_one": "(-1.000, 1.000, 0.000); (1.000, 1.000, 0.000); (1.000, 1.000, 0.000); (-1.000, 1.000, 0.000)",
+  "p2_corner_z_one": "(-0.000, 0.000, 1.000); (0.000, 0.000, 1.000); (0.000, 0.000, 1.000)"
+ }
+}

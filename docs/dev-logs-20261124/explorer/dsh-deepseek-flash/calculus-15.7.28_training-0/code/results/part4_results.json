@@ -1,0 +1,162 @@
+{
+  "subdivision": 40,
+  "triangle_count": 15840,
+  "boundary_edge_count": 0,
+  "volume": {
+    "mesh": 6.665833333333333,
+    "slices": 6.666666666666667,
+    "iterated_integral": 6.666666666666667,
+    "relative_gap": 0.00012500000000015277
+  },
+  "areas": [
+    {
+      "name": "S1",
+      "equation": "y = 0",
+      "mesh_area": 8.0,
+      "integral_area": 8.0,
+      "relative_gap": 0.0
+    },
+    {
+      "name": "S2",
+      "equation": "x = 0",
+      "mesh_area": 2.0,
+      "integral_area": 2.0,
+      "relative_gap": 0.0
+    },
+    {
+      "name": "S3",
+      "equation": "z = 0",
+      "mesh_area": 5.3325000000000005,
+      "integral_area": 5.333333333333333,
+      "relative_gap": 0.0001562499999998579
+    },
+    {
+      "name": "S4",
+      "equation": "y + z = 2",
+      "mesh_area": 7.541293821354529,
+      "integral_area": 7.542472332656509,
+      "relative_gap": 0.00015625000000029014
+    },
+    {
+      "name": "S5",
+      "equation": "x = 4 - y^2",
+      "mesh_area": 3.5361599687101544,
+      "integral_area": 3.5358345552408683,
+      "relative_gap": 9.203300216740012e-05
+    }
+  ],
+  "cuts": [
+    {
+      "height": 0.51,
+      "drawn_area": 5.571855,
+      "area_from_limits": 5.572451,
+      "relative_gap": 0.00010695473140989824
+    },
+    {
+      "height": 1.01,
+      "drawn_area": 2.949705,
+      "area_from_limits": 2.9501009999999996,
+      "relative_gap": 0.00013423269237217335
+    },
+    {
+      "height": 1.51,
+      "drawn_area": 0.842555,
+      "area_from_limits": 0.842751,
+      "relative_gap": 0.00023257166114305883
+    }
+  ],
+  "projection": {
+    "covered_fraction": 1.0,
+    "area_outside_disk": 4.84108,
+    "sample_count": 200000
+  },
+  "labels": [
+    {
+      "name": "S1",
+      "equation": "y = 0",
+      "point": [
+        2.2,
+        0.0,
+        1.0
+      ],
+      "residual_on_own_surface": 0.0,
+      "nearest_other_surface": 0.7071067811865475,
+      "inside_region": true
+    },
+    {
+      "name": "S2",
+      "equation": "x = 0",
+      "point": [
+        0.0,
+        0.6,
+        0.9
+      ],
+      "residual_on_own_surface": 0.0,
+      "nearest_other_surface": 0.35355339059327373,
+      "inside_region": true
+    },
+    {
+      "name": "S3",
+      "equation": "z = 0",
+      "point": [
+        1.5,
+        0.7,
+        0.0
+      ],
+      "residual_on_own_surface": 0.0,
+      "nearest_other_surface": 0.7,
+      "inside_region": true
+    },
+    {
+      "name": "S4",
+      "equation": "y + z = 2",
+      "point": [
+        1.2,
+        0.75,
+        1.25
+      ],
+      "residual_on_own_surface": 0.0,
+      "nearest_other_surface": 0.75,
+      "inside_region": true
+    },
+    {
+      "name": "S5",
+      "equation": "x = 4 - y^2",
+      "point": [
+        3.84,
+        0.4,
+        1.0
+      ],
+      "residual_on_own_surface": 0.0,
+      "nearest_other_surface": 0.4,
+      "inside_region": true
+    }
+  ],
+  "vertices": {
+    "A": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "B": [
+      4.0,
+      0.0,
+      0.0
+    ],
+    "C": [
+      4.0,
+      0.0,
+      2.0
+    ],
+    "D": [
+      0.0,
+      0.0,
+      2.0
+    ],
+    "T": [
+      0.0,
+      2.0,
+      0.0
+    ]
+  }
+}

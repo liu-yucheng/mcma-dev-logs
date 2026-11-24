@@ -1,0 +1,126 @@
+{
+  "checks": {
+    "count": 11,
+    "part": "part4",
+    "rows": [
+      {
+        "computed": 0.027903999999999995,
+        "difference": 0.0,
+        "expected": 0.027903999999999995,
+        "name": "inner x integral of the inertia at y = 0.6",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 2.725,
+        "difference": 0.0,
+        "expected": 2.725,
+        "name": "inner x integral of the inertia at y = 1.5",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 28.573695999999995,
+        "difference": 0.0,
+        "expected": 28.573695999999995,
+        "name": "inner x integral of the inertia at y = 2.4",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 59.79428571428571,
+        "difference": 1.4210854715202004e-14,
+        "expected": 59.79428571428569,
+        "name": "inertia: Beta function against quadrature",
+        "tolerance": 1e-08
+      },
+      {
+        "computed": 59.79428571428569,
+        "difference": 1.4210854715202004e-14,
+        "expected": 59.79428571428571,
+        "name": "inertia: two integration orders",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 59.79428571428569,
+        "difference": 0.09615769538340402,
+        "expected": 59.69812801890229,
+        "name": "inertia: quadrature against Monte Carlo",
+        "tolerance": 0.39248900147510496
+      },
+      {
+        "computed": 166.6285714285713,
+        "difference": 1.1368683772161603e-13,
+        "expected": 166.6285714285714,
+        "name": "the substitution y = 3 t gives the factor 3^7 = 2187",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 2187.0,
+        "difference": 1.8189894035458565e-12,
+        "expected": 2186.999999999998,
+        "name": "the exponent of 3 recovered from the integral is an integer power",
+        "tolerance": 2.1869999999999983e-06
+      },
+      {
+        "computed": 11.199999999999996,
+        "difference": 3.552713678800501e-15,
+        "expected": 11.2,
+        "name": "the integral of the density is the mass of Part 2",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 100.8,
+        "difference": 41.005714285714305,
+        "expected": 59.79428571428569,
+        "name": "the radius of the cylinder overstates the inertia",
+        "tolerance": 1.0
+      },
+      {
+        "computed": 59.79428571428569,
+        "difference": 0.0,
+        "expected": 59.79428571428569,
+        "name": "the mean squared radius is the inertia over the mass",
+        "tolerance": 1e-09
+      }
+    ]
+  },
+  "inner_iz_at_0_6": "0.027904000",
+  "inner_iz_at_1_5": "2.725000000",
+  "inner_iz_at_2_4": "28.573696000",
+  "inner_rows": [
+    {
+      "difference": "0.00e+00",
+      "direct": "0.027904000",
+      "formula": "0.027904000",
+      "gauss": "0.027904000",
+      "y": "0.6"
+    },
+    {
+      "difference": "0.00e+00",
+      "direct": "2.725000000",
+      "formula": "2.725000000",
+      "gauss": "2.725000000",
+      "y": "1.5"
+    },
+    {
+      "difference": "0.00e+00",
+      "direct": "28.573696000",
+      "formula": "28.573696000",
+      "gauss": "28.573696000",
+      "y": "2.4"
+    }
+  ],
+  "iz": "59.794286",
+  "iz_3dp": "59.794",
+  "iz_alternate": "59.794285714",
+  "iz_at_cylinder_radius": "100.800000",
+  "iz_closed": "59.794285714",
+  "iz_monte_carlo": "59.698128",
+  "iz_monte_carlo_error": "0.098122",
+  "iz_sigma": "0.980",
+  "mean_square_radius": "5.338776",
+  "repeated_mass": "11.200000",
+  "substitution_exponent": 7,
+  "substitution_factor": "166.628571",
+  "substitution_integral": "166.628571",
+  "substitution_power": "2187.000000",
+  "substitution_ratio": "2187"
+}

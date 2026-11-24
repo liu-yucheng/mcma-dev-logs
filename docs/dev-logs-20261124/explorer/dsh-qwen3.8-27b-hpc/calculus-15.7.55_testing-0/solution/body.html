@@ -1,0 +1,41 @@
+<h1>15.7.55: the region that maximizes a triple integral</h1>
+<blockquote class="statement">Find the region $E$ for which the triple integral of $1 - x^2 - 2y^2 - 3z^2$ is a maximum. Then compute the exact maximum value of the integral.</blockquote>
+<table><tr><th>Given</th><th>Find</th></tr>
+<tr><td>integrand $g = 1 - x^2 - 2y^2 - 3z^2$</td><td>(a) the region $E$, (b) the exact maximum</td></tr></table>
+<table><tr><th>symbol</th><th>meaning</th><th>unit</th></tr>
+<tr><td>$x, y, z$</td><td>coordinates</td><td>length</td></tr>
+<tr><td>$g$</td><td>the integrand</td><td>as $x^2$</td></tr>
+<tr><td>$u, v, w$</td><td>scaled coordinates, $x = u$, $y = v/\sqrt{2}$, $z = w/\sqrt{3}$</td><td>length</td></tr>
+<tr><td>$I$</td><td>the maximum value</td><td>as $g$ times volume</td></tr></table>
+<section><h2>Part (a): the region</h2>
+<section><h3>Step 1.1: the integrand is positive inside the ellipsoid</h3>
+<p class="reason">The integrand is $g = 1 - (x^2 + 2y^2 + 3z^2)$, and each point below one raises the integral.</p>
+<div class="computation">$$ E = \left\{ (x, y, z): x^2 + 2y^2 + 3z^2 \leq 1 \right\} $$</div>
+<p class="result">The region is the ellipsoid with semi-axes $1$, $\frac{1}{\sqrt{2}}$, $\frac{1}{\sqrt{3}}$, printed by <code>part1_step1.py</code>.</p>
+<p class="verification"><code>part1_step1.py</code> checks the zero set and the sign of $g$ on a sample.</p>
+<p class="mistake">A larger region adds negative volume, so the maximum stops at $g = 0$.</p>
+</section></section>
+<section><h2>Part (b): the exact maximum</h2>
+<section><h3>Step 1.2: the change of variables</h3>
+<p class="reason">The scaling $x = u$, $y = v/\sqrt{2}$, $z = w/\sqrt{3}$ maps the ellipsoid to the unit ball, with Jacobian $\frac{1}{\sqrt{6}}$.</p>
+<div class="computation">$$ I = \frac{1}{\sqrt{6}}\iiint_{u^2 + v^2 + w^2 \leq 1} (1 - u^2 - v^2 - w^2)\,du\,dv\,dw $$</div>
+<p class="result">The exact value is $\frac{2\sqrt{6}\,\pi}{5}$, about 3.090, printed by <code>part1_step2.py</code>.</p>
+<p class="verification"><code>part1_step2.py</code> compares the exact integral with a Monte Carlo mean over the ball.</p>
+<p class="mistake">The Jacobian is $\frac{1}{\sqrt{6}}$, not $\sqrt{6}$; the map shrinks volume.</p>
+</section>
+<section><h3>Step 1.3: the exact maximum is $\frac{2\sqrt{6}\,\pi}{5}$</h3>
+<p class="reason">The product of the Jacobian and the ball integral gives the value.</p>
+<div class="computation">$$ I = \frac{4\pi}{5\sqrt{6}} = \frac{2\sqrt{6}\,\pi}{5} $$</div>
+<p class="result">The maximum is $\frac{2\sqrt{6}\,\pi}{5}$, about 3.090, printed by <code>part1_step3.py</code>.</p>
+<p class="verification"><code>part1_step3.py</code> compares the closed form with a Monte Carlo sample over the ellipsoid.</p>
+<p class="mistake">The semi-axis of the $z$-direction is $\frac{1}{\sqrt{3}}$, not $\frac{1}{3}$.</p>
+</section></section>
+<section class="answer"><h2>Answer</h2>
+<p >The region is the ellipsoid $x^2 + 2y^2 + 3z^2 \leq 1$, and the exact maximum is $\frac{2\sqrt{6}\,\pi}{5}$, about 3.090.</p>
+<figure><img src="FIG:part1_figure1.png" alt="the ellipsoid"><figcaption>Figure 1. The ellipsoid $x^2 + 2y^2 + 3z^2 = 1$.</figcaption></figure>
+</section>
+<section class="notes"><h2>Notes</h2>
+<ul><li>The integrand vanishes on the ellipsoid surface.</li>
+<li>The scaling sends the ellipsoid to the unit ball.</li>
+<li>Every value is printed by a script named in its step.</li></ul>
+</section>

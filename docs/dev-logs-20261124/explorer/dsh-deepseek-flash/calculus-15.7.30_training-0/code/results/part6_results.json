@@ -1,0 +1,194 @@
+[
+  {
+    "label": "number of orders against 3! from the factorial formula",
+    "computed": 6.0,
+    "expected": 6.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "number of orders against the count of three nested loops",
+    "computed": 6.0,
+    "expected": 6.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "number of orders with x innermost against 6/3",
+    "computed": 2.0,
+    "expected": 2.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "number of orders with y innermost against 6/3",
+    "computed": 2.0,
+    "expected": 2.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "number of orders with z innermost against 6/3",
+    "computed": 2.0,
+    "expected": 2.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "order dz dy dx accepts the points of E only",
+    "computed": 15728.0,
+    "expected": 15728.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "order dz dy dx from the bound rule against 36*pi",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 0.00011309733552923255,
+    "passed": true
+  },
+  {
+    "label": "order dz dy dx from the bound rule against the value of Part 5",
+    "computed": 622.0353454107789,
+    "expected": 622.0353454107789,
+    "difference": 0.0,
+    "tolerance": 0.0006220353454107788,
+    "passed": true
+  },
+  {
+    "label": "order dy dz dx accepts the points of E only",
+    "computed": 15728.0,
+    "expected": 15728.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "order dy dz dx from the bound rule against 36*pi",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 0.00011309733552923255,
+    "passed": true
+  },
+  {
+    "label": "order dy dz dx from the bound rule against the value of Part 5",
+    "computed": 622.035345410779,
+    "expected": 622.035345410779,
+    "difference": 0.0,
+    "tolerance": 0.0006220353454107789,
+    "passed": true
+  },
+  {
+    "label": "order dz dx dy accepts the points of E only",
+    "computed": 15728.0,
+    "expected": 15728.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "order dz dx dy from the bound rule against 36*pi",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 0.00011309733552923255,
+    "passed": true
+  },
+  {
+    "label": "order dz dx dy from the bound rule against the value of Part 5",
+    "computed": 622.0353454107786,
+    "expected": 622.0353454107786,
+    "difference": 0.0,
+    "tolerance": 0.0006220353454107786,
+    "passed": true
+  },
+  {
+    "label": "order dx dz dy accepts the points of E only",
+    "computed": 15728.0,
+    "expected": 15728.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "order dx dz dy from the bound rule against 36*pi",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 0.00011309733552923255,
+    "passed": true
+  },
+  {
+    "label": "order dx dz dy from the bound rule against the value of Part 5",
+    "computed": 622.0353454107786,
+    "expected": 622.0353454107786,
+    "difference": 0.0,
+    "tolerance": 0.0006220353454107786,
+    "passed": true
+  },
+  {
+    "label": "order dy dx dz accepts the points of E only",
+    "computed": 15728.0,
+    "expected": 15728.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "order dy dx dz from the bound rule against 36*pi",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 0.00011309733552923255,
+    "passed": true
+  },
+  {
+    "label": "order dy dx dz from the bound rule against the value of Part 5",
+    "computed": 622.0353454107786,
+    "expected": 622.0353454107786,
+    "difference": 0.0,
+    "tolerance": 0.0006220353454107786,
+    "passed": true
+  },
+  {
+    "label": "order dx dy dz accepts the points of E only",
+    "computed": 15728.0,
+    "expected": 15728.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "order dx dy dz from the bound rule against 36*pi",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 0.00011309733552923255,
+    "passed": true
+  },
+  {
+    "label": "order dx dy dz from the bound rule against the value of Part 5",
+    "computed": 622.0353454107786,
+    "expected": 622.0353454107786,
+    "difference": 0.0,
+    "tolerance": 0.0006220353454107786,
+    "passed": true
+  },
+  {
+    "label": "number of distinct written order names",
+    "computed": 6.0,
+    "expected": 6.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  }
+]

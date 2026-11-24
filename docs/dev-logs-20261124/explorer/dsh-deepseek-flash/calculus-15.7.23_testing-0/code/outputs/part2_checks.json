@@ -1,0 +1,94 @@
+{
+  "check_count": 11,
+  "passed_count": 11,
+  "checks": [
+    {
+      "name": "slice at z = 0.00: quadrature against the closed form",
+      "computed": 0.5,
+      "expected": 0.5,
+      "difference": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "slice at z = 0.00: Monte Carlo against the closed form, in standard errors",
+      "computed": 0.6862146561711832,
+      "expected": 0.0,
+      "difference": 0.6862146561711832,
+      "tolerance": 4.0,
+      "passed": true
+    },
+    {
+      "name": "slice at z = 0.25: quadrature against the closed form",
+      "computed": 0.46875,
+      "expected": 0.46875000000000006,
+      "difference": 5.551115123125783e-17,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "slice at z = 0.25: Monte Carlo against the closed form, in standard errors",
+      "computed": 1.175642037375807,
+      "expected": 0.0,
+      "difference": 1.175642037375807,
+      "tolerance": 4.0,
+      "passed": true
+    },
+    {
+      "name": "slice at z = 0.50: quadrature against the closed form",
+      "computed": 0.37499999999999994,
+      "expected": 0.37499999999999994,
+      "difference": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "slice at z = 0.50: Monte Carlo against the closed form, in standard errors",
+      "computed": 0.0620553125369375,
+      "expected": 0.0,
+      "difference": 0.0620553125369375,
+      "tolerance": 4.0,
+      "passed": true
+    },
+    {
+      "name": "slice at z = 0.75: quadrature against the closed form",
+      "computed": 0.21875000000000003,
+      "expected": 0.21875000000000003,
+      "difference": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "slice at z = 0.75: Monte Carlo against the closed form, in standard errors",
+      "computed": 0.8177735380235482,
+      "expected": 0.0,
+      "difference": 0.8177735380235482,
+      "tolerance": 4.0,
+      "passed": true
+    },
+    {
+      "name": "width along y falls from z = 0 to z = 1",
+      "computed": "decreasing",
+      "expected": "decreasing",
+      "difference": 0.0,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "slice at z = 1: closed form against the quadrature of an empty interval",
+      "computed": 0.0,
+      "expected": 0.0,
+      "difference": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "sum of the slice areas: quadrature against 1 / 3",
+      "computed": 0.3333333333333333,
+      "expected": 0.3333333333333333,
+      "difference": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    }
+  ]
+}

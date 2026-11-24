@@ -1,0 +1,6 @@
+# Exact versions of the environment of this session.
+# Created with: uv venv code/.venv
+# Filled with: uv pip install --python code/.venv numpy scipy matplotlib
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2

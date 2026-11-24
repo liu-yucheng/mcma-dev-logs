@@ -1,0 +1,203 @@
+{
+  "part": 1,
+  "values": {
+    "vertex_list": "(2, 2, 0), (2, 2, 1), (2, 0, 0), (0, 2, 0)",
+    "vertex_count": 4,
+    "projection_xy_area": 2.0,
+    "projection_xy_corners": "(2, 0), (0, 2), (2, 2)",
+    "projection_xz_area": 1.0,
+    "projection_xz_corners": "(0, 0), (2, 0), (2, 1)",
+    "projection_yz_area": 1.0,
+    "projection_yz_corners": "(0, 0), (2, 0), (2, 1)",
+    "volume": 0.6666666666666666,
+    "volume_latex": "\\frac{2}{3}",
+    "volume_text": "0.666666666667",
+    "volume_mc": "0.668544",
+    "volume_mc_error": "0.000746194498784",
+    "volume_without_third": "2",
+    "wrong_side_volume": "3.33333333333",
+    "slanted_face_area": "2.44948974278",
+    "face_z_zero_area": "2",
+    "face_x_two_area": "1",
+    "face_y_two_area": "1",
+    "z_largest": "1",
+    "z_on_x_zero_large": "0",
+    "sample_count": 4000000,
+    "seed": 20261123,
+    "box_volume": 4.0,
+    "base_area": 2,
+    "height": 1,
+    "centroid": "(1.5, 1.5, 0.25)",
+    "sampled_fraction": "0.167136"
+  },
+  "checks": [
+    {
+      "name": "four vertices satisfy all four half-spaces",
+      "computed": 4,
+      "expected": 4,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "four distinct vertices from the four plane triples",
+      "computed": 4,
+      "expected": 4,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "the centroid (1.5, 1.5, 0.25) lies in E",
+      "computed": 1,
+      "expected": 1,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "volume by determinant against volume by pyramid formula",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "volume by iterated integral against volume by pyramid formula",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "volume by Monte Carlo against volume by pyramid formula, four standard errors",
+      "computed": 0.668544,
+      "expected": 0.6666666666666666,
+      "tolerance": 0.0029847779951373272,
+      "passed": true
+    },
+    {
+      "name": "wrong side of the slanted plane: its volume differs from the volume of E",
+      "computed": 3.3333333333333335,
+      "expected": 0.6666666666666666,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "base times height without the factor one third differs from the volume of E",
+      "computed": 2.0,
+      "expected": 0.6666666666666666,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "smallest x over E by linear programming",
+      "computed": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "largest x over E by linear programming",
+      "computed": 2.0,
+      "expected": 2.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "smallest y over E by linear programming",
+      "computed": 0.0,
+      "expected": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "largest y over E by linear programming",
+      "computed": 2.0,
+      "expected": 2.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "largest z over E by linear programming",
+      "computed": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "in the plane x = 0 the smallest y equals 2",
+      "computed": 2.0,
+      "expected": 2.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "in the plane x = 0 the largest y equals 2",
+      "computed": 2.0,
+      "expected": 2.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "in the plane x = 0 the largest z equals 0",
+      "computed": -0.0,
+      "expected": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "in the plane y = 0 the smallest x equals 2",
+      "computed": 2.0,
+      "expected": 2.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "in the plane y = 0 the largest x equals 2",
+      "computed": 2.0,
+      "expected": 2.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "in the plane y = 0 the largest z equals 0",
+      "computed": -0.0,
+      "expected": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "projection on the xy plane: corner list against sampling",
+      "computed": 2.0,
+      "expected": 1.998655,
+      "tolerance": 0.01,
+      "passed": true
+    },
+    {
+      "name": "projection on the xz plane: corner list against sampling",
+      "computed": 1.0,
+      "expected": 1.002452,
+      "tolerance": 0.01,
+      "passed": true
+    },
+    {
+      "name": "projection on the yz plane: corner list against sampling",
+      "computed": 1.0,
+      "expected": 1.000376,
+      "tolerance": 0.01,
+      "passed": true
+    },
+    {
+      "name": "slanted face: cross product against the projection rule",
+      "computed": 2.449489742783178,
+      "expected": 2.449489742783178,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "face in the plane z = 0 against the base area",
+      "computed": 2.0,
+      "expected": 2.0,
+      "tolerance": 0.0,
+      "passed": true
+    }
+  ]
+}

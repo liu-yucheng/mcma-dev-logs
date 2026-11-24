@@ -1,0 +1,84 @@
+{
+  "part": "part4",
+  "check_count": 7,
+  "passed_count": 7,
+  "records": [
+    {
+      "part": "part4",
+      "name": "part4.second_order_derivative",
+      "computed": 2.635610412946833e-10,
+      "expected": 0.0,
+      "difference": 2.635610412946833e-10,
+      "relative_difference": 2.635610412946833e-10,
+      "tolerance": 1e-06,
+      "passed": true,
+      "note": "Largest relative gap between the central difference of the second antiderivative and its integrand."
+    },
+    {
+      "part": "part4",
+      "name": "part4.order_values_agree",
+      "computed": 3.375,
+      "expected": 3.375,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "Exact value of the order dx dy dz against the value that Part 3 computes in the order dz dx dy."
+    },
+    {
+      "part": "part4",
+      "name": "part4.second_order_quad",
+      "computed": 3.375000000000001,
+      "expected": 3.375,
+      "difference": 8.881784197001252e-16,
+      "relative_difference": 2.6316397620744445e-16,
+      "tolerance": 1e-11,
+      "passed": true,
+      "note": "Nested quadrature of the second order against the exact rational value of that order."
+    },
+    {
+      "part": "part4",
+      "name": "part4.polar_quadrature",
+      "computed": 3.3749999999999996,
+      "expected": 3.375,
+      "difference": 4.440892098500626e-16,
+      "relative_difference": 1.3158198810372225e-16,
+      "tolerance": 1e-10,
+      "passed": true,
+      "note": "Cylindrical quadrature that never uses the nested limits against the exact value."
+    },
+    {
+      "part": "part4",
+      "name": "part4.polar_volume",
+      "computed": 3.0,
+      "expected": 3.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-10,
+      "passed": true,
+      "note": "Volume by the cylindrical Jacobian against the volume of Part 1."
+    },
+    {
+      "part": "part4",
+      "name": "part4.parameter_map_inside",
+      "computed": 0.0,
+      "expected": 0.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 0.0,
+      "passed": true,
+      "note": "Number of sampled parameter triples that leave the solid against zero."
+    },
+    {
+      "part": "part4",
+      "name": "part4.monte_carlo_inside_five_errors",
+      "computed": 0.6083794365202891,
+      "expected": 0.0,
+      "difference": 0.6083794365202891,
+      "relative_difference": 0.6083794365202891,
+      "tolerance": 5.0,
+      "passed": true,
+      "note": "Gap of the Monte Carlo average and the exact value in standard errors against five errors."
+    }
+  ]
+}

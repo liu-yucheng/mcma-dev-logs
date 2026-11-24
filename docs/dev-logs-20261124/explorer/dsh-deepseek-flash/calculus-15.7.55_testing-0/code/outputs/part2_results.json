@@ -1,0 +1,174 @@
+{
+  "ball_inside": 0.6840265760863746,
+  "ball_outside": -1.5217846170437002,
+  "candidate_rows": [
+    {
+      "gap": 0.0,
+      "name": "ellipsoid P",
+      "quadrature": 0.6840265756333253,
+      "value": 0.6840265760863276
+    },
+    {
+      "gap": 1.521784617043606,
+      "name": "unit ball",
+      "quadrature": -0.8377580409572791,
+      "value": -0.8377580409572785
+    },
+    {
+      "gap": 0.18402657608632755,
+      "name": "unit cube",
+      "quadrature": 0.5000000000000014,
+      "value": 0.5
+    },
+    {
+      "gap": 0.14468530137377977,
+      "name": "scaled 0.80",
+      "quadrature": 0.5393415914340899,
+      "value": 0.5393412747125478
+    },
+    {
+      "gap": 0.4752782313334192,
+      "name": "scaled 1.25",
+      "quadrature": 0.20874645467821012,
+      "value": 0.20874834475290838
+    }
+  ],
+  "checks": {
+    "count": 18,
+    "part": "part2",
+    "rows": [
+      {
+        "computed": 0.6840265756333253,
+        "difference": 4.530023023363583e-10,
+        "expected": 0.6840265760863276,
+        "name": "candidate_ellipsoid_P_closed_form_against_quadrature",
+        "tolerance": 1e-07
+      },
+      {
+        "computed": -0.8377580409572791,
+        "difference": 6.661338147750939e-16,
+        "expected": -0.8377580409572785,
+        "name": "candidate_unit_ball_closed_form_against_quadrature",
+        "tolerance": 1e-07
+      },
+      {
+        "computed": 0.5000000000000014,
+        "difference": 1.4432899320127035e-15,
+        "expected": 0.5,
+        "name": "candidate_unit_cube_closed_form_against_quadrature",
+        "tolerance": 1e-07
+      },
+      {
+        "computed": 0.5393415914340899,
+        "difference": 3.167215421040481e-07,
+        "expected": 0.5393412747125478,
+        "name": "candidate_scaled_0.80_closed_form_against_quadrature",
+        "tolerance": 1e-05
+      },
+      {
+        "computed": 0.6840265760863276,
+        "difference": 0.14468530137377977,
+        "expected": 0.5393412747125478,
+        "name": "candidate_scaled_0.80_below_maximum",
+        "tolerance": 0.05
+      },
+      {
+        "computed": 0.20874645467821012,
+        "difference": 1.8900746982519756e-06,
+        "expected": 0.20874834475290838,
+        "name": "candidate_scaled_1.25_closed_form_against_quadrature",
+        "tolerance": 1e-05
+      },
+      {
+        "computed": 0.6840265760863276,
+        "difference": 0.4752782313334192,
+        "expected": 0.20874834475290838,
+        "name": "candidate_scaled_1.25_below_maximum",
+        "tolerance": 0.05
+      },
+      {
+        "computed": 0.6840265760863276,
+        "difference": 1.521784617043606,
+        "expected": -0.8377580409572785,
+        "name": "candidate_unit_ball_below_maximum",
+        "tolerance": 0.05
+      },
+      {
+        "computed": 0.6840265760863276,
+        "difference": 0.18402657608632755,
+        "expected": 0.5,
+        "name": "candidate_unit_cube_below_maximum",
+        "tolerance": 0.05
+      },
+      {
+        "computed": 0.6840265760863276,
+        "difference": 0.14468530137377977,
+        "expected": 0.5393412747125478,
+        "name": "candidate_scaled_0.80_below_maximum",
+        "tolerance": 0.05
+      },
+      {
+        "computed": 0.6840265760863276,
+        "difference": 0.4752782313334192,
+        "expected": 0.20874834475290838,
+        "name": "candidate_scaled_1.25_below_maximum",
+        "tolerance": 0.05
+      },
+      {
+        "computed": -0.8377580409573255,
+        "difference": 4.6407322429331543e-14,
+        "expected": -0.8377580409572791,
+        "name": "ball_split_sum_against_direct_quadrature",
+        "tolerance": 1e-08
+      },
+      {
+        "computed": 0.0,
+        "difference": 1.5217846170437002,
+        "expected": -1.5217846170437002,
+        "name": "ball_part_outside_P_is_negative",
+        "tolerance": 0.5
+      },
+      {
+        "computed": 0.6840288643452748,
+        "difference": 2.2882589472139614e-06,
+        "expected": 0.6840265760863276,
+        "name": "positive_part_over_box_against_maximum",
+        "tolerance": 0.002
+      },
+      {
+        "computed": 0.003906556041812892,
+        "difference": 0.0002319686805160627,
+        "expected": 0.004138524722328955,
+        "name": "removed_ball_gap_against_closed_form",
+        "tolerance": 0.004589931225372523
+      },
+      {
+        "computed": -8.770761894538736e-10,
+        "difference": 8.770761894538736e-10,
+        "expected": 0.0,
+        "name": "scaled_family_derivative_at_one",
+        "tolerance": 1e-06
+      },
+      {
+        "computed": 1.0260415837121493,
+        "difference": 1.719582658044061e-06,
+        "expected": 1.0260398641294912,
+        "name": "quadratic_moment_against_closed_form",
+        "tolerance": 1e-05
+      },
+      {
+        "computed": 5.130207918560746,
+        "difference": 8.597913288888037e-06,
+        "expected": 5.130199320647457,
+        "name": "stationarity_three_volume_against_five_moment",
+        "tolerance": 0.0001
+      }
+    ]
+  },
+  "maximum_value": 0.6840265760863276,
+  "positive_part_over_box": 0.6840288643452748,
+  "quadratic_moment": 1.0260415837121493,
+  "removed_ball_gap": 0.003906556041812892,
+  "removed_ball_gap_error": 0.0011472328063431307,
+  "scaled_derivative": -8.770761894538736e-10
+}

@@ -1,0 +1,13 @@
+part2 checks
+check                                                computed         expected    tolerance result
+rectangle_area_at_y_equal_0.25                    0.750000000      0.750000000     1.00e-09 pass
+rectangle_area_at_y_equal_0.5                     0.707106781      0.707106781     1.00e-09 pass
+rectangle_area_at_y_equal_1.0                     0.000000000      0.000000000     1.00e-09 pass
+parabolic_area_at_z_equal_0.0                     1.333333333      1.333333333     1.00e-09 pass
+parabolic_area_at_z_equal_0.5                     0.471404521      0.471404521     1.00e-09 pass
+parabolic_area_at_z_equal_0.8                     0.119256959      0.119256959     1.00e-09 pass
+stacked_section_area_against_volume               0.533333333      0.533333333     1.00e-08 pass
+section_at_y_one_is_a_segment                     2.000000000      2.000000000     1.00e-12 pass
+section_at_z_one_is_one_point                     0.000000000      0.000000000     1.00e-12 pass
+section_at_y_zero_is_a_segment                    0.000000000      0.000000000     1.00e-12 pass
+10 checks, 10 pass

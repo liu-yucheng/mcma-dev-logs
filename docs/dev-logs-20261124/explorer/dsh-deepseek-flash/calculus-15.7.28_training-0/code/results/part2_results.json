@@ -1,0 +1,184 @@
+{
+  "heights": [
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0
+  ],
+  "rows": [
+    {
+      "height": 0.0,
+      "length_x": 4.0,
+      "length_z": 2.0,
+      "area_product": 8.0,
+      "area_sampled": 8.0,
+      "relative_gap": 0.0,
+      "shape": "rectangle",
+      "corner_count": 4,
+      "corners": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          2.0
+        ],
+        [
+          4.0,
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0,
+          2.0
+        ]
+      ],
+      "rectangle_disagreements": 0,
+      "disk_disagreements": 2404,
+      "area_of_misread_cut": 5.333333333333334
+    },
+    {
+      "height": 0.5,
+      "length_x": 3.75,
+      "length_z": 1.5,
+      "area_product": 5.625,
+      "area_sampled": 5.622812,
+      "relative_gap": 0.0003889777777778313,
+      "shape": "rectangle",
+      "corner_count": 4,
+      "corners": [
+        [
+          0.0,
+          0.5,
+          0.0
+        ],
+        [
+          0.0,
+          0.5,
+          1.5
+        ],
+        [
+          3.75,
+          0.5,
+          0.0
+        ],
+        [
+          3.75,
+          0.5,
+          1.5
+        ]
+      ],
+      "rectangle_disagreements": 0,
+      "disk_disagreements": 1702,
+      "area_of_misread_cut": 4.875
+    },
+    {
+      "height": 1.0,
+      "length_x": 3.0,
+      "length_z": 1.0,
+      "area_product": 3.0,
+      "area_sampled": 2.998832,
+      "relative_gap": 0.00038933333333327863,
+      "shape": "rectangle",
+      "corner_count": 4,
+      "corners": [
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          1.0
+        ],
+        [
+          3.0,
+          1.0,
+          0.0
+        ],
+        [
+          3.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "rectangle_disagreements": 0,
+      "disk_disagreements": 1144,
+      "area_of_misread_cut": 3.6666666666666665
+    },
+    {
+      "height": 1.5,
+      "length_x": 1.75,
+      "length_z": 0.5,
+      "area_product": 0.875,
+      "area_sampled": 0.874588,
+      "relative_gap": 0.0004708571428571062,
+      "shape": "rectangle",
+      "corner_count": 4,
+      "corners": [
+        [
+          0.0,
+          1.5,
+          0.0
+        ],
+        [
+          0.0,
+          1.5,
+          0.5
+        ],
+        [
+          1.75,
+          1.5,
+          0.0
+        ],
+        [
+          1.75,
+          1.5,
+          0.5
+        ]
+      ],
+      "rectangle_disagreements": 0,
+      "disk_disagreements": 1101,
+      "area_of_misread_cut": 1.9583333333333333
+    },
+    {
+      "height": 2.0,
+      "length_x": 0.0,
+      "length_z": 0.0,
+      "area_product": 0.0,
+      "area_sampled": 0.0,
+      "relative_gap": 0.0,
+      "shape": "point",
+      "corner_count": 1,
+      "corners": [
+        [
+          0.0,
+          2.0,
+          0.0
+        ]
+      ],
+      "rectangle_disagreements": 0,
+      "disk_disagreements": 1559,
+      "area_of_misread_cut": 0.0
+    }
+  ],
+  "monotone": true,
+  "top_point": [
+    0.0,
+    2.0,
+    0.0
+  ],
+  "shapes": [
+    "rectangle",
+    "rectangle",
+    "rectangle",
+    "rectangle",
+    "point"
+  ]
+}

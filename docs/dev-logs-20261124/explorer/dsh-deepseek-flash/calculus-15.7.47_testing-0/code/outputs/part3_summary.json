@@ -1,0 +1,96 @@
+{
+ "part": "part3",
+ "check_count": 9,
+ "passed_count": 9,
+ "checks": [
+  {
+   "name": "mass_of_two_orders",
+   "computed": 0.295835221965018,
+   "expected": 0.2958352219711032,
+   "difference": 6.085187909121714e-12,
+   "tolerance": 1e-09,
+   "reason": "the order $dx\\,dz\\,dy$ against the order $dx\\,dy\\,dz$",
+   "passed": true
+  },
+  {
+   "name": "mass_against_closed_form",
+   "computed": 0.295835221965018,
+   "expected": 0.29583522177679766,
+   "difference": 1.8822032821219636e-10,
+   "tolerance": 1e-09,
+   "reason": "the three-dimensional quadrature against the one-dimensional integral of the inner antiderivative",
+   "passed": true
+  },
+  {
+   "name": "mass_monte_carlo_inside_three_errors",
+   "computed": 7.72273157960135e-05,
+   "bound": 0.001197542785815867,
+   "reason": "the gap between the Monte Carlo mean and the closed-form mass against three standard errors",
+   "passed": true
+  },
+  {
+   "name": "section_mass_at_z_equal_0.0",
+   "computed": 0.9797932820904256,
+   "expected": 0.9797932820904258,
+   "difference": 2.220446049250313e-16,
+   "tolerance": 1e-09,
+   "reason": "the analytic inner integral over $y$ against a two-dimensional quadrature over the same section",
+   "passed": true
+  },
+  {
+   "name": "section_mass_at_z_equal_0.5",
+   "computed": 0.19788540832051432,
+   "expected": 0.19788540832051416,
+   "difference": 1.6653345369377348e-16,
+   "tolerance": 1e-09,
+   "reason": "the analytic inner integral over $y$ against a two-dimensional quadrature over the same section",
+   "passed": true
+  },
+  {
+   "name": "section_mass_at_z_equal_0.8",
+   "computed": 0.025820286190189976,
+   "expected": 0.02582028619018998,
+   "difference": 3.469446951953614e-18,
+   "tolerance": 1e-09,
+   "reason": "the analytic inner integral over $y$ against a two-dimensional quadrature over the same section",
+   "passed": true
+  },
+  {
+   "name": "stacked_section_mass_against_mass",
+   "computed": 0.2958355424949399,
+   "expected": 0.29583522177679766,
+   "difference": 3.2071814221046324e-07,
+   "tolerance": 1e-06,
+   "reason": "the integral of the section mass over $z$ against the closed-form mass, where the adaptive quadrature of the stack carries its own error of order 1e-7",
+   "passed": true
+  },
+  {
+   "name": "density_at_corner_against_hypotenuse",
+   "computed": 1.4142135623730951,
+   "expected": 1.4142135623730951,
+   "difference": 0.0,
+   "tolerance": 1e-12,
+   "reason": "the density at $(1, 1, 0)$ against the diagonal of the unit square",
+   "passed": true
+  },
+  {
+   "name": "density_at_axis_point",
+   "computed": 0.0,
+   "expected": 0.0,
+   "difference": 0.0,
+   "tolerance": 1e-12,
+   "reason": "the density at $(0, 0, 1)$ against zero, which no other point of the rim gives",
+   "passed": true
+  }
+ ],
+ "display": {
+  "p3_mass": "0.295835222",
+  "p3_mass_order": "0.295835222",
+  "p3_mass_mc": "0.295757994",
+  "p3_mass_mc_se": "0.000399181",
+  "p3_mass_mc_gap": "0.000077227",
+  "p3_slice_mass_list": "0.979793282, 0.197885408, 0.025820286",
+  "p3_density_corner": "1.414213562",
+  "p3_density_corner_exact": "\\sqrt{2}"
+ }
+}

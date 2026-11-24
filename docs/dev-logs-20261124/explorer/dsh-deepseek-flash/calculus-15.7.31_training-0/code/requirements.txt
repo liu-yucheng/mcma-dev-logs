@@ -1,0 +1,7 @@
+# Exact package versions of the environment in code/.venv of this session.
+# The environment was created with: uv venv code/.venv
+# The packages were installed with: uv pip install --python code/.venv numpy scipy matplotlib
+# Interpreter: CPython 3.11.7
+numpy==2.4.6
+scipy==1.17.1
+matplotlib==3.11.2

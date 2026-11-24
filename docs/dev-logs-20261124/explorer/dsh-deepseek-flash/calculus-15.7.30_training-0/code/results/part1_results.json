@@ -1,0 +1,154 @@
+[
+  {
+    "label": "volume: slice quadrature against closed form",
+    "computed": 113.09733552923275,
+    "expected": 113.09733552923255,
+    "difference": 1.9895196601282805e-13,
+    "tolerance": 1e-08,
+    "passed": true
+  },
+  {
+    "label": "volume: triple quadrature against closed form",
+    "computed": 113.09733552923257,
+    "expected": 113.09733552923255,
+    "difference": 1.4210854715202004e-14,
+    "tolerance": 1e-06,
+    "passed": true
+  },
+  {
+    "label": "volume: Monte Carlo against closed form, three standard errors",
+    "computed": 113.238,
+    "expected": 113.09733552923255,
+    "difference": 0.14066447076744737,
+    "tolerance": 0.2799591318567765,
+    "passed": true
+  },
+  {
+    "label": "section area at x = -2.0 against 9*pi",
+    "computed": 28.2754,
+    "expected": 28.274333882308138,
+    "difference": 0.0010661176918631554,
+    "tolerance": 0.25,
+    "passed": true
+  },
+  {
+    "label": "section area at x = -0.5 against 9*pi",
+    "computed": 28.2754,
+    "expected": 28.274333882308138,
+    "difference": 0.0010661176918631554,
+    "tolerance": 0.25,
+    "passed": true
+  },
+  {
+    "label": "section area at x = +0.0 against 9*pi",
+    "computed": 28.2754,
+    "expected": 28.274333882308138,
+    "difference": 0.0010661176918631554,
+    "tolerance": 0.25,
+    "passed": true
+  },
+  {
+    "label": "section area at x = +1.5 against 9*pi",
+    "computed": 28.2754,
+    "expected": 28.274333882308138,
+    "difference": 0.0010661176918631554,
+    "tolerance": 0.25,
+    "passed": true
+  },
+  {
+    "label": "section area at x = +2.0 against 9*pi",
+    "computed": 28.2754,
+    "expected": 28.274333882308138,
+    "difference": 0.0010661176918631554,
+    "tolerance": 0.25,
+    "passed": true
+  },
+  {
+    "label": "section area at x = -2.2 against 0",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 1e-12,
+    "passed": true
+  },
+  {
+    "label": "section area at x = +2.2 against 0",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 1e-12,
+    "passed": true
+  },
+  {
+    "label": "membership: cylinder point scaled by 0.999",
+    "computed": 1.0,
+    "expected": 1.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "membership: cylinder point scaled by 1.001",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "membership: plane point (2.0, 0, 0)",
+    "computed": 1.0,
+    "expected": 1.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "membership: plane point (2.001, 0, 0)",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "membership: centre point",
+    "computed": 1.0,
+    "expected": 1.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "membership: outside corner",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "yz projection on the plane x = 0: sampled lift search against the closed criterion",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "xy projection on the plane z = 0: sampled lift search against the closed criterion",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  },
+  {
+    "label": "xz projection on the plane y = 0: sampled lift search against the closed criterion",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0,
+    "passed": true
+  }
+]
