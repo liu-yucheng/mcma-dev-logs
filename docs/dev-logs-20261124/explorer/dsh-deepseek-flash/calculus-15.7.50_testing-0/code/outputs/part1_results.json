@@ -1,0 +1,173 @@
+{
+  "anchors": [
+    {
+      "inside": "True",
+      "offset": [
+        "0.1000",
+        "0.8500",
+        "0.6200"
+      ],
+      "point": [
+        "0.3000",
+        "1.5000",
+        "2.5981"
+      ],
+      "residual": "0.000e+00",
+      "surface": "cylinder"
+    },
+    {
+      "inside": "True",
+      "offset": [
+        "0.9200",
+        "-0.5500",
+        "0.1400"
+      ],
+      "point": [
+        "0.2500",
+        "0.9000",
+        "0.0000"
+      ],
+      "residual": "0.000e+00",
+      "surface": "zero_plane"
+    },
+    {
+      "inside": "True",
+      "offset": [
+        "0.0500",
+        "0.6500",
+        "1.0500"
+      ],
+      "point": [
+        "0.0000",
+        "2.1000",
+        "0.9000"
+      ],
+      "residual": "0.000e+00",
+      "surface": "x_zero_plane"
+    },
+    {
+      "inside": "True",
+      "offset": [
+        "0.4500",
+        "0.0000",
+        "0.5500"
+      ],
+      "point": [
+        "0.4000",
+        "1.2000",
+        "0.6000"
+      ],
+      "residual": "2.220e-16",
+      "surface": "plane_y_equals_3x"
+    }
+  ],
+  "checks": {
+    "count": 9,
+    "part": "part1",
+    "rows": [
+      {
+        "computed": 3.0000000000000004,
+        "difference": 8.881784197001252e-16,
+        "expected": 2.9999999999999996,
+        "name": "volume: two integration orders",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 3.0000000000000004,
+        "difference": 0.00042600000000003746,
+        "expected": 2.9995740000000004,
+        "name": "volume: quadrature against Monte Carlo",
+        "tolerance": 0.011999576931838693
+      },
+      {
+        "computed": 7.0685834705770345,
+        "difference": 0.0,
+        "expected": 7.0685834705770345,
+        "name": "projection on x = 0: quadrature against Simpson on a grid",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 7.0685834705770345,
+        "difference": 0.00041252942296576833,
+        "expected": 7.068996,
+        "name": "projection on x = 0: closed form against Monte Carlo",
+        "tolerance": 0.010449982345293101
+      },
+      {
+        "computed": 1.299038105676658,
+        "difference": 1.0681393547429252e-09,
+        "expected": 1.2990381046085187,
+        "name": "section area at y = 1.5: product against the volume difference",
+        "tolerance": 1e-06
+      },
+      {
+        "computed": 0.0,
+        "difference": 0.0,
+        "expected": 0.0,
+        "name": "label anchor cylinder satisfies its surface",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.0,
+        "difference": 0.0,
+        "expected": 0.0,
+        "name": "label anchor zero_plane satisfies its surface",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.0,
+        "difference": 0.0,
+        "expected": 0.0,
+        "name": "label anchor x_zero_plane satisfies its surface",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 2.220446049250313e-16,
+        "difference": 2.220446049250313e-16,
+        "expected": 0.0,
+        "name": "label anchor plane_y_equals_3x satisfies its surface",
+        "tolerance": 1e-12
+      }
+    ]
+  },
+  "projection_area": "7.068583",
+  "projection_area_closed_form": "7.068583",
+  "section_area": "1.299038",
+  "section_area_difference": "1.299038",
+  "section_height": "2.598076",
+  "section_width": "0.500000",
+  "section_y": "1.500000",
+  "shape_rows": [
+    {
+      "area": "0.000000",
+      "distinct_corners": "2",
+      "height": "3.000000",
+      "shape": "segment",
+      "width": "0.000000",
+      "y": "0.0"
+    },
+    {
+      "area": "1.299038",
+      "distinct_corners": "4",
+      "height": "2.598076",
+      "shape": "rectangle",
+      "width": "0.500000",
+      "y": "1.5"
+    },
+    {
+      "area": "0.000000",
+      "distinct_corners": "2",
+      "height": "0.000000",
+      "shape": "segment",
+      "width": "1.000000",
+      "y": "3.0"
+    }
+  ],
+  "volume": "3.000000",
+  "volume_alternate": "3.000000",
+  "volume_monte_carlo": "2.999574",
+  "volume_monte_carlo_error": "0.003000",
+  "volume_relative_difference": "2.96e-16",
+  "volume_relative_difference_denominator": "3377699720527873",
+  "volume_relative_difference_latex": "2.96 \\times 10^{-16}"
+}

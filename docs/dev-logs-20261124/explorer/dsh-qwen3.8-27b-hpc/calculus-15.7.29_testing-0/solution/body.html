@@ -1,0 +1,75 @@
+<h1>Six Orderings for the Dome Solid</h1>
+<blockquote class="statement">Express the integral $\iiint_{E} f(x,y,z) dV$ as an iterated integral in six different ways, where $E$ is the solid bounded by the surfaces $y = 4 - x^{2} - 4z^{2}$ and $y = 0$. The six forms are the orders that keep two outer bounds constant.</blockquote>
+<table>
+<tr><th>Item</th><th>Content</th></tr>
+<tr><td>Given</td><td>$E$ is bounded by $y = 4 - x^{2} - 4z^{2}$ and $y = 0$.</td></tr>
+<tr><td>Find</td><td>Six iterated forms of $\iiint_{E} f(x,y,z) dV$.</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$E$</td><td>Solid dome</td><td>none</td></tr>
+<tr><td>$f(x,y,z)$</td><td>Integrand</td><td>none</td></tr>
+<tr><td>$x$, $y$, $z$</td><td>Coordinates</td><td>unit</td></tr>
+<tr><td>$V$</td><td>Volume of $E$</td><td>cubic unit</td></tr>
+</table>
+<section>
+<h2>Part 1. Describe the solid</h2>
+<section>
+<h3>Step 1.1 Cross sections and volume</h3>
+<p class="reason">Solve the inequalities for the bounds and compute the volume by a stretch map and by sampling.</p>
+<div class="computation">
+$$E = \{(x,y,z) : x^{2} + 4z^{2} \leq 4, 0 \leq y \leq 4 - x^{2} - 4z^{2}\}$$
+$$V = 2 \int_{-1}^{1} \int_{-\sqrt{1-u^{2}}}^{\sqrt{1-u^{2}}} (4 - 4u^{2} - 4v^{2}) dv du = 4\pi \approx 12.566371$$
+</div>
+<p class="result">The sections at $y = 0$, $y = 1$, $y = 4$ shrink to a point; $V = 4\pi \approx 12.566371$ cubic units.</p>
+<p class="verification">The script <code>part1_step1.py</code> prints the section half-axes 2.000000, 1.732051, 0.000000 and the Monte Carlo value 12.552896, and asserts the latter against $4\pi$ within 0.06.</p>
+<p class="mistake">A common error treats the dome as a hemisphere of radius 2 and takes $16\pi/3$; the sections are ellipses, not circles.</p>
+</section>
+</section>
+<section>
+<h2>Part 2. Six symbolic orderings</h2>
+<section>
+<h3>Step 2.1 Build the six forms</h3>
+<p class="reason">Project $E$ onto a coordinate plane and solve for the inner variable at each fixed outer pair.</p>
+<div class="computation">
+$$I_{1} = \int_{-2}^{2} \int_{0}^{4-x^{2}} \int_{-\frac{\sqrt{4-x^{2}-y}}{2}}^{\frac{\sqrt{4-x^{2}-y}}{2}} 1 dz dy dx$$
+$$I_{4} = \int_{-2}^{2} \int_{-\frac{\sqrt{4-x^{2}}}{2}}^{\frac{\sqrt{4-x^{2}}}{2}} \int_{0}^{4-x^{2}-4z^{2}} 1 dy dz dx$$
+</div>
+<p class="result">Each of the six nested integrals simplifies to $4\pi$.</p>
+<p class="verification">The script <code>part2_step2.py</code> integrates each inner bound in sympy, evaluates the two outer integrals on a 400-point grid, and asserts each value against $4\pi$ within 0.08.</p>
+<p class="mistake">Solving $4z^{2} \leq 4 - x^{2} - y$ for $z$ gives a factor $\frac{1}{2}$ inside the root; dropping it doubles the width.</p>
+</section>
+</section>
+<section>
+<h2>Part 3. Numeric check</h2>
+<section>
+<h3>Step 3.1 Nested trapezoid grids</h3>
+<p class="reason">Evaluate all six forms numerically to guard against an algebra slip.</p>
+<div class="computation">
+$$I_{k} = \sum_{i} \sum_{j} w_{i} w_{j} g_{k}(a_{i}, b_{j})$$
+</div>
+<p class="result">On a 500-point grid each form lands within 0.08 of $4\pi \approx 12.566371$.</p>
+<p class="verification">The script <code>part3_step3.py</code> prints $I_{1}$ through $I_{6}$ and asserts each value against $4\pi$ within the grid tolerance 0.08.</p>
+<p class="mistake">A grid step missing from the weights scales the whole sum by $n$; the printed values expose that error.</p>
+</section>
+</section>
+<section class="answer">
+<h2>Answer. The six iterated forms</h2>
+<p>All six equal $\iiint_{E} f(x,y,z) dV$ for the integrand $f(x,y,z)$:</p>
+<ul>
+<li>Order $dz dy dx$: $\int_{-2}^{2} \int_{0}^{4-x^{2}} \int_{-\frac{\sqrt{4-x^{2}-y}}{2}}^{\frac{\sqrt{4-x^{2}-y}}{2}} f(x,y,z) dz dy dx$.</li>
+<li>Order $dx dy dz$: $\int_{-1}^{1} \int_{0}^{4-4z^{2}} \int_{-\sqrt{4-4z^{2}-y}}^{\sqrt{4-4z^{2}-y}} f(x,y,z) dx dy dz$.</li>
+<li>Order $dz dx dy$: $\int_{0}^{4} \int_{-\sqrt{4-y}}^{\sqrt{4-y}} \int_{-\frac{\sqrt{4-y-x^{2}}}{2}}^{\frac{\sqrt{4-y-x^{2}}}{2}} f(x,y,z) dz dx dy$.</li>
+<li>Order $dy dz dx$: $\int_{-2}^{2} \int_{-\frac{\sqrt{4-x^{2}}}{2}}^{\frac{\sqrt{4-x^{2}}}{2}} \int_{0}^{4-x^{2}-4z^{2}} f(x,y,z) dy dz dx$.</li>
+<li>Order $dy dx dz$: $\int_{-1}^{1} \int_{-\sqrt{4-4z^{2}}}^{\sqrt{4-4z^{2}}} \int_{0}^{4-x^{2}-4z^{2}} f(x,y,z) dy dx dz$.</li>
+<li>Order $dx dz dy$: $\int_{0}^{4} \int_{-\frac{\sqrt{4-y}}{2}}^{\frac{\sqrt{4-y}}{2}} \int_{-\sqrt{4-4z^{2}-y}}^{\sqrt{4-4z^{2}-y}} f(x,y,z) dx dz dy$.</li>
+</ul>
+</section>
+<section class="notes">
+<h2>Notes</h2>
+<ul>
+<li>Each order keeps two outer bounds constant.</li>
+<li>The $z$ bound carries the factor $\frac{1}{2}$ from $4z^{2}$.</li>
+<li>The volume uses the stretch $x = 2u$, $z = v$ with Jacobian 2.</li>
+</ul>
+</section>

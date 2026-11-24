@@ -1,0 +1,80 @@
+{
+  "part": 3,
+  "values": {
+    "projection_area": "1",
+    "volume_reference": "0.666666666667",
+    "outer_z_max": "1",
+    "value_dydxdz": "0.666666666667",
+    "latex_dydxdz": "\\int_{0}^{1}\\int_{2z}^{2}\\int_{2-x+2z}^{2} f(x,y,z)\\,dy\\,dx\\,dz",
+    "value_dydzdx": "0.666666666667",
+    "latex_dydzdx": "\\int_{0}^{2}\\int_{0}^{\\frac{x}{2}}\\int_{2-x+2z}^{2} f(x,y,z)\\,dy\\,dz\\,dx",
+    "wrong_outer_bound": "0",
+    "gauss_points": 12,
+    "random_count": 300000
+  },
+  "checks": [
+    {
+      "name": "projection on the plane y = 0: length of the x strips against the corner list",
+      "computed": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "outer bound of z against the largest height of a vertex",
+      "computed": 1.0,
+      "expected": 1.0,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "the limits of dy dx dz describe the same points as E",
+      "computed": 300024,
+      "expected": 300024,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "dy dx dz: exact value against the volume by determinant",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "dy dx dz: nested quadrature against the exact value",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "the limits of dy dz dx describe the same points as E",
+      "computed": 300024,
+      "expected": 300024,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "dy dz dx: exact value against the volume by determinant",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "dy dz dx: nested quadrature against the exact value",
+      "computed": 0.6666666666666665,
+      "expected": 0.6666666666666666,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "outer bound z from 0 to 2 instead of 0 to 1: its signed integral differs from the volume",
+      "computed": 0.0,
+      "expected": 0.6666666666666666,
+      "tolerance": 0.0,
+      "passed": true
+    }
+  ]
+}

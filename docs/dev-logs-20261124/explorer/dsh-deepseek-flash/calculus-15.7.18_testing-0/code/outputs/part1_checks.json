@@ -1,0 +1,260 @@
+{
+  "part": "part1",
+  "check_count": 23,
+  "passed_count": 23,
+  "records": [
+    {
+      "part": "part1",
+      "name": "part1.yz_projection_quad",
+      "computed": 7.068583470577036,
+      "expected": 7.0685834705770345,
+      "difference": 1.7763568394002505e-15,
+      "relative_difference": 2.513030859427963e-16,
+      "tolerance": 1e-10,
+      "passed": true,
+      "note": "Quadrature of sqrt(9-z^2) against the closed form pi*r^2/4."
+    },
+    {
+      "part": "part1",
+      "name": "part1.yz_projection_count",
+      "computed": 7.073066250000001,
+      "expected": 7.0685834705770345,
+      "difference": 0.0044827794229664875,
+      "relative_difference": 0.0006337816251850443,
+      "tolerance": 0.008,
+      "passed": true,
+      "note": "Grid count of the quarter disk against the closed form pi*r^2/4."
+    },
+    {
+      "part": "part1",
+      "name": "part1.xz_projection_quad",
+      "computed": 2.356194490192344,
+      "expected": 2.356194490192345,
+      "difference": 8.881784197001252e-16,
+      "relative_difference": 3.769546289141946e-16,
+      "tolerance": 1e-10,
+      "passed": true,
+      "note": "Quadrature of sqrt(9-z^2)/3 against pi*r^2/12."
+    },
+    {
+      "part": "part1",
+      "name": "part1.xz_projection_count",
+      "computed": 2.35768875,
+      "expected": 2.356194490192345,
+      "difference": 0.0014942598076550517,
+      "relative_difference": 0.0006337816251848561,
+      "tolerance": 0.008,
+      "passed": true,
+      "note": "Grid count of the xz region against the closed form pi*r^2/12."
+    },
+    {
+      "part": "part1",
+      "name": "part1.xy_projection_quad",
+      "computed": 1.5,
+      "expected": 1.5,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-10,
+      "passed": true,
+      "note": "Quadrature of y/3 against the triangle area r^2/(2m)."
+    },
+    {
+      "part": "part1",
+      "name": "part1.xy_projection_count",
+      "computed": 1.50203475,
+      "expected": 1.5,
+      "difference": 0.002034749999999974,
+      "relative_difference": 0.0013546624004537671,
+      "tolerance": 0.008,
+      "passed": true,
+      "note": "Grid count of the xy triangle against the closed form r^2/(2m)."
+    },
+    {
+      "part": "part1",
+      "name": "part1.volume_slice_y",
+      "computed": 2.999999999999995,
+      "expected": 3.0,
+      "difference": 4.884981308350689e-15,
+      "relative_difference": 1.6283271027835629e-15,
+      "tolerance": 1e-10,
+      "passed": true,
+      "note": "Quadrature of the slice area at fixed y against the closed form r^3/(3m)."
+    },
+    {
+      "part": "part1",
+      "name": "part1.volume_slice_z",
+      "computed": 3.0,
+      "expected": 3.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-10,
+      "passed": true,
+      "note": "Quadrature of the slice area at fixed z against the closed form r^3/(3m)."
+    },
+    {
+      "part": "part1",
+      "name": "part1.volume_slice_pair",
+      "computed": 3.0,
+      "expected": 2.999999999999995,
+      "difference": 4.884981308350689e-15,
+      "relative_difference": 1.6283271027835629e-15,
+      "tolerance": 1e-10,
+      "passed": true,
+      "note": "Two different slicings of the same solid must give one volume."
+    },
+    {
+      "part": "part1",
+      "name": "part1.volume_count",
+      "computed": 3.000067708333334,
+      "expected": 3.0,
+      "difference": 6.770833333380466e-05,
+      "relative_difference": 2.2568935076275177e-05,
+      "tolerance": 0.008,
+      "passed": true,
+      "note": "Count of one random point per cell of a 240-cube grid against the closed form r^3/(3m)."
+    },
+    {
+      "part": "part1",
+      "name": "part1.volume_monte_carlo",
+      "computed": 3.003885,
+      "expected": 3.0,
+      "difference": 0.0038849999999999163,
+      "relative_difference": 0.0012933251439385717,
+      "tolerance": 0.005,
+      "passed": true,
+      "note": "Monte Carlo estimate against the closed form, inside five standard errors."
+    },
+    {
+      "part": "part1",
+      "name": "part1.slice_y_0.6_count",
+      "computed": 0.5884655627756152,
+      "expected": 0.5878775382679627,
+      "difference": 0.0005880245076524959,
+      "relative_difference": 0.00099925049968763,
+      "tolerance": 0.008,
+      "passed": true,
+      "note": "Grid count inside the slice at fixed y against the closed form (y/3)*sqrt(9-y^2)."
+    },
+    {
+      "part": "part1",
+      "name": "part1.slice_y_1.5_count",
+      "computed": 1.3003374685418612,
+      "expected": 1.299038105676658,
+      "difference": 0.0012993628652031575,
+      "relative_difference": 0.000999250499687749,
+      "tolerance": 0.008,
+      "passed": true,
+      "note": "Grid count inside the slice at fixed y against the closed form (y/3)*sqrt(9-y^2)."
+    },
+    {
+      "part": "part1",
+      "name": "part1.slice_y_2.7_count",
+      "computed": 1.1780799116964162,
+      "expected": 1.1769027147559816,
+      "difference": 0.0011771969404346105,
+      "relative_difference": 0.0009992504996876365,
+      "tolerance": 0.008,
+      "passed": true,
+      "note": "Grid count inside the slice at fixed y against the closed form (y/3)*sqrt(9-y^2)."
+    },
+    {
+      "part": "part1",
+      "name": "part1.slice_z_0.0_count",
+      "computed": 1.50203475,
+      "expected": 1.5,
+      "difference": 0.002034749999999974,
+      "relative_difference": 0.0013546624004537671,
+      "tolerance": 0.008,
+      "passed": true,
+      "note": "Grid count inside the slice at fixed z against the closed form (9-z^2)/6."
+    },
+    {
+      "part": "part1",
+      "name": "part1.slice_z_1.5_count",
+      "computed": 1.1261053125,
+      "expected": 1.125,
+      "difference": 0.0011053125000000108,
+      "relative_difference": 0.0009815356412324987,
+      "tolerance": 0.008,
+      "passed": true,
+      "note": "Grid count inside the slice at fixed z against the closed form (9-z^2)/6."
+    },
+    {
+      "part": "part1",
+      "name": "part1.slice_y_rectangle_count",
+      "computed": 1.0,
+      "expected": 1.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "One interior slice at fixed y must be a rectangle, the count of the corner list gives one."
+    },
+    {
+      "part": "part1",
+      "name": "part1.slice_z_triangle_count",
+      "computed": 2.0,
+      "expected": 2.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "Two interior slices at fixed z must be triangles, the count of the corner list gives two."
+    },
+    {
+      "part": "part1",
+      "name": "part1.slice_y_degenerate_count",
+      "computed": 2.0,
+      "expected": 2.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "The two limits of y must give a segment, the count of the corner list gives two."
+    },
+    {
+      "part": "part1",
+      "name": "part1.label_point_cylinder_on_surface",
+      "computed": 0.0,
+      "expected": 0.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "Equation residual of the label point against zero, the point must lie on its surface."
+    },
+    {
+      "part": "part1",
+      "name": "part1.label_point_plane_x_zero_on_surface",
+      "computed": 0.0,
+      "expected": 0.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "Equation residual of the label point against zero, the point must lie on its surface."
+    },
+    {
+      "part": "part1",
+      "name": "part1.label_point_plane_y_three_x_on_surface",
+      "computed": 2.220446049250313e-16,
+      "expected": 0.0,
+      "difference": 2.220446049250313e-16,
+      "relative_difference": 2.220446049250313e-16,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "Equation residual of the label point against zero, the point must lie on its surface."
+    },
+    {
+      "part": "part1",
+      "name": "part1.label_point_plane_z_zero_on_surface",
+      "computed": 0.0,
+      "expected": 0.0,
+      "difference": 0.0,
+      "relative_difference": 0.0,
+      "tolerance": 1e-12,
+      "passed": true,
+      "note": "Equation residual of the label point against zero, the point must lie on its surface."
+    }
+  ]
+}

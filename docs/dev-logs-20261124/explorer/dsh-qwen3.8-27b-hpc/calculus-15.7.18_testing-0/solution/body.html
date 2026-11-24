@@ -1,0 +1,47 @@
+<h1>Triple integral over a quarter cylinder solid</h1>
+<blockquote class="statement">Evaluate the triple integral $iiint_E z , dV$. The solid $E$ is bounded by the cylinder $y^2 + z^2 = 9$ and the planes $x = 0$, $y = 3x$, and $z = 0$ in the first octant.</blockquote>
+<table>
+<tr><th>Given</th><th>Find</th></tr>
+<tr><td>Solid $E$ bounded by the cylinder $y^2 + z^2 = 9$ and the planes $x = 0$, $y = 3x$, $z = 0$ in the first octant</td><td>Value of the triple integral $iiint_E z , dV$</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$x$</td><td>Coordinate on the x-axis</td><td>length</td></tr>
+<tr><td>$y$</td><td>Coordinate on the y-axis</td><td>length</td></tr>
+<tr><td>$z$</td><td>Coordinate on the z-axis</td><td>length</td></tr>
+<tr><td>$E$</td><td>Solid in the first octant under the plane $x = y/3$</td><td>n/a</td></tr>
+</table>
+<section><h2>Part 1: evaluate the triple integral</h2>
+<section><h3>Step 1.1: describe the solid by its sections</h3>
+<p class="reason">At fixed $y$ the cylinder keeps $0 leq z leq sqrt{9 - y^2}$ and the plane $y = 3x$ keeps $0 leq x leq y/3$, so $0 leq y leq 3$.</p>
+<div class="computation">$$ E = \{(x, y, z) : 0 \leq y \leq 3, \ 0 \leq z \leq \sqrt{9 - y^2}, \ 0 \leq x \leq y/3\} $$</div>
+<p class="result">The section at $y = 1.5$ has $z$ up to $2.5981$ and $x$ up to $0.5000$; at $y = 3$ the section closes to a point, and the grid area of the quarter disk is $7.128$ against the target $7.069$, printed by <code>part1_step1.py</code>.</p>
+<p class="verification"><code>part1_step1.py</code> compares the grid area of the quarter disk with the closed form $9\pi/4$.</p>
+<p class="mistake">A reader may take the section as a rectangle with $z$ up to $3$ and lose the cylinder boundary.</p>
+</section>
+<section><h3>Step 1.2: integrate $z$ through the limits</h3>
+<p class="reason">The inner integral of $z$ gives $(9 - y^2)/2$, and the $x$-length at fixed $y$ is $y/3$.</p>
+<div class="computation">$$ \iiint_E z \, dV = \int_0^3 \int_0^{y/3} \int_0^{\sqrt{9 - y^2}} z \, dz \, dx \, dy = \int_0^3 \frac{y}{3} \cdot \frac{9 - y^2}{2} \, dy = \frac{27}{8} $$</div>
+<p class="result">The exact value is $27/8 = 3.375$ and the trapezoid value is $3.375$, printed by <code>part1_step2.py</code>.</p>
+<p class="verification"><code>part1_step2.py</code> compares the closed form $27/8$ with the trapezoid rule on the same one-variable integral.</p>
+<p class="mistake">A reader may drop the factor $y/3$ from the $x$-length and integrate $(9 - y^2)/2$ alone, which overcounts.</p>
+</section>
+<section><h3>Step 1.3: Monte Carlo confirmation</h3>
+<p class="reason">The box $[0,1] \times [0,3] \times [0,3]$ contains $E$, so a random sample scales the mean by the box volume.</p>
+<div class="computation">$$ I \approx \frac{\text{Vol}(B)}{N} \sum_{p_i \in E} z_i $$</div>
+<p class="result">The Monte Carlo value is $3.3844$ against the exact value $3.375$, printed by <code>part1_step3.py</code>.</p>
+<p class="verification"><code>part1_step3.py</code> compares the Monte Carlo estimate with the closed form $27/8$.</p>
+<p class="mistake">A reader may forget the box volume factor and report the raw mean of $z$.</p>
+</section>
+<figure><img src="FIG:part1_figure1.png" alt="Quarter cylinder under the plane x = y/3"><figcaption>Figure 1. The quarter cylinder $y^2 + z^2 \leq 9$ under the plane $x = y/3$ in the first octant.</figcaption></figure>
+</section>
+<section class="answer"><h2>Answer</h2>
+<p>The triple integral equals $27/8 = 3.375$.</p>
+</section>
+<section class="notes"><h2>Notes</h2>
+<ul>
+<li>The plane $y = 3x$ involves the $x$ and $y$ axes, and the $z$-axis lies in it.</li>
+<li>The order $dz$, $dx$, $dy$ keeps every limit a single expression.</li>
+<li>The Monte Carlo estimate of step 1.3 agrees with $27/8$ inside the tolerance of its assertion.</li>
+</ul>
+</section>

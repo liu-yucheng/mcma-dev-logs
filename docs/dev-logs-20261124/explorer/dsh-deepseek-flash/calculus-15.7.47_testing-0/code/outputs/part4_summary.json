@@ -1,0 +1,90 @@
+{
+ "part": "part4",
+ "check_count": 8,
+ "passed_count": 8,
+ "checks": [
+  {
+   "name": "moment_y_of_two_orders",
+   "computed": 0.15783087019919004,
+   "expected": 0.15783087019917635,
+   "difference": 1.3683498778505054e-14,
+   "tolerance": 1e-09,
+   "reason": "the order $dx\\,dz\\,dy$ against the order $dx\\,dy\\,dz$",
+   "passed": true
+  },
+  {
+   "name": "moment_z_of_two_orders",
+   "computed": 0.06900217588291395,
+   "expected": 0.06900217588643831,
+   "difference": 3.524361358309136e-12,
+   "tolerance": 1e-09,
+   "reason": "the order $dx\\,dz\\,dy$ against the order $dx\\,dy\\,dz$",
+   "passed": true
+  },
+  {
+   "name": "moment_x_vanishes",
+   "computed": 1.2851532752277215e-18,
+   "expected": 0.0,
+   "difference": 1.2851532752277215e-18,
+   "tolerance": 1e-12,
+   "reason": "the region and the density are unchanged by $x \\mapsto -x$, so the integral of the odd function $x\\sqrt{x^{2}+y^{2}}$ is zero",
+   "passed": true
+  },
+  {
+   "name": "moment_y_by_sections",
+   "computed": 0.15783087019919004,
+   "expected": 0.15783087019862146,
+   "difference": 5.685729664861583e-13,
+   "tolerance": 1e-08,
+   "reason": "the three-dimensional quadrature against the stack of line integrals at constant $y$",
+   "passed": true
+  },
+  {
+   "name": "moment_z_by_sections",
+   "computed": 0.06900217588291395,
+   "expected": 0.06900226722775865,
+   "difference": 9.134484470207926e-08,
+   "tolerance": 1e-07,
+   "reason": "the three-dimensional quadrature against the stack of section masses at constant $z$",
+   "passed": true
+  },
+  {
+   "name": "y_bar_against_sections",
+   "computed": 0.5335093946922023,
+   "expected": 0.533509395029717,
+   "difference": 3.3751468286880026e-10,
+   "tolerance": 1e-06,
+   "reason": "the quotient of the quadrature moments against the quotient of the stacked moments",
+   "passed": true
+  },
+  {
+   "name": "z_bar_against_sections",
+   "computed": 0.23324530265389878,
+   "expected": 0.23324561157163232,
+   "difference": 3.0891773353247665e-07,
+   "tolerance": 1e-06,
+   "reason": "the quotient of the quadrature moments against the quotient of the stacked moments",
+   "passed": true
+  },
+  {
+   "name": "x_bar_below_resolution",
+   "computed": 4.3441523517429194e-18,
+   "bound": 1e-12,
+   "reason": "the center of mass lies on the plane $x = 0$ by symmetry, so $\\bar{x}$ is zero within the resolution of the quadrature",
+   "passed": true
+  }
+ ],
+ "display": {
+  "p4_mass": "0.295835222",
+  "p4_moment_x": "0.000000000",
+  "p4_moment_y": "0.157830870",
+  "p4_moment_z": "0.069002176",
+  "p4_xbar": "0.000000000",
+  "p4_ybar": "0.533509395",
+  "p4_zbar": "0.233245303",
+  "p4_moment_y_alt": "0.157830870",
+  "p4_moment_z_alt": "0.069002267",
+  "p4_ybar_alt": "0.533509395",
+  "p4_zbar_alt": "0.233245611"
+ }
+}

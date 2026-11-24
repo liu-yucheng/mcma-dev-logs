@@ -1,0 +1,247 @@
+{
+  "surfaces": [
+    {
+      "name": "S1",
+      "equation": "y = 0",
+      "largest_residual": 0.0,
+      "all_inside": true,
+      "outward_step_outside": true,
+      "inward_step_inside": true,
+      "area": 8.0
+    },
+    {
+      "name": "S2",
+      "equation": "x = 0",
+      "largest_residual": 0.0,
+      "all_inside": true,
+      "outward_step_outside": true,
+      "inward_step_inside": true,
+      "area": 2.0
+    },
+    {
+      "name": "S3",
+      "equation": "z = 0",
+      "largest_residual": 0.0,
+      "all_inside": true,
+      "outward_step_outside": true,
+      "inward_step_inside": true,
+      "area": 5.333333333333333
+    },
+    {
+      "name": "S4",
+      "equation": "y + z = 2",
+      "largest_residual": 0.0,
+      "all_inside": true,
+      "outward_step_outside": true,
+      "inward_step_inside": true,
+      "area": 7.542472332656509
+    },
+    {
+      "name": "S5",
+      "equation": "x = 4 - y^2",
+      "largest_residual": 0.0,
+      "all_inside": true,
+      "outward_step_outside": true,
+      "inward_step_inside": true,
+      "area": 3.5358345552408683
+    }
+  ],
+  "corners": {
+    "A": {
+      "point": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "surface_count": 3
+    },
+    "B": {
+      "point": [
+        4.0,
+        0.0,
+        0.0
+      ],
+      "surface_count": 3
+    },
+    "C": {
+      "point": [
+        4.0,
+        0.0,
+        2.0
+      ],
+      "surface_count": 3
+    },
+    "D": {
+      "point": [
+        0.0,
+        0.0,
+        2.0
+      ],
+      "surface_count": 3
+    },
+    "T": {
+      "point": [
+        0.0,
+        2.0,
+        0.0
+      ],
+      "surface_count": 4
+    }
+  },
+  "edges": [
+    {
+      "name": "e1",
+      "from": "A",
+      "to": "B",
+      "surfaces": [
+        "S1",
+        "S3"
+      ],
+      "description": "y = 0 and z = 0",
+      "residual_first": 0.0,
+      "residual_second": 0.0,
+      "largest_residual": 0.0,
+      "residual_other": 1.414213562373095,
+      "start_error": 0.0,
+      "end_error": 0.0,
+      "arc_length": 4.000000000031715,
+      "chord_length": 4.0,
+      "on_boundary": true
+    },
+    {
+      "name": "e2",
+      "from": "B",
+      "to": "C",
+      "surfaces": [
+        "S1",
+        "S5"
+      ],
+      "description": "y = 0 and x = 4 - y^2",
+      "residual_first": 0.0,
+      "residual_second": 0.0,
+      "largest_residual": 0.0,
+      "residual_other": 1.414213562373095,
+      "start_error": 0.0,
+      "end_error": 0.0,
+      "arc_length": 2.0000000000158575,
+      "chord_length": 2.0,
+      "on_boundary": true
+    },
+    {
+      "name": "e3",
+      "from": "C",
+      "to": "D",
+      "surfaces": [
+        "S1",
+        "S4"
+      ],
+      "description": "y = 0 and y + z = 2",
+      "residual_first": 0.0,
+      "residual_second": 0.0,
+      "largest_residual": 0.0,
+      "residual_other": 2.0,
+      "start_error": 0.0,
+      "end_error": 0.0,
+      "arc_length": 4.000000000028832,
+      "chord_length": 4.0,
+      "on_boundary": true
+    },
+    {
+      "name": "e4",
+      "from": "D",
+      "to": "A",
+      "surfaces": [
+        "S1",
+        "S2"
+      ],
+      "description": "y = 0 and x = 0",
+      "residual_first": 0.0,
+      "residual_second": 0.0,
+      "largest_residual": 0.0,
+      "residual_other": 1.414213562373095,
+      "start_error": 0.0,
+      "end_error": 0.0,
+      "arc_length": 2.000000000014416,
+      "chord_length": 2.0,
+      "on_boundary": true
+    },
+    {
+      "name": "e5",
+      "from": "A",
+      "to": "T",
+      "surfaces": [
+        "S2",
+        "S3"
+      ],
+      "description": "x = 0 and z = 0",
+      "residual_first": 0.0,
+      "residual_second": 0.0,
+      "largest_residual": 0.0,
+      "residual_other": 1.414213562373095,
+      "start_error": 0.0,
+      "end_error": 0.0,
+      "arc_length": 2.0000000000158575,
+      "chord_length": 2.0,
+      "on_boundary": true
+    },
+    {
+      "name": "e6",
+      "from": "D",
+      "to": "T",
+      "surfaces": [
+        "S2",
+        "S4"
+      ],
+      "description": "x = 0 and y + z = 2",
+      "residual_first": 0.0,
+      "residual_second": 0.0,
+      "largest_residual": 0.0,
+      "residual_other": 2.0,
+      "start_error": 0.0,
+      "end_error": 0.0,
+      "arc_length": 2.8284271247675967,
+      "chord_length": 2.8284271247461907,
+      "on_boundary": true
+    },
+    {
+      "name": "e7",
+      "from": "B",
+      "to": "T",
+      "surfaces": [
+        "S3",
+        "S5"
+      ],
+      "description": "z = 0 and x = 4 - y^2",
+      "residual_first": 0.0,
+      "residual_second": 0.0,
+      "largest_residual": 0.0,
+      "residual_other": 1.414213562373095,
+      "start_error": 0.0,
+      "end_error": 0.0,
+      "arc_length": 4.646783762462102,
+      "chord_length": 4.646781741302666,
+      "on_boundary": true
+    },
+    {
+      "name": "e8",
+      "from": "C",
+      "to": "T",
+      "surfaces": [
+        "S4",
+        "S5"
+      ],
+      "description": "y + z = 2 and x = 4 - y^2",
+      "residual_first": 0.0,
+      "residual_second": 0.0,
+      "largest_residual": 0.0,
+      "residual_other": 2.0,
+      "start_error": 0.0,
+      "end_error": 0.0,
+      "arc_length": 5.124014274181651,
+      "chord_length": 5.124012309953218,
+      "on_boundary": true
+    }
+  ],
+  "step": 1e-05,
+  "sample_count": 600
+}

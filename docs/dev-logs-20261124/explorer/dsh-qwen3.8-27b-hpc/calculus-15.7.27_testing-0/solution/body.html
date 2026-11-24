@@ -1,0 +1,54 @@
+<h1>Exercise 15.7.27: Sketch the Solid and Compute Its Volume</h1>
+<blockquote class="statement">Sketch the solid whose volume is given by the iterated integral. The volume is $V = \int_0^1 \int_0^{1-x} \int_0^{2-2z} dy \, dz \, dx$.</blockquote>
+<table>
+<tr><th>Given</th><th>Find</th></tr>
+<tr><td>The bounds: $0 \leq x \leq 1$, $0 \leq z \leq 1 - x$, $0 \leq y \leq 2 - 2z$.</td><td>A sketch of the solid and its exact volume.</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$x$</td><td>Coordinate in the $x$ direction</td><td>none</td></tr>
+<tr><td>$y$</td><td>Coordinate in the $y$ direction</td><td>none</td></tr>
+<tr><td>$z$</td><td>Height above the base</td><td>none</td></tr>
+<tr><td>$V$</td><td>Volume of the solid</td><td>cubic unit</td></tr>
+<tr><td>$N$</td><td>Monte Carlo sample count</td><td>none</td></tr>
+</table>
+<section>
+<h2>Part 1: The solid and its volume</h2>
+<section>
+<h3>Step 1: Read the bounds and list the corner points</h3>
+<p class="reason">Each limit bounds one face. Intersecting the faces gives the corner points.</p>
+<div class="computation">$$C = \{(0,0,0),\ (1,0,0),\ (1,2,0),\ (0,2,0),\ (0,0,1)\}$$</div>
+<p class="result">The solid is a pyramid with a rectangular base in the $z = 0$ plane and apex $(0, 0, 1)$.</p>
+<p class="verification">The script <code>part1_step1.py</code> solves each triple of face planes, prints the corner list, and compares the pyramid formula $\frac{2}{3}$ with a Monte Carlo value $0.6684$.</p>
+<p class="mistake">Do not call it a tetrahedron. The base has four corners, so the solid has five vertices.</p>
+</section>
+<section>
+<h3>Step 2: Evaluate the iterated integral exactly</h3>
+<p class="reason">Integrate from the inner limit out. Every limit is linear in its own variable.</p>
+<div class="computation">$$\int_0^{2-2z} dy = 2 - 2z, \qquad \int_0^{1-x} (2-2z) \, dz = 1 - x^2$$</div>
+<div class="computation">$$V = \int_0^1 (1 - x^2) \, dx = \left[ x - \frac{x^3}{3} \right]_0^1 = \frac{2}{3}$$</div>
+<p class="result">The exact volume is $V = \frac{2}{3}$, about $0.6667$ cubic units.</p>
+<p class="verification">The script <code>part1_step2.py</code> runs the sympy integral and checks the section form $\int_0^1 2(1-t)^2 \, dt$ plus a trapezoid grid of $200001$ points.</p>
+<p class="mistake">A common slip is to write $1 - x$ instead of $1 - x^2$ after the $z$ integral.</p>
+</section>
+<section>
+<h3>Step 3: Monte Carlo cross-check</h3>
+<p class="reason">Sample the enclosing box $[0,1] \times [0,2] \times [0,1]$ and count the points inside the solid.</p>
+<div class="computation">$$\hat{V} = 2 \cdot \frac{N_{in}}{N}, \qquad N = 400000$$</div>
+<p class="result">The estimate is $\hat{V} = 0.6668$ with a standard error of $0.0015$.</p>
+<p class="verification">The script <code>part1_step3.py</code> draws $400000$ samples and asserts that the error stays below $6$ standard errors.</p>
+<p class="mistake">Missing the factor $2$, the box volume, gives $\frac{1}{3}$ instead of $\frac{2}{3}$.</p>
+</section>
+<figure><img src="FIG:part1_figure1.png" alt="Pyramid solid with base in the z=0 plane and apex (0,0,1)"><figcaption>Figure 1. The solid: base rectangle $0 \leq x \leq 1$, $0 \leq y \leq 2$ in the $z = 0$ plane, apex $(0, 0, 1)$.</figcaption></figure>
+</section>
+<section class="answer">
+<p>The solid is a pyramid whose base is the rectangle $0 \leq x \leq 1$, $0 \leq y \leq 2$ in the $z = 0$ plane and whose apex is $(0, 0, 1)$.</p>
+<p>The volume is $V = \frac{2}{3}$, about $0.6667$ cubic units.</p>
+</section>
+<section class="notes">
+<ul>
+<li>Five faces bound the solid: $x = 0$, $y = 0$, $z = 0$, $x + z = 1$, $y + 2z = 2$.
+<li>Horizontal sections are rectangles of area $2(1-z)^2$, which shrink to a point at $z = 1$.
+<li>The Monte Carlo standard error is $0.0015$ at $400000$ samples.
+</ul>
+</section>

@@ -1,0 +1,49 @@
+<h1>Volume between two paraboloids</h1>
+<blockquote class="statement">Use a triple integral to find the volume of the solid. The solid is enclosed by the paraboloids $y = x^2 + z^2$ and $y = 8 - x^2 - z^2$.</blockquote>
+<table>
+<tr><th>Given</th><th>Find</th></tr>
+<tr><td>Solid enclosed by the paraboloids $y = x^2 + z^2$ and $y = 8 - x^2 - z^2$</td><td>Volume $V$ of the solid</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$x$</td><td>Coordinate on the x-axis</td><td>length</td></tr>
+<tr><td>$y$</td><td>Coordinate on the y-axis</td><td>length</td></tr>
+<tr><td>$z$</td><td>Coordinate on the z-axis</td><td>length</td></tr>
+<tr><td>$r$</td><td>Radial distance in the $x$-$z$ plane</td><td>length</td></tr>
+<tr><td>$\theta$</td><td>Azimuth angle in the $x$-$z$ plane</td><td>radian</td></tr>
+<tr><td>$V$</td><td>Volume of the solid</td><td>volume</td></tr>
+</table>
+<section><h2>Part 1: find the volume $V$</h2>
+<section><h3>Step 1.1: find the common circle</h3>
+<p class="reason">Both surfaces give the same $y$ on the circle $r = 2$, where $r^2 = x^2 + z^2$. Inside that circle the lower surface is $y = r^2$ and the upper one is $y = 8 - r^2$.</p>
+<div class="computation">$$ r^2 = 8 - r^2, \text{ so } r = 2 \text{ and } y = 4 $$</div>
+<p class="result">The slices at $r = 0$, $1$, $2$ span $y$ from $0$ to $8$, from $1$ to $7$, and close at $y = 4$, and the shell sum gives $50.2655$, printed by <code>part1_step1.py</code>.</p>
+<p class="verification"><code>part1_step1.py</code> compares the shell sum with the closed form $16\pi$.</p>
+<p class="mistake">A reader may reverse the two surfaces and integrate the negative band $r^2 - (8 - r^2)$.</p>
+</section>
+<section><h3>Step 1.2: set up the cylindrical integral</h3>
+<p class="reason">In cylindrical coordinates about the y-axis the element is $r \, dr \, d\theta \, dy$, and the band height is $8 - 2r^2$.</p>
+<div class="computation">$$ V = \int_0^{2\pi} \int_0^2 \int_{r^2}^{8 - r^2} r \, dy \, dr \, d\theta = \int_0^{2\pi} \int_0^2 (8 - 2r^2) r \, dr \, d\theta = 16\pi $$</div>
+<p class="result">The exact volume is $16\pi = 50.2655$ and the grid disk area is $12.562$ against the target $12.566$, printed by <code>part1_step2.py</code>.</p>
+<p class="verification"><code>part1_step2.py</code> compares the closed form $16\pi$ with the grid area of the disk of radius $2$.</p>
+<p class="mistake">A reader may forget the Jacobian $r$ and integrate $8 - 2r^2$ alone.</p>
+</section>
+<section><h3>Step 1.3: Monte Carlo confirmation</h3>
+<p class="reason">The box $[-2,2] \times [0,8] \times [-2,2]$ contains the solid, so a random sample scales the hit ratio by the box volume.</p>
+<div class="computation">$$ V \approx \frac{\text{Vol}(B)}{N} \sum_{p_i \in E} 1 $$</div>
+<p class="result">The Monte Carlo volume is $50.2963$ against the target $50.2655$, printed by <code>part1_step3.py</code>.</p>
+<p class="verification"><code>part1_step3.py</code> compares the Monte Carlo estimate with the closed form $16\pi$.</p>
+<p class="mistake">A reader may forget the box volume factor and report the raw hit ratio.</p>
+</section>
+<figure><img src="FIG:part1_figure1.png" alt="Solid between the two paraboloids"><figcaption>Figure 1. The solid between $y = x^2 + z^2$ and $y = 8 - x^2 - z^2$.</figcaption></figure>
+</section>
+<section class="answer"><h2>Answer</h2>
+<p>The volume of the solid is $16\pi = 50.2655$.</p>
+</section>
+<section class="notes"><h2>Notes</h2>
+<ul>
+<li>The two paraboloids meet on the circle $r = 2$ at the height $y = 4$.</li>
+<li>The cylindrical coordinates use the $x$-$z$ plane, since both surfaces are symmetric about the y-axis.</li>
+<li>The order $dy$, $dr$, $d\theta$ keeps the band height a single expression.</li>
+</ul>
+</section>

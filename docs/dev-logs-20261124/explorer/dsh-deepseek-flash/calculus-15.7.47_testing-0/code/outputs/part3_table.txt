@@ -1,0 +1,12 @@
+part3 checks
+check                                                computed         expected    tolerance result
+mass_of_two_orders                                0.295835222      0.295835222     1.00e-09 pass
+mass_against_closed_form                          0.295835222      0.295835222     1.00e-09 pass
+mass_monte_carlo_inside_three_errors              0.000077227      0.001197543     0.00e+00 pass
+section_mass_at_z_equal_0.0                       0.979793282      0.979793282     1.00e-09 pass
+section_mass_at_z_equal_0.5                       0.197885408      0.197885408     1.00e-09 pass
+section_mass_at_z_equal_0.8                       0.025820286      0.025820286     1.00e-09 pass
+stacked_section_mass_against_mass                 0.295835542      0.295835222     1.00e-06 pass
+density_at_corner_against_hypotenuse              1.414213562      1.414213562     1.00e-12 pass
+density_at_axis_point                             0.000000000      0.000000000     1.00e-12 pass
+9 checks, 9 pass

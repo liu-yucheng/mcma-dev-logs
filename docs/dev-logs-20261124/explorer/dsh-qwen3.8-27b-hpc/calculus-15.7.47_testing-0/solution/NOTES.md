@@ -1,0 +1,1 @@
+Solid: 0<=y<=1, -sqrt(y)<=x<=sqrt(y), 0<=z<=1-y, rho=sqrt(x^2+y^2). Set up M, COM, Iz as iterated integrals; closed form carries asinh residues. M=0.295835221777, (ybar,zbar)=(0.533509395030, 0.233245302485), Iz=0.158648240288. Monte Carlo with 4e5 points cross-checks each value.

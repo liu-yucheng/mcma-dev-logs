@@ -1,0 +1,4 @@
+# Direct packages of the tutorial session. The versions are the installed versions.
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2

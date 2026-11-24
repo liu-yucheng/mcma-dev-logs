@@ -1,0 +1,117 @@
+{
+  "part": 5,
+  "values": {
+    "latex_dzdxdy": "\\int_{0}^{2}\\int_{2-y}^{2}\\int_{0}^{\\frac{x+y-2}{2}} f(x,y,z)\\,dz\\,dx\\,dy",
+    "latex_dzdydx": "\\int_{0}^{2}\\int_{2-x}^{2}\\int_{0}^{\\frac{x+y-2}{2}} f(x,y,z)\\,dz\\,dy\\,dx",
+    "latex_dydxdz": "\\int_{0}^{1}\\int_{2z}^{2}\\int_{2-x+2z}^{2} f(x,y,z)\\,dy\\,dx\\,dz",
+    "latex_dydzdx": "\\int_{0}^{2}\\int_{0}^{\\frac{x}{2}}\\int_{2-x+2z}^{2} f(x,y,z)\\,dy\\,dz\\,dx",
+    "latex_dxdydz": "\\int_{0}^{1}\\int_{2z}^{2}\\int_{2-y+2z}^{2} f(x,y,z)\\,dx\\,dy\\,dz",
+    "latex_dxdzdy": "\\int_{0}^{2}\\int_{0}^{\\frac{y}{2}}\\int_{2-y+2z}^{2} f(x,y,z)\\,dx\\,dz\\,dy",
+    "exact_common": "2.63333333333",
+    "exact_common_latex": "\\frac{79}{30}",
+    "monte_carlo": "2.64204586335",
+    "monte_carlo_spread": "0.00299851423762",
+    "monte_carlo_count": 4000000,
+    "riemann_20": "2.6270825",
+    "riemann_error_20": "0.00625083333333",
+    "riemann_40": "2.63177078125",
+    "riemann_error_40": "0.00156255208333",
+    "riemann_80": "2.63294270508",
+    "riemann_error_80": "0.000390628255208",
+    "riemann_160": "2.63323567688",
+    "riemann_error_160": "9.76564534505e-05",
+    "riemann_320": "2.63330891926",
+    "riemann_error_320": "2.44140752153e-05",
+    "riemann_ratios": [
+      "4.00039998667",
+      "4.00009999917",
+      "4.00002499995",
+      "4.00000625006"
+    ],
+    "latex_distinct": 6,
+    "polynomial": "2 + xy - z",
+    "polynomial_values": [
+      "2",
+      "5"
+    ]
+  },
+  "checks": [
+    {
+      "name": "the six orders give one common exact value",
+      "computed": 1,
+      "expected": 1,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "with f = 1 every order gives the volume by determinant",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "the six orders with f = 1 give one value",
+      "computed": 1,
+      "expected": 1,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "box quadrature with the indicator of E against the exact value, four standard errors",
+      "computed": 2.642045863345822,
+      "expected": 2.6333333333333333,
+      "tolerance": 0.011994056951492308,
+      "passed": true
+    },
+    {
+      "name": "box quadrature: random points inside E against the volume by determinant, four standard errors",
+      "computed": 0.668544,
+      "expected": 0.6666666666666666,
+      "tolerance": 0.011994056951492308,
+      "passed": true
+    },
+    {
+      "name": "indicator quadrature at the coarsest grid against the exact value, one tenth",
+      "computed": 0.0062508333333326505,
+      "expected": 0.0,
+      "tolerance": 0.26333333333333336,
+      "passed": true
+    },
+    {
+      "name": "indicator quadrature at the finest grid against the exact value, one hundredth",
+      "computed": 2.4414075215251074e-05,
+      "expected": 0.0,
+      "tolerance": 0.026333333333333334,
+      "passed": true
+    },
+    {
+      "name": "every refinement lowers the error by more than CONVERGENCE_FACTOR",
+      "computed": 4.000006250062525,
+      "expected": 1.3,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "the six printed formulas are six different strings",
+      "computed": 6,
+      "expected": 6,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "the polynomial at the origin against its constant term",
+      "computed": 2.0,
+      "expected": 2.0,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "the polynomial at the apex against the constant term plus four minus one",
+      "computed": 5.0,
+      "expected": 5.0,
+      "tolerance": 0.0,
+      "passed": true
+    }
+  ]
+}

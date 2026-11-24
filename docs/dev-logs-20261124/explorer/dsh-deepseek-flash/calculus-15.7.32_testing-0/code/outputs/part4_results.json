@@ -1,0 +1,72 @@
+{
+  "part": 4,
+  "values": {
+    "projection_area": "1",
+    "volume_reference": "0.666666666667",
+    "value_dxdydz": "0.666666666667",
+    "latex_dxdydz": "\\int_{0}^{1}\\int_{2z}^{2}\\int_{2-y+2z}^{2} f(x,y,z)\\,dx\\,dy\\,dz",
+    "value_dxdzdy": "0.666666666667",
+    "latex_dxdzdy": "\\int_{0}^{2}\\int_{0}^{\\frac{y}{2}}\\int_{2-y+2z}^{2} f(x,y,z)\\,dx\\,dz\\,dy",
+    "wrong_middle_bound": "0",
+    "gauss_points": 12,
+    "random_count": 300000
+  },
+  "checks": [
+    {
+      "name": "projection on the plane x = 0: length of the z strips against the corner list",
+      "computed": 1.0,
+      "expected": 1.0,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "the limits of dx dy dz describe the same points as E",
+      "computed": 300024,
+      "expected": 300024,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "dx dy dz: exact value against the volume by determinant",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "dx dy dz: nested quadrature against the exact value",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "the limits of dx dz dy describe the same points as E",
+      "computed": 300024,
+      "expected": 300024,
+      "tolerance": 0.0,
+      "passed": true
+    },
+    {
+      "name": "dx dz dy: exact value against the volume by determinant",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "dx dz dy: nested quadrature against the exact value",
+      "computed": 0.6666666666666665,
+      "expected": 0.6666666666666666,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "middle bound z from 0 to 1 instead of 0 to y/2: its signed integral differs from the volume",
+      "computed": 0.0,
+      "expected": 0.6666666666666666,
+      "tolerance": 0.0,
+      "passed": true
+    }
+  ]
+}

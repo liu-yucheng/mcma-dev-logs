@@ -1,0 +1,6 @@
+# Exact versions of the packages that the tutorial scripts use.
+# The environment lives at code/.venv and it was created with uv 0.10.12 on CPython 3.11.15.
+# Install with: uv pip install --python code/.venv/Scripts/python.exe -r code/requirements.txt
+numpy==2.4.6
+scipy==1.17.1
+matplotlib==3.11.2

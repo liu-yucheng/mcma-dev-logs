@@ -1,0 +1,120 @@
+{
+  "checks": {
+    "count": 14,
+    "part": "part4",
+    "rows": [
+      {
+        "computed": 0.13333333333333333,
+        "difference": 4.440892098500626e-16,
+        "expected": 0.1333333333333329,
+        "name": "radial_integral_fraction_against_part3_quadrature",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.047407407407407405,
+        "difference": 0.0,
+        "expected": 0.047407407407407405,
+        "name": "squared_forms_carry_one_rational_coefficient",
+        "tolerance": 0.0
+      },
+      {
+        "computed": 0.13333333333333333,
+        "difference": 0.0,
+        "expected": 0.13333333333333333,
+        "name": "symbolic_integral_against_closed_form",
+        "tolerance": 0.0
+      },
+      {
+        "computed": 0.6840265760863276,
+        "difference": 2.220446049250313e-15,
+        "expected": 0.6840265760863253,
+        "name": "closed_form_against_part3_exact_value",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.6840265760863274,
+        "difference": 1.1102230246251565e-16,
+        "expected": 0.6840265760863276,
+        "name": "rationalized_form_against_closed_form",
+        "tolerance": 1e-15
+      },
+      {
+        "computed": 0.6840265760863276,
+        "difference": 0.0,
+        "expected": 0.6840265760863276,
+        "name": "closed_form_against_part2_maximum",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.6840265760863277,
+        "difference": 1.1102230246251565e-16,
+        "expected": 0.6840265760863276,
+        "name": "mean_value_route_against_closed_form",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.4,
+        "difference": 1.3322676295501878e-15,
+        "expected": 0.3999999999999987,
+        "name": "mean_value_against_part3_mean",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.6884058893003189,
+        "difference": 0.0043793132139913205,
+        "expected": 0.6840265760863276,
+        "name": "sample_interval_upper_above_exact",
+        "tolerance": 0.0
+      },
+      {
+        "computed": 0.6840265760863276,
+        "difference": 0.0031582957861153726,
+        "expected": 0.6808682803002122,
+        "name": "sample_interval_lower_below_exact",
+        "tolerance": 0.0
+      },
+      {
+        "computed": 0.13333335416666484,
+        "difference": 2.0833331504377384e-08,
+        "expected": 0.13333333333333333,
+        "name": "midpoint_rule_radial_against_closed_form",
+        "tolerance": 0.0001
+      },
+      {
+        "computed": 0.6840265760863273,
+        "difference": 2.220446049250313e-16,
+        "expected": 0.6840265760863276,
+        "name": "cartesian_quadrature_against_closed_form",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 0.684027,
+        "difference": 0.0,
+        "expected": 0.684027,
+        "name": "six_decimal_rounding_against_part3_value",
+        "tolerance": 0.0
+      },
+      {
+        "computed": 0.0,
+        "difference": 0.0,
+        "expected": 0.0,
+        "name": "sign_disagreements_against_zero",
+        "tolerance": 0.0
+      }
+    ]
+  },
+  "exact_value": 0.6840265760863276,
+  "exact_value_rationalized": 0.6840265760863274,
+  "mean_route": 0.6840265760863277,
+  "mean_value": 0.4,
+  "radial_integral": 0.13333333333333333,
+  "sample_lower": 0.6808682803002122,
+  "sample_upper": 0.6884058893003189,
+  "sign_disagreements": 0,
+  "sign_sample_count": 200000,
+  "six_decimals": 0.684027,
+  "squared_coefficient": [
+    32,
+    675
+  ]
+}

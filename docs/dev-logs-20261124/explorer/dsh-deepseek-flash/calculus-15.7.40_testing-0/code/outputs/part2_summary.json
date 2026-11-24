@@ -1,0 +1,114 @@
+{
+  "part_number": 2,
+  "part_title": "Compute the mass of the solid",
+  "checks": [
+    {
+      "name": "mass from the inner integral over z against its expanded form",
+      "computed": "16/5",
+      "expected": "16/5",
+      "tolerance": "0",
+      "first_method": "symbolic integral of the z integral",
+      "second_method": "integral of the expanded polynomial in y",
+      "passed": true
+    },
+    {
+      "name": "mass from two orders of the triple integral",
+      "computed": "16/5",
+      "expected": "16/5",
+      "tolerance": "0",
+      "first_method": "triple integral in the order dy dx dz",
+      "second_method": "triple integral in the order dz dx dy",
+      "passed": true
+    },
+    {
+      "name": "mass from the substituted integral",
+      "computed": "16/5",
+      "expected": "16/5",
+      "tolerance": "0",
+      "first_method": "substituted integral of 16 u^4",
+      "second_method": "triple integral in the order dy dx dz",
+      "passed": true
+    },
+    {
+      "name": "mass from the section area",
+      "computed": "16/5",
+      "expected": "16/5",
+      "tolerance": "0",
+      "first_method": "single integral of 4 times the section area",
+      "second_method": "triple integral in the order dy dx dz",
+      "passed": true
+    },
+    {
+      "name": "inner integral of y at z = 0.0",
+      "computed": "2",
+      "expected": "2",
+      "tolerance": "1.0e-10",
+      "first_method": "integral of 1 over the y bounds",
+      "second_method": "section area divided by the x length",
+      "passed": true
+    },
+    {
+      "name": "inner integral of y at z = 0.4",
+      "computed": "1.54919333848",
+      "expected": "1.54919333848",
+      "tolerance": "1.0e-10",
+      "first_method": "integral of 1 over the y bounds",
+      "second_method": "section area divided by the x length",
+      "passed": true
+    },
+    {
+      "name": "inner integral of y at z = 0.8",
+      "computed": "0.894427191",
+      "expected": "0.894427191",
+      "tolerance": "1.0e-10",
+      "first_method": "integral of 1 over the y bounds",
+      "second_method": "section area divided by the x length",
+      "passed": true
+    },
+    {
+      "name": "mass from the numerical single integral",
+      "computed": "3.19999999998",
+      "expected": "3.2",
+      "tolerance": "1.0e-10",
+      "first_method": "adaptive quadrature of the section area",
+      "second_method": "exact triple integral",
+      "passed": true
+    },
+    {
+      "name": "mass from the integral of the y sections",
+      "computed": "3.2",
+      "expected": "3.2",
+      "tolerance": "1.0e-10",
+      "first_method": "adaptive quadrature over y of the trapezoid area",
+      "second_method": "exact triple integral",
+      "passed": true
+    },
+    {
+      "name": "mass from rejection sampling",
+      "computed": "3.198342",
+      "expected": "3.2",
+      "tolerance": "7.8e-03",
+      "first_method": "Monte Carlo estimate from the box",
+      "second_method": "exact triple integral",
+      "passed": true
+    }
+  ],
+  "values": {
+    "p2_mass_exact": "$\\frac{16}{5}$",
+    "p2_mass_decimal": "$3.200000$",
+    "p2_volume_exact": "$\\frac{4}{5}$",
+    "p2_volume_decimal": "$0.800000$",
+    "p2_section_area_latex": "$2(1 - z)^{3/2}$",
+    "p2_inner_integral_latex": "$2\\sqrt{1 - z}$",
+    "p2_naive_prism_mass": "$2.000000$",
+    "p2_naive_narrow_mass": "$1.333333$",
+    "p2_sampling_mass": "$3.1983$",
+    "p2_sampling_error": "$0.0020$",
+    "p2_sampling_points": "4000000",
+    "p2_area_integral_mass": "$3.200000000$",
+    "p2_y_section_mass": "$3.200000000$",
+    "p2_symbolic_mass": "$\\frac{16}{5}$"
+  },
+  "pass_count": 10,
+  "fail_count": 0
+}

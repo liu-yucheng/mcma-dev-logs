@@ -1,0 +1,5 @@
+# Exact versions of the environment of this session.
+# Python interpreter: CPython 3.14.3, created by uv 0.10.12 at code/.venv
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2

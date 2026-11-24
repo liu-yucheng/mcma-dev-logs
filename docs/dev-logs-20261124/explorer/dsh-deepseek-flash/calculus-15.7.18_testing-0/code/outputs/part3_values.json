@@ -1,0 +1,14 @@
+{
+  "p3_answer_decimal": "3.375000000",
+  "p3_answer_latex": "\\dfrac{27}{8}",
+  "p3_inner_latex": "\\dfrac{9 - y^{2}}{2}",
+  "p3_middle_latex": "\\dfrac{y\\,(9 - y^{2})}{6}",
+  "p3_antiderivative_latex": "\\dfrac{3y^{2}}{4} - \\dfrac{y^{4}}{24}",
+  "p3_mean_height_decimal": "1.125000000",
+  "p3_mean_height_latex": "\\dfrac{9}{8}",
+  "p3_outer_integrand_latex": "\\dfrac{9y - y^{3}}{6}",
+  "p3_wrong_value_decimal": "9.000000000",
+  "p3_wrong_ratio_decimal": "2.666667",
+  "p3_derivative_gap": "2.636e-10",
+  "p3_check_count": "12"
+}

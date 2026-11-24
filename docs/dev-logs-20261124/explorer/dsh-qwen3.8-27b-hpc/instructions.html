@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instructions &mdash; Qwen transfer</title>
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../../preview.css">
+<style>
+img { max-width: 100%; height: auto; display: block; }
+.prompt { white-space: pre-wrap; font-size: .82rem; background: #f6f8fa; border: 1px solid #e2e6ec; border-radius: 8px; padding: 12px 14px; }
+td.num { text-align: right; }
+</style>
+</head>
+<body class="leaf">
+<main class="container">
+<h1>&#128220; Task instructions &mdash; Qwen transfer</h1>
+<p class="small">The v17 experience compiled for a 40 tokens/s decoder. 187 lines, 8,466 bytes.</p>
+<pre class="prompt">&lt;!-- Compiled from the MCMA v17 parameters, then cut for a 40 tokens/s decoder:
+     24 problems, 4 hours, 600 s per problem. Every rule below is written as a
+     cost rule first and a quality rule second. The reference layout is the
+     dsh-qwen3.8-27b-hpc run of 2026-11-10. --&gt;
+
+# Task Instructions
+
+Solve all 24 problems in this directory. One subdirectory holds one problem, as
+`&lt;subdir&gt;/problem.png`. You write the solution into `&lt;subdir&gt;/solution/` and
+publish `&lt;subdir&gt;/solution.html`.
+
+## 0. The budget
+
+| Item | Value |
+| --- | --- |
+| Problems | 24 |
+| Wall clock | 4 h |
+| Per problem | 600 s, target 420 s |
+| Decoder | 40 tokens/s, so 1,000 output tokens = 25 s |
+| Output per problem | 8,000 tokens, including reasoning |
+| Turns per problem | 6 |
+
+Seven rules keep you inside the budget.
+
+1. One message may hold several tool calls. Write every script of a problem in
+   one message. Do not serialize what can go in parallel.
+2. Chain shell commands with `;` and print the tail only:
+   `python a.py; python b.py 2&gt;&amp;1 | tail -12`.
+3. Never restate the problem. Never describe a plan. At most one sentence
+   between tool calls. No summary before the last turn.
+4. Never open `solution.html` (about 800 KB). Never print a Base64 payload.
+5. Two attempts on one script. On the third failure, simplify the math, keep a
+   value you can print, and move on.
+6. Do not read this file again, and do not list the workspace twice.
+7. If a problem passes 540 s (compare `date +%s`), skip the figure, finish the
+   page, run the gate, and go to the next problem.
+
+## 1. The tools are built. Do not rebuild them.
+
+| Path | Use |
+| --- | --- |
+| `tools/render.py &lt;subdir&gt;` | Builds `&lt;subdir&gt;/solution/solution.html` from `&lt;subdir&gt;/solution/body.html`. Inlines KaTeX, the fonts, and every `FIG:` image. |
+| `tools/check.py &lt;page&gt;` | The release gate. Prints one line per defect class, then `PASS` or `FAIL`. |
+| `tools/katex/` | Offline KaTeX 0.16.47. No network is needed. |
+
+You write four things per problem: the step scripts, at most one figure script,
+`solution/body.html`, and `solution/NOTES.md` (three lines).
+
+Never write CSS, `&lt;head&gt;`, `&lt;script&gt;`, or Base64 text. `render.py` adds all of
+them. A hand-written `&lt;head&gt;` is a defect, not an improvement.
+
+## 2. One problem in six turns
+
+| Turn | Action |
+| --- | --- |
+| 1 | Read `problem.png`. Nothing else. |
+| 2 | Write every `part&lt;i&gt;_step&lt;j&gt;.py` in one message: 3 steps, 4 when the problem has two parts. |
+| 3 | Run them in one command, tail 12 lines each. Fix only a traceback line. |
+| 4 | Write `body.html`, and one figure script when the problem names a region, a surface, or a space curve. |
+| 5 | `python tools/render.py &lt;subdir&gt;; python tools/check.py &lt;subdir&gt;/solution/solution.html` |
+| 6 | Repair only the defect that `check.py` named, then `cp &lt;subdir&gt;/solution/solution.html &lt;subdir&gt;/solution.html` |
+
+A step script is 12 to 30 lines: a one-line docstring with the claim, the exact
+computation, one numeric cross-check, one assertion, one `print`.
+
+```python
+&quot;&quot;&quot;Step 1.1: the cross section at x is a disk of area pi*x/4.&quot;&quot;&quot;
+
+import numpy as np
+import sympy as sp
+
+x = sp.symbols(&quot;x&quot;, positive=True)
+print(&quot;area at x = 4:&quot;, sp.pi * 4 / 4)
+
+step, axis = 0.01, np.arange(0, 1.5, 0.01)
+grid = np.array([[a, b] for a in axis for b in axis])
+count = int((grid[:, 0] ** 2 + grid[:, 1] ** 2 &lt;= 1.0).sum())
+print(&quot;grid area:&quot;, round(count * step**2, 4))
+
+assert abs(count * step**2 - float(sp.pi)) &lt; 0.03
+print(&quot;PASS 1.1&quot;)
+```
+
+## 3. Math rules
+
+Correctness and verification together carry 0.50 of the score. These rules
+carry both.
+
+1. No print, no sentence. Every number, shape, count, corner, and extremum on
+   the page is printed by a script, and the verification line names that script.
+2. Every assertion compares two independently computed values: an exact method
+   (`sympy`, `fractions`) against a numeric method (grid, sample, Monte Carlo).
+3. A banned assertion: a value against itself, a literal against a literal, or a
+   hard-coded answer under the label of exact arithmetic.
+4. The tolerance follows the method. A grid of step `h` gets a tolerance about
+   `h`. One `1e-9` serves only a closed-form comparison.
+5. Shape from the inequalities, not from the picture. Print the boundary of the
+   section at three heights, and the corner list at each endpoint of the
+   parameter. Call the section a point, a segment, or a face from that print.
+6. A label on a surface satisfies that surface&#x27;s equation. Compute the point.
+7. Name a plane by the two axes that its points keep: a projection that drops
+   `y` lies on `y = 0`. Give each surface its own direction.
+8. Count what you claim: periods, rows, valleys, and repetitions come from a
+   print inside a script.
+9. Exact form first, then the decimal, then the unit.
+10. Never carry a value from another problem, from the statement of an example,
+    or from this file.
+
+## 4. body.html: the only page file you write
+
+Eight blocks, in this order: `h1`; `blockquote class=&quot;statement&quot;` (two
+sentences); a `Given`/`Find` table; a symbol table (symbol, meaning, unit); one
+`section` per part, holding one `section` per step; `section class=&quot;answer&quot;`;
+`section class=&quot;notes&quot;`.
+
+A step is exactly this:
+
+```html
+&lt;section&gt;&lt;h3&gt;Step 1.1: the cross section at $x$ is a disk&lt;/h3&gt;
+&lt;p class=&quot;reason&quot;&gt;The two inequalities give $y^2 + z^2 \leq x/4$.&lt;/p&gt;
+&lt;div class=&quot;computation&quot;&gt;$$ A(x) = \pi \frac{x}{4} $$&lt;/div&gt;
+&lt;p class=&quot;result&quot;&gt;The area at $x = 4$ is $\pi$, printed by &lt;code&gt;part1_step1.py&lt;/code&gt;.&lt;/p&gt;
+&lt;p class=&quot;verification&quot;&gt;&lt;code&gt;part1_step1.py&lt;/code&gt; compares the closed form with a grid count at three heights.&lt;/p&gt;
+&lt;p class=&quot;mistake&quot;&gt;A reader may take the slice for an annulus, but the limits give a disk.&lt;/p&gt;
+&lt;/section&gt;
+```
+
+Rules for the file.
+
+1. Put every math token inside `$...$` or `$$...$$`, including in a table cell
+   and in a figure caption. Escape `&lt;` and `&amp;` in running text.
+2. One `&lt;li&gt;` is one item, and it ends with a full stop.
+3. At most 90 words per step, 120 lines per file, no inline styles.
+4. A figure is `&lt;figure&gt;&lt;img src=&quot;FIG:part1_figure1.png&quot; alt=&quot;...&quot;&gt;&lt;figcaption&gt;Figure 1. ...&lt;/figcaption&gt;&lt;/figure&gt;`.
+   `render.py` inlines the PNG. Never write a Base64 string.
+5. KaTeX accepts `\frac \sqrt \iiint \int \iint \partial \lim \sum \prod
+   \theta \phi \rho \lambda \mu \leq \geq \neq \approx \cdot \times \vec \hat
+   \bar \text \left( \right) \begin{pmatrix} \begin{aligned} \begin{cases}`.
+   It rejects `\label`, `\eqref`, `\multicolumn`, `\begin{align}`, and
+   `\begin{tabular}`. Use `\begin{aligned}` inside `$$...$$`, and build every
+   table with HTML `&lt;table&gt;`.
+6. A caption copy is plain text plus math. No `&lt;br&gt;`, no list.
+
+## 5. Figures: at most one, 40 lines
+
+Draw one only when the problem names a region, a surface, or a space curve. Keep
+`figsize=(5, 3.6)`, `dpi=150`, one color map, wall `alpha=0.85`, and one label
+per surface placed at a point that satisfies that surface.
+
+```python
+figure.canvas.draw()
+renderer = figure.canvas.get_renderer()
+artists = list(axes.texts) + ([axes.get_legend()] if axes.get_legend() else [])
+for artist in artists:
+    box = artist.get_window_extent(renderer)
+    name = artist.get_text() if hasattr(artist, &quot;get_text&quot;) else &quot;legend&quot;
+    assert axes.bbox.x0 - 1 &lt;= box.x0 and box.x1 &lt;= axes.bbox.x1 + 1, name
+    assert axes.bbox.y0 - 1 &lt;= box.y0 and box.y1 &lt;= axes.bbox.y1 + 1, name
+```
+
+## 6. Release
+
+```bash
+python tools/render.py &lt;subdir&gt;; python tools/check.py &lt;subdir&gt;/solution/solution.html \
+  &amp;&amp; cp &lt;subdir&gt;/solution/solution.html &lt;subdir&gt;/solution.html; ls -la &lt;subdir&gt;/solution
+```
+
+`check.py` must print `PASS` before the copy. Never report a problem as done
+without the `PASS` line and the `ls` line in front of you.
+
+## 7. Report
+
+After each problem, print one line: subdirectory, seconds used, step count,
+figure count, final answer, `PASS`.
+
+## Natural Language Styles
+
+ASD-STE100 non-strict mode with academic US English fallback. Short active
+sentences. One term for one concept. Simplified Technical Chinese for Chinese.
+
+## Python Code Styles
+
+- Google Python Style, with one docstring sentence per file and per function.
+- 119 character limit, 4-space indentation, horizontally aligned hanging indents.
+- Complete words for names. `from ... import ...`. Sorted imports.
+- `python` and `pip` for the runtime; `numpy`, `sympy`, `matplotlib` are installed.
+- Scratch files go under a dot directory and are deleted before the problem ends.
+</pre>
+</main>
+</body>
+</html>

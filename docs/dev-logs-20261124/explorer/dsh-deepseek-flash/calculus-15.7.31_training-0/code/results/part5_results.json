@@ -1,0 +1,51 @@
+[
+  {
+    "label": "Points that the limits of $dy\\,dx\\,dz$ and $E$ classify differently",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  },
+  {
+    "label": "Points that the limits of $dx\\,dy\\,dz$ and $E$ classify differently",
+    "computed": 0.0,
+    "expected": 0.0,
+    "difference": 0.0,
+    "tolerance": 0.0
+  },
+  {
+    "label": "Order $dy\\,dx\\,dz$ against $dx\\,dy\\,dz$ for $f = 1$",
+    "computed": 8.533333333333333,
+    "expected": 8.533333333333337,
+    "difference": 3.552713678800501e-15,
+    "tolerance": 1e-07
+  },
+  {
+    "label": "Order $dy\\,dx\\,dz$ against $dx\\,dy\\,dz$ for $f = x^2+y+z$",
+    "computed": 24.380952380952376,
+    "expected": 24.380952380952383,
+    "difference": 7.105427357601002e-15,
+    "tolerance": 1e-07
+  },
+  {
+    "label": "Order $dy\\,dx\\,dz$ against $dx\\,dy\\,dz$ for $f = 1+xyz$",
+    "computed": 8.533333333333333,
+    "expected": 8.533333333333335,
+    "difference": 1.7763568394002505e-15,
+    "tolerance": 1e-07
+  },
+  {
+    "label": "Order $dy\\,dx\\,dz$ against the exact volume $128/15$",
+    "computed": 8.533333333333333,
+    "expected": 8.533333333333333,
+    "difference": 0.0,
+    "tolerance": 1e-07
+  },
+  {
+    "label": "Order $dx\\,dy\\,dz$ against the exact volume $128/15$",
+    "computed": 8.533333333333337,
+    "expected": 8.533333333333333,
+    "difference": 3.552713678800501e-15,
+    "tolerance": 1e-07
+  }
+]
