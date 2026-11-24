@@ -1,0 +1,5 @@
+# Exact versions of the environment of this tutorial, installed with uv into code/.venv.
+# Python 3.14.3, uv 0.10.12 (00d72dac7 2026-03-19 x86_64-pc-windows-msvc).
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2

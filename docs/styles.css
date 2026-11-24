@@ -7,6 +7,7 @@
   --line: #e2e6ec;
   --bg: #ffffff;
   --bg-soft: #f6f8fa;
+  --mono: "Cascadia Mono", "Cascadia Code", "Ubuntu Sans Mono", Consolas, "Courier New", monospace;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -17,6 +18,16 @@ body {
   font-family: Cambria, Georgia, "Times New Roman", serif;
   line-height: 1.6;
   font-size: 17px;
+}
+/* Global prose alignment for every dev log: justify running text, keep code,
+   tables, navigation, and explorer rows left-aligned. */
+main p, main li, main dt, main dd, main blockquote, .boxed-note,
+header.site p.lede {
+  text-align: justify;
+  text-justify: inter-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 .container { width: 95%; max-width: none; margin: 0 auto; padding: 0 20px; }
 button, input, select, textarea { font-family: Arial, Helvetica, sans-serif; }
@@ -138,8 +149,9 @@ pre {
   font-size: .86rem;
   line-height: 1.5;
   text-align: left;
+  font-family: var(--mono);
 }
-code { font-family: "Cascadia Mono", "Ubuntu Sans Mono", "Courier New", monospace; }
+code, kbd, samp, tt { font-family: var(--mono); }
 pre > code { display: block; text-align: left; }
 .boxed-note {
   background: #fff8e6;
@@ -174,6 +186,11 @@ figure.flow figcaption { font-size: .85rem; color: var(--muted); margin-top: 8px
   display: flex;
   flex-direction: column;
   font-weight: 300;
+  font-family: var(--mono);
+}
+.explorer button, .explorer input, .explorer select, .explorer textarea,
+.explorer .btn {
+  font-family: var(--mono);
 }
 .panel {
   display: flex;
@@ -213,7 +230,7 @@ figure.flow figcaption { font-size: .85rem; color: var(--muted); margin-top: 8px
 .addrbar .path {
   flex: 1;
   min-width: 0;
-  font-family: Consolas, "Courier New", monospace;
+  font-family: var(--mono);
   font-size: .8rem;
   color: var(--ink);
   background: #fff;
@@ -266,7 +283,7 @@ figure.flow figcaption { font-size: .85rem; color: var(--muted); margin-top: 8px
   padding: 4px 10px;
   font-size: .78rem;
   color: var(--muted);
-  font-family: "Cascadia Mono", "Ubuntu Sans Mono", "Courier New", monospace;
+  font-family: var(--mono);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -325,3 +342,10 @@ body.resizing-v { cursor: row-resize; user-select: none; }
 .chip-file { background: #0f766e; }
 .chip-log { background: #8e44ad; }
 .empty-hint { color: var(--muted); font-size: .84rem; padding: 10px 6px; }
+
+/* ---- Sidebar-style explorer page (older dev logs) ---- */
+.explorer-wrap { font-family: var(--mono); }
+.explorer-wrap button, .explorer-wrap input, .explorer-wrap select, .explorer-wrap textarea,
+.explorer-wrap .btn2 {
+  font-family: var(--mono);
+}

@@ -1,0 +1,49 @@
+{
+  "sample_count": 40000,
+  "inside_count": 5914,
+  "nested_against_flat": 0,
+  "nested_against_solved": 0,
+  "nested_against_misread": 1801,
+  "extent": {
+    "analytic": {
+      "x": 4.0,
+      "y": 2.0,
+      "z": 2.0
+    },
+    "grid": {
+      "x": 4.0,
+      "y": 2.0,
+      "z": 2.0
+    }
+  },
+  "volume": {
+    "given_order": 6.666666666666667,
+    "swapped_inner_order": 6.666666666666667,
+    "order_x_y_z": 6.666666666666667,
+    "largest_gap": 0.0,
+    "exact_numerator": 20,
+    "exact_denominator": 3,
+    "exact_text": "20/3",
+    "exact_value": 6.666666666666667
+  },
+  "probes": {
+    "x_above_the_wall": {
+      "point": [
+        3.5,
+        1.0,
+        0.5
+      ],
+      "inside_by_limits": false,
+      "inside_by_misreading": true
+    },
+    "x_below_the_wall": {
+      "point": [
+        1.0,
+        1.0,
+        0.5
+      ],
+      "inside_by_limits": true,
+      "inside_by_misreading": true
+    }
+  }
+}

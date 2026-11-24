@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Recursive self-improvement for calculus plotting, 2026-11-24. DeepSeek Flash at 200 tokens/s learned 17 canonical solutions and tested 7. Qwen3.8-27B at 40 tokens/s reused the learned instruction on 24 problems. The math stayed correct. The plot style did not transfer.">
+<title>RSI 2026-11-24 &mdash; Overview</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.chapter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 18px 0; }
+.chapter-card { display: block; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; text-decoration: none; color: var(--ink); }
+.chapter-card:hover { border-color: var(--accent); background: #eef4fc; }
+.chapter-card .ico { font-size: 1.5rem; }
+.chapter-card h3 { margin: 6px 0 4px; font-size: 1.05rem; }
+.chapter-card p { margin: 0; font-size: .9rem; color: var(--muted); }
+.stat-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.stat-fail { background: #fdf1ee; border-color: #ecb7a6; }
+.stat-fail .num { color: #b23a1c; }
+.recipe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin: 18px 0; }
+.recipe { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: #fff; }
+.recipe.ok { border-left: 5px solid #2f6f4f; }
+.recipe.warn { border-left: 5px solid #e8a33d; }
+.recipe h3 { margin: 0 0 6px; font-size: 1rem; }
+.recipe .meta { font-size: .84rem; color: var(--muted); margin: 0; }
+.recipe .big { font-size: 1.35rem; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-11-24</div>
+    <h1>&#129514; Learning to Plot, and Failing to Transfer It</h1>
+    <p class="lede">&#129302; A new recursive self-improvement (RSI) harness trained DeepSeek Flash at 200 tokens/s on 17 canonical solutions. &#128200; It learned a plotting recipe: labelled 3D solids and labelled 2D projections. &#128034; The same instruction then ran on Qwen3.8-27B at 40 tokens/s on 24 problems. &#10060; The math stayed correct, but the plot style did not transfer. &#9989; DeepSeek Flash is acceptable as a math tutor. &#9201; Qwen3.8-27B is not.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html" aria-current="page">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Harness</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="answer">
+  <h2>&#9889; Short answer</h2>
+  <p>&#9989; <strong>The framework works.</strong> The MCMA DeepSeek Harness plugin trains an agent the way a classical model is trained: forward pass, feedback, backward pass, validate, and test. The operator trained 17 canonical solutions and tested 7 unseen problems.</p>
+  <p>&#129514; <strong>The learning is real, but implicit.</strong> The instruction grew from 272 to 11,952 characters of learned experience. It now carries plotting rules that the v0 prompt did not have. The loss curve does not show this: the final pass had the worst single loss of the run (0.316), while the plot instruction was at its best.</p>
+  <p>&#128034; <strong>The transfer failed.</strong> Qwen3.8-27B read the v17 instruction and solved 24 problems. It passed its own release gate 24 of 24 times. It did not reproduce the learned plot style: no labelled projection panel on 15.7.32, and overlapping surface labels on 15.7.18.</p>
+
+  <div class="stat-grid">
+    <div class="stat"><div class="num">17</div><div class="lbl">&#129302; Training solutions (v0 &rarr; v17)</div></div>
+    <div class="stat"><div class="num">7</div><div class="lbl">&#128200; Test problems at v17</div></div>
+    <div class="stat"><div class="num">24</div><div class="lbl">&#128034; Transfer problems on Qwen3.8-27B</div></div>
+    <div class="stat"><div class="num">6 / 7</div><div class="lbl">&#9989; DeepSeek test answers equal to canonical</div></div>
+    <div class="stat"><div class="num">24 / 24</div><div class="lbl">&#128737; Qwen release gate PASS</div></div>
+    <div class="stat stat-fail"><div class="num">0 / 2</div><div class="lbl">&#10060; Learned plot recipes that transferred</div></div>
+  </div>
+
+  <div class="recipe-grid">
+    <div class="recipe ok">
+      <h3>&#9989; DeepSeek Flash (Internet) + MCMA RSI</h3>
+      <p class="big">200 tokens/s</p>
+      <p class="meta">&#128187; PC harness, PTC mode. &#129302; 17 train passes, 7 test passes. &#9201; 14 h 07 m active, 16 h 57 m elapsed. &#128196; 79 figures and 117 verification scripts in the final folders.</p>
+    </div>
+    <div class="recipe warn">
+      <h3>&#9888; Qwen3.8-27B (HPC) + v17 transfer</h3>
+      <p class="big">40 tokens/s</p>
+      <p class="meta">&#128421; Same harness, prebuilt <code>render.py</code> and <code>check.py</code>. &#129302; 24 problems, 24 gate PASS. &#9201; 5 h 44 m against a 4 h budget. &#128200; 23 figures and 75 step scripts. &#10060; Plot style did not transfer.</p>
+    </div>
+  </div>
+
+  <p class="small">&#128204; The manual remarks assume that both models give correct math, because many earlier runs did. This log checks that assumption where it can: the DeepSeek test split has a canonical answer for each problem, and Qwen has a structural release gate. The one DeepSeek error is 15.7.23, a wedge volume given as 1/3 instead of &pi;/4 &minus; 1/3.</p>
+</section>
+
+<section id="finding">
+  <h2>&#128161; Main finding</h2>
+  <p>&#128295; <strong>The harness learned through the prompt, not through the loss.</strong> Every pass added text distilled from that pass&rsquo;s evaluator findings. The tutor prompt grew from 1,432 to 21,584 characters. The plotting rules in v17 are a record of what previous passes got wrong. The loss is a five-dimension rubric average; it cannot say which sentence caused the gain.</p>
+  <p>&#127912; <strong>The learned recipe has two visible parts.</strong> On 15.7.32, DeepSeek draws a labelled tetrahedron with vertex letters and plane labels, then a second figure with three labelled 2D projections and their areas. The v0 output had no such projection panel. This is the clearest evidence that the instruction changed the plot.</p>
+  <p>&#10060; <strong>Words alone did not move the recipe to a slower model.</strong> Qwen3.8-27B received the same rules at 40 tokens/s. On 15.7.32 it drew one 3D panel with clipped, low-contrast labels and no projection panel. On 15.7.18 it drew one 3D panel whose surface labels collide on the curved wall, with no projection and no adjusted viewpoint.</p>
+  <p>&#9201; <strong>The speed verdict is separate from the quality verdict.</strong> With RSI off, DeepSeek Flash finishes a problem in under 5 minutes on average. Qwen3.8-27B needs over 15 minutes on average. The manual remarks call Qwen unacceptable as a tutor regardless of harness improvements.</p>
+</section>
+
+<section id="changed">
+  <h2>&#128260; What changed since the last log</h2>
+  <table>
+    <tbody>
+      <tr><th>&#128203; Scope</th><td>The last log compared four one-shot recipes. This log trains one recipe, then transfers the learned instruction to a second model.</td></tr>
+      <tr><th>&#127919; Goal</th><td>The last log asked for correct solutions. This log asks whether a model can learn <em>how</em> to plot from canonical solutions, and whether it can teach that skill to another model.</td></tr>
+      <tr><th>&#129302; Harness</th><td>A new MCMA plugin adds <code>mcma_forward</code>, <code>mcma_feedback</code>, <code>mcma_backward</code>, <code>mcma_resume</code>, and <code>mcma_test</code> to DeepSeek Harness.</td></tr>
+      <tr><th>&#128220; Prompt</th><td>The instruction is a trained artifact. Version v0 is the old 64-line prompt. Version v17 is a 424-line prompt with a score model, a verification law, a page law, and a figure law.</td></tr>
+      <tr><th>&#129504; Models</th><td>DeepSeek Flash at 200 tokens/s does the learning. Qwen3.8-27B at 40 tokens/s receives the compiled experience.</td></tr>
+      <tr><th>&#128451; Data</th><td>Two workspaces and two datasets: 17 training solutions, 7 test problems, and 24 transfer problems from Stewart 15.7, 15.8, and 15.9.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="chapters">
+  <h2>&#128218; Chapters</h2>
+  <div class="chapter-grid">
+    <a class="chapter-card" href="agents.html">
+      <div class="ico">&#129302;</div>
+      <h3>Harness and Recipes</h3>
+      <p>The MCMA RSI plugin, the training protocol, the loss formula, the two recipes, and the diff from v0 to v17.</p>
+    </a>
+    <a class="chapter-card" href="briefing.html">
+      <div class="ico">&#128202;</div>
+      <h3>Results Briefing</h3>
+      <p>The 17 training losses, the 7 test losses, the transfer comparison, the time and token speed, and the figures that did and did not transfer.</p>
+    </a>
+    <a class="chapter-card" href="explorer.html">
+      <div class="ico">&#128269;</div>
+      <h3>Results Explorer</h3>
+      <p>A 2-pane file explorer. Open a DeepSeek report beside a Qwen solution, read the step scripts, the figures, the prompts, and the operator remarks.</p>
+    </a>
+    <a class="chapter-card" href="plans.html">
+      <div class="ico">&#128506;</div>
+      <h3>Future Plans</h3>
+      <p>Restore the classic plotting prompts, make the RSI learn explicitly, deploy DeepSeek Flash or a distilled version on the HPC, and find a coding- or math-enhanced Qwen3.8-27B.</p>
+    </a>
+  </div>
+</section>
+
+<section id="scope">
+  <h2>&#128300; Scope</h2>
+  <table>
+    <tbody>
+      <tr><th>&#128218; Problems</th><td>24 exercises from Stewart, <em>Calculus: Early Transcendentals</em>: 17 train and 7 test in the training chapter 15.7/15.8/15.9 family, plus the same 24 run again on Qwen3.8-27B.</td></tr>
+      <tr><th>&#129514; Recipes</th><td>2: DeepSeek Flash (Internet) + MCMA RSI on the PC, and Qwen3.8-27B (HPC) + v17 instruction + prebuilt tools.</td></tr>
+      <tr><th>&#128187; Harness</th><td>DeepSeek Harness on the PC for both recipes. The MCMA plugin is <code>dsh-mcma</code> 0.41.2 with four local source patches.</td></tr>
+      <tr><th>&#129302; Models</th><td>DeepSeek Flash from the Internet API at 200 tokens/s. Qwen3.8-27B from an HPC VLLM server at 40 tokens/s.</td></tr>
+      <tr><th>&#128196; Output</th><td>DeepSeek writes <code>report.html</code> per problem; 13 of the 25 folders also hold an identical <code>tutorial.html</code>. Qwen writes <code>solution.html</code> built by <code>tools/render.py</code> and checked by <code>tools/check.py</code>.</td></tr>
+      <tr><th>&#128200; Figures</th><td>79 in the final DeepSeek folders, 23 in the Qwen transfer folders, all drawn with matplotlib.</td></tr>
+      <tr><th>&#129518; Scripts</th><td>117 DeepSeek verification scripts and 75 Qwen step scripts. The Qwen tree also holds 23 figure scripts and 7 <code>NOTES.md</code> files.</td></tr>
+      <tr><th>&#128203; Canonical set</th><td>24 problem scans and 24 reference solution scans, in <code>mcma-dataset-20261124-1/</code>.</td></tr>
+      <tr><th>&#128193; Data</th><td><code>.raw_data/dev-logs-20261124/</code></td></tr>
+    </tbody>
+  </table>
+  <p class="small">&#128204; The training and test problem folders hold <code>problem.png</code>, <code>problem.md</code>, <code>steps/</code>, <code>code/</code> (scripts, figures, saved values), and the final page. The Qwen folders hold <code>problem.png</code>, <code>solution/</code>, and <code>solution.html</code>. The counts use the final folder for each problem. The early <code>calculus-15.7.17_training-0</code> folder is kept for the record and is not counted.</p>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

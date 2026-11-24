@@ -1,0 +1,100 @@
+{
+  "part_number": 4,
+  "part_title": "Check the answer with the shadow method",
+  "checks": [
+    {
+      "name": "largest difference between the analytic height and the searched height",
+      "computed": "1.11022302463e-16",
+      "expected": "0",
+      "tolerance": "1.0e-12",
+      "first_method": "closed form min(1 - y^2, 1 - x)",
+      "second_method": "bisection search with the membership test",
+      "passed": true
+    },
+    {
+      "name": "mass from the symbolic shadow integral",
+      "computed": "16/5",
+      "expected": "16/5",
+      "tolerance": "0",
+      "first_method": "symbolic integral of the height over the shadow",
+      "second_method": "exact mass of part 2",
+      "passed": true
+    },
+    {
+      "name": "mass from the quadrature over the shadow",
+      "computed": "3.2",
+      "expected": "3.2",
+      "tolerance": "1.0e-08",
+      "first_method": "nested quadrature of the height over the shadow",
+      "second_method": "symbolic integral of the height over the shadow",
+      "passed": true
+    },
+    {
+      "name": "M_yz from the quadrature over the shadow",
+      "computed": "1.14285714286",
+      "expected": "1.14285714286",
+      "tolerance": "1.0e-08",
+      "first_method": "nested quadrature of 4 x times the height over the shadow",
+      "second_method": "exact moment of part 3",
+      "passed": true
+    },
+    {
+      "name": "M_xy from the quadrature over the shadow",
+      "computed": "0.914285714286",
+      "expected": "0.914285714286",
+      "tolerance": "1.0e-08",
+      "first_method": "nested quadrature of the inner moment of z over the shadow",
+      "second_method": "exact moment of part 3",
+      "passed": true
+    },
+    {
+      "name": "volume from the shadow sampling",
+      "computed": "0.799691682646",
+      "expected": "0.8",
+      "tolerance": "1.0e-03",
+      "first_method": "mean accepted height times the shadow area",
+      "second_method": "exact volume of part 2",
+      "passed": true
+    },
+    {
+      "name": "center coordinate x from the shadow sampling",
+      "computed": "0.357310577604",
+      "expected": "0.357142857143",
+      "tolerance": "7.6e-04",
+      "first_method": "mean of the points that the shadow scheme accepts",
+      "second_method": "ratio of two exact moments",
+      "passed": true
+    },
+    {
+      "name": "center coordinate y from the shadow sampling",
+      "computed": "-3.3888984571e-05",
+      "expected": "0",
+      "tolerance": "1.5e-03",
+      "first_method": "mean of the points that the shadow scheme accepts",
+      "second_method": "ratio of two exact moments",
+      "passed": true
+    },
+    {
+      "name": "center coordinate z from the shadow sampling",
+      "computed": "0.285587985614",
+      "expected": "0.285714285714",
+      "tolerance": "6.7e-04",
+      "first_method": "mean of the points that the shadow scheme accepts",
+      "second_method": "ratio of two exact moments",
+      "passed": true
+    }
+  ],
+  "values": {
+    "p4_height_latex": "$\\min(1 - y^{2},\\ 1 - x)$",
+    "p4_shadow_area": "$2.000000$",
+    "p4_projection_area": "$0.500000$",
+    "p4_shadow_mass": "$3.200000000$",
+    "p4_shadow_moment_yz": "$1.142857143$",
+    "p4_shadow_moment_xy": "$0.914285714$",
+    "p4_sampled_center": "$(0.3573,\\ -0.0000,\\ 0.2856)$",
+    "p4_accepted_points": "1599481",
+    "p4_height_points": "320"
+  },
+  "pass_count": 9,
+  "fail_count": 0
+}

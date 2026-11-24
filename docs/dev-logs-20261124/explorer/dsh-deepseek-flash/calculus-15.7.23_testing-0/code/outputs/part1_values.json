@@ -1,0 +1,11 @@
+{
+  "p1_sample_size": "60000",
+  "p1_hits": "20112",
+  "p1_seed": "20261123",
+  "p1_named_points": "8",
+  "p1_named_inside": "4",
+  "p1_monte_carlo": "0.335200",
+  "p1_monte_carlo_error": "0.001927",
+  "p1_monte_carlo_z": "0.969",
+  "p1_quarter_cylinder": "0.785398163"
+}

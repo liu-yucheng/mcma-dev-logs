@@ -1,0 +1,303 @@
+{
+  "part_number": 1,
+  "part_title": "Read the shape of the solid from the four inequalities",
+  "checks": [
+    {
+      "name": "cylinder label lies on its surface",
+      "computed": "0",
+      "expected": "0",
+      "tolerance": "0",
+      "first_method": "exact residual of the drawn anchor",
+      "second_method": "exact zero of the equation",
+      "passed": true
+    },
+    {
+      "name": "inclined plane label lies on its surface",
+      "computed": "0",
+      "expected": "0",
+      "tolerance": "0",
+      "first_method": "exact residual of the drawn anchor",
+      "second_method": "exact zero of the equation",
+      "passed": true
+    },
+    {
+      "name": "wall label keeps x = 0",
+      "computed": "0",
+      "expected": "0",
+      "tolerance": "0",
+      "first_method": "exact coordinate of the drawn anchor",
+      "second_method": "exact zero of the equation x = 0",
+      "passed": true
+    },
+    {
+      "name": "floor label keeps z = 0",
+      "computed": "0",
+      "expected": "0",
+      "tolerance": "0",
+      "first_method": "exact coordinate of the drawn anchor",
+      "second_method": "exact zero of the equation z = 0",
+      "passed": true
+    },
+    {
+      "name": "the four label anchors lie inside E",
+      "computed": "TTTT",
+      "expected": "TTTT",
+      "tolerance": "0",
+      "first_method": "floating-point predicate",
+      "second_method": "exact rational substitution",
+      "passed": true
+    },
+    {
+      "name": "height form and width form agree on every sample",
+      "computed": "0 disagreements in 200000 points",
+      "expected": "0 disagreements in 200000 points",
+      "tolerance": "0",
+      "first_method": "count of the height form",
+      "second_method": "count of the width form",
+      "passed": true
+    },
+    {
+      "name": "range of y from the cylinder equation",
+      "computed": "[-1, 1]",
+      "expected": "[-1, 1]",
+      "tolerance": "0",
+      "first_method": "roots of 1 - y^2 = 0",
+      "second_method": "reading of the statement",
+      "passed": true
+    },
+    {
+      "name": "largest |y| in a random sample",
+      "computed": "0.998317402022",
+      "expected": "1",
+      "tolerance": "1.0e-02",
+      "first_method": "Monte Carlo maximum",
+      "second_method": "closed-form bound of the cylinder",
+      "passed": true
+    },
+    {
+      "name": "largest z in a random sample",
+      "computed": "0.997926966991",
+      "expected": "1",
+      "tolerance": "1.0e-02",
+      "first_method": "Monte Carlo maximum",
+      "second_method": "closed-form ceiling of the cylinder",
+      "passed": true
+    },
+    {
+      "name": "area of the section at z = 0.0 from its corners",
+      "computed": "2",
+      "expected": "2",
+      "tolerance": "1.0e-12",
+      "first_method": "shoelace formula on the printed corners",
+      "second_method": "closed form 2 (1 - z)^(3/2)",
+      "passed": true
+    },
+    {
+      "name": "area of the section at z = 0.0 by sampling",
+      "computed": "2",
+      "expected": "2",
+      "tolerance": "8.0e-03",
+      "first_method": "indicator sampling of the inequalities",
+      "second_method": "closed form 2 (1 - z)^(3/2)",
+      "passed": true
+    },
+    {
+      "name": "area of the section at z = 0.5 from its corners",
+      "computed": "0.707106781187",
+      "expected": "0.707106781187",
+      "tolerance": "1.0e-12",
+      "first_method": "shoelace formula on the printed corners",
+      "second_method": "closed form 2 (1 - z)^(3/2)",
+      "passed": true
+    },
+    {
+      "name": "area of the section at z = 0.5 by sampling",
+      "computed": "0.70893",
+      "expected": "0.707106781187",
+      "tolerance": "8.0e-03",
+      "first_method": "indicator sampling of the inequalities",
+      "second_method": "closed form 2 (1 - z)^(3/2)",
+      "passed": true
+    },
+    {
+      "name": "area of the section at z = 0.9 from its corners",
+      "computed": "0.0632455532034",
+      "expected": "0.0632455532034",
+      "tolerance": "1.0e-12",
+      "first_method": "shoelace formula on the printed corners",
+      "second_method": "closed form 2 (1 - z)^(3/2)",
+      "passed": true
+    },
+    {
+      "name": "area of the section at z = 0.9 by sampling",
+      "computed": "0.062955",
+      "expected": "0.0632455532034",
+      "tolerance": "8.0e-03",
+      "first_method": "indicator sampling of the inequalities",
+      "second_method": "closed form 2 (1 - z)^(3/2)",
+      "passed": true
+    },
+    {
+      "name": "area of the section at y = -0.6 from its corners",
+      "computed": "0.4352",
+      "expected": "0.4352",
+      "tolerance": "1.0e-12",
+      "first_method": "shoelace formula on the printed corners",
+      "second_method": "closed form u - u^2 / 2 with u = 0.6400",
+      "passed": true
+    },
+    {
+      "name": "area of the section at y = -0.6 by sampling",
+      "computed": "0.4361375",
+      "expected": "0.4352",
+      "tolerance": "8.0e-03",
+      "first_method": "indicator sampling of the inequalities",
+      "second_method": "closed form u - u^2 / 2 with u = 0.6400",
+      "passed": true
+    },
+    {
+      "name": "area of the section at y = 0.0 from its corners",
+      "computed": "0.5",
+      "expected": "0.5",
+      "tolerance": "1.0e-12",
+      "first_method": "shoelace formula on the printed corners",
+      "second_method": "closed form u - u^2 / 2 with u = 1.0000",
+      "passed": true
+    },
+    {
+      "name": "area of the section at y = 0.0 by sampling",
+      "computed": "0.4994725",
+      "expected": "0.5",
+      "tolerance": "8.0e-03",
+      "first_method": "indicator sampling of the inequalities",
+      "second_method": "closed form u - u^2 / 2 with u = 1.0000",
+      "passed": true
+    },
+    {
+      "name": "area of the section at y = 0.5 from its corners",
+      "computed": "0.46875",
+      "expected": "0.46875",
+      "tolerance": "1.0e-12",
+      "first_method": "shoelace formula on the printed corners",
+      "second_method": "closed form u - u^2 / 2 with u = 0.7500",
+      "passed": true
+    },
+    {
+      "name": "area of the section at y = 0.5 by sampling",
+      "computed": "0.4679325",
+      "expected": "0.46875",
+      "tolerance": "8.0e-03",
+      "first_method": "indicator sampling of the inequalities",
+      "second_method": "closed form u - u^2 / 2 with u = 0.7500",
+      "passed": true
+    },
+    {
+      "name": "area of the section at x = 0.0 from the width integral",
+      "computed": "1.33333333333",
+      "expected": "1.33333333333",
+      "tolerance": "1.0e-10",
+      "first_method": "integral of the width 2 sqrt(1 - z)",
+      "second_method": "closed form (4/3) (1 - x^(3/2))",
+      "passed": true
+    },
+    {
+      "name": "area of the section at x = 0.0 by sampling",
+      "computed": "1.33393",
+      "expected": "1.33333333333",
+      "tolerance": "8.0e-03",
+      "first_method": "indicator sampling of the inequalities",
+      "second_method": "closed form (4/3) (1 - x^(3/2))",
+      "passed": true
+    },
+    {
+      "name": "area of the section at x = 0.4 from the width integral",
+      "computed": "0.996023716249",
+      "expected": "0.996023716249",
+      "tolerance": "1.0e-10",
+      "first_method": "integral of the width 2 sqrt(1 - z)",
+      "second_method": "closed form (4/3) (1 - x^(3/2))",
+      "passed": true
+    },
+    {
+      "name": "area of the section at x = 0.4 by sampling",
+      "computed": "0.99616",
+      "expected": "0.996023716249",
+      "tolerance": "8.0e-03",
+      "first_method": "indicator sampling of the inequalities",
+      "second_method": "closed form (4/3) (1 - x^(3/2))",
+      "passed": true
+    },
+    {
+      "name": "area of the section at x = 0.8 from the width integral",
+      "computed": "0.379277662933",
+      "expected": "0.379277662933",
+      "tolerance": "1.0e-10",
+      "first_method": "integral of the width 2 sqrt(1 - z)",
+      "second_method": "closed form (4/3) (1 - x^(3/2))",
+      "passed": true
+    },
+    {
+      "name": "area of the section at x = 0.8 by sampling",
+      "computed": "0.380255",
+      "expected": "0.379277662933",
+      "tolerance": "8.0e-03",
+      "first_method": "indicator sampling of the inequalities",
+      "second_method": "closed form (4/3) (1 - x^(3/2))",
+      "passed": true
+    },
+    {
+      "name": "area of the section at x = 1.0 from the width integral",
+      "computed": "0",
+      "expected": "0",
+      "tolerance": "1.0e-10",
+      "first_method": "integral of the width 2 sqrt(1 - z)",
+      "second_method": "closed form (4/3) (1 - x^(3/2))",
+      "passed": true
+    },
+    {
+      "name": "the section at x = 1 is a segment of length 2",
+      "computed": "2",
+      "expected": "2",
+      "tolerance": "1.0e-12",
+      "first_method": "distance between the printed corner points",
+      "second_method": "width 2 sqrt(1 - z) at the only allowed height",
+      "passed": true
+    },
+    {
+      "name": "area of the projection on the plane y = 0",
+      "computed": "0.5",
+      "expected": "0.5",
+      "tolerance": "1.0e-12",
+      "first_method": "shoelace formula on the printed corners",
+      "second_method": "integral of the x length 1 - z",
+      "passed": true
+    },
+    {
+      "name": "the projection test equals the triangle test",
+      "computed": "0 mismatches in 20000 pairs",
+      "expected": "0 mismatches in 20000 pairs",
+      "tolerance": "0",
+      "first_method": "existence of a coordinate y on a grid",
+      "second_method": "closed form x + z <= 1 of the triangle",
+      "passed": true
+    }
+  ],
+  "values": {
+    "p1_y_interval": "$-1 \\le y \\le 1$",
+    "p1_sympy_roots": "$y = -1$ and $y = 1$",
+    "p1_projection_area": "\\frac{1}{2}",
+    "p1_projection_area_decimal": "0.500000",
+    "p1_shape_at_z": "a rectangle",
+    "p1_shape_at_y": "a right trapezoid",
+    "p1_shape_at_x": "the region between the two branches of $|y| = \\sqrt{1 - z}$",
+    "p1_corners_at_z_half": "(0.000, -0.707, 0.500); (0.500, -0.707, 0.500); (0.500, 0.707, 0.500); (0.000, 0.707, 0.500)",
+    "p1_corners_at_y_zero": "(0.000, 0.000, 0.000); (1.000, 0.000, 0.000); (0.000, 0.000, 1.000); (0.000, 0.000, 1.000)",
+    "p1_corners_at_x_one": "(1.000, -1.000, 0.000); (1.000, 1.000, 0.000); (1.000, 0.000, 0.000); (1.000, -0.000, 0.000)",
+    "p1_corners_at_z_zero": "(0.000, -1.000, 0.000); (1.000, -1.000, 0.000); (1.000, 1.000, 0.000); (0.000, 1.000, 0.000)",
+    "p1_samples": "200000",
+    "p1_disagreements": "0",
+    "p1_area_at_z_table": "$z = 0.0$ : $2.000000$ | $z = 0.5$ : $0.707107$ | $z = 0.9$ : $0.063246$"
+  },
+  "pass_count": 31,
+  "fail_count": 0
+}

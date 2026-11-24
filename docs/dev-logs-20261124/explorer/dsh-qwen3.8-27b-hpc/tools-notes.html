@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tools notes &mdash; Qwen transfer</title>
+<link rel="stylesheet" href="../../../styles.css">
+<link rel="stylesheet" href="../../../preview.css">
+<style>
+img { max-width: 100%; height: auto; display: block; }
+.prompt { white-space: pre-wrap; font-size: .82rem; background: #f6f8fa; border: 1px solid #e2e6ec; border-radius: 8px; padding: 12px 14px; }
+td.num { text-align: right; }
+</style>
+</head>
+<body class="leaf">
+<main class="container">
+<h1>&#128736; Tools notes</h1>
+<p class="small">The prebuilt render and check tools. Reproduced from <code>tools/README.md</code>.</p>
+<pre class="prompt"># tools/ operator notes
+
+These files are prebuilt so that the model never spends output tokens on them.
+`instructions.md` points at them and forbids rebuilding.
+
+## Contents
+
+| Path | Size | Role |
+| --- | --- | --- |
+| `render.py` | 5.8 KB | Builds `&lt;subdir&gt;/solution/solution.html` from `&lt;subdir&gt;/solution/body.html`. |
+| `check.py` | 4.2 KB | Release gate. Prints `PASS` or a list of defects. |
+| `katex/katex.min.js` | 272 KB | KaTeX 0.16.47, vendored. |
+| `katex/auto-render.min.js` | 3 KB | Finds `$...$` in the page body at load time. |
+| `katex/katex.min.css` | 23 KB | Style sheet. `render.py` inlines it. |
+| `katex/fonts/*.woff2` | 296 KB | 20 font files. `render.py` inlines them as data URIs. |
+
+Total 596 KB. No network access is needed at any point.
+
+## One problem by hand
+
+```bash
+python tools/render.py calculus-15.7.17_testing-0
+python tools/check.py calculus-15.7.17_testing-0/solution/solution.html
+cp calculus-15.7.17_testing-0/solution/solution.html calculus-15.7.17_testing-0/solution.html
+```
+
+`render.py` reads only `body.html` plus the `FIG:` images. It rejects a
+`body.html` that carries `&lt;html&gt;`, `&lt;head&gt;`, `&lt;style&gt;`, `&lt;script&gt;`, or `&lt;body&gt;`,
+because it owns the page shell.
+
+## Server settings that the time budget assumes
+
+The 40 tokens/s figure and the 4 h target assume that thinking is off.
+
+- Qwen3 reasoning: send `enable_thinking: false`, or cap the thinking budget at
+  1024 tokens. Uncapped thinking spends 2,000 to 6,000 tokens per step and
+  breaks the budget at 24 problems.
+- `temperature` 0.2, `top_p` 0.9. The task is deterministic work, not sampling.
+- Stop sequences: none. `render.py` owns the release condition.
+- Context: about 12 KB of prompt, so a 32K window is enough. Do not raise
+  `max_tokens` above 8,192 per turn; the budget counts turns.
+
+## Expected cost per problem
+
+| Stage | Output tokens | Seconds at 40 tokens/s |
+| --- | --- | --- |
+| Read the image, name the plan | 400 | 10 |
+| 3 step scripts | 2,100 | 53 |
+| `body.html`, 120 lines | 2,600 | 65 |
+| One figure script, optional | 900 | 23 |
+| One repair plus the report line | 700 | 18 |
+| Total decode | 6,700 | 168 |
+
+Add about 12 s for the scripts and the two tools. A problem costs about 3.5 to
+4.5 minutes of wall clock, so 24 problems cost 90 to 110 minutes, and the
+remaining time absorbs a slow problem or a server stall.
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+| --- | --- | --- |
+| `missing figure: &lt;path&gt;` | `body.html` names a PNG that does not exist | Run the figure script first. |
+| `keeps a FIG: reference that is not inside an img src` | `FIG:` in a link or a caption | Move it into an `&lt;img src&gt;`. |
+| `math outside $...$` | A symbol written as text | Wrap it in `$...$`. |
+| `step block: N; result: M` | A step misses `p.result` or `p.verification` | One of each per step. |
+| `unescaped &lt; in figcaption` | `a &lt; b` in a caption | Write `&amp;lt;`. |
+| Page is blank | `body.html` carries its own `&lt;head&gt;` | Remove the `&lt;head&gt;`. |
+
+## Rebuilding the vendored KaTeX
+
+```bash
+npm pack katex@0.16.47
+tar -xzf katex-0.16.47.tgz
+cp package/dist/katex.min.js package/dist/katex.min.css \
+   package/dist/contrib/auto-render.min.js tools/katex/
+cp -r package/dist/fonts tools/katex/
+```
+
+`render.py` looks for `katex/fonts/*.woff2` only. The `.woff` and `.ttf`
+alternates are optional and are dropped when present.
+</pre>
+</main>
+</body>
+</html>

@@ -1,0 +1,155 @@
+{
+ "part": "part1",
+ "check_count": 15,
+ "passed_count": 15,
+ "checks": [
+  {
+   "name": "label_points_on_their_surfaces",
+   "computed": 5.551115123125783e-17,
+   "expected": 0.0,
+   "difference": 5.551115123125783e-17,
+   "tolerance": 1e-12,
+   "reason": "the equation of each surface is evaluated at the point where Figure 1 writes its label",
+   "passed": true
+  },
+  {
+   "name": "projection_area_integral_against_shoelace",
+   "computed": 1.3333333333333335,
+   "expected": 1.3333333333000006,
+   "difference": 3.333289200213585e-11,
+   "tolerance": 1e-09,
+   "reason": "one integral in x and one polygon area of the same boundary",
+   "passed": true
+  },
+  {
+   "name": "projection_area_against_exact_third",
+   "computed": 1.3333333333333335,
+   "expected": 1.3333333333333333,
+   "difference": 2.220446049250313e-16,
+   "tolerance": 1e-10,
+   "reason": "the quadrature against the exact fraction 4/3 of the same integral",
+   "passed": true
+  },
+  {
+   "name": "section_area_at_zero_against_projection",
+   "computed": 1.3333333333333253,
+   "expected": 1.3333333333333335,
+   "difference": 8.215650382226158e-15,
+   "tolerance": 1e-09,
+   "reason": "a two-dimensional quadrature of the section at $z = 0$ against the one-dimensional projection integral",
+   "passed": true
+  },
+  {
+   "name": "yz_projection_area_against_triangle",
+   "computed": 0.5,
+   "expected": 0.5,
+   "difference": 0.0,
+   "tolerance": 1e-12,
+   "reason": "the integral of $1 - y$ against the area of the right triangle with legs of length one",
+   "passed": true
+  },
+  {
+   "name": "volume_of_two_orders",
+   "computed": 0.5333333333333333,
+   "expected": 0.5333333333333334,
+   "difference": 1.1102230246251565e-16,
+   "tolerance": 1e-09,
+   "reason": "the order $dz\\,dy\\,dx$ against the order $dy\\,dz\\,dx$",
+   "passed": true
+  },
+  {
+   "name": "volume_against_exact_fraction",
+   "computed": 0.5333333333333333,
+   "expected": 0.5333333333333333,
+   "difference": 0.0,
+   "tolerance": 1e-09,
+   "reason": "the nested quadrature against the exact fraction $\\frac{8}{15}$",
+   "passed": true
+  },
+  {
+   "name": "volume_monte_carlo_inside_three_errors",
+   "computed": 7.766666666664257e-05,
+   "bound": 0.001876253696337323,
+   "reason": "the gap between the Monte Carlo estimate and $\\frac{8}{15}$ against three standard errors",
+   "passed": true
+  },
+  {
+   "name": "grid_y_at_most_one",
+   "computed": 1.0,
+   "bound": 1.0,
+   "reason": "the plane $y + z = 1$ with $z \\ge 0$",
+   "passed": true
+  },
+  {
+   "name": "grid_y_attains_one",
+   "computed": 1.0,
+   "expected": 1.0,
+   "difference": 0.0,
+   "tolerance": 0.0,
+   "reason": "the largest y of the grid against the intercept $y = 1$ of the plane at $z = 0$",
+   "passed": true
+  },
+  {
+   "name": "grid_x_at_most_one",
+   "computed": 1.0,
+   "bound": 1.0,
+   "reason": "the bound $x^{2} \\le y \\le 1$",
+   "passed": true
+  },
+  {
+   "name": "grid_minus_x_at_most_one",
+   "computed": 1.0,
+   "bound": 1.0,
+   "reason": "the bound $x^{2} \\le y \\le 1$",
+   "passed": true
+  },
+  {
+   "name": "grid_x_attains_minus_one",
+   "computed": -1.0,
+   "expected": -1.0,
+   "difference": 0.0,
+   "tolerance": 0.0,
+   "reason": "$x^{2} \\le 1$ at $y = 1$",
+   "passed": true
+  },
+  {
+   "name": "grid_x_attains_one",
+   "computed": 1.0,
+   "expected": 1.0,
+   "difference": 0.0,
+   "tolerance": 0.0,
+   "reason": "$x^{2} \\le 1$ at $y = 1$",
+   "passed": true
+  },
+  {
+   "name": "membership_masks_agree",
+   "computed": 0.0,
+   "expected": 0.0,
+   "difference": 0.0,
+   "tolerance": 0.0,
+   "reason": "the three defining inequalities against the limits of the order $dz\\,dy\\,dx$ on 300000 samples",
+   "passed": true
+  }
+ ],
+ "display": {
+  "p1_x_min_text": "-1",
+  "p1_x_max_text": "1",
+  "p1_y_min_text": "0",
+  "p1_y_max_text": "1",
+  "p1_projection_area": "1.333333333",
+  "p1_projection_area_exact": "\\frac{4}{3}",
+  "p1_projection_yz_area": "0.500000000",
+  "p1_projection_yz_area_exact": "\\frac{1}{2}",
+  "p1_volume": "0.533333333",
+  "p1_volume_exact": "\\frac{8}{15}",
+  "p1_volume_mc": "0.533411000",
+  "p1_volume_mc_se": "0.000625418",
+  "p1_volume_mc_gap": "0.000077667",
+  "p1_grid_point_count": "1771561",
+  "p1_grid_inside_count": "469871",
+  "p1_cylinder_label": "0.55",
+  "p1_floor_label_y": "0.72",
+  "p1_top_label_z": "0.68",
+  "p1_residual": "5.55e-17"
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "part": "part5",
+ "check_count": 5,
+ "passed_count": 5,
+ "checks": [
+  {
+   "name": "inertia_of_two_orders",
+   "computed": 0.15864824028825486,
+   "expected": 0.15864824028825497,
+   "difference": 1.1102230246251565e-16,
+   "tolerance": 1e-09,
+   "reason": "the order $dx\\,dz\\,dy$ against the order $dx\\,dy\\,dz$",
+   "passed": true
+  },
+  {
+   "name": "inertia_by_sections",
+   "computed": 0.15864824028825486,
+   "expected": 0.15864824022726084,
+   "difference": 6.099401539394478e-11,
+   "tolerance": 1e-07,
+   "reason": "the three-dimensional quadrature against the stack of section contributions over $z$",
+   "passed": true
+  },
+  {
+   "name": "inertia_by_one_integral_in_x",
+   "computed": 0.15864824028825486,
+   "expected": 0.1586482400754565,
+   "difference": 2.1279836226462123e-10,
+   "tolerance": 1e-06,
+   "reason": "the three-dimensional quadrature against one integral in $x$ of a two-dimensional inner quadrature",
+   "passed": true
+  },
+  {
+   "name": "inertia_monte_carlo_inside_three_errors",
+   "computed": 9.630833305587783e-05,
+   "bound": 0.0009711338107481666,
+   "reason": "the gap between the Monte Carlo mean and the quadrature value against three standard errors",
+   "passed": true
+  },
+  {
+   "name": "inertia_against_density_times_radius",
+   "computed": 0.5362723181995372,
+   "expected": 0.5362723183345561,
+   "difference": 1.350188849613687e-10,
+   "tolerance": 1e-06,
+   "reason": "the ratio of the inertia to the mass against the same ratio built from the stacked values",
+   "passed": true
+  }
+ ],
+ "display": {
+  "p5_inertia": "0.158648240",
+  "p5_inertia_alt": "0.158648240",
+  "p5_inertia_polar": "0.158648240",
+  "p5_inertia_mc": "0.158551932",
+  "p5_inertia_mc_se": "0.000323711",
+  "p5_inertia_gap": "0.000096308",
+  "p5_section_inertia_list": "0.782238115, 0.053280186, 0.002046677",
+  "p5_inertia_over_mass": "0.536272318"
+ }
+}

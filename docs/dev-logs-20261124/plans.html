@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Plans after the 2026-11-24 RSI run: restore the classic plotting prompts, make the RSI learn explicitly, deploy DeepSeek Flash or a distilled version on the HPC, and find a coding- or math-enhanced Qwen3.8-27B.">
+<title>RSI 2026-11-24 &mdash; Future Plans</title>
+<link rel="stylesheet" href="../styles.css">
+<style>
+.callout { background: #fff8e6; border: 1px solid #eddcae; border-radius: 10px; padding: 16px 20px; margin: 18px 0; }
+.callout h3 { margin-top: 0; }
+.callout.hard { background: #fdf1ee; border-color: #ecb7a6; }
+.plan-tag { display: inline-block; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; background: #e3f0fc; color: #0f52b0; margin-left: 8px; vertical-align: middle; }
+.plan-tag.week { background: #eee9fb; color: #4c3a7a; }
+.plan-tag.hard { background: #fbe4de; color: #b23a1c; }
+.plan-tag.long { background: #e8f4ea; color: #2f6f4f; }
+.recipe-line { font-family: var(--mono); font-size: .84rem; background: #f6f8fa; border: 1px solid #e2e6ec; border-radius: 8px; padding: 10px 12px; display: block; margin: 10px 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="container">
+    <div class="kicker">Experiment Report &middot; 2026-11-24</div>
+    <h1>&#128220; Future Plans</h1>
+    <p class="lede">&#128204; Added after the 2026-11-24 run. &#127919; Four items: (1) restore the classic plotting prompts, (2) make the RSI learn explicitly, (3) deploy DeepSeek Flash or a distilled version on the HPC, and (4) find a coding- or math-enhanced Qwen3.8-27B. &#128161; The first item is a direct answer to the 15.7.18 failure. The second is a direct answer to the loss curve.</p>
+  </div>
+</header>
+
+<nav>
+  <div class="container">
+    <a href="../index.html" title="Back to docs index" aria-label="Back to docs index">&#8592;</a>
+    <a href="index.html" title="Dev log home" aria-label="Dev log home">&#8962;</a>
+    <a href="index.html">&#128300; Overview</a>
+    <a href="agents.html">&#129302; Harness</a>
+    <a href="briefing.html">&#128202; Results Briefing</a>
+    <a href="explorer.html">&#128269; Results Explorer</a>
+    <a href="plans.html" aria-current="page">&#128506; Future Plans</a>
+  </div>
+</nav>
+
+<main class="container">
+
+<section id="window">
+  <h2>&#128197; The next step</h2>
+  <p>&#128204; The four items split into two groups. Items 1 and 2 fix the learning method. Items 3 and 4 move the deployment target. The plot work comes first, because the learned recipe is the product.</p>
+  <table>
+    <thead><tr><th>Item</th><th>Work</th><th>Why now</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>&#127912; 1. Restore classic plotting prompts</td>
+        <td>Add the old DeepAgents plotting rules back into <code>system_message.md</code>.</td>
+        <td>The v17 figure law is strong on label discipline and weak on the 2D/3D pair. The old prompt required both.</td>
+      </tr>
+      <tr>
+        <td>&#128295; 2. Explicit RSI</td>
+        <td>Revise the framework so that learning is visible and measurable.</td>
+        <td>The loss does not track the plot learning. The last pass is the worst.</td>
+      </tr>
+      <tr>
+        <td>&#128421; 3. DeepSeek Flash on the HPC</td>
+        <td>Deploy the full model or a distilled version on the HPC.</td>
+        <td>DeepSeek Flash is the only model that is fast enough for a tutor today.</td>
+      </tr>
+      <tr>
+        <td>&#129504; 4. Qwen3.8-27B variants</td>
+        <td>Find a coding-enhanced or math-enhanced variation on the HPC.</td>
+        <td>The current Qwen3.8-27B is not acceptable as a tutor at 40 tokens/s.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="plan-plots">
+  <h2>&#127912; Plan 1. Restore the Classic Plotting Prompts <span class="plan-tag week">Next</span></h2>
+  <p>&#128204; The old DeepAgents-based MCMA system message had explicit plot requirements. It required, for every 3D problem, one 3D pyplot plot, one 3D PGFplots plot, one 2D pyplot plot, and one 2D PGFplots plot. The v17 figure law dropped that requirement. The result is clear in 15.7.18: one 3D panel, two labels on the wrong surface, no projection.</p>
+  <span class="recipe-line">&#129302; RSI: LLM (Internet) + DeepSeek Harness (PC, PTC mode) + Python (numpy, sympy, matplotlib) + HTML (KaTeX)</span>
+  <div class="grid2">
+    <div class="card">
+      <h3>&#127919; Goal</h3>
+      <p>Restore the classic plot prompts and keep the v17 label law. The target is a labelled projection plus a labelled solid for every 3D problem.</p>
+    </div>
+    <div class="card">
+      <h3>&#128295; Actions</h3>
+      <p>&#128220; <strong>Copy the old rules.</strong> Take the plot rules from <code>system_message.md</code> and add them to the v17 figure law.</p>
+      <p>&#128200; <strong>Require the pair.</strong> Require one 3D view and one labelled 2D projection for every 3D problem.</p>
+      <p>&#127912; <strong>Keep the label law.</strong> Keep arrowheads, label-on-surface, closure, and clearance checks.</p>
+      <p>&#129514; <strong>Re-run 15.7.18 and 15.7.32.</strong> Use the same problems, so the old and new figures compare directly.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>&#9989; Outcome</h3>
+    <p>A figure law that produces a labelled projection panel and a labelled solid on the hard 3D problems. The 15.7.18 perspective failure becomes the first regression test.</p>
+  </div>
+</section>
+
+<section id="plan-explicit">
+  <h2>&#128295; Plan 2. Make the RSI Learn Explicitly <span class="plan-tag week">Next</span></h2>
+  <p>&#128204; The current loop writes free text into the prompt. The loss is a five-dimension rubric average. It cannot say which rule caused a gain, and it cannot say whether the plot improved. The prompt grew from 272 to 11,952 characters in <code>prompt.extra</code>, and the final pass had the worst loss of the run.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>&#127919; Goal</h3>
+      <p>A training signal that reflects the learned skill, especially the plot skill, and a record of which rule came from which defect.</p>
+    </div>
+    <div class="card">
+      <h3>&#128295; Actions</h3>
+      <p>&#128200; <strong>Split the loss.</strong> Report correctness, verification, and figure quality as separate numbers. Do not average them into one value.</p>
+      <p>&#127912; <strong>Add a figure score.</strong> Score label placement, projection presence, axis arrowheads, closure, and clearance as named checks.</p>
+      <p>&#128203; <strong>Keep a rule ledger.</strong> Each backward pass adds one rule with the problem and defect that caused it. A later pass can cite it.</p>
+      <p>&#9989; <strong>Keep the gate.</strong> A rule is accepted only if the release gate still passes and the figure score rises.</p>
+    </div>
+  </div>
+  <div class="callout">
+    <p>&#128161; <strong>Why explicit matters.</strong> The transfer failed because the learned rule was prose. A slower model read the prose and did not apply it. An explicit rule with a named check, a target, and a before/after figure is easier to carry across models.</p>
+  </div>
+</section>
+
+<section id="plan-deepseek">
+  <h2>&#128421; Plan 3. Deploy DeepSeek Flash or a Distilled Version on the HPC <span class="plan-tag hard">Hard</span></h2>
+  <p>&#128204; DeepSeek Flash is the only model with acceptable tutor speed today: about 200 tokens/s, and under 5 minutes per problem with RSI off. The model is served from the Internet. This plan tests whether it can move to the HPC.</p>
+  <table>
+    <thead><tr><th>Option</th><th>Hardware</th><th>Expected speed</th><th>Expected quality</th></tr></thead>
+    <tbody>
+      <tr><td>&#128421; Full parameter version</td><td>GPU + CPU</td><td>Extremely low throughput</td><td>Close to the Internet model</td></tr>
+      <tr><td>&#128230; Distilled version</td><td>GPU only</td><td>Higher throughput</td><td>Significant performance degradation</td></tr>
+    </tbody>
+  </table>
+  <div class="grid2">
+    <div class="card">
+      <h3>&#127919; Goal</h3>
+      <p>A local DeepSeek Flash endpoint that a tutor product can call without the Internet API.</p>
+    </div>
+    <div class="card">
+      <h3>&#128295; Actions</h3>
+      <p>&#128200; <strong>Measure the full version.</strong> Record tokens/s and time per problem on the GPU + CPU path.</p>
+      <p>&#128230; <strong>Measure a distilled version.</strong> Record the speed gain and the loss on the 7 test problems.</p>
+      <p>&#129514; <strong>Compare on the same problems.</strong> Use the 7 test problems and the two transfer examples.</p>
+      <p>&#128295; <strong>Decide with numbers.</strong> Accept a distilled model only if the math stays correct and the plot quality stays close.</p>
+    </div>
+  </div>
+  <div class="callout hard">
+    <p>&#9888; <strong>The full version is likely too slow.</strong> The manual remarks expect extremely low throughput on GPU + CPU. This plan measures it first, so the team does not plan a tutor service around a model that cannot serve one.</p>
+  </div>
+</section>
+
+<section id="plan-qwen">
+  <h2>&#129504; Plan 4. Find a Coding- or Math-Enhanced Qwen3.8-27B <span class="plan-tag hard">Hard</span></h2>
+  <p>&#128204; The current Qwen3.8-27B is not acceptable as a tutor at 40 tokens/s: over 15 minutes per problem with RSI off. This plan tests whether a stronger variation removes the quality gap, and whether the speed gap is a parameter-size limit.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>&#127919; Goal</h3>
+      <p>Find a Qwen3.8-27B variation that handles the plotting rules and the page laws on the first pass, and measure its speed on the HPC.</p>
+    </div>
+    <div class="card">
+      <h3>&#128295; Actions</h3>
+      <p>&#128269; <strong>Locate a coding-enhanced variation first.</strong> The task is code-heavy: Python checks, matplotlib figures, HTML composition.</p>
+      <p>&#129514; <strong>If none fits, locate a math-enhanced variation.</strong> Use the same 7 test problems and the two transfer examples.</p>
+      <p>&#128200; <strong>Re-run the transfer.</strong> Use the same v17-derived instruction, so the model is the only variable.</p>
+      <p>&#129518; <strong>Record the gate and the figures.</strong> A variation is accepted only if the gate passes and the learned plot recipe transfers.</p>
+    </div>
+  </div>
+  <div class="callout">
+    <p>&#128161; <strong>The parameter-size question.</strong> If a coding-enhanced variation fixes the plot transfer but not the speed, the limit is the parameter count. If it fixes both, the limit was the base model. Either result changes the next deployment plan.</p>
+  </div>
+</section>
+
+<section id="status">
+  <h2>&#128203; Plan status</h2>
+  <table>
+    <thead><tr><th>Plan</th><th>Owner</th><th>First check</th></tr></thead>
+    <tbody>
+      <tr><td>&#127912; Restore classic plotting prompts</td><td>Experiment</td><td>15.7.18 gets a labelled 2D projection and the plane label is on the plane.</td></tr>
+      <tr><td>&#128295; Explicit RSI</td><td>Experiment</td><td>A figure score moves with the learned rules, and the loss no longer hides the plot gain.</td></tr>
+      <tr><td>&#128421; DeepSeek Flash on the HPC</td><td>Platform</td><td>A tokens/s table for the full and the distilled paths, with time per problem.</td></tr>
+      <tr><td>&#129504; Qwen3.8-27B variants</td><td>Platform</td><td>A coding- or math-enhanced variation runs the 7 test problems and the 2 transfer examples.</td></tr>
+    </tbody>
+  </table>
+  <p>&#128204; These are plans, not results. This chapter will change when a plan has a measured result.</p>
+</section>
+
+<section id="risks">
+  <h2>&#9888; Risks and controls</h2>
+  <table>
+    <thead><tr><th>Risk</th><th>Effect</th><th>Control</th></tr></thead>
+    <tbody>
+      <tr><td>&#127912; A classic plot rule hurts the page</td><td>More figures, more time, and a broken release gate.</td><td>Keep the gate. Add the rules one at a time and re-run the two hard problems.</td></tr>
+      <tr><td>&#128200; A figure score is gamed</td><td>A high score with a bad figure.</td><td>Score named checks that a script can fail. Keep a human review on the two hard problems.</td></tr>
+      <tr><td>&#128012; The full DeepSeek model is too slow</td><td>A local tutor that cannot serve one student.</td><td>Measure first. Do not promise a local endpoint before the tokens/s table exists.</td></tr>
+      <tr><td>&#129302; A distilled model loses correctness</td><td>A fast answer with a wrong result.</td><td>Compare with the 7 canonical answers and the 24-page gate before accepting it.</td></tr>
+      <tr><td>&#129504; No Qwen variation fits</td><td>The HPC path stays unusable for tutoring.</td><td>Test coding first, then math. If neither fits, keep DeepSeek Flash as the tutor and use Qwen only for batch work.</td></tr>
+      <tr><td>&#129514; The transfer gap is the base model</td><td>More prompt work does not close it.</td><td>The explicit RSI and the model variation run as separate tests, so the cause is visible.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="container">
+    <p>MCMA-Dev-Logs. Copyright (C) 2026 Yucheng Liu. Supervised by Prof. HU Jishan. Co-supervised by Prof. ZHOU Jinni. Released under the GNU AGPL 3.0 License.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+{
+  "checks": {
+    "count": 23,
+    "part": "part1",
+    "rows": [
+      {
+        "computed": 1.0,
+        "difference": 0.0,
+        "expected": 1.0,
+        "name": "semi_axis_x_by_root_finding",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 0.0,
+        "difference": 0.0,
+        "expected": 0.0,
+        "name": "boundary_residual_on_axis_x",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.7071067811865475,
+        "difference": 0.0,
+        "expected": 0.7071067811865475,
+        "name": "semi_axis_y_by_root_finding",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": -2.220446049250313e-16,
+        "difference": 2.220446049250313e-16,
+        "expected": 0.0,
+        "name": "boundary_residual_on_axis_y",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.5773502691896257,
+        "difference": 1.1102230246251565e-16,
+        "expected": 0.5773502691896258,
+        "name": "semi_axis_z_by_root_finding",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 2.220446049250313e-16,
+        "difference": 2.220446049250313e-16,
+        "expected": 0.0,
+        "name": "boundary_residual_on_axis_z",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 2.221441469079181,
+        "difference": 2.220446049250313e-15,
+        "expected": 2.221441469079183,
+        "name": "section_area_0.0_formula_against_quadrature",
+        "tolerance": 2.2214414690791832e-09
+      },
+      {
+        "computed": 2.2197920339076815,
+        "difference": 0.001649435171501512,
+        "expected": 2.221441469079183,
+        "name": "section_area_0.0_formula_against_sample",
+        "tolerance": 0.044428829381583664
+      },
+      {
+        "computed": 1.0,
+        "difference": 0.0,
+        "expected": 1.0,
+        "name": "section_0.0_half_width_x_against_formula",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 0.7071067811865475,
+        "difference": 1.1102230246251565e-16,
+        "expected": 0.7071067811865476,
+        "name": "section_0.0_half_width_y_against_formula",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 1.954868492789682,
+        "difference": 1.1102230246251565e-15,
+        "expected": 1.954868492789681,
+        "name": "section_area_0.2_formula_against_quadrature",
+        "tolerance": 1.954868492789681e-09
+      },
+      {
+        "computed": 1.9585754752288715,
+        "difference": 0.0037069824391906536,
+        "expected": 1.954868492789681,
+        "name": "section_area_0.2_formula_against_sample",
+        "tolerance": 0.039097369855793616
+      },
+      {
+        "computed": 0.938083151964686,
+        "difference": 0.0,
+        "expected": 0.938083151964686,
+        "name": "section_0.2_half_width_x_against_formula",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 0.6633249580710799,
+        "difference": 0.0,
+        "expected": 0.6633249580710799,
+        "name": "section_0.2_half_width_y_against_formula",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 1.1551495639211713,
+        "difference": 3.552713678800501e-15,
+        "expected": 1.1551495639211748,
+        "name": "section_area_0.4_formula_against_quadrature",
+        "tolerance": 1.1551495639211748e-09
+      },
+      {
+        "computed": 1.1550529873712632,
+        "difference": 9.657654991168663e-05,
+        "expected": 1.1551495639211748,
+        "name": "section_area_0.4_formula_against_sample",
+        "tolerance": 0.023102991278423496
+      },
+      {
+        "computed": 0.7211102550927978,
+        "difference": 0.0,
+        "expected": 0.7211102550927978,
+        "name": "section_0.4_half_width_x_against_formula",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 0.5099019513592784,
+        "difference": 0.0,
+        "expected": 0.5099019513592784,
+        "name": "section_0.4_half_width_y_against_formula",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 1.7100664402158188,
+        "difference": 2.220446049250313e-16,
+        "expected": 1.710066440215819,
+        "name": "volume_closed_form_against_sections",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 1.7100664402158197,
+        "difference": 6.661338147750939e-16,
+        "expected": 1.710066440215819,
+        "name": "volume_against_unit_field",
+        "tolerance": 1e-09
+      },
+      {
+        "computed": 1.70494,
+        "difference": 0.005126440215819095,
+        "expected": 1.710066440215819,
+        "name": "volume_against_sample",
+        "tolerance": 0.02071974864364913
+      },
+      {
+        "computed": 0.0,
+        "difference": 0.0,
+        "expected": 0.0,
+        "name": "section_quarter_point_residual",
+        "tolerance": 1e-12
+      },
+      {
+        "computed": 0.0,
+        "difference": 0.0,
+        "expected": 0.0,
+        "name": "surface_label_point_residual",
+        "tolerance": 1e-12
+      }
+    ]
+  },
+  "ellipsoid_volume": 1.710066440215819,
+  "section_quarter_point": [
+    0.5951579758046893,
+    0.28791229900445797,
+    0.4
+  ],
+  "section_rows": [
+    {
+      "area_formula": 2.221441469079183,
+      "area_quadrature": 2.221441469079181,
+      "area_sample": 2.2197920339076815,
+      "height": 0.0,
+      "semi_x": 1.0,
+      "semi_y": 0.7071067811865476
+    },
+    {
+      "area_formula": 1.954868492789681,
+      "area_quadrature": 1.954868492789682,
+      "area_sample": 1.9585754752288715,
+      "height": 0.2,
+      "semi_x": 0.938083151964686,
+      "semi_y": 0.6633249580710799
+    },
+    {
+      "area_formula": 1.1551495639211748,
+      "area_quadrature": 1.1551495639211713,
+      "area_sample": 1.1550529873712632,
+      "height": 0.4,
+      "semi_x": 0.7211102550927978,
+      "semi_y": 0.5099019513592784
+    }
+  ],
+  "semi_axis_x": 1.0,
+  "semi_axis_y": 0.7071067811865475,
+  "semi_axis_z": 0.5773502691896258,
+  "volume_from_sections": 1.7100664402158188,
+  "volume_sample": 1.70494,
+  "volume_sample_error": 0.0051799371609122825
+}

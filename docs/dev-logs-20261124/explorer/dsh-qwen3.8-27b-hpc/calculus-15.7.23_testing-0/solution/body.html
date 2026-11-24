@@ -1,0 +1,75 @@
+<h1>15.7.23 The Wedge Cut from the Cylinder</h1>
+<blockquote class="statement">Express the volume of the wedge in the first octant that is cut from the cylinder $y^2 + z^2 = 1$ by the planes $y = x$ and $x = 1$ as a triple integral. Then use a computer algebra system to find the exact value of that integral.</blockquote>
+<table>
+<tr><th>Item</th><th>Content</th></tr>
+<tr><td>Given</td><td>The cylinder $y^2 + z^2 = 1$; the planes $y = x$ and $x = 1$; the first octant.</td></tr>
+<tr><td>Find</td><td>(a) The volume as a triple integral. (b) Its exact value.</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$x, y, z$</td><td>Coordinates of a point in the wedge</td><td>length</td></tr>
+<tr><td>$A(x)$</td><td>Area of the slice of the wedge at fixed $x$</td><td>area</td></tr>
+<tr><td>$V$</td><td>Volume of the wedge</td><td>length cubed</td></tr>
+</table>
+<section>
+<h2>Part 1: The triple integral</h2>
+<section>
+<h3>Step 1.1: The slice at fixed x</h3>
+<p class="reason">The first octant keeps $x$, $y$, $z$ nonnegative. The plane $y = x$ caps $y$; the cylinder caps $z$ at $sqrt{1 - y^2}$. The wedge is then $0 leq x leq 1$, $0 leq y leq x$, $0 leq z leq sqrt{1 - y^2}$.</p>
+<div class="computation">
+$$E = \left\{ (x, y, z) : 0 \leq x \leq 1, \; 0 \leq y \leq x, \; 0 \leq z \leq \sqrt{1 - y^2} \right\}$$
+</div>
+<p class="result">The slice at fixed $x$ lies in the $yz$ plane. The script prints the corner list at $x = 0$, $x = 0.5$, $x = 1$; the top corner at $x = 0.5$ is $(0.5, 0.8660)$.</p>
+<p class="verification">The script <code>part1_step1.py</code> compares a grid count of that slice with the exact area $A(0.5) = 0.478306$, tolerance $0.04$.</p>
+<p class="mistake">A common slip caps $y$ at $1$ and drops the plane $y = x$.</p>
+</section>
+<section>
+<h3>Step 1.2: The iterated integral</h3>
+<p class="reason">Integrate $1$ from $z = 0$ to $sqrt{1 - y^2}$, then $y$ from $0$ to $x$, then $x$ from $0$ to $1$.</p>
+<div class="computation">
+$$V = \int_0^1 \int_0^x \int_0^{\sqrt{1 - y^2}} \, dz \, dy \, dx$$
+</div>
+<p class="result">This is the answer of part (a). The slice area is $A(x) = \frac{x\sqrt{1-x^2}}{2} + \frac{\arcsin x}{2}$.</p>
+<p class="verification">The script <code>part1_step2.py</code> recomputes the value by trapezoid passes in the same order, agreement $5 \times 10^{-4}$.</p>
+<p class="mistake">A common slip caps $y$ at $1$ and reads the cylinder as a box.</p>
+</section>
+<figure>
+<img src="FIG:part1_figure1.png" alt="The wedge cut from the cylinder by the two planes">
+<figcaption>Figure 1. The wedge in the first octant cut from the cylinder $y^2 + z^2 = 1$ by the planes $y = x$ and $x = 1$.</figcaption>
+</figure>
+</section>
+<section>
+<h2>Part 2: The exact value</h2>
+<section>
+<h3>Step 2.1: The CAS antiderivatives</h3>
+<p class="reason">The CAS returns two antiderivatives. Each must differentiate back to its integrand on $(0.1, 0.9)$.</p>
+<div class="computation">
+$$\int \sqrt{1 - y^2} \, dy = \frac{y\sqrt{1-y^2}}{2} + \frac{\arcsin y}{2}, \qquad \int x \sqrt{1 - x^2} \, dx = -\frac{(1-x^2)^{3/2}}{3}$$
+</div>
+<p class="result">The finite difference of each antiderivative matches its integrand to $2.6 \times 10^{-10}$.</p>
+<p class="verification">The script <code>part2_step1.py</code> checks both derivatives on a 17-point grid.</p>
+<p class="mistake">A common slip signs the second term wrong and gets $\frac{(1-x^2)^{3/2}}{3}$.</p>
+</section>
+<section>
+<h3>Step 2.2: Evaluate at the limits</h3>
+<p class="reason">Evaluate the slice integral at its limits. The $x$ integral splits into two terms.</p>
+<div class="computation">
+$$V = \int_0^1 \left( \frac{x\sqrt{1-x^2}}{2} + \frac{\arcsin x}{2} \right) dx = \frac{1}{6} + \left( \frac{\pi}{4} - \frac{1}{2} \right) = \frac{\pi}{4} - \frac{1}{3}$$
+</div>
+<p class="result">The exact value is $V = \frac{\pi}{4} - \frac{1}{3} \approx 0.4521$, length cubed.</p>
+<p class="verification">The script <code>part2_step2.py</code> compares the value with a Monte Carlo pass of $300000$ points, tolerance $4\sigma$.</p>
+<p class="mistake">A common slip drops the $\frac{1}{6}$ term and reports $\frac{\pi}{4} - \frac{1}{2}$.</p>
+</section>
+</section>
+<section class="answer">
+<h2>Answer</h2>
+<p>Part (a): $V = \int_0^1 \int_0^x \int_0^{\sqrt{1 - y^2}} \, dz \, dy \, dx$.</p>
+<p>Part (b): $V = \frac{\pi}{4} - \frac{1}{3} \approx 0.4521$, length cubed.</p>
+</section>
+<section class="notes">
+<h2>Notes</h2>
+<ul>
+<li>The plane $x = 1$ keeps the $y$ and $z$ axes free; the plane $y = x$ keeps the $z$ axis free.</li>
+<li>Every number on this page is printed by a named script under <code>solution/</code>.</li>
+</ul>
+</section>

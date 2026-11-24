@@ -1,0 +1,5 @@
+# Python packages of the tutorial, with the versions that the verification scripts used.
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2
+sympy==1.14.0

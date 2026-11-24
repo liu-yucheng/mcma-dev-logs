@@ -1,0 +1,128 @@
+{
+  "p2_order_rows": [
+    {
+      "order": "dz dx dy",
+      "outer": "0 \\le y \\le 3",
+      "middle": "0 \\le x \\le \\dfrac{y}{3}",
+      "inner": "0 \\le z \\le \\sqrt{9 - y^{2}}",
+      "volume": "3.000000000"
+    },
+    {
+      "order": "dx dz dy",
+      "outer": "0 \\le y \\le 3",
+      "middle": "0 \\le z \\le \\sqrt{9 - y^{2}}",
+      "inner": "0 \\le x \\le \\dfrac{y}{3}",
+      "volume": "3.000000000"
+    },
+    {
+      "order": "dx dy dz",
+      "outer": "0 \\le z \\le 3",
+      "middle": "0 \\le y \\le \\sqrt{9 - z^{2}}",
+      "inner": "0 \\le x \\le \\dfrac{y}{3}",
+      "volume": "3.000000000"
+    },
+    {
+      "order": "dy dx dz",
+      "outer": "0 \\le z \\le 3",
+      "middle": "0 \\le x \\le \\dfrac{\\sqrt{9 - z^{2}}}{3}",
+      "inner": "3x \\le y \\le \\sqrt{9 - z^{2}}",
+      "volume": "3.000000000"
+    },
+    {
+      "order": "dy dz dx",
+      "outer": "0 \\le x \\le 1",
+      "middle": "0 \\le z \\le 3\\,\\sqrt{1 - x^{2}}",
+      "inner": "3x \\le y \\le \\sqrt{9 - z^{2}}",
+      "volume": "3.000000000"
+    },
+    {
+      "order": "dz dy dx",
+      "outer": "0 \\le x \\le 1",
+      "middle": "3x \\le y \\le 3",
+      "inner": "0 \\le z \\le \\sqrt{9 - y^{2}}",
+      "volume": "3.000000000"
+    }
+  ],
+  "p2_chosen_order": "dz dx dy",
+  "p2_dependence_rows": [
+    {
+      "order": "dz dx dy",
+      "bound": "outer_lower",
+      "latex": "0",
+      "depends_on": "none"
+    },
+    {
+      "order": "dz dx dy",
+      "bound": "outer_upper",
+      "latex": "3",
+      "depends_on": "none"
+    },
+    {
+      "order": "dz dx dy",
+      "bound": "middle_lower",
+      "latex": "0",
+      "depends_on": "none"
+    },
+    {
+      "order": "dz dx dy",
+      "bound": "middle_upper",
+      "latex": "\\dfrac{y}{3}",
+      "depends_on": "y"
+    },
+    {
+      "order": "dz dx dy",
+      "bound": "inner_lower",
+      "latex": "0",
+      "depends_on": "none"
+    },
+    {
+      "order": "dz dx dy",
+      "bound": "inner_upper",
+      "latex": "\\sqrt{9 - y^{2}}",
+      "depends_on": "y"
+    },
+    {
+      "order": "dy dx dz",
+      "bound": "outer_lower",
+      "latex": "0",
+      "depends_on": "none"
+    },
+    {
+      "order": "dy dx dz",
+      "bound": "outer_upper",
+      "latex": "3",
+      "depends_on": "none"
+    },
+    {
+      "order": "dy dx dz",
+      "bound": "middle_lower",
+      "latex": "0",
+      "depends_on": "none"
+    },
+    {
+      "order": "dy dx dz",
+      "bound": "middle_upper",
+      "latex": "\\dfrac{\\sqrt{9 - z^{2}}}{3}",
+      "depends_on": "z"
+    },
+    {
+      "order": "dy dx dz",
+      "bound": "inner_lower",
+      "latex": "3x",
+      "depends_on": "x"
+    },
+    {
+      "order": "dy dx dz",
+      "bound": "inner_upper",
+      "latex": "\\sqrt{9 - z^{2}}",
+      "depends_on": "z"
+    }
+  ],
+  "p2_chosen_inner_dependence": "y",
+  "p2_demo_height": "1.500",
+  "p2_demo_x_high": "0.500000000",
+  "p2_demo_z_high": "2.598076211",
+  "p2_volume": "3.000000000",
+  "p2_check_count": "51",
+  "p2_membership_sample_count": "480910"
+}

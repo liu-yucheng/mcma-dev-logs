@@ -1,0 +1,47 @@
+<h1>Mass and center of mass under the plane $z = 1 + x + y$</h1>
+<blockquote class="statement">Find the mass and center of mass of the solid $E$ with the density function $\rho$. The solid $E$ lies under the plane $z = 1 + x + y$ and above the region in the $xy$-plane bounded by $y = \sqrt{x}$, $y = 0$, and $x = 1$; take $\rho(x, y, z) = 2$.</blockquote>
+<table>
+<tr><th>Given</th><th>Find</th></tr>
+<tr><td>Solid $E$: $0 \leq z \leq 1 + x + y$ over $D$; density $\rho = 2$</td><td>Mass $M$ and center of mass $(\bar{x}, \bar{y}, \bar{z})$</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$D$</td><td>Base region in the $xy$-plane</td><td>area</td></tr>
+<tr><td>$\rho$</td><td>Constant density $2$</td><td>mass per volume</td></tr>
+<tr><td>$M$</td><td>Total mass</td><td>mass</td></tr>
+<tr><td>$M_{yz}, M_{xz}, M_{xy}$</td><td>Moments about the $yz$, $xz$, $xy$ planes</td><td>mass length</td></tr>
+</table>
+<section><h2>Part 1: mass and center of mass</h2>
+<section><h3>Step 1.1: the base $D$ and the mass</h3>
+<p class="reason">The base $D$ keeps the $x$ and $y$ coordinates. It spans $0 \leq x \leq 1$ and $0 \leq y \leq \sqrt{x}$. The plane is above $D$, so $z$ runs from $0$ to $1 + x + y$.</p>
+<div class="computation">$$ M = \iiint_E 2 \, dV = \int_0^1 \int_0^{\sqrt{x}} 2 (1 + x + y) \, dy \, dx = \frac{79}{30} $$</div>
+<p class="result">The area of $D$ is $2/3$, the volume is $79/60 = 1.316667$, the mass is $79/30 = 2.633333$, and the grid mass is $2.633300$, printed by <code>part1_step1.py</code>.</p>
+<p class="verification"><code>part1_step1.py</code> compares the exact mass with a midpoint grid of $800^2$ columns and prints the section corners at $z = 0.5$, $1$, and $1.5$.</p>
+<p class="mistake">A reader may take the base as the unit square and miss the curve $y = \sqrt{x}$.</p>
+</section>
+<section><h3>Step 1.2: the moments of $E$</h3>
+<p class="reason">The moment about a plane keeps the coordinate the plane holds fixed, so $M_{yz}$ keeps $x$, $M_{xz}$ keeps $y$, and $M_{xy}$ keeps $z$.</p>
+<div class="computation">$$ M_{yz} = \frac{179}{105}, \quad M_{xz} = \frac{11}{10}, \quad M_{xy} = \frac{337}{180} $$</div>
+<p class="result">The grid moments are $1.704765$, $1.099990$, and $1.872236$, printed by <code>part1_step2.py</code>.</p>
+<p class="verification"><code>part1_step2.py</code> compares each exact moment with the same midpoint grid.</p>
+<p class="mistake">A reader may weight by $z$ in $M_{yz}$, but that plane keeps $x$.</p>
+</section>
+<section><h3>Step 1.3: the center of mass</h3>
+<p class="reason">Each coordinate of the center of mass is its moment divided by the mass.</p>
+<div class="computation">$$ (\bar{x}, \bar{y}, \bar{z}) = \left(\frac{358}{553}, \frac{33}{79}, \frac{337}{474}\right) = (0.647378, 0.417722, 0.710970) $$</div>
+<p class="result">The Monte Carlo estimate is $(0.647252, 0.417217, 0.710588)$ with $266336$ kept points, printed by <code>part1_step3.py</code>.</p>
+<p class="verification"><code>part1_step3.py</code> compares the exact center with a weighted Monte Carlo estimator on $400000$ samples.</p>
+<p class="mistake">A reader may sample a box and forget the weight by the column height $1 + x + y$.</p>
+</section>
+<figure><img src="FIG:part1_figure1.png" alt="Solid E under the plane z = 1 + x + y over the base D"><figcaption>Figure 1. The solid $E$ over the base $D$ under the plane $z = 1 + x + y$.</figcaption></figure>
+</section>
+<section class="answer"><h2>Answer</h2>
+<p>The mass is $M = 79/30 = 2.633333$. The center of mass is $(358/553, 33/79, 337/474) = (0.647378, 0.417722, 0.710970)$.</p>
+</section>
+<section class="notes"><h2>Notes</h2>
+<ul>
+<li>The base $D$ is the region between $y = 0$ and $y = \sqrt{x}$ for $0 \leq x \leq 1$.</li>
+<li>The top plane is above the base, so the solid has no hole.</li>
+<li>The weighted Monte Carlo estimator reuses one draw of the base for every mass term.</li>
+</ul>
+</section>

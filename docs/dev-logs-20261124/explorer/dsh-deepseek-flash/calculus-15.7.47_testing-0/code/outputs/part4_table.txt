@@ -1,0 +1,11 @@
+part4 checks
+check                                                computed         expected    tolerance result
+moment_y_of_two_orders                            0.157830870      0.157830870     1.00e-09 pass
+moment_z_of_two_orders                            0.069002176      0.069002176     1.00e-09 pass
+moment_x_vanishes                                 0.000000000      0.000000000     1.00e-12 pass
+moment_y_by_sections                              0.157830870      0.157830870     1.00e-08 pass
+moment_z_by_sections                              0.069002176      0.069002267     1.00e-07 pass
+y_bar_against_sections                            0.533509395      0.533509395     1.00e-06 pass
+z_bar_against_sections                            0.233245303      0.233245612     1.00e-06 pass
+x_bar_below_resolution                            0.000000000      0.000000000     0.00e+00 pass
+8 checks, 8 pass

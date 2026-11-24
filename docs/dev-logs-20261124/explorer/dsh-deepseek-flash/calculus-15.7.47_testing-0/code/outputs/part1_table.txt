@@ -1,0 +1,18 @@
+part1 checks
+check                                                computed         expected    tolerance result
+label_points_on_their_surfaces                    0.000000000      0.000000000     1.00e-12 pass
+projection_area_integral_against_shoelace         1.333333333      1.333333333     1.00e-09 pass
+projection_area_against_exact_third               1.333333333      1.333333333     1.00e-10 pass
+section_area_at_zero_against_projection           1.333333333      1.333333333     1.00e-09 pass
+yz_projection_area_against_triangle               0.500000000      0.500000000     1.00e-12 pass
+volume_of_two_orders                              0.533333333      0.533333333     1.00e-09 pass
+volume_against_exact_fraction                     0.533333333      0.533333333     1.00e-09 pass
+volume_monte_carlo_inside_three_errors            0.000077667      0.001876254     0.00e+00 pass
+grid_y_at_most_one                                1.000000000      1.000000000     0.00e+00 pass
+grid_y_attains_one                                1.000000000      1.000000000     0.00e+00 pass
+grid_x_at_most_one                                1.000000000      1.000000000     0.00e+00 pass
+grid_minus_x_at_most_one                          1.000000000      1.000000000     0.00e+00 pass
+grid_x_attains_minus_one                         -1.000000000     -1.000000000     0.00e+00 pass
+grid_x_attains_one                                1.000000000      1.000000000     0.00e+00 pass
+membership_masks_agree                            0.000000000      0.000000000     0.00e+00 pass
+15 checks, 15 pass

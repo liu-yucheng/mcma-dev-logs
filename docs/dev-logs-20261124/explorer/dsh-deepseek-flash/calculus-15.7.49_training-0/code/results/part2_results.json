@@ -1,0 +1,259 @@
+{
+  "part": 2,
+  "title": "The mass of E",
+  "checks": [
+    {
+      "label": "inner integral in z at x=0.0, y=0.5, quadrature against the formula",
+      "computed": 0.875,
+      "expected": 0.875,
+      "difference": 0.0,
+      "tolerance": 1e-13
+    },
+    {
+      "label": "inner integral in z at x=0.3, y=0.8, quadrature against the formula",
+      "computed": 2.0,
+      "expected": 2.0,
+      "difference": 0.0,
+      "tolerance": 1e-13
+    },
+    {
+      "label": "inner integral in z at x=0.7, y=0.2, quadrature against the formula",
+      "computed": 0.4,
+      "expected": 0.4,
+      "difference": 0.0,
+      "tolerance": 1e-13
+    },
+    {
+      "label": "section mass at x=0.0, two-dimensional quadrature against the formula",
+      "computed": 1.0,
+      "expected": 1.0,
+      "difference": 0.0,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "section mass at x=0.4, two-dimensional quadrature against the formula",
+      "computed": 0.9729363583762906,
+      "expected": 0.9729363583762904,
+      "difference": 1.1102230246251565e-16,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "section mass at x=0.8, two-dimensional quadrature against the formula",
+      "computed": 0.4319999999999998,
+      "expected": 0.4319999999999998,
+      "difference": 0.0,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "$\\int_0^1 (1-x^{2})\\,dx$ against its closed form",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "$\\int_0^1 (1-x^{2})\\,dx$, quadrature against the closed form",
+      "computed": 0.6666666666666666,
+      "expected": 0.6666666666666666,
+      "difference": 0.0,
+      "tolerance": 1e-11
+    },
+    {
+      "label": "$\\int_0^1 x(1-x^{2})\\,dx$ against its closed form",
+      "computed": 0.25,
+      "expected": 0.25,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "$\\int_0^1 x(1-x^{2})\\,dx$, quadrature against the closed form",
+      "computed": 0.25,
+      "expected": 0.25,
+      "difference": 0.0,
+      "tolerance": 1e-11
+    },
+    {
+      "label": "$\\int_0^1 (1-x^{2})^{3/2}\\,dx$ against its closed form",
+      "computed": 0.5890486225480862,
+      "expected": 0.5890486225480862,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "$\\int_0^1 (1-x^{2})^{3/2}\\,dx$, quadrature against the closed form",
+      "computed": 0.5890486225480863,
+      "expected": 0.5890486225480862,
+      "difference": 1.1102230246251565e-16,
+      "tolerance": 1e-11
+    },
+    {
+      "label": "m against 11/24 + 3pi/32",
+      "computed": 0.7528576446073765,
+      "expected": 0.7528576446073765,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    },
+    {
+      "label": "m, quadrature in the order dz dy dx against the exact value",
+      "computed": 0.7528576446073761,
+      "expected": 0.7528576446073765,
+      "difference": 3.3306690738754696e-16,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "m, quadrature in the order dy dz dx against the exact value",
+      "computed": 0.7528576446073761,
+      "expected": 0.7528576446073765,
+      "difference": 3.3306690738754696e-16,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "m, Monte Carlo against the exact value within four standard errors",
+      "computed": 0.7532277747489338,
+      "expected": 0.7528576446073765,
+      "difference": 0.00037013014155728996,
+      "tolerance": 0.002175996016572686
+    },
+    {
+      "label": "m, sum of the four terms of the linear decomposition against the direct integral",
+      "computed": 0.7528576446073765,
+      "expected": 0.7528576446073765,
+      "difference": 0.0,
+      "tolerance": 1e-15
+    }
+  ],
+  "tables": [
+    {
+      "caption": "The inner integral in $z$ of $\\rho$, checked at three points $(x,y)$",
+      "columns": [
+        "$x$",
+        "$y$",
+        "$(1+x)y+\\tfrac{3}{2}y^{2}$",
+        "quadrature"
+      ],
+      "rows": [
+        [
+          "0.0",
+          "0.5",
+          "0.875000",
+          "0.875000"
+        ],
+        [
+          "0.3",
+          "0.8",
+          "2.000000",
+          "2.000000"
+        ],
+        [
+          "0.7",
+          "0.2",
+          "0.400000",
+          "0.400000"
+        ]
+      ]
+    },
+    {
+      "caption": "The mass of the section at a fixed $x$, checked at three values of $x$",
+      "columns": [
+        "$x$",
+        "$Y$",
+        "$(1+x)Y^{2}/2+Y^{3}/2$",
+        "quadrature"
+      ],
+      "rows": [
+        [
+          "0.0",
+          "1.000000",
+          "1.000000",
+          "1.000000"
+        ],
+        [
+          "0.4",
+          "0.916515",
+          "0.972936",
+          "0.972936"
+        ],
+        [
+          "0.8",
+          "0.600000",
+          "0.432000",
+          "0.432000"
+        ]
+      ]
+    },
+    {
+      "caption": "The three standard integrals in $x$",
+      "columns": [
+        "integral",
+        "exact value",
+        "decimal",
+        "quadrature"
+      ],
+      "rows": [
+        [
+          "$\\int_0^1 (1-x^{2})\\,dx$",
+          "\\frac{2}{3}",
+          "0.666666667",
+          "0.666666667"
+        ],
+        [
+          "$\\int_0^1 x(1-x^{2})\\,dx$",
+          "\\frac{1}{4}",
+          "0.250000000",
+          "0.250000000"
+        ],
+        [
+          "$\\int_0^1 (1-x^{2})^{3/2}\\,dx$",
+          "\\frac{3 \\pi}{16}",
+          "0.589048623",
+          "0.589048623"
+        ]
+      ]
+    },
+    {
+      "caption": "The four terms of the linear decomposition of the mass",
+      "columns": [
+        "term",
+        "exact value",
+        "decimal"
+      ],
+      "rows": [
+        [
+          "$\\int_E 1\\,dV$",
+          "\\frac{1}{3}",
+          "0.333333"
+        ],
+        [
+          "$\\int_E x\\,dV$",
+          "\\frac{1}{8}",
+          "0.125000"
+        ],
+        [
+          "$\\int_E y\\,dV$",
+          "\\frac{\\pi}{16}",
+          "0.196350"
+        ],
+        [
+          "$\\int_E z\\,dV$",
+          "\\frac{\\pi}{32}",
+          "0.098175"
+        ],
+        [
+          "sum",
+          "\\frac{3 \\pi}{32} + \\frac{11}{24}",
+          "0.752858"
+        ]
+      ]
+    }
+  ],
+  "facts": {
+    "mass_exact": "\\frac{3 \\pi}{32} + \\frac{11}{24}",
+    "mass_exact_text": "11/24 + 3\\pi/32",
+    "mass_common_denominator": "\\frac{3 \\pi}{32} + \\frac{11}{24}",
+    "mass_decimal": "0.752858",
+    "monte_carlo_mass": 0.7532277747489338,
+    "monte_carlo_standard_error": 0.0005439990041431715,
+    "largest_difference": 0.00037013014155728996,
+    "check_count": 17
+  }
+}

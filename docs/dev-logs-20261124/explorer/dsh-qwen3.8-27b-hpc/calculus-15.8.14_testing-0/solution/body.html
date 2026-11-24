@@ -1,0 +1,61 @@
+<h1>Exercise 15.8.14: The Solid Between Two Paraboloids</h1>
+<blockquote class="statement">
+Use a graphing device to draw the solid enclosed by the paraboloids $z = x^2 + y^2$ and $z = 5 - x^2 - y^2$.
+The page names the intersection circle, the slice areas at three heights, and the enclosed volume.
+</blockquote>
+<table>
+<tr><th>Given</th><th>Find</th></tr>
+<tr><td>The paraboloids $z = x^2 + y^2$ and $z = 5 - x^2 - y^2$</td><td>The intersection circle, the slice area at three heights, and the enclosed volume</td></tr>
+</table>
+<table>
+<tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr>
+<tr><td>$r$</td><td>Distance from the $z$-axis, $r = \sqrt{x^2 + y^2}$</td><td>None</td></tr>
+<tr><td>$z$</td><td>Height above the $xy$-plane</td><td>None</td></tr>
+<tr><td>$A$</td><td>Area of one horizontal slice</td><td>None</td></tr>
+<tr><td>$V$</td><td>Volume of the enclosed solid</td><td>None</td></tr>
+</table>
+<section>
+<h2>Part 1: The Solid, Its Slices, and Its Volume</h2>
+<section>
+<h3>Step 1.1: Intersection circle and exact volume</h3>
+<p class="reason">Set the two surface heights equal to find the circle, then integrate the gap between the surfaces in cylindrical form.</p>
+<div class="computation">
+$$r^2 = 5 - r^2 \;\Rightarrow\; r = \sqrt{\frac{5}{2}}, \quad z = \frac{5}{2}$$
+$$V = \int_0^{2\pi}\int_0^{\sqrt{5/2}} (5 - 2r^2)\,r\,dr\,d\theta = \frac{25\pi}{4} \approx 19.6350$$
+</div>
+<p class="result">The two surfaces meet at the circle $r = \sqrt{5/2} \approx 1.5811$, $z = 5/2 = 2.5000$; the volume is $V = \frac{25\pi}{4} \approx 19.6350$.</p>
+<p class="verification">The script <code>part1_step1.py</code> checks the exact volume against a trapezoid sum with $4000$ radial steps.</p>
+<p class="mistake">A common slip reverses the surfaces and integrates $2r^2 - 5$, which is negative over the whole disk.</p>
+</section>
+<section>
+<h3>Step 1.2: Slice areas at three heights</h3>
+<p class="reason">A slice at height $z$ holds where $r^2 \le z$ and $r^2 \le 5 - z$, so the slice is a disk of radius $\min(\sqrt{z}, \sqrt{5 - z})$.</p>
+<div class="computation">
+$$A(z) = \pi\min(z, 5 - z) \;\Rightarrow\; A(1) = \pi, \quad A\left(\frac{5}{2}\right) = \frac{5\pi}{2}, \quad A(4) = \pi$$
+</div>
+<p class="result">The slice areas are $A(1) \approx 3.1416$, $A(5/2) \approx 7.8540$, and $A(4) \approx 3.1416$.</p>
+<p class="verification">The script <code>part1_step2.py</code> checks each area against a fixed-seed Monte Carlo count in the bounding square.</p>
+<p class="mistake">Using $r = \sqrt{5 - z}$ below $z = 5/2$ overstates the radius and doubles the area at $z = 1$.</p>
+</section>
+<section>
+<h3>Step 1.3: Monte Carlo volume check</h3>
+<p class="reason">Sample the bounding cylinder $r \le \sqrt{5/2}$, $0 \le z \le 5$ uniformly and count the points that sit between the two surfaces.</p>
+<div class="computation">
+$$V \approx \pi\left(\frac{5}{2}\right) \cdot 5 \cdot \frac{N_{\text{in}}}{N} \approx 19.6350$$
+</div>
+<p class="result">The estimate from $N = 4\,000\,000$ samples lands within $0.05$ of the exact value $25\pi/4$.</p>
+<p class="verification">The script <code>part1_step3.py</code> checks the estimate against the exact value from the symbolic integral.</p>
+<p class="mistake">Uniform $r$ sampling overweights the axis; use $r = \sqrt{5u/2}$ for a uniform disk.</p>
+</section>
+<figure><img src="FIG:part1_figure1.png" alt="The solid enclosed by the two paraboloids"><figcaption>Figure 1. The solid between $z = x^2 + y^2$ (lower) and $z = 5 - x^2 - y^2$ (upper), meeting at $z = 5/2$.</figcaption></figure>
+</section>
+<section class="answer">
+<p>The solid closes at the circle $r = \sqrt{5/2}$, $z = 5/2$. Its volume is $V = \frac{25\pi}{4} \approx 19.6350$.</p>
+</section>
+<section class="notes">
+<ul>
+<li>Both surfaces rotate about the $z$-axis, so the angle integral reduces to a factor of $2\pi$.</li>
+<li>Every number on this page is printed by one script named in its step.</li>
+<li>The figure labels sit on their surfaces and stay inside the axes.</li>
+</ul>
+</section>

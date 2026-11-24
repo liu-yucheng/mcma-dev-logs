@@ -1,0 +1,192 @@
+{
+  "part": 4,
+  "title": "The moment of inertia of E about the z axis",
+  "checks": [
+    {
+      "label": "I_z, the sum of the two second moments against the direct integral",
+      "computed": 0.4796828741826954,
+      "expected": 0.4796828741826954,
+      "difference": 0.0,
+      "tolerance": 1e-14
+    },
+    {
+      "label": "I_z, the sum of its eight monomial terms against the direct integral",
+      "computed": 0.4796828741826954,
+      "expected": 0.4796828741826954,
+      "difference": 0.0,
+      "tolerance": 1e-14
+    },
+    {
+      "label": "I_z, the exact polar integral against the direct integral",
+      "computed": 0.4796828741826954,
+      "expected": 0.4796828741826954,
+      "difference": 0.0,
+      "tolerance": 1e-14
+    },
+    {
+      "label": "I_z, quadrature in the order dz dy dx against the exact value",
+      "computed": 0.47968287418269556,
+      "expected": 0.4796828741826954,
+      "difference": 1.6653345369377348e-16,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "I_z, quadrature in the order dx dz dy against the exact value",
+      "computed": 0.4796828741826955,
+      "expected": 0.4796828741826954,
+      "difference": 1.1102230246251565e-16,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "I_z, numerical polar quadrature against the exact value",
+      "computed": 0.4796828741826955,
+      "expected": 0.4796828741826954,
+      "difference": 1.1102230246251565e-16,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "I_z, Monte Carlo estimate within four standard errors",
+      "computed": 0.47979646357784544,
+      "expected": 0.4796828741826954,
+      "difference": 0.00011358939515004884,
+      "tolerance": 0.001616565541589316
+    },
+    {
+      "label": "the moment of the plain distance weight, quadrature against the exact value",
+      "computed": 0.19999999999999998,
+      "expected": 0.2,
+      "difference": 2.7755575615628914e-17,
+      "tolerance": 1e-10
+    },
+    {
+      "label": "largest sampled density at or below the maximum density",
+      "computed": 3.234332647656763,
+      "expected": 3.23606797749979,
+      "difference": 0.0017353298430267117,
+      "tolerance": 2.23606797749979
+    },
+    {
+      "label": "the density-weighted mean of x^2 + y^2, exact quotient against the quadrature quotient",
+      "computed": 0.6371495031213447,
+      "expected": 0.6371495031213441,
+      "difference": 5.551115123125783e-16,
+      "tolerance": 1e-10
+    }
+  ],
+  "bounds": [
+    {
+      "label": "I_z inside the sandwich [plain moment, maximum density times plain moment]",
+      "computed": 0.4796828741826954,
+      "expected": 0.2,
+      "difference": 0.2796828741826954,
+      "tolerance": 0.4472135954999579
+    },
+    {
+      "label": "I_z smaller than the mass, because the distance squared is at most one",
+      "computed": 0.4796828741826954,
+      "expected": 0.7528576446073765,
+      "difference": 0.2731747704246811,
+      "tolerance": 0.7528576446073765
+    }
+  ],
+  "tables": [
+    {
+      "caption": "The eight monomial integrals of the moment of inertia",
+      "columns": [
+        "term",
+        "exact integral",
+        "decimal"
+      ],
+      "rows": [
+        [
+          "$x^{2}$",
+          "\\frac{1}{15}",
+          "0.066667"
+        ],
+        [
+          "$y^{2}$",
+          "\\frac{2}{15}",
+          "0.133333"
+        ],
+        [
+          "$x^{3}$",
+          "\\frac{1}{24}",
+          "0.041667"
+        ],
+        [
+          "$x^{2} y$",
+          "\\frac{\\pi}{96}",
+          "0.032725"
+        ],
+        [
+          "$x^{2} z$",
+          "\\frac{\\pi}{192}",
+          "0.016362"
+        ],
+        [
+          "$y^{3}$",
+          "\\frac{\\pi}{32}",
+          "0.098175"
+        ],
+        [
+          "$x y^{2}$",
+          "\\frac{1}{24}",
+          "0.041667"
+        ],
+        [
+          "$y^{2} z$",
+          "\\frac{\\pi}{64}",
+          "0.049087"
+        ]
+      ]
+    },
+    {
+      "caption": "The moment of inertia and its two second moments",
+      "columns": [
+        "quantity",
+        "exact value",
+        "decimal"
+      ],
+      "rows": [
+        [
+          "$I_z$",
+          "\\frac{17}{60}+\\frac{\\pi}{16}",
+          "0.479683"
+        ],
+        [
+          "$\\int_E x^2\\rho\\,dV$",
+          "\\frac{\\pi}{64} + \\frac{13}{120}",
+          "0.157421"
+        ],
+        [
+          "$\\int_E y^2\\rho\\,dV$",
+          "\\frac{3 \\pi}{64} + \\frac{7}{40}",
+          "0.322262"
+        ],
+        [
+          "$\\int_E (x^2+y^2)\\,dV$",
+          "\\frac{1}{5}",
+          "0.200000"
+        ]
+      ]
+    }
+  ],
+  "facts": {
+    "moment_of_inertia_exact": "\\frac{17}{60}+\\frac{\\pi}{16}",
+    "moment_of_inertia_decimal": "0.479683",
+    "second_moment_x_exact": "\\frac{\\pi}{64} + \\frac{13}{120}",
+    "second_moment_y_exact": "\\frac{3 \\pi}{64} + \\frac{7}{40}",
+    "second_moment_x_decimal": "0.157421",
+    "second_moment_y_decimal": "0.322262",
+    "plain_moment_exact": "\\frac{1}{5}",
+    "plain_moment_decimal": "0.200000",
+    "polar_exact": "\\frac{\\pi}{16} + \\frac{17}{60}",
+    "maximum_density_decimal": "3.236068",
+    "upper_bound_decimal": "0.647214",
+    "mean_distance_squared_decimal": "0.637150",
+    "monte_carlo_value": "0.479796",
+    "monte_carlo_error": "0.000404",
+    "largest_difference": 0.0017353298430267117,
+    "check_count": 10
+  }
+}

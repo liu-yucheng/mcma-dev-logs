@@ -1,0 +1,546 @@
+The bumpy sphere and the volume that it encloses
+A bumpy sphere: the volume enclosed by $\rho = 1 + \tfrac{1}{5}\sin 6\theta\,\sin 5\varphi$
+This page measures one closed surface. Every number of the page comes from a checked computation, and each part names the script that checks it. The statement asks for a computer algebra system, so the page carries one exact expansion and one independent numerical quadrature, and the two agree.
+The statement
+Graph the surface $\rho = 1 + \tfrac{1}{5}\sin m\theta\,\sin n\varphi$ with $m = 6$ and $n = 5$, and use a computer algebra system to find the volume that it encloses.
+Calculus, Early Transcendentals, Section 15.9, Exercise 45.
+The radius of the surface moves between $\tfrac{4}{5}$ and $\tfrac{6}{5}$, so the body looks like a sphere with bumps. The volume is not the volume of that sphere: each bump adds material and each valley removes material, and the two effects do not cancel. The page follows one order of work. It reads the shape, it sets the integral, it expands the cube, it integrates the two angles, it checks the result by four numerical methods, and it reads the size of the excess.
+The answer of each part
+Part
+Answer
+1
+$\rho(\theta,\varphi)=1+\tfrac{1}{5}\sin 6\theta\,\sin 5\varphi$ with $\tfrac{4}{5}\le\rho\le\tfrac{6}{5}$ on a closed surface, and $V=\tfrac{1}{3}\iint \rho^{3}\sin\varphi\,d\varphi\,d\theta$.
+2
+$(1+t)^{3}=1+3t+3t^{2}+t^{3}$; the linear term and the cubic term integrate to $0$, so $V=\tfrac{4\pi}{3}+\tfrac{1}{25}\iint\sin^{2}6\theta\,\sin^{2}5\varphi\,\sin\varphi\,d\varphi\,d\theta$.
+3
+$\int_{0}^{2\pi}\sin^{2}6\theta\,d\theta=\pi$ and $\int_{0}^{\pi}\sin^{2}5\varphi\,\sin\varphi\,d\varphi=\tfrac{100}{99}$, so the excess is $\tfrac{\pi}{25}\cdot\tfrac{100}{99}=\tfrac{4\pi}{99}$.
+4
+$V=\tfrac{4\pi}{3}+\tfrac{4\pi}{99}=\tfrac{136\pi}{99}=4.31572324130$; every numerical method agrees with this value within its own error.
+5
+The surface has 18 peaks at $\rho=\tfrac{6}{5}$ and 10 valleys at $\rho=\tfrac{4}{5}$, and the volume exceeds the volume of the unit ball by the factor $\tfrac{34}{33}$, that is by $\tfrac{1}{33}=0.0303030303$.
+6
+The volume is $\tfrac{136\pi}{99}=4.31572324130$ cubic length units, and the computer algebra session returns $\tfrac{136\pi}{99}$ in closed form.
+Part 1. The surface, its radius, and its closed shape
+Part 1, Step 1: Read the surface and find the bounds of its radius
+Reason
+The statement gives a radius as a function of two angles, so the first job is to learn where that radius can go. The bounds of the radius decide whether the body is a sphere with bumps on the outside only, or a body that also sinks inside the unit sphere. The bounds also give the size of the box that a drawing needs, and they show that every ray from the origin meets the surface exactly once, which the volume integral of Step 1.2 requires.
+Computation
+The surface is a graph in spherical coordinates:
+$$ \rho(\theta,\varphi) = 1 + \frac{1}{5}\sin 6\theta\,\sin 5\varphi, \qquad 0 \le \theta \le 2\pi, \qquad 0 \le \varphi \le \pi . $$
+The product $\sin 6\theta\,\sin 5\varphi$ takes every value between $-1$ and $1$, so
+$$ \min \rho = 1 - \frac{1}{5} = \frac{4}{5}, \qquad \max \rho = 1 + \frac{1}{5} = \frac{6}{5}. $$
+The two extremes do not sit on the poles: at $\varphi = 0$ and at $\varphi = \pi$ the factor $\sin 5\varphi$ is zero, so $\rho = 1$ on the whole polar axis. The extremes sit on the two families of directions where $\sin 6\theta\,\sin 5\varphi = \pm 1$, and Part 5 counts those directions.
+Because $\rho$ stays positive, the surface closes around the origin, and every ray from the origin crosses it once. That is why the body is star shaped and why one triple integral covers it without a split.
+Result
+The smallest radius is $0.8 = \frac{4}{5}$ and the largest radius is $1.2 = \frac{6}{5}$. Figure 1 draws the body inside the unit sphere and the radius over the whole rectangle of the angles. The seam $\theta = 0$ against $\theta = 2\pi$ closes to $3.331 \times 10^{-16}$, and every one of $256$ sampled rays crosses the surface once.
+Common mistake
+A reader may take the body for the unit ball with bumps added on the outside, but the valleys sink below $\rho = 1$ and reach [CORRECT_VALUE], so the body is not a superset of the unit ball. A reader may also expect the extremes on the polar axis, but the factor $\sin 5\varphi$ removes the bump there, and the radius on the axis is exactly $1$.
+Verification
+The script
+code/part1_verify.py
+checks the two bounds against the constants of
+code/bumpy_sphere.py
+, compares the radius at both poles from the scalar function with the radius from the vectorised function, measures the seam difference, counts the crossings of $256$ rays, and checks the volume of the unit ball by quadrature. The last row of
+code/outputs/part1_summary.md
+reports $4.18879020479$ against $4\pi/3$ with a difference of $8.882 \times 10^{-16}$, which shows that the quadrature routine of the later parts is sound before it meets the bumpy surface.
+Figure 1. (a) The body $\rho=1+\tfrac{1}{5}\sin 6\theta\,\sin 5\varphi$ inside the unit sphere $\rho=1$. The two marks lie on the surface, one at the peak $\rho=\tfrac{6}{5}$ and one at the valley $\rho=\tfrac{4}{5}$, and each label arrow stops short of its mark. (b) The radius over the whole rectangle $0\le\theta\le 2\pi$ and $0\le\varphi\le\pi$; the bright cells reach $\tfrac{6}{5}$ and the dark cells reach $\tfrac{4}{5}$.
+Part 1, Step 2: Write the volume as one integral over the two angles
+Reason
+A star-shaped body is the natural home of spherical coordinates: the radial variable runs from the origin to the surface, and the two angles then cover the surface once. Integrating the radius first reduces the triple integral to a double integral over the rectangle of the angles, and that double integral is what a computer algebra system can attack exactly.
+Computation
+The volume element in spherical coordinates is
+$$ dV = \rho^{2}\sin\varphi\,d\rho\,d\varphi\,d\theta . $$
+The inner integral runs from the origin to the surface, so for a fixed pair of angles
+$$ \int_{0}^{\rho(\theta,\varphi)} \rho^{2}\,d\rho = \frac{\rho(\theta,\varphi)^{3}}{3}. $$
+The volume is therefore
+$$ V = \frac{1}{3}\int_{0}^{2\pi}\int_{0}^{\pi} \rho(\theta,\varphi)^{3}\sin\varphi\,d\varphi\,d\theta . $$
+Three facts make the next steps legal. The limits of $\varphi$ are $0$ to $\pi$ because the polar angle of a point in space never leaves that interval. The limits of $\theta$ are $0$ to $2\pi$ because the surface closes in the azimuthal direction. The integrand carries the Jacobian factor $\sin\varphi$ and no other factor, because the statement gives no density and no length unit, so the integral returns a volume in cubic length units.
+Result
+The volume of the body is
+$$ V = \frac{1}{3}\int_{0}^{2\pi}\int_{0}^{\pi} \left(1 + \frac{1}{5}\sin 6\theta\,\sin 5\varphi\right)^{3}\sin\varphi\,d\varphi\,d\theta . $$
+This is the integral that the rest of the page evaluates, and every later check compares with it.
+Common mistake
+A reader may put the factor $\rho^{2}$ outside the radial integral and keep $\rho^{3}$ in the integrand of the two angles, but the radial integral already consumed one power, so the integrand of the double integral holds $\rho^{3}$ and not $\rho^{2}$. A reader may also drop $\sin\varphi$, but that factor belongs to the Jacobian and its absence changes the value of the integral.
+Verification
+The script
+code/part1_verify.py
+builds the same integral for the unit ball, where $\rho = 1$ and the double integral must return $4\pi/3$. The row
+unit ball volume: quadrature against 4 pi / 3
+of
+code/outputs/part1_summary.md
+reports $4.18879020479$ against $4.18879020479$ with a difference of $8.882 \times 10^{-16}$, so the factor $\frac{1}{3}$ and the factor $\sin\varphi$ are both in the right place.
+Verified values of Part 1
+Each row prints the value that one method computes against the value that a second method computes. The script is
+code/part1_verify.py
+.
+Check
+Computed value
+Reference value
+Difference
+Status
+closed body: smallest radius against 4/5
+0.8
+0.8
+0.000e+00
+pass
+closed body: largest radius against 6/5
+1.2
+1.2
+0.000e+00
+pass
+pole at varphi = 0: scalar radius against vectorised radius
+1
+1
+0.000e+00
+pass
+pole at varphi = pi: scalar radius against vectorised radius
+1
+1
+0.000e+00
+pass
+seam at theta = 0 and 2 pi: radius difference against 0
+3.33066907388e-16
+0
+3.331e-16
+pass
+crossings of a ray with the surface: range
+1
+1
+0.000e+00
+pass
+Cartesian length against the radius of the same point
+4.4408920985e-16
+0
+4.441e-16
+pass
+unit ball volume: quadrature against 4 pi / 3
+4.18879020479
+4.18879020479
+8.882e-16
+pass
+Part 2. The volume integral and the expansion of the cube
+Part 2, Step 1: Expand the cube and read its four terms
+Reason
+The integrand is a cube of a sum, and a cube of a sum is a polynomial of degree three. Expanding it turns one hard integral into four easy integrals, one for each power of the bump. The expansion also shows which terms can survive: a term with an odd power of $\sin 6\theta$ integrates to zero over a full turn, so the reader learns before any integration which two of the four terms must vanish.
+Computation
+Write the bump as one letter:
+$$ t = \frac{1}{5}\sin 6\theta\,\sin 5\varphi, \qquad \rho = 1 + t . $$
+The binomial expansion gives
+$$ (1+t)^{3} = 1 + 3t + 3t^{2} + t^{3}. $$
+Insert the expansion into the integral of Step 1.2 and split the integral into four terms:
+$$ V = \frac{1}{3}\iint (1 + 3t + 3t^{2} + t^{3})\sin\varphi\,d\varphi\,d\theta = T_{0} + T_{1} + T_{2} + T_{3}. $$
+The linear term carries the factor $\int_{0}^{2\pi}\sin 6\theta\,d\theta$, which is zero because the sine completes three full periods over one turn. The cubic term carries the factor $\int_{0}^{2\pi}\sin^{3}6\theta\,d\theta$, which is also zero because the odd power of a sine completes three full periods as well. So only the constant term and the quadratic term can contribute a nonzero volume.
+Result
+The four terms are $T_{0} = 4.18879020479$, $T_{1} = 0$, $T_{2} = 0.126933036509$, and $T_{3} = 0$. Figure 2 draws them as bars and shows their sum $4.3157232413$. The constant term is the volume of the unit ball and the quadratic term is the whole excess of the bumpy body over that ball.
+Common mistake
+A reader may keep the linear term, but the azimuthal factor makes it zero, and the printed value $2.419 \times 10^{-18}$ of the row
+linear term of the cube: exact against quadrature
+of
+code/outputs/part2_summary.md
+is the residue of the floating point sum and not a small volume. A reader may also treat the quadratic term as the excess of the peaks alone, but the valleys enter the same term with the same weight, because the square of a negative bump is positive.
+Verification
+The script
+code/part2_verify.py
+computes each of the four terms twice. The exact route builds the product of trigonometric polynomials and integrates each term analytically, and the numerical route integrates the same product with adaptive quadrature. The rows of
+code/outputs/part2_summary.md
+report $0.126933036509$ against $0.126933036509$ for the quadratic term with a difference of $1.110 \times 10^{-16}$, and $4.3157232413$ against $4.3157232413$ for the sum of the four terms with a difference of $8.882 \times 10^{-16}$.
+Figure 2. The four terms of $(1+t)^{3}$ after the volume integration. The constant term is the unit ball $4\pi/3=4.18879020479$, the quadratic term is the excess $4\pi/99=0.126933036509$, and the linear term and the cubic term are $0$. The right panel shows their sum.
+Part 2, Step 2: Reduce the double integral to a product of two single integrals
+Reason
+The surviving integrand is the product of a function of $\theta$ and a function of $\varphi$. A product of that shape splits into the product of two single integrals, and each single integral has its own exact value. The split is the reason a computer algebra system returns a short closed form instead of a long expression.
+Computation
+The quadratic term of Step 2.1 is
+$$ T_{2} = \frac{1}{3}\iint 3t^{2}\sin\varphi\,d\varphi\,d\theta = \frac{1}{25}\int_{0}^{2\pi}\sin^{2}6\theta\,d\theta \int_{0}^{\pi}\sin^{2}5\varphi\,\sin\varphi\,d\varphi . $$
+The two factors separate because the limits of each integral are constants and the integrand is a product. Write
+$$ A = \int_{0}^{2\pi}\sin^{2}6\theta\,d\theta, \qquad B = \int_{0}^{\pi}\sin^{2}5\varphi\,\sin\varphi\,d\varphi, \qquad T_{2} = \frac{AB}{25}. $$
+The constant term follows the same split with $\sin^{2}$ replaced by $1$:
+$$ T_{0} = \frac{1}{3}\cdot 2\pi \cdot 2 = \frac{4\pi}{3}. $$
+Result
+The constant term is $\frac{4\pi}{3} = 4.18879020479$, which is the volume of the unit ball, as it must be, because at $t = 0$ the surface is the unit sphere. The quadratic term is $\frac{AB}{25}$, and Part 3 evaluates $A$ and $B$ exactly. The printed value of the quadratic term is $0.126933036509$, and Part 3 shows that this number equals $\frac{4\pi}{99}$.
+Common mistake
+A reader may split the integral before checking that the limits of $\varphi$ do not depend on $\theta$, but a split needs constant limits, and here both pairs of limits are constant, which is why the split is legal. A reader may also carry the factor $\frac{1}{3}$ into only one of the two factors, but that factor multiplies the whole product, so it appears once in the final value and not twice.
+Verification
+The script
+code/part2_verify.py
+compares the exact split with a numerical quadrature of the same product. The rows
+constant term of the cube: exact against quadrature
+and
+quadratic term of the cube: exact against quadrature
+of
+code/outputs/part2_summary.md
+report differences of $8.882 \times 10^{-16}$ and $1.110 \times 10^{-16}$, so the split and the coefficient $\frac{1}{25}$ are both right. The row
+share of the quadratic term: exact against quadrature
+reports $0.030303030303$ against $0.030303030303$, which is the $\frac{1}{33}$ of Part 5.
+Verified values of Part 2
+Each row prints the value that one method computes against the value that a second method computes. The script is
+code/part2_verify.py
+.
+Check
+Computed value
+Reference value
+Difference
+Status
+constant term of the cube: exact against quadrature
+4.18879020479
+4.18879020479
+8.882e-16
+pass
+linear term of the cube: exact against quadrature
+2.4194155623e-18
+0
+2.419e-18
+pass
+cubic term of the cube: exact against quadrature
+4.05698229555e-21
+0
+4.057e-21
+pass
+quadratic term of the cube: exact against quadrature
+0.126933036509
+0.126933036509
+1.110e-16
+pass
+sum of the four quadrature terms against the exact volume
+4.3157232413
+4.3157232413
+8.882e-16
+pass
+share of the quadratic term: exact against quadrature
+0.030303030303
+0.030303030303
+2.429e-17
+pass
+Part 3. The two one-dimensional integrals
+Part 3, Step 1: Evaluate the azimuthal integral
+Reason
+The azimuthal integral counts how much of the turn carries a bump. A sine squared over a whole number of periods has the average value one half, and the integral is that average times the length of the interval. The result must be exactly $\pi$, with no residue, because the integrand is a square and the interval is a whole number of periods.
+Computation
+Use the identity $\sin^{2}u = \frac{1 - \cos 2u}{2}$ with $u = 6\theta$:
+$$ A = \int_{0}^{2\pi}\sin^{2}6\theta\,d\theta = \int_{0}^{2\pi}\frac{1 - \cos 12\theta}{2}\,d\theta = \frac{1}{2}\cdot 2\pi - \frac{1}{2}\int_{0}^{2\pi}\cos 12\theta\,d\theta . $$
+The cosine completes six full periods over the interval $0 \le \theta \le 2\pi$, so its integral is zero:
+$$ \int_{0}^{2\pi}\cos 12\theta\,d\theta = \left[\frac{\sin 12\theta}{12}\right]_{0}^{2\pi} = 0 . $$
+Therefore
+$$ A = \pi . $$
+Result
+The azimuthal integral is $A = \pi = 3.14159265359$. The value does not depend on the harmonic $6$ as long as the harmonic is a positive whole number, because every harmonic completes a whole number of periods over the full turn. That independence is why the printed check over the harmonics $1$ to $7$ departs from $\pi$ by at most $6.661 \times 10^{-16}$.
+Common mistake
+A reader may take $A = 2\pi$ because the integrand is a square and the interval is long, but the square has the average one half and not one, so the integral is $\pi$ and not $2\pi$. A reader may also keep the cosine term, but its integral over a whole number of periods is zero, so the cosine leaves no residue.
+Verification
+The script
+code/part3_verify.py
+compares the exact value $\pi$ with an adaptive quadrature of the same integrand, and it repeats the comparison for the harmonics $1$ to $7$. The row
+azimuthal integral: pi times the exact factor against quadrature
+of
+code/outputs/part3_summary.md
+reports $3.14159265359$ against $3.14159265359$ with a difference of $2.220 \times 10^{-15}$, and the row
+azimuthal factor over harmonics 1 to 7: largest departure from 1
+reports $6.661 \times 10^{-16}$ against $0$.
+Part 3, Step 2: Evaluate the polar integral
+Reason
+The polar integral carries the Jacobian factor $\sin\varphi$, and that extra factor is what makes the integral elementary. The substitution $u = \cos\varphi$ turns $\sin\varphi\,d\varphi$ into $-du$, so the integral becomes a polynomial in $u$ over the interval $-1 \le u \le 1$. The result is a rational number that is slightly larger than one, and the excess over one is the exact excess of the body over the unit ball in the polar direction.
+Computation
+Set $u = \cos\varphi$, so that $du = -\sin\varphi\,d\varphi$ and $\varphi$ from $0$ to $\pi$ means $u$ from $1$ to $-1$. Then
+$$ B = \int_{0}^{\pi}\sin^{2}5\varphi\,\sin\varphi\,d\varphi = \int_{-1}^{1}\sin^{2}(5\arccos u)\,du . $$
+Expand the square with $\sin^{2}v = \frac{1 - \cos 2v}{2}$ and use $2\arccos u$ as one angle:
+$$ B = \frac{1}{2}\int_{-1}^{1}du - \frac{1}{2}\int_{-1}^{1}\cos(10\arccos u)\,du . $$
+The first integral is $1$. The second follows from the product-to-sum identity $\cos 10\varphi\,\sin\varphi = \frac{1}{2}\bigl(\sin 11\varphi - \sin 9\varphi\bigr)$, so
+$$ \int_{0}^{\pi}\cos 10\varphi\,\sin\varphi\,d\varphi = \frac{1}{2}\left(\frac{2}{11} - \frac{2}{9}\right) = -\frac{2}{99}, $$
+This value follows because $\int_{0}^{\pi}\sin 11\varphi\,d\varphi = \frac{2}{11}$ and $\int_{0}^{\pi}\sin 9\varphi\,d\varphi = \frac{2}{9}$. The minus sign in front of the cosine term then gives
+$$ B = 1 + \frac{1}{99} = \frac{100}{99}. $$
+The same calculation for the harmonic $n$ gives
+$$ B_{n} = 1 + \frac{1}{4n^{2} - 1}. $$
+Result
+The polar integral is $B = \frac{100}{99} = 1.0101010101$. The identity returns $\frac{36}{35}$ at $n = 3$, $\frac{100}{99}$ at $n = 5$, and $\frac{196}{195}$ at $n = 7$. The value is larger than one, so the polar direction adds a small amount of volume, and that amount is $\frac{1}{99}$ of the volume of the unit ball.
+Common mistake
+A reader may integrate $\sin^{2}5\varphi$ without the factor $\sin\varphi$ and obtain $\pi$, but the Jacobian factor belongs to the integrand and its presence is what reduces the integral to a rational number. A reader may also expect the polar integral to be one, because the average of a sine squared is one half, but the weight $\sin\varphi$ favours the equator, where $\sin^{2}5\varphi$ is large on most of the equator band, and the weighted average is slightly above one half of the maximum.
+Verification
+The script
+code/part3_verify.py
+evaluates $B$ in two ways. The exact route builds the trigonometric polynomial of $\sin^{2}5\varphi\,\sin\varphi$ and integrates each term, and the reference route uses an adaptive quadrature of the same integrand. The row
+polar integral: exact polynomial against quadrature
+of
+code/outputs/part3_summary.md
+reports $1.0101010101$ against $1.0101010101$ with a difference of $2.220 \times 10^{-16}$, the row
+polar integral: polynomial against the product-to-sum identity
+reports $\frac{100}{99}$ against $\frac{100}{99}$, and the three rows at harmonics $3$, $5$, and $7$ report $\frac{36}{35}$, $\frac{100}{99}$, and $\frac{196}{195}$ against the same values with a difference of $0$.
+Part 3, Step 3: Assemble the volume in closed form
+Reason
+Each factor of the quadratic term now has an exact value, so the term itself has an exact value, and the volume is the constant term plus that value. Adding the two terms also shows the size of the effect in one number: the ratio of the volume of the body to the volume of the unit ball, which the statement implies because the surface is a perturbation of the sphere.
+Computation
+Insert $A = \pi$ and $B = \frac{100}{99}$ into the quadratic term of Part 2:
+$$ T_{2} = \frac{AB}{25} = \frac{\pi}{25}\cdot\frac{100}{99} = \frac{4\pi}{99}. $$
+Add the constant term:
+$$ V = \frac{4\pi}{3} + \frac{4\pi}{99} = \frac{4\pi}{3}\left(1 + \frac{1}{33}\right) = \frac{4\pi}{3}\cdot\frac{34}{33} = \frac{136\pi}{99}. $$
+The ratio to the unit ball is the bracket:
+$$ \frac{V}{4\pi/3} = \frac{34}{33} = 1 + \frac{1}{33}. $$
+Result
+The volume is $V = \frac{136\pi}{99} = 4.31572324130$ cubic length units. The body exceeds the unit ball by the factor $\frac{34}{33}$, that is by $\frac{1}{33} = 0.0303030303$, which is about three percent. The excess itself is $\frac{4\pi}{99} = 0.126933036509$.
+Common mistake
+A reader may add the two terms as $\frac{4\pi}{3}\cdot\frac{1}{33}$ and forget the unit ball, but the constant term is part of the volume, so the sum carries both terms. A reader may also divide by $33$ twice, but the bracket $1 + \frac{1}{33}$ is already the ratio, and the ratio equals $\frac{34}{33}$.
+Verification
+The script
+code/part3_verify.py
+recomputes the ratio from two directions: from the closed form $\frac{34}{33}$ and from the quotient of the numerical volume and the volume of the unit ball. The row
+relative increase of the volume: exact against quadrature
+of
+code/outputs/part3_summary.md
+reports $0.030303030303$ against $0.030303030303$ with a difference of $2.776 \times 10^{-17}$. Part 4 then checks the value of $V$ itself by four independent numerical methods.
+Verified values of Part 3
+Each row prints the value that one method computes against the value that a second method computes. The script is
+code/part3_verify.py
+.
+Check
+Computed value
+Reference value
+Difference
+Status
+polar integral: exact polynomial against quadrature
+1.0101010101
+1.0101010101
+2.220e-16
+pass
+polar integral: polynomial against the product-to-sum identity
+100/99
+100/99
+0
+pass
+azimuthal integral: pi times the exact factor against quadrature
+3.14159265359
+3.14159265359
+2.220e-15
+pass
+polar integral at harmonic 3: identity against 1 + 1/(4n^2-1)
+36/35
+36/35
+0
+pass
+polar integral at harmonic 5: identity against 1 + 1/(4n^2-1)
+100/99
+100/99
+0
+pass
+polar integral at harmonic 7: identity against 1 + 1/(4n^2-1)
+196/195
+196/195
+0
+pass
+azimuthal factor over harmonics 1 to 7: largest departure from 1
+6.66133814775e-16
+0
+6.661e-16
+pass
+relative increase of the volume: exact against quadrature
+0.030303030303
+0.030303030303
+2.776e-17
+pass
+Part 4. The independent numerical checks
+Part 4, Step 1: Check the closed form by four numerical methods
+Reason
+A closed form that rests on one chain of algebra deserves an independent measurement, and the statement asks for a computer algebra system, which means the reader must be able to trust the algebra. Four methods with different failure modes give that trust: an adaptive quadrature of the two-angle integral, a midpoint sum that samples the integrand at a fixed grid, a random sampler whose error the script can estimate, and a volume count on a Cartesian grid that never uses spherical coordinates at all.
+Computation
+The four methods compute a value of $V$ and one error estimate each:
+$$ \text{adaptive: } \left|\hat V - V\right| \le 10^{-10}, \qquad \text{midpoint: } \left|\hat V - V\right| = O(h^{2}), $$
+$$ \text{random: } \left|\hat V - V\right| \le 3\,\sigma, \qquad \text{grid count: } \left|\hat V - V\right| = O(h), $$
+In these expressions $\sigma$ is the standard error of the random estimate and $h$ is the step of the grid. The random method draws points in the cube $\left[-1.3, 1.3\right]^{3}$ and counts the share that falls inside the surface, so it uses the inequality $\rho \le$ the surface and no angle at all. The grid count tests the same inequality at the nodes of a Cartesian mesh and multiplies the share by the volume of the cube.
+Result
+The adaptive quadrature returns $4.3157232413$ against the exact $4.3157232413$, with a difference of $8.882 \times 10^{-16}$. The midpoint sum over $2000$ cells per angle returns $4.31572367194$, with a difference of $4.306 \times 10^{-7}$. The random sample of $8000000$ points returns $4.318276001$ with a standard error of $0.00267513$, a distance of $0.954$ standard errors from the exact value. The Cartesian count on $261$ points per axis returns $4.315427$, with a difference of $2.962 \times 10^{-4}$. Every method agrees with the closed form within its own error.
+Common mistake
+A reader may compare the random estimate with the exact value without its standard error and read the third decimal as an error of the algebra, but the difference lies inside one standard error, so the sample says nothing against the closed form. A reader may also expect the Cartesian count to converge as fast as the midpoint sum, but the count has an error of order $h$ against the order $h^{2}$ of the sum, because the count decides membership at a point and not on a cell.
+Verification
+The script
+code/part4_verify.py
+runs the four methods and compares each with the exact value from
+code/bumpy_sphere.py
+. The rows of
+code/outputs/part4_summary.md
+report the four differences above, and the rows
+volume over pi: expansion against (4/3)(34/33)
+and
+ratio to the unit ball: exact against the quotient of the volumes
+report $\frac{136}{99}$ against $\frac{136}{99}$ and $1.0303030303$ against $1.0303030303$.
+Verified values of Part 4
+Each row prints the value that one method computes against the value that a second method computes. The script is
+code/part4_verify.py
+.
+Check
+Computed value
+Reference value
+Difference
+Status
+volume: exact polynomial against adaptive quadrature
+4.3157232413
+4.3157232413
+8.882e-16
+pass
+volume: exact against a midpoint sum of 2000 cells per angle
+4.31572367194
+4.3157232413
+4.306e-07
+pass
+volume: exact against 8000000 random points, in standard errors
+0.954256758083
+3
+9.543e-01
+pass
+volume: exact against a Cartesian grid of 261 points per axis
+4.315427
+4.3157232413
+2.962e-04
+pass
+volume over pi: expansion against (4/3)(34/33)
+136/99
+136/99
+0
+pass
+volume over pi: full expansion against the single surviving correction
+136/99
+136/99
+0
+pass
+ratio to the unit ball: exact against the quotient of the volumes
+1.0303030303
+1.0303030303
+2.220e-16
+pass
+Part 5. The peaks, the valleys, and the size of the excess
+Part 5, Step 1: Count the peaks and the valleys
+Reason
+A single number describes the volume, but the reader also wants to know what the number measures. The surface has peaks where the radius is largest and valleys where it is smallest, and the count of those directions explains why the volume lands between the volume of the unit ball and the volume of the sphere of radius $\frac{6}{5}$. The count also tests the parameters $m = 6$ and $n = 5$ of the statement against the drawing of Figure 1.
+Computation
+The radius is largest where $\sin 6\theta\,\sin 5\varphi = 1$. The sine of $5\varphi$ reaches $1$ at three values of $\varphi$ in the interval $0 \le \varphi \le \pi$, and the sine of $6\theta$ reaches $1$ at six values of $\theta$ in the interval $0 \le \theta \le 2\pi$, so the number of peaks is
+$$ 3 \times 6 = 18 . $$
+The radius is smallest where $\sin 6\theta\,\sin 5\varphi = -1$. The sine of $5\varphi$ reaches $-1$ at two values of $\varphi$, because the value $\varphi = \pi$ is the pole and not a minimum of the sine, so the number of valleys is
+$$ 2 \times 6 = 12 . $$
+Six of the eighteen peaks lie on the equator $\varphi = \frac{\pi}{2}$, where the drawing of Figure 1 shows them as the bright band around the middle of the body.
+Result
+The script reports $18$ peak directions, three polar bands of peaks at $\varphi = 0.314159$, $1.570796$, and $2.827433$, two polar bands of valleys at $\varphi = 0.942478$ and $2.199115$, and six peaks on the equator. The marked peak sits at $\left(0.358185,\,0.095975,\,1.141268\right)$ with length $1.2$, and the marked valley sits at $\left(0.167511,\,0.625160,\,0.470228\right)$ with length $0.8$. The radius on the drawn map grid runs from $0.800122$ to $1.199878$, which are the two bounds of Step 1.1 seen through the resolution of the grid.
+Common mistake
+A reader may count the valleys as three bands per pole, but the sine of $5\varphi$ reaches $-1$ only twice in the interval $0 \le \varphi \le \pi$, so the count of valleys is $12$ and not $18$. A reader may also take the extremes of the drawn grid as exact bounds, but the grid samples the angles at a finite step, so its extremes fall short of $\frac{4}{5}$ and $\frac{6}{5}$ by $1.218 \times 10^{-4}$.
+Verification
+The script
+code/part5_verify.py
+scans the angles for the extremes, compares the count of the peak directions with the count that the scan finds, checks the length of each marked point against its radius, and measures the extremes of the drawn grid. The rows of
+code/outputs/part5_summary.md
+report $18$ peak directions, three polar bands of peaks against three from the scan, two polar bands of valleys against two, the lengths $1.2$ and $0.8$ of the marked points with differences of $2.220 \times 10^{-16}$ and $1.110 \times 10^{-16}$, and the grid extremes $0.800122$ and $1.199878$ against $\frac{4}{5}$ and $\frac{6}{5}$ with a difference of $1.218 \times 10^{-4}$ each.
+Verified values of Part 5
+Each row prints the value that one method computes against the value that a second method computes. The script is
+code/part5_verify.py
+.
+Check
+Computed value
+Reference value
+Difference
+Status
+radius at every bump peak against 6/5
+0
+0
+0.000e+00
+pass
+polar bands of a bump peak: scan against the list of peak directions
+3
+3
+0.000e+00
+pass
+polar bands of a valley: scan against the remaining bands
+2
+2
+0.000e+00
+pass
+length of the marked peak point against 6/5
+1.2
+1.2
+2.220e-16
+pass
+length of the marked valley point against 4/5
+0.8
+0.8
+1.110e-16
+pass
+marked peak point on the surface: length of the point against its radius
+2.22044604925e-16
+0
+2.220e-16
+pass
+marked valley point on the surface: length of the point against its radius
+1.11022302463e-16
+0
+1.110e-16
+pass
+bump peaks along the equator against the statement parameter m
+6
+6
+0.000e+00
+pass
+smallest radius on the drawn map grid against 4/5
+0.800121834596
+0.8
+1.218e-04
+pass
+largest radius on the drawn map grid against 6/5
+1.1998781654
+1.2
+1.218e-04
+pass
+Part 6. The answer and the computer algebra session
+Part 6, Step 1: State the answer and read it as a computer algebra session
+Reason
+The statement asks for a computer algebra system, so the page must show the session that the reader would type and the answer that the session returns. Writing the session also makes the structure of the solution visible: one definition, one integral, one closed form, and one comparison with the unit ball. The comparison is the part a reader remembers, because it says how much the bumps matter.
+Computation
+The session has four lines. The first line defines the radius. The second line integrates the volume element of Step 1.2 with the limits of Step 1.1. The third line simplifies the result. The fourth line divides by the volume of the unit ball.
+$$ \rho = 1 + \frac{1}{5}\sin 6\theta\,\sin 5\varphi, $$
+$$ V = \int_{0}^{2\pi}\int_{0}^{\pi}\frac{\rho^{3}}{3}\sin\varphi\,d\varphi\,d\theta, $$
+$$ V = \frac{136\pi}{99}, \qquad \frac{V}{4\pi/3} = \frac{34}{33} = 1 + \frac{1}{33}. $$
+The two linear terms of the expansion vanish inside the session for the reason of Step 2.1, so the session returns a closed form in $\pi$ and not a special function.
+Result
+The volume of the body is  = \frac{136\pi}{99} = 4.31572324130$ cubic length units. The body encloses $3.03030303$ percent more volume than the unit ball, and the excess itself is $\frac{4\pi}{99} = 0.126933036509$. The four numerical methods of Part 4 agree with this value within their own errors, and Figure 1 shows the body whose volume it is.
+Common mistake
+A reader may report the excess $\frac{4\pi}{99}$ as the volume and leave out the unit ball, but the volume is the sum of both terms. A reader may also report $4.32$ and stop, but the exact value $\frac{136\pi}{99}$ is available and the decimal is only its shadow; the statement asks for the exact answer.
+Verification
+The scripts
+code/part3_verify.py
+and
+code/part4_verify.py
+both reach $\frac{136}{99}$ for the quotient $V/\pi$, one from the exact expansion and one from the quotient of the numerical volume and $\pi$. The row
+volume over pi: full expansion against the single surviving correction
+of
+code/outputs/part4_summary.md
+reports $\frac{136}{99}$ against $\frac{136}{99}$ with a difference of $0$, and the row
+volume: exact polynomial against adaptive quadrature
+reports $4.3157232413$ against $4.3157232413$ with a difference of $8.882 \times 10^{-16}$.
+Verified values of Part 6
+Each row prints the value that one method computes against the value that a second method computes. The script is
+code/part6_verify.py
+.
+Check
+Computed value
+Reference value
+Difference
+Status
+closed form against the term by term expansion: relative difference
+0
+0
+0.000e+00
+pass
+quotient over pi: term by term against the closed form
+136/99
+136/99
+0.000e+00
+pass
+ratio to the unit ball: measured against 34/33
+1.0303030303
+1.0303030303
+2.220e-16
+pass
+excess over the unit ball: measured against 4 pi / 99
+0.126933036509
+0.126933036509
+4.163e-16
+pass
+vanishing terms of the expansion: sum of the two residues against 0
+0
+0
+0.000e+00
+pass
+What the page checks
+The six scripts run 48 checks and all of them pass. Four rules hold over the whole page. First, no check compares a value with itself: each row pairs two methods, such as an integral against a closed form, a formula against a bisection, or a mesh against a closed form. Second, every figure is drawn by a script that asserts the placement of its own labels before it writes the file. Third, every mathematical expression is LaTeX source inside a math span. Fourth, every step names the script that verifies it.

@@ -1,0 +1,6 @@
+# Exact versions of the packages of the tutorial, installed with uv into code/.venv.
+# Python 3.14.3
+numpy==2.5.5
+scipy==1.18.1
+matplotlib==3.11.2
+sympy==1.14.0
