@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Plans after the 2026-11-24 RSI run: restore the classic plotting prompts, make the RSI learn explicitly, deploy DeepSeek Flash or a distilled version on the HPC, and find a coding- or math-enhanced Qwen3.8-27B.">
+<meta name="description" content="Plans after the 2026-11-24 meeting with Prof. HU Jishan: survey recursive visual refinement research, hand-build a plot recipe with a 3D overview, a matching 3D zoom-in, and 2D projections, restore the classic plotting prompts, make the RSI learn explicitly, and deploy faster models.">
 <title>RSI 2026-11-24 &mdash; Future Plans</title>
 <link rel="stylesheet" href="../styles.css">
 <style>
@@ -14,6 +14,7 @@
 .plan-tag.week { background: #eee9fb; color: #4c3a7a; }
 .plan-tag.hard { background: #fbe4de; color: #b23a1c; }
 .plan-tag.long { background: #e8f4ea; color: #2f6f4f; }
+.plan-tag.top { background: #ffe9d6; color: #a23c00; }
 .recipe-line { font-family: var(--mono); font-size: .84rem; background: #f6f8fa; border: 1px solid #e2e6ec; border-radius: 8px; padding: 10px 12px; display: block; margin: 10px 0; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 @media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
@@ -25,7 +26,7 @@
   <div class="container">
     <div class="kicker">Experiment Report &middot; 2026-11-24</div>
     <h1>&#128220; Future Plans</h1>
-    <p class="lede">&#128204; Added after the 2026-11-24 run. &#127919; Four items: (1) restore the classic plotting prompts, (2) make the RSI learn explicitly, (3) deploy DeepSeek Flash or a distilled version on the HPC, and (4) find a coding- or math-enhanced Qwen3.8-27B. &#128161; The first item is a direct answer to the 15.7.18 failure. The second is a direct answer to the loss curve.</p>
+    <p class="lede">&#128204; Added after a meeting with Prof. HU Jishan on 2026-11-24. &#127919; Two highest-priority tasks come first: (1) survey how agents recursively refine the visual quality of code-generated math plots, and (2) hand-build a plot recipe with a clear 3D overview, a matching 3D zoom-in, and clear 2D projections. &#128295; Four follow-on items: restore the classic plotting prompts, make the RSI learn explicitly, deploy DeepSeek Flash or a distilled version on the HPC, and find a coding- or math-enhanced Qwen3.8-27B.</p>
   </div>
 </header>
 
@@ -43,9 +44,57 @@
 
 <main class="container">
 
+<section id="priority">
+  <h2>&#127919; Highest priority after the 2026-11-24 meeting</h2>
+  <p>&#128204; Added after a meeting with Prof. HU Jishan on 2026-11-24. These two tasks come before <a href="#window">the four work items below</a>. The target is not a better average score. The target is a plot recipe that a reader can use: a clear 3D overview, a matching 3D zoom-in, and clear 2D projections.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3>&#128218; 1. Survey recursive visual refinement <span class="plan-tag top">Top priority</span></h3>
+      <p>&#128269; <strong>Check the latest dynamics in the research community.</strong> Read the recent literature and public work on agents that write plotting code. Look for works about how an AI agent recursively refines the visual quality of code-generated math plots.</p>
+      <p>&#128203; <strong>Record the method.</strong> For each work, note the refinement loop (what the agent changes), the feedback signal (human, model, or image metric), the benchmark, and the failure modes.</p>
+      <p>&#9989; <strong>Decide what to reuse.</strong> Pick the one or two methods that fit our harness and our canonical-figure baseline. Write the reason in the plan.</p>
+      <p class="small">&#128204; First check: a short annotated list of relevant works, plus a decision on the first method to test.</p>
+    </div>
+    <div class="card">
+      <h3>&#127912; 2. Hand-build the plot recipe <span class="plan-tag top">Top priority</span></h3>
+      <p>&#129517; <strong>Pick a few plotting problems.</strong> Use problems that need a solid, a cut, and a projection. Start from the two transfer examples, 15.7.18 and 15.7.32, and add one more if needed.</p>
+      <p>&#128295; <strong>Refine the prompt by hand.</strong> Work manually or interactively, one requirement at a time, until the agent writes code that produces the figures in the requirement table. Keep the instructions short and explicit.</p>
+      <p>&#127912; <strong>Check every view.</strong> A figure is accepted only if all three view groups pass. Do not trade one view for another.</p>
+      <p class="small">&#128204; First check: one prompt set that gives all three view groups on all chosen problems, with a side-by-side figure record.</p>
+    </div>
+  </div>
+
+  <h3>&#128208; Plot requirements</h3>
+  <p>&#128204; These are the acceptance rules for task 2. A human checks each row on the rendered image. The same rules apply to every chosen problem.</p>
+  <table>
+    <thead><tr><th>View</th><th>Requirement</th><th>Check on the image</th></tr></thead>
+    <tbody>
+      <tr><td rowspan="5">3D overview</td><td>Visible labels</td><td>Every surface, plane, axis, and marked point has a readable label.</td></tr>
+      <tr><td>Visible geometric boundaries</td><td>The body reads as closed. Each boundary and intersection curve is visible.</td></tr>
+      <tr><td>Line sketch meshes</td><td>A line mesh shows the shape and the curvature, not only a solid fill.</td></tr>
+      <tr><td>Correct isometric perspective relationships</td><td>Parallel lines stay parallel. The three axes use one consistent scale.</td></tr>
+      <tr><td>No perspective illusions</td><td>No surface, edge, or label reads as a different object than the one it names.</td></tr>
+      <tr><td rowspan="5">3D zoom-in</td><td>Visible labels</td><td>The same labels remain readable at the closer scale.</td></tr>
+      <tr><td>Same viewing angle as the overview</td><td>The camera direction matches the overview. Only the distance changes.</td></tr>
+      <tr><td>Line sketch meshes</td><td>The mesh is visible in the zoom, with the same style as the overview.</td></tr>
+      <tr><td>Correct isometric perspective relationships</td><td>The zoom keeps the same projection and scale rule.</td></tr>
+      <tr><td>No perspective illusions</td><td>The closer view does not create a new false reading.</td></tr>
+      <tr><td rowspan="4">2D projections</td><td>1 or more projection views</td><td>At least one labelled projection appears for every 3D problem.</td></tr>
+      <tr><td>Visible labels</td><td>Each projection labels its axes, curves, and marked points.</td></tr>
+      <tr><td>Visible geometric boundaries</td><td>The projection shows the bounded region, not only an outline.</td></tr>
+      <tr><td>Projected planes marked in the 3D zoom-in</td><td>Each 2D projection has a matching plane or outline in the 3D zoom-in shot.</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <h3>&#128161; How this fits the four items below</h3>
+    <p>&#128295; The hand-built recipe is the reference. Item 1 below (restore the classic plotting prompts) is one input to it. Item 2 (explicit RSI) is how the recipe becomes measurable and transferable.</p>
+    <p>&#9888; <strong>Do not accept a prompt that only works on one problem.</strong> The first check must hold on every chosen problem. If the prompt needs a different wording for each problem, the recipe is not ready.</p>
+  </div>
+</section>
+
 <section id="window">
-  <h2>&#128197; The next step</h2>
-  <p>&#128204; The four items split into two groups. Items 1 and 2 fix the learning method. Items 3 and 4 move the deployment target. The plot work comes first, because the learned recipe is the product.</p>
+  <h2>&#128197; Second priority: the four work items</h2>
+  <p>&#128204; The four items below follow the two meeting tasks. Items 1 and 2 fix the learning method. Items 3 and 4 move the deployment target. The plot work comes first, because the learned recipe is the product.</p>
   <table>
     <thead><tr><th>Item</th><th>Work</th><th>Why now</th></tr></thead>
     <tbody>
@@ -171,6 +220,8 @@
   <table>
     <thead><tr><th>Plan</th><th>Owner</th><th>First check</th></tr></thead>
     <tbody>
+      <tr><td>&#128218; Survey recursive visual refinement</td><td>Experiment</td><td>An annotated list of relevant works and one selected method.</td></tr>
+      <tr><td>&#127912; Hand-built plot recipe</td><td>Experiment</td><td>All three view groups pass the requirement table on every chosen problem.</td></tr>
       <tr><td>&#127912; Restore classic plotting prompts</td><td>Experiment</td><td>15.7.18 gets a labelled 2D projection and the plane label is on the plane.</td></tr>
       <tr><td>&#128295; Explicit RSI</td><td>Experiment</td><td>A figure score moves with the learned rules, and the loss no longer hides the plot gain.</td></tr>
       <tr><td>&#128421; DeepSeek Flash on the HPC</td><td>Platform</td><td>A tokens/s table for the full and the distilled paths, with time per problem.</td></tr>
@@ -185,6 +236,8 @@
   <table>
     <thead><tr><th>Risk</th><th>Effect</th><th>Control</th></tr></thead>
     <tbody>
+      <tr><td>&#128295; Manual prompt overfits one problem</td><td>A recipe that works only on the demo figures.</td><td>Require every chosen problem to pass the requirement table. Freeze the prompt before the RSI test.</td></tr>
+      <tr><td>&#128218; The survey finds no usable method</td><td>Time spent with no reusable result.</td><td>Time-box the survey. Use the hand-built recipe as the baseline if no method fits.</td></tr>
       <tr><td>&#127912; A classic plot rule hurts the page</td><td>More figures, more time, and a broken release gate.</td><td>Keep the gate. Add the rules one at a time and re-run the two hard problems.</td></tr>
       <tr><td>&#128200; A figure score is gamed</td><td>A high score with a bad figure.</td><td>Score named checks that a script can fail. Keep a human review on the two hard problems.</td></tr>
       <tr><td>&#128012; The full DeepSeek model is too slow</td><td>A local tutor that cannot serve one student.</td><td>Measure first. Do not promise a local endpoint before the tokens/s table exists.</td></tr>
